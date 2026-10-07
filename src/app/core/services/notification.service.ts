@@ -159,7 +159,7 @@ export class NotificationService {
       read: isViewed,
       viewed: isViewed,
       createdAt: item.createdAt ? new Date(item.createdAt) : new Date(),
-      actionUrl: typeof item.metadata?.actionUrl === 'string' ? item.metadata.actionUrl : null,
+      actionUrl: typeof item.metadata?.['actionUrl'] === 'string' ? (item.metadata['actionUrl'] as string) : null,
       metadata: item.metadata,
     };
   }

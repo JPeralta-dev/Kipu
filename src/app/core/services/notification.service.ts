@@ -69,7 +69,16 @@ export class NotificationService {
         try {
           const raw = JSON.parse(event.data);
           const mapped = this.mapApiNotification(raw);
-          this._notifications.update(list => [mapped, ...list.filter(n => n.id !== mapped.id)]);
+          this._notifications.update(list => {
+            const existing = list.find(n => n.id === mapped.id);
+            if (existing) {
+              if (existing.read || existing.viewed) {
+                return list;
+              }
+              return [mapped, ...list.filter(n => n.id !== mapped.id)];
+            }
+            return [mapped, ...list];
+          });
         } catch {
           // Ignore malformed payloads
         }
@@ -109,9 +118,9 @@ export class NotificationService {
 
     // 2. Call backend PATCH route
     if (this.http) {
-      this.http.patch(`${this.base}/${id}/viewed`, {}).subscribe({
-        error: () => {
-          // Non-blocking: retain optimistic state
+      this.http.patch(`${this.base}/${id}/viewed`, { viewed: true }).subscribe({
+        error: (err) => {
+          console.error('[NotificationService] Failed to mark notification as viewed on backend:', err);
         },
       });
     }

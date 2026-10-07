@@ -117,6 +117,7 @@ describe('NotificationService', () => {
 
       const patchReq = httpMock.expectOne(`${environment.apiUrl}/api/notifications/1/viewed`);
       expect(patchReq.request.method).toBe('PATCH');
+      expect(patchReq.request.body).toEqual({ viewed: true });
       patchReq.flush({});
 
       const after = service.notifications().find(n => n.id === '1');

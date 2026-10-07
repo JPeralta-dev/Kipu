@@ -28,6 +28,28 @@ describe('NotificationsDropdownComponent', () => {
     fixture = TestBed.createComponent(NotificationsDropdownComponent);
     component = fixture.componentInstance;
     notificationService = TestBed.inject(NotificationService);
+    notificationService.setNotifications([
+      {
+        id: '1',
+        title: 'notifications.welcome.title',
+        message: 'notifications.welcome.message',
+        type: 'success',
+        read: false,
+        viewed: false,
+        createdAt: new Date(),
+        actionUrl: null,
+      },
+      {
+        id: '2',
+        title: 'notifications.feature.title',
+        message: 'notifications.feature.message',
+        type: 'info',
+        read: true,
+        viewed: true,
+        createdAt: new Date(),
+        actionUrl: null,
+      },
+    ]);
     fixture.detectChanges();
   });
 

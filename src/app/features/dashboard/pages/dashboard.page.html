@@ -250,18 +250,10 @@
         </div>
       </section>
 
-      <!-- ZONE 4: ECOSYSTEM & DISTRIBUTION (Budgets, Pockets, Channels, Referral) -->
+      <!-- ZONE 4: ECOSYSTEM & DISTRIBUTION (Budgets, Referral) -->
       <section class="dashboard-ecosystem" ftSubtleReveal="fade-up" [delay]="180">
-        <div class="ecosystem-card">
+        <div class="ecosystem-card ecosystem-card--full">
           <ft-budget-progress-widget />
-        </div>
-
-        <div class="ecosystem-card">
-          <ft-pocket-progress-widget />
-        </div>
-
-        <div class="ecosystem-card" data-tour="telegram-connect">
-          <ft-channel-distribution-widget />
         </div>
 
         @if (isPremium()) {

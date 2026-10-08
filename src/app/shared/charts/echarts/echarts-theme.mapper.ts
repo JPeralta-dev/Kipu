@@ -777,9 +777,10 @@ export class EchartsThemeMapper {
   ): EChartsOption {
     const css = this.cssVars();
     const colors = this.categoryColors();
-    const total = data.reduce((sum, v) => sum + v, 0);
     return {
       ...this.buildTheme(css),
+      xAxis: { show: false },
+      yAxis: { show: false },
       title: title ? { text: title, left: 'center', top: 'center' } : undefined,
       tooltip: {
         trigger: 'item',
@@ -815,8 +816,8 @@ export class EchartsThemeMapper {
       series: [
         {
           type: 'pie',
-          radius: ['45%', '70%'],
-          center: ['35%', '50%'],
+          radius: ['48%', '72%'],
+          center: ['38%', '50%'],
           avoidLabelOverlap: true,
           itemStyle: {
             borderRadius: 6,
@@ -832,7 +833,7 @@ export class EchartsThemeMapper {
             name: label,
             value: data[i],
             itemStyle: {
-              color: (customColors && customColors[i]) ? customColors[i] + 'CC' : colors[i % colors.length] + 'CC',
+              color: (customColors && customColors[i]) ? customColors[i] : colors[i % colors.length],
             },
           })),
         },

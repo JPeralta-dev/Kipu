@@ -344,10 +344,11 @@
   }
 
   @include at-lg {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 1.8fr 1fr 1.25fr;
     gap: 20px;
   }
 
+  &__hourly,
   &__trends {
     @include at-md {
       grid-column: 1 / -1;
@@ -360,14 +361,19 @@
 
   &__category,
   &__daily,
+  &__weekly,
   &__transactions {
     min-height: 320px;
+    height: 100%;
   }
 
-  // Ensure all direct children stretch to equal height
+  // Ensure all direct children stretch to equal height and respect grid column width ratio
   > * {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    width: 100%;
   }
 
   // Align transactions card to match sibling chart cards height
@@ -404,20 +410,6 @@
       background: var(--glass-border);
       border-radius: 4px;
     }
-  }
-
-  &__hourly {
-    @include at-md {
-      grid-column: 1 / -1;
-    }
-
-    @include at-lg {
-      grid-column: auto;
-    }
-  }
-
-  &__weekly {
-    min-height: 320px;
   }
 }
 

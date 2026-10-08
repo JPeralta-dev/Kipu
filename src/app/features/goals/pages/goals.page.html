@@ -170,16 +170,19 @@
 
         <div class="form-group">
           <label class="form-label" for="goal-target">Monto objetivo</label>
-          <input
-            id="goal-target"
-            class="form-input"
-            type="number"
-            [(ngModel)]="formTargetAmount"
-            name="targetAmount"
-            placeholder="800000"
-            min="1"
-            required
-          />
+          <div class="input-wrap currency-wrap">
+            <input
+              id="goal-target"
+              class="form-input currency-input"
+              type="text"
+              inputmode="decimal"
+              [(ngModel)]="formTargetAmount"
+              name="targetAmount"
+              placeholder="0.00"
+              required
+              ftNumberFormat
+            />
+          </div>
         </div>
 
         <div class="form-group">
@@ -238,23 +241,27 @@
       <form class="modal__form" (ngSubmit)="onSubmitAddAmount()">
         <div class="form-group">
           <label class="form-label" for="add-amount">Monto a agregar</label>
-          <input
-            id="add-amount"
-            class="form-input"
-            type="number"
-            [(ngModel)]="formAddAmount"
-            name="addAmount"
-            placeholder="80000"
-            min="1"
-            required
-            autofocus
-          />
+          <div class="input-wrap currency-wrap">
+            <span class="currency-symbol">{{ currencySymbol() }}</span>
+            <input
+              id="add-amount"
+              class="form-input currency-input"
+              type="text"
+              inputmode="decimal"
+              [(ngModel)]="formAddAmount"
+              name="addAmount"
+              placeholder="0.00"
+              required
+              autofocus
+              ftNumberFormat
+            />
+          </div>
         </div>
 
         @if (selectedGoal()) {
           <div class="add-amount__current">
             Actual: {{ formatCurrency(selectedGoal()!.currentAmount) }}
-            → Nuevo: {{ formatCurrency(selectedGoal()!.currentAmount + (formAddAmount() || 0)) }}
+            → Nuevo: {{ formatCurrency(selectedGoal()!.currentAmount + parseNumber(formAddAmount())) }}
           </div>
         }
 

@@ -67,7 +67,7 @@
                     @for (p of periodOptions; track p.value) {
                       <button
                         class="month-selector__shortcut"
-                        [class.month-selector__shortcut--active]="headerPeriod() === p.value"
+                        [class.month-selector__shortcut--active]="!showCustomDates() && headerPeriod() === p.value"
                         (click)="onPeriodChange(p.value); monthOpen.set(false)"
                         type="button"
                       >
@@ -80,7 +80,7 @@
                   @for (month of dateRange.availableMonths(); track month.start) {
                     <button
                       class="month-selector__option"
-                      [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                      [class.month-selector__option--active]="!showCustomDates() && dateRange.startDate() === month.start"
                       (click)="onMonthSelect(month)"
                       type="button"
                     >
@@ -91,7 +91,8 @@
                   <!-- Custom range toggle -->
                   <button
                     class="month-selector__option month-selector__option--custom"
-                    (click)="showCustomDates.set(!showCustomDates()); monthOpen.set(false)"
+                    [class.month-selector__option--active]="showCustomDates()"
+                    (click)="toggleCustomDates(); monthOpen.set(false)"
                     type="button"
                   >
                     <ng-icon name="calendar" size="0.9rem" />
@@ -151,7 +152,7 @@
         <ft-analytics-kpis [kpis]="kpis()" [loading]="false" />
       </div>
 
-      <!-- 3. Charts Row: Trends (wide) + Daily (narrow) -->
+      <!-- 3. Charts Grid (Bento Layout) -->
       <div class="analytics-charts-row">
         <!-- Monthly Trends (wide) -->
         <div class="analytics-charts-row__trends" ftSubtleReveal="fade-up" [delay]="100">
@@ -211,10 +212,7 @@
             [pageSize]="5"
           />
         </div>
-      </div>
 
-      <!-- 3b. Hourly Activity + Weekly Patterns + Category Breakdown Row -->
-      <div class="analytics-charts-row">
         <!-- Hourly Activity (wide) -->
         <div class="analytics-charts-row__hourly" ftSubtleReveal="fade-up" [delay]="250">
           <ft-analytics-chart-card

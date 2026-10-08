@@ -1,4 +1,4 @@
-export type NotificationType = 'info' | 'success' | 'warning' | 'error';
+export type NotificationType = 'info' | 'success' | 'warning' | 'error' | string;
 
 export interface Notification {
   id: string;
@@ -6,6 +6,8 @@ export interface Notification {
   message: string;
   type: NotificationType;
   read: boolean;
+  viewed?: boolean;
   createdAt: Date;
-  actionUrl: string | null;
+  actionUrl?: string | null;
+  metadata?: Record<string, unknown>;
 }

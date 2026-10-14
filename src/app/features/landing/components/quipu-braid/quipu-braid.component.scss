@@ -44,10 +44,10 @@
     backdrop-filter: blur(8px);
     box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
 
-    &-symbol {
+    &-icon {
       color: #F59E0B;
-      font-size: 0.9rem;
-      line-height: 1;
+      display: flex;
+      align-items: center;
     }
 
     &-text {
@@ -280,7 +280,9 @@
   border: 1px solid rgba(245, 158, 11, 0.15);
 
   &-icon {
-    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #F59E0B;
     line-height: 1;
   }

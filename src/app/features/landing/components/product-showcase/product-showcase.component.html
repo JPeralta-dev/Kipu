@@ -11,7 +11,7 @@
         <span class="showcase__title-gradient">entender de verdad tu dinero.</span>
       </h2>
       <p class="showcase__subtitle">
-        Presupuestos claros, metas que inspiran, análisis inteligente y registro sin fricción. Sin publicidad y sin exigir acceso a tus cuentas bancarias.
+        Presupuestos claros, metas que inspiran y análisis inteligente. Todo diseñado para darte paz mental sin publicidad y sin pedirte tus claves bancarias.
       </p>
     </div>
 
@@ -24,7 +24,7 @@
         role="tab"
         [attr.aria-selected]="activeTab() === 'budgets'"
       >
-        <span class="showcase__tab-icon">📊</span>
+        <ng-icon name="chart" size="1rem" class="showcase__tab-icon" />
         <span>Límites & Presupuestos</span>
       </button>
 
@@ -35,7 +35,7 @@
         role="tab"
         [attr.aria-selected]="activeTab() === 'goals'"
       >
-        <span class="showcase__tab-icon">🎯</span>
+        <ng-icon name="goals" size="1rem" class="showcase__tab-icon" />
         <span>Metas de Ahorro</span>
       </button>
 
@@ -46,23 +46,12 @@
         role="tab"
         [attr.aria-selected]="activeTab() === 'insights'"
       >
-        <span class="showcase__tab-icon">✦</span>
+        <ng-icon name="insights" size="1rem" class="showcase__tab-icon" />
         <span>Insights Inteligentes</span>
-      </button>
-
-      <button
-        class="showcase__tab"
-        [class.showcase__tab--active]="activeTab() === 'logging'"
-        (click)="activeTab.set('logging')"
-        role="tab"
-        [attr.aria-selected]="activeTab() === 'logging'"
-      >
-        <span class="showcase__tab-icon">⚡</span>
-        <span>3 Formas de Registrar</span>
       </button>
     </div>
 
-    <!-- Tab Panels Container (Double-Bezel Architecture) -->
+    <!-- Tab Panels Container -->
     <div class="showcase__stage">
       <!-- 1. TAB: BUDGETS -->
       @if (activeTab() === 'budgets') {
@@ -100,6 +89,9 @@
                   <div class="budget-item">
                     <div class="budget-item__row">
                       <div class="budget-item__info">
+                        <div class="budget-item__icon-wrap">
+                          <ng-icon [name]="item.icon" size="0.95rem" />
+                        </div>
                         <span class="budget-item__name">{{ item.category }}</span>
                       </div>
                       <div class="budget-item__amounts">
@@ -119,10 +111,12 @@
                     <div class="budget-item__status">
                       @if (item.status === 'exceeded') {
                         <span class="budget-status budget-status--danger">
-                          ⚠️ Te has pasado por ${{ item.spent - item.limit }}
+                          <ng-icon name="warning" size="0.875rem" />
+                          Te has pasado por ${{ item.spent - item.limit }}
                         </span>
                       } @else {
                         <span class="budget-status budget-status--ok">
+                          <ng-icon name="check" size="0.875rem" />
                           Quedan ${{ item.limit - item.spent }} disponibles
                         </span>
                       }
@@ -164,9 +158,14 @@
                 @for (goal of goals; track goal.title) {
                   <div class="goal-item">
                     <div class="goal-item__header">
-                      <div>
-                        <div class="goal-item__title">{{ goal.title }}</div>
-                        <div class="goal-item__meta">{{ goal.category }} · {{ goal.eta }}</div>
+                      <div class="goal-item__heading-group">
+                        <div class="goal-item__icon-wrap" [style.color]="goal.color">
+                          <ng-icon [name]="goal.icon" size="1.05rem" />
+                        </div>
+                        <div>
+                          <div class="goal-item__title">{{ goal.title }}</div>
+                          <div class="goal-item__meta">{{ goal.category }} · {{ goal.eta }}</div>
+                        </div>
                       </div>
                       <div class="goal-item__pct" [style.color]="goal.color">
                         {{ getPercent(goal.current, goal.target) }}%
@@ -217,7 +216,9 @@
           <div class="showcase-panel__widget">
             <div class="widget-card widget-card--insights">
               <div class="insight-bubble insight-bubble--highlight">
-                <div class="insight-bubble__icon">💡</div>
+                <div class="insight-bubble__icon">
+                  <ng-icon name="insights" size="1.25rem" />
+                </div>
                 <div class="insight-bubble__content">
                   <div class="insight-bubble__title">Ahorro inteligente detectado</div>
                   <div class="insight-bubble__body">
@@ -227,7 +228,9 @@
               </div>
 
               <div class="insight-bubble">
-                <div class="insight-bubble__icon">🔄</div>
+                <div class="insight-bubble__icon">
+                  <ng-icon name="repeat" size="1.25rem" />
+                </div>
                 <div class="insight-bubble__content">
                   <div class="insight-bubble__title">Suscripciones recurrentes</div>
                   <div class="insight-bubble__body">
@@ -237,7 +240,9 @@
               </div>
 
               <div class="insight-bubble">
-                <div class="insight-bubble__icon">📈</div>
+                <div class="insight-bubble__icon">
+                  <ng-icon name="trendUp" size="1.25rem" />
+                </div>
                 <div class="insight-bubble__content">
                   <div class="insight-bubble__title">Flujo de caja equilibrado</div>
                   <div class="insight-bubble__body">
@@ -245,106 +250,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      }
-
-      <!-- 4. TAB: LOGGING / 3 FORMAS DE REGISTRAR -->
-      @if (activeTab() === 'logging') {
-        <div class="showcase-panel showcase-panel--logging">
-          <div class="showcase-panel__text">
-            <span class="showcase-panel__tag">Sin Fricción</span>
-            <h3 class="showcase-panel__heading">Añade tus movimientos como prefieras. En segundos.</h3>
-            <p class="showcase-panel__desc">
-              El secreto para mantener el orden es la facilidad. Registra con un mensaje rápido por Telegram, a mano en un toque o subiendo tu extracto bancario.
-            </p>
-
-            <!-- Mini Selector for Input Method -->
-            <div class="method-selector">
-              <button
-                class="method-btn"
-                [class.method-btn--active]="activeInputMethod() === 'telegram'"
-                (click)="activeInputMethod.set('telegram')"
-              >
-                Telegram Bot
-              </button>
-              <button
-                class="method-btn"
-                [class.method-btn--active]="activeInputMethod() === 'manual'"
-                (click)="activeInputMethod.set('manual')"
-              >
-                Registro a Mano
-              </button>
-              <button
-                class="method-btn"
-                [class.method-btn--active]="activeInputMethod() === 'import'"
-                (click)="activeInputMethod.set('import')"
-              >
-                Extracto Bancario
-              </button>
-            </div>
-          </div>
-
-          <div class="showcase-panel__widget">
-            <div class="widget-card">
-              @if (activeInputMethod() === 'telegram') {
-                <div class="chat-preview">
-                  <div class="chat-header">
-                    <span class="chat-header__bot-dot"></span>
-                    <span class="chat-header__name">KipuBot (Telegram)</span>
-                  </div>
-
-                  <div class="chat-bubble chat-bubble--user">
-                    <span>Café de especialidad con medialuna $4.80</span>
-                    <span class="chat-time">10:42 AM</span>
-                  </div>
-
-                  <div class="chat-bubble chat-bubble--bot">
-                    <div class="chat-bot-response">
-                      <span class="chat-check">✓</span>
-                      <div>
-                        <strong>Gasto registrado con éxito</strong>
-                        <div class="chat-details">
-                          Monto: <strong>$4.80</strong> · Categoría: <strong>Cafetería</strong><br />
-                          Presupuesto restante: <strong>$42.20</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <span class="chat-time">10:42 AM</span>
-                  </div>
-                </div>
-              }
-
-              @if (activeInputMethod() === 'manual') {
-                <div class="manual-preview">
-                  <div class="manual-top">
-                    <span class="manual-pill manual-pill--expense">Gasto</span>
-                    <span class="manual-pill">Ingreso</span>
-                  </div>
-                  <div class="manual-amount">$ 35.00</div>
-                  <div class="manual-chips">
-                    <span class="manual-chip manual-chip--selected">🍔 Alimentación</span>
-                    <span class="manual-chip">🚗 Transporte</span>
-                    <span class="manual-chip">🛒 Compras</span>
-                    <span class="manual-chip">☕ Ocio</span>
-                  </div>
-                  <button class="manual-save-btn">Guardar Movimiento (1 toque)</button>
-                </div>
-              }
-
-              @if (activeInputMethod() === 'import') {
-                <div class="import-preview">
-                  <div class="import-dropzone">
-                    <div class="import-icon">📄</div>
-                    <div class="import-title">Arrastra tu extracto bancario</div>
-                    <div class="import-desc">Compatible con CSV, Excel (.xlsx) y texto bancario</div>
-                    <div class="import-security">
-                      🔒 Cero acceso a tus contraseñas bancarias. Tú revisas y confirmas qué guardar.
-                    </div>
-                  </div>
-                </div>
-              }
             </div>
           </div>
         </div>

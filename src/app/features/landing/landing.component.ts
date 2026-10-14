@@ -8,7 +8,6 @@ import { PublicNavbarComponent } from './components/public-navbar/public-navbar.
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
 import { QuipuBraidComponent } from './components/quipu-braid/quipu-braid.component';
 import { ProductShowcaseComponent } from './components/product-showcase/product-showcase.component';
-import { FeatureCardComponent } from './components/feature-card/feature-card.component';
 import { TelegramSectionComponent } from './components/telegram-section/telegram-section.component';
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
@@ -36,7 +35,6 @@ import { environment } from '../../../environments/environment';
     HeroSectionComponent,
     QuipuBraidComponent,
     ProductShowcaseComponent,
-    FeatureCardComponent,
     TelegramSectionComponent,
     FinalCtaComponent,
     LandingBackgroundComponent,
@@ -61,7 +59,6 @@ export class LandingComponent implements OnInit {
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
   readonly pricingEnabled = environment.pricingEnabled;
-  readonly showAllFeatures = signal(false);
 
   /** Public site URL — used as og:url and twitter:url. */
   readonly siteUrl = environment.production
@@ -132,15 +129,6 @@ export class LandingComponent implements OnInit {
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-  features = [
-    { icon: 'dashboard', title: 'landing.features.dashboard.title', description: 'landing.features.dashboard.description' },
-    { icon: 'transactions', title: 'landing.features.transactions.title', description: 'landing.features.transactions.description' },
-    { icon: 'analytics', title: 'landing.features.analytics.title', description: 'landing.features.analytics.description' },
-    { icon: 'info', title: 'landing.features.ai_insights.title', description: 'landing.features.ai_insights.description' },
-    { icon: 'categories', title: 'landing.features.categories.title', description: 'landing.features.categories.description' },
-    { icon: 'telegram', title: 'landing.features.telegram.title', description: 'landing.features.telegram.description' },
-  ];
 
   /**
    * Tier cards shared with the subscription page.

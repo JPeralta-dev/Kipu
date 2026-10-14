@@ -3,7 +3,7 @@
     <!-- Header / Eyebrow -->
     <div class="quipu__header">
       <div class="quipu__badge">
-        <span class="quipu__badge-symbol">☍</span>
+        <ng-icon name="shieldCheck" size="0.875rem" class="quipu__badge-icon" />
         <span class="quipu__badge-text">HERENCIA ANDINA · CONTABILIDAD MILENARIA</span>
       </div>
       <h2 class="quipu__title">
@@ -11,7 +11,7 @@
         <span class="quipu__title-gradient">Cada nudo cuenta tu historia.</span>
       </h2>
       <p class="quipu__subtitle">
-        Siglos antes de las hojas de cálculo, los incas gobernaban sus recursos mediante el <em>Quipu</em>: un sistema de cordeles y nudos donde cada posición representaba orden, abundancia y verdad. Hoy llevamos esa misma claridad a tu día a día.
+        Siglos antes de las hojas de cálculo, los incas gobernaban sus recursos mediante el <em>Quipu</em>: un sistema de cordeles y nudos donde cada posición representaba orden, abundancia y verdad. Kipu traslada esa misma claridad a tu día a día.
       </p>
     </div>
 
@@ -50,7 +50,9 @@
         </div>
 
         <div class="quipu__callout">
-          <div class="quipu__callout-icon">✦</div>
+          <div class="quipu__callout-icon">
+            <ng-icon name="insights" size="1.25rem" />
+          </div>
           <div class="quipu__callout-text">
             <strong>Sin hojas de cálculo complejas.</strong> En Kipu todo se organiza en armonía: tus ingresos, tus límites y tus metas en un solo tejido vivo.
           </div>
@@ -88,7 +90,6 @@
           >
             <defs>
               <!-- Gradients for authentic Andean cord dyes -->
-              <!-- Cord 1: Inti Gold (Abundance & Inflows) -->
               <linearGradient id="cordGold" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stop-color="#FDE047" />
                 <stop offset="35%" stop-color="#F59E0B" />
@@ -96,7 +97,6 @@
                 <stop offset="100%" stop-color="#FDE047" />
               </linearGradient>
 
-              <!-- Cord 2: Qoya Amethyst (Accounts & Budgets) -->
               <linearGradient id="cordPurple" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stop-color="#F0ABFC" />
                 <stop offset="40%" stop-color="#C084FC" />
@@ -104,32 +104,22 @@
                 <stop offset="100%" stop-color="#E879F9" />
               </linearGradient>
 
-              <!-- Cord 3: Antisuyu Emerald (Growth & Savings) -->
               <linearGradient id="cordEmerald" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stop-color="#6EE7B7" />
                 <stop offset="50%" stop-color="#10B981" />
                 <stop offset="100%" stop-color="#047857" />
               </linearGradient>
 
-              <!-- Cord 4: Subtle Silk Accent -->
               <linearGradient id="cordSilk" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.4)" />
+                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.45)" />
+                <stop offset="50%" stop-color="rgba(255, 255, 255, 0.15)" />
                 <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)" />
               </linearGradient>
-
-              <!-- Glow filter for active knots -->
-              <filter id="knotGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
             </defs>
 
             <!-- Top suspension loops -->
             <path
-              d="M 120 40 Q 120 60 140 60 L 230 60"
+              d="M 120 40 Q 120 58 140 58 L 230 58"
               fill="none"
               stroke="#D97706"
               stroke-width="2.5"
@@ -137,7 +127,7 @@
               opacity="0.6"
             />
             <path
-              d="M 340 40 Q 340 60 320 60 L 230 60"
+              d="M 340 40 Q 340 58 320 58 L 230 58"
               fill="none"
               stroke="#C084FC"
               stroke-width="2.5"
@@ -145,40 +135,48 @@
               opacity="0.6"
             />
 
-            <!-- Shadow layer underneath braids for deep haptic depth -->
+            <!-- Shadow layer underneath braids for organic 3D depth -->
             <path
               [attr.d]="strandPaths().d1"
               fill="none"
-              stroke="rgba(0, 0, 0, 0.65)"
+              stroke="rgba(0, 0, 0, 0.6)"
               stroke-width="7"
               stroke-linecap="round"
             />
             <path
               [attr.d]="strandPaths().d2"
               fill="none"
-              stroke="rgba(0, 0, 0, 0.65)"
+              stroke="rgba(0, 0, 0, 0.6)"
               stroke-width="7"
               stroke-linecap="round"
             />
             <path
               [attr.d]="strandPaths().d3"
               fill="none"
-              stroke="rgba(0, 0, 0, 0.65)"
+              stroke="rgba(0, 0, 0, 0.6)"
               stroke-width="7"
               stroke-linecap="round"
             />
 
-            <!-- Subsidiary Silk Strand (Fine outer thread) -->
+            <!-- Subsidiary Silk Strands (Harmonic tension lines) -->
             <path
               [attr.d]="strandPaths().dAccent"
               fill="none"
               stroke="url(#cordSilk)"
-              stroke-width="1.5"
+              stroke-width="1.25"
               stroke-dasharray="3 4"
               stroke-linecap="round"
             />
+            <path
+              [attr.d]="strandPaths().dFineThread"
+              fill="none"
+              stroke="rgba(253, 224, 71, 0.35)"
+              stroke-width="1"
+              stroke-dasharray="2 3"
+              stroke-linecap="round"
+            />
 
-            <!-- Main Braided Cords with woven textures -->
+            <!-- Main Braided Cords -->
             <!-- Strand 3: Emerald Growth -->
             <path
               [attr.d]="strandPaths().d3"
@@ -249,7 +247,7 @@
                     />
                   }
 
-                  <!-- Authentic Andean Knot Geometry -->
+                  <!-- Authentic Andean Knot Geometry (Minimalist vector crafts) -->
                   <!-- Nudo 0: Nudo Simple (Yapana) -->
                   @if (knot.knotType === 'simple') {
                     <g class="quipu-knot__glyph">
@@ -299,7 +297,7 @@
                     <rect
                       x="0"
                       y="0"
-                      width="120"
+                      width="128"
                       height="24"
                       rx="12"
                       fill="#1A1224"
@@ -307,11 +305,11 @@
                       stroke-width="1"
                     />
                     <text
-                      x="60"
+                      x="64"
                       y="16"
                       text-anchor="middle"
                       fill="#FFFFFF"
-                      font-size="10"
+                      font-size="9.5"
                       font-weight="600"
                       letter-spacing="0.02em"
                     >
@@ -334,10 +332,10 @@
             </g>
           </svg>
 
-          <!-- Interactive scroll / gesture hint footer inside the loom frame -->
+          <!-- Interactive caption with pulse dot -->
           <div class="quipu-loom__caption">
             <span class="quipu-loom__caption-pulse"></span>
-            <span>Desplaza o interactúa: las cuerdas y nudos responden al avance</span>
+            <span>Tensa y descubre los nudos con el scroll o el cursor</span>
           </div>
         </div>
       </div>

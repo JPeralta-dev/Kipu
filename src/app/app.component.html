@@ -8,7 +8,7 @@
   }
 
   <!-- Main content area -->
-  <main class="app-main">
+  <main class="app-main" [class.app-main--landing]="isLandingRoute()">
     <router-outlet />
   </main>
 

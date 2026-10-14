@@ -6,6 +6,7 @@ import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { PublicNavbarComponent } from './components/public-navbar/public-navbar.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
+import { QuipuBraidComponent } from './components/quipu-braid/quipu-braid.component';
 import { FeatureCardComponent } from './components/feature-card/feature-card.component';
 import { TelegramSectionComponent } from './components/telegram-section/telegram-section.component';
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
@@ -32,6 +33,7 @@ import { environment } from '../../../environments/environment';
     NgIcon,
     PublicNavbarComponent,
     HeroSectionComponent,
+    QuipuBraidComponent,
     FeatureCardComponent,
     TelegramSectionComponent,
     FinalCtaComponent,

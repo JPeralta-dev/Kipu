@@ -1,216 +1,269 @@
 .telegram-section {
-  padding: 24px 0;
   position: relative;
-}
-
-.telegram-section__inner {
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 48px;
-  align-items: center;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
-  padding: 48px 56px;
-  box-shadow: var(--shadow-lg);
-  overflow: visible;
-}
-
-.telegram-section__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  background: var(--info-bg);
-  border: 1px solid rgba(167, 139, 250, 0.2);
-  border-radius: var(--radius-full);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--info);
-  margin-bottom: 24px;
-}
-
-.telegram-section__badge-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.telegram-section__title {
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text-primary);
-  margin: 0 0 16px;
-}
-
-.telegram-section__accent {
-  color: var(--accent-start);
-}
-
-.telegram-section__description {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  margin: 0 0 32px;
-}
-
-.telegram-section__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-  border: none;
-  border-radius: var(--radius-sm);
-  color: var(--text-inverse);
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: var(--glow-accent);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(217, 70, 239, 0.35);
-  }
-
-  ng-icon {
-    flex-shrink: 0;
-  }
-}
-
-.telegram-section__visual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: visible;
-}
-
-/* Device Mockup */
-.device-mockup {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-  margin: 0 auto;
-}
+  padding: 3rem 0;
+  color: #FFFFFF;
 
-.device-mockup__image {
-  display: block;
-  width: 100%;
-  max-width: 360px;
-  height: auto;
-  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.45));
-  animation: device-float 6s ease-in-out infinite;
-}
-
-.device-mockup__screen {
-  position: absolute;
-  top: 8.5%;
-  left: 12.5%;
-  right: 12.5%;
-  bottom: 8.5%;
-  border-radius: 32px;
-  overflow: hidden;
-  background: #000;
-}
-
-.device-mockup__placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(217, 70, 239, 0.1), rgba(124, 58, 237, 0.1));
-}
-
-.device-mockup__placeholder-text {
-  font-size: 14px;
-  color: rgba(243, 232, 255, 0.3);
-  text-align: center;
-  padding: 20px;
-}
-
-@keyframes device-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .telegram-section__inner {
+  &__inner {
+    margin: 0 auto;
+    display: grid;
     grid-template-columns: 1fr;
-    padding: 40px;
-    gap: 40px;
+    gap: 3.5rem;
+    align-items: center;
+    background: linear-gradient(150deg, rgba(26, 18, 36, 0.7) 0%, rgba(13, 7, 20, 0.9) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2.25rem;
+    padding: 3rem 2rem;
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.7),
+                inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+
+    @media (min-width: 1024px) {
+      grid-template-columns: 1.15fr 0.85fr;
+      padding: 4rem 4.5rem;
+      gap: 4.5rem;
+    }
   }
 
-  .telegram-section__title {
-    font-size: 28px;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
-  .device-mockup__image {
-    max-width: 340px;
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #38BDF8;
+    max-width: fit-content;
+
+    &-icon {
+      color: #38BDF8;
+      display: flex;
+      align-items: center;
+    }
   }
-}
 
-@media (max-width: 640px) {
-  .telegram-section {
-    padding: 16px 0;
+  &__title {
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #FFFFFF;
+    margin: 0;
+
+    &-gradient {
+      background: linear-gradient(135deg, #FFFFFF 20%, #38BDF8 70%, #0284C7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 
-  .telegram-section__inner {
-    padding: 24px;
+  &__description {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(243, 244, 246, 0.7);
+    margin: 0;
+    max-width: 580px;
   }
 
-  .telegram-section__title {
-    font-size: 24px;
+  /* 3 Methods Cards */
+  .registration-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin: 0.5rem 0;
   }
 
-  .device-mockup__image {
-    max-width: 280px;
-    transform: none;
+  .method-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.15rem;
+    padding: 1.15rem 1.4rem;
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition: all 300ms cubic-bezier(0.32, 0.72, 0, 1);
+    outline: none;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px);
+    }
+
+    &--active {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(26, 18, 36, 0.8) 100%);
+      border-color: rgba(14, 165, 233, 0.35);
+      box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.5),
+                  0 0 20px rgba(14, 165, 233, 0.08);
+
+      .method-card__icon-wrap {
+        background: rgba(14, 165, 233, 0.18);
+        border-color: rgba(14, 165, 233, 0.4);
+        color: #38BDF8;
+      }
+
+      .method-card__title {
+        color: #FFFFFF;
+      }
+
+      .method-card__desc {
+        color: rgba(255, 255, 255, 0.85);
+      }
+    }
+
+    &__icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.85rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.75);
+      flex-shrink: 0;
+      transition: all 250ms ease;
+    }
+
+    &__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    &__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0;
+    }
+
+    &__badge {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 9999px;
+      background: rgba(14, 165, 233, 0.15);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      color: #7DD3FC;
+    }
+
+    &__desc {
+      font-size: 0.845rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.55);
+      margin: 0.25rem 0 0;
+      transition: color 250ms ease;
+    }
   }
 
-  .device-mockup__screen {
-    top: 9%;
-    left: 13%;
-    right: 13%;
-    bottom: 9%;
-    border-radius: 24px;
+  /* Action Buttons */
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
   }
-}
 
-.telegram-section__action-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-}
+  &__btn-telegram {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: 9999px;
+    background: #0088CC;
+    color: #FFFFFF;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0, 136, 204, 0.35);
+    transition: all 300ms cubic-bezier(0.32, 0.72, 0, 1);
 
-.telegram-section__hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  background: rgba(0, 136, 204, 0.08);
-  border: 1px solid rgba(0, 136, 204, 0.25);
-  border-radius: var(--radius-md);
-  font-size: 13.5px;
-  color: var(--text-secondary);
-  line-height: 1.4;
-
-  span {
-    color: var(--text-primary);
-    font-weight: 500;
+    &:hover {
+      background: #0099e6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 136, 204, 0.45);
+    }
   }
-}
 
-.telegram-section__hint-icon {
-  color: #0088cc;
-  flex-shrink: 0;
+  &__btn-app {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.4rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #FFFFFF;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 250ms ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+  }
+
+  /* Visual Phone Device Mockup Container */
+  &__visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .device-frame {
+    position: relative;
+    max-width: 360px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__glow {
+      position: absolute;
+      inset: 15% 10% 15% 10%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.22) 0%, rgba(124, 58, 237, 0.15) 50%, transparent 75%);
+      filter: blur(40px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    &__image {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.65));
+      transition: transform 400ms cubic-bezier(0.32, 0.72, 0, 1);
+
+      &:hover {
+        transform: translateY(-4px) scale(1.02);
+      }
+    }
+  }
 }

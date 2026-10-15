@@ -37,6 +37,7 @@ import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown,
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { DateRangeService } from '../../../core/services/date-range.service';
+import { DEMO_ANALYTICS_DATA } from '../services/analytics-demo-data';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 import type { KpiData, MonthStory, CategoryAnalysis } from '../analytics.types';
@@ -259,6 +260,8 @@ export class AnalyticsPage implements OnInit {
     { value: '6m', labelKey: 'analytics.period.6m' },
     { value: '1y', labelKey: 'analytics.period.1y' },
   ];
+
+  readonly demoMode = signal(false);
 
   // ─── Derived signals from store ─────────────────────────────────────────
 
@@ -754,7 +757,37 @@ export class AnalyticsPage implements OnInit {
     };
   }
 
+  toggleDemoMode(): void {
+    const nextState = !this.demoMode();
+    this.demoMode.set(nextState);
+    if (nextState) {
+      this.applyDemoData();
+      this.toast.info('Modo Captura Activo: Mostrando datos de demostración para screenshot.');
+    } else {
+      const params = this.store.apiParams();
+      this.loadData(params.range, params.bankId, params.type, params.category, params.chartFilterType, params.chartFilterValue);
+      this.toast.info('Modo Captura Desactivado: Restaurando datos reales de tu cuenta.');
+    }
+  }
+
+  private applyDemoData(): void {
+    this.store.setLoading();
+    this.store.setSummary(DEMO_ANALYTICS_DATA.summary);
+    this.store.setMonthlyTrend(DEMO_ANALYTICS_DATA.trend);
+    this.store.setCategoryBreakdown(DEMO_ANALYTICS_DATA.categoryBreakdown);
+    this.store.setDailySpending(DEMO_ANALYTICS_DATA.dailySpending);
+    this.store.setInsights(DEMO_ANALYTICS_DATA.insights.insights);
+    this.store.setTransactions(DEMO_ANALYTICS_DATA.transactions.transactions);
+    this._hourlyData.set(DEMO_ANALYTICS_DATA.hourlyActivity);
+    this._weeklyPatterns.set(DEMO_ANALYTICS_DATA.weeklyPatterns);
+    this.store.setReady();
+  }
+
   private loadData(range?: DateRange, bankId?: string, type?: string, category?: string, chartFilterType?: string, chartFilterValue?: string | number): void {
+    if (this.demoMode()) {
+      this.applyDemoData();
+      return;
+    }
     this.store.setLoading();
 
     // Daily spending range: use the filter range if it spans <= 32 days, otherwise fallback to current week

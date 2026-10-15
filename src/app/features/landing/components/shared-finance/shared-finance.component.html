@@ -1,0 +1,201 @@
+<section class="shared-finance" #cascadeStage>
+  <div class="shared-finance__inner">
+    <!-- Left Column: Editorial Value Proposition -->
+    <div class="shared-finance__narrative">
+      <div class="shared-finance__badge">
+        <ng-icon name="userGroup" size="0.95rem" class="shared-finance__badge-icon" />
+        <span class="shared-finance__badge-text">GASTOS COMPARTIDOS · EN PAREJA O GRUPO</span>
+      </div>
+
+      <h2 class="shared-finance__title">
+        Dividí los gastos<br />
+        <span class="shared-finance__title-accent">sin llevar la cuenta.</span>
+      </h2>
+
+      <p class="shared-finance__description">
+        El alquiler lo pagás vos, el súper lo paga ella. Cargás cada gasto compartido y Kipu mantiene el saldo al día automáticamente, sin que se te mezclen con tus gastos personales ni tengas que hacer cuentas a fin de mes.
+      </p>
+
+      <ul class="shared-finance__features">
+        <li class="shared-finance__feature">
+          <div class="shared-finance__feature-icon">
+            <ng-icon name="check" size="0.95rem" />
+          </div>
+          <div class="shared-finance__feature-text">
+            <strong>Repartilo como quieras:</strong> en partes iguales, por porcentajes o montos fijos por persona.
+          </div>
+        </li>
+
+        <li class="shared-finance__feature">
+          <div class="shared-finance__feature-icon">
+            <ng-icon name="check" size="0.95rem" />
+          </div>
+          <div class="shared-finance__feature-text">
+            <strong>Para la pareja o el hogar:</strong> saldos claros para alquiler, compras y servicios del mes.
+          </div>
+        </li>
+
+        <li class="shared-finance__feature">
+          <div class="shared-finance__feature-icon">
+            <ng-icon name="check" size="0.95rem" />
+          </div>
+          <div class="shared-finance__feature-text">
+            <strong>Saldos en tiempo real:</strong> sabés exactamente quién le debe a quién en todo momento.
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right Column: Animated Z-Axis Cascading Card Cluster -->
+    <div class="shared-finance__stage" [class.is-visible]="isVisible()">
+      <div class="cascade-cluster">
+        <!-- Ambient Radial Glow behind the cards -->
+        <div class="cascade-cluster__ambient"></div>
+
+        <!-- Card 1: Recent Shared Expense (Top Left, -1.5deg tilt) -->
+        <div
+          class="cascade-card cascade-card--expense"
+          [class.is-dimmed]="activeHoverCard() !== null && activeHoverCard() !== 1"
+          (mouseenter)="setHoverCard(1)"
+          (mouseleave)="setHoverCard(null)"
+        >
+          <div class="cascade-card__top">
+            <div class="cascade-card__tag">
+              <span class="cascade-card__dot"></span>
+              <span>Salieron a cenar</span>
+            </div>
+            <span class="cascade-card__meta">Viernes</span>
+          </div>
+
+          <div class="cascade-card__body">
+            <div class="cascade-card__amount-row">
+              <span class="cascade-card__amount">$64.50</span>
+              <div class="cascade-card__avatars">
+                <span class="cascade-avatar cascade-avatar--1">JM</span>
+                <span class="cascade-avatar cascade-avatar--2">SL</span>
+              </div>
+            </div>
+            <div class="cascade-card__split-pill">
+              <ng-icon name="check" size="0.75rem" />
+              <span>Dividido 50/50 · $32.25 cada uno</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Household Group Breakdown (Top Right, +2deg tilt) -->
+        <div
+          class="cascade-card cascade-card--group"
+          [class.is-dimmed]="activeHoverCard() !== null && activeHoverCard() !== 2"
+          (mouseenter)="setHoverCard(2)"
+          (mouseleave)="setHoverCard(null)"
+        >
+          <div class="cascade-card__header">
+            <div>
+              <div class="cascade-card__title">Departamento 402</div>
+              <div class="cascade-card__subtitle">Gastos compartidos del mes</div>
+            </div>
+            <span class="cascade-card__status-pill">Al día</span>
+          </div>
+
+          <div class="cascade-rows">
+            <div class="cascade-row">
+              <div class="cascade-row__left">
+                <span class="cascade-row__label">Alquiler</span>
+                <span class="cascade-row__payer">Pagó Juan</span>
+              </div>
+              <span class="cascade-row__value">$850.00</span>
+            </div>
+
+            <div class="cascade-row">
+              <div class="cascade-row__left">
+                <span class="cascade-row__label">Supermercado</span>
+                <span class="cascade-row__payer">Pagó Sofía</span>
+              </div>
+              <span class="cascade-row__value">$185.40</span>
+            </div>
+
+            <div class="cascade-row">
+              <div class="cascade-row__left">
+                <span class="cascade-row__label">Internet fibra</span>
+                <span class="cascade-row__payer">Pagó Juan</span>
+              </div>
+              <span class="cascade-row__value">$42.00</span>
+            </div>
+          </div>
+
+          <div class="cascade-card__footer">
+            <span>Total repartido:</span>
+            <strong>$1,077.40</strong>
+          </div>
+        </div>
+
+        <!-- Card 3: Settlement Action Card (Foreground Bottom, -0.5deg tilt) -->
+        <div
+          class="cascade-card cascade-card--settle"
+          [class.cascade-card--settled]="isSettled()"
+          [class.is-dimmed]="activeHoverCard() !== null && activeHoverCard() !== 3"
+          (mouseenter)="setHoverCard(3)"
+          (mouseleave)="setHoverCard(null)"
+        >
+          <div class="cascade-card__top">
+            <span class="cascade-card__eyebrow">Balance del grupo</span>
+            <span class="cascade-card__badge-live">En vivo</span>
+          </div>
+
+          <div class="settle-box">
+            <div class="settle-box__avatar-group">
+              <span class="cascade-avatar cascade-avatar--ring">SL</span>
+              <div class="settle-box__info">
+                <span class="settle-box__name">Sofía</span>
+                <span class="settle-box__sub">
+                  {{ isSettled() ? 'Cuentas saldadas' : 'Te debe por el alquiler' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="settle-box__amount-wrap">
+              <span class="settle-box__amount" [class.settle-box__amount--zero]="isSettled()">
+                {{ isSettled() ? '$0.00' : '$353.30' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="settle-box__action">
+            <button
+              type="button"
+              class="settle-action-btn"
+              [class.settle-action-btn--settled]="isSettled()"
+              (click)="toggleSettled()"
+              [attr.aria-label]="isSettled() ? 'Deshacer saldo' : 'Marcar saldo cobrado'"
+            >
+              @if (!isSettled()) {
+                <span class="settle-action-btn__icon">
+                  <ng-icon name="check" size="0.875rem" />
+                </span>
+                <span>Marcar cobrado en 1 clic</span>
+              } @else {
+                <span class="settle-action-btn__icon settle-action-btn__icon--success">
+                  <ng-icon name="check" size="0.875rem" />
+                </span>
+                <span>¡Cobro registrado! (Clic para reiniciar)</span>
+              }
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4: Floating Verification Pill (Bottom Right Anchor) -->
+        <div
+          class="cascade-pill"
+          [class.cascade-pill--active]="isSettled()"
+        >
+          <div class="cascade-pill__icon">
+            <ng-icon name="shieldCheck" size="0.95rem" />
+          </div>
+          <span class="cascade-pill__text">
+            {{ isSettled() ? 'Todas las cuentas al día' : 'Saldos sincronizados automáticamente' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

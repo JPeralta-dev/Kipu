@@ -1185,11 +1185,33 @@
       "emptyTitle": "No channel transactions",
       "emptyDesc": "Record your first transaction to see channel distribution",
       "errorTitle": "Error loading channels",
-      "errorDesc": "We couldn't load the channel distribution. Try again."
     }
+  },
+  "budgets": {
+    "title": "Monthly Budgets",
+    "subtitle": "Spending limits by category",
+    "budget": "Budget",
+    "set_budget": "Set budget",
+    "edit_budget": "Edit budget",
+    "delete_budget": "Delete budget",
+    "limit_amount": "Monthly limit",
+    "alert_threshold": "Alert threshold (%)",
+    "alert_threshold_hint": "We'll notify you when spending reaches this percentage (80% by default).",
+    "saved": "Budget saved successfully",
+    "deleted": "Budget deleted",
+    "save_error": "Failed to save budget",
+    "delete_error": "Failed to delete budget",
+    "spent_of": "{{spent}} of {{limit}}",
+    "exceeded": "Exceeded by {{amount}}",
+    "remaining": "{{amount}} remaining",
+    "widget_title": "Monthly Budget",
+    "widget_view_all": "Manage limits",
+    "widget_empty_title": "No active budgets",
+    "widget_empty_desc": "Set monthly limits on your expense categories to keep spending on track.",
+    "widget_empty_cta": "Configure budgets",
+    "widget_total_spent": "Total spent",
+    "widget_total_limit": "Budgeted",
+    "confirm_delete_title": "Delete budget?",
+    "confirm_delete_msg": "Are you sure you want to remove the budget limit for this category?"
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b2a3fd2656239240a21bbc5523ecc312e171c116

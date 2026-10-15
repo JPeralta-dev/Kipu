@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Budget, CreateBudgetDto, UpdateBudgetDto, BudgetAlert } from '../models/budget.model';
 
+import { map } from 'rxjs/operators';
+
 @Injectable({ providedIn: 'root' })
 export class BudgetsService {
   private readonly http = inject(HttpClient);
@@ -31,6 +33,8 @@ export class BudgetsService {
   }
 
   getBudgetAlerts(): Observable<BudgetAlert[]> {
-    return this.http.get<BudgetAlert[]>(`${this.base}/budgets/alerts`);
+    return this.http.get<{ alerts: BudgetAlert[] } | BudgetAlert[]>(`${this.base}/budgets/alerts`).pipe(
+      map((res) => (Array.isArray(res) ? res : res?.alerts || [])),
+    );
   }
 }

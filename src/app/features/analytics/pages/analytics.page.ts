@@ -37,6 +37,7 @@ import { AnalyticsApiService, AnalyticsSummary, MonthlyTrend, CategoryBreakdown,
 import { AnalyticsStore } from '../services/analytics.store';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { DateRangeService } from '../../../core/services/date-range.service';
+import { DEMO_ANALYTICS_DATA } from '../services/analytics-demo-data';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 import type { KpiData, MonthStory, CategoryAnalysis } from '../analytics.types';
@@ -260,6 +261,8 @@ export class AnalyticsPage implements OnInit {
     { value: '1y', labelKey: 'analytics.period.1y' },
   ];
 
+  readonly demoMode = signal(false);
+
   // ─── Derived signals from store ─────────────────────────────────────────
 
   readonly kpis = computed<KpiData[]>(() =>
@@ -404,13 +407,13 @@ export class AnalyticsPage implements OnInit {
 
     const labels: string[] = top.map(c => this.i18n.translate(c.category));
     const data: number[] = top.map(c => c.amount);
-    const colors: string[] = top.map((c, i) => (c as any).color || defaultColors[i % defaultColors.length]);
+    const colors: string[] = top.map((_, i) => defaultColors[i % defaultColors.length]);
 
     if (rest.length > 0) {
       const restTotal = rest.reduce((sum, c) => sum + c.amount, 0);
       labels.push(this.i18n.translate('analytics.otherCategories') || 'Otros');
       data.push(restTotal);
-      colors.push('#9CA3AF');
+      colors.push(defaultColors[5] || '#6E48AA');
     }
 
     return this.themeMapper.buildDonutOption(labels, data, undefined, colors);
@@ -610,11 +613,15 @@ export class AnalyticsPage implements OnInit {
   // ─── Actions ────────────────────────────────────────────────────────────
 
   onPeriodChange(period: PeriodOption): void {
+    this.showCustomDates.set(false);
     // Map header period to store period
     const storePeriod: '7d' | '30d' | '90d' | '6m' | '1y' =
       period === '1m' ? '30d' :
       period === '3m' ? '90d' :
       period === '1y' ? '1y' : '6m';
+    if (period === '1m') {
+      this.dateRange.setCurrentMonth();
+    }
     this.store.setPeriod(storePeriod);
     // Clear chart filters when changing period
     this.onClearChartFilters();
@@ -625,6 +632,8 @@ export class AnalyticsPage implements OnInit {
   }
 
   onFiltersReset(): void {
+    this.showCustomDates.set(false);
+    this.dateRange.setCurrentMonth();
     this.store.clearFilters();
   }
 
@@ -633,14 +642,26 @@ export class AnalyticsPage implements OnInit {
   }
 
   onMonthSelect(month: { start: string; end: string }): void {
+    this.showCustomDates.set(false);
     this.dateRange.setMonth(month.start, month.end);
-    this.store.setDateRange(month.start, month.end);
+    const startDate = new Date(month.start + 'T00:00:00Z').toISOString();
+    const endDate = new Date(month.end + 'T23:59:59Z').toISOString();
+    this.store.setDateRange(startDate, endDate);
     this.monthOpen.set(false);
+  }
+
+  toggleCustomDates(): void {
+    const isCustom = !this.showCustomDates();
+    this.showCustomDates.set(isCustom);
+    if (!isCustom) {
+      this.onPeriodChange('1m');
+    }
   }
 
   /** Handle custom date range from header inputs */
   onCustomDateChange({ start, end }: { start: string; end: string }): void {
     if (start && end) {
+      this.dateRange.setMonth(start, end);
       // Convert to UTC ISO strings with proper boundaries
       const startDate = new Date(start + 'T00:00:00Z').toISOString();
       const endDate = new Date(end + 'T23:59:59Z').toISOString();
@@ -736,7 +757,37 @@ export class AnalyticsPage implements OnInit {
     };
   }
 
+  toggleDemoMode(): void {
+    const nextState = !this.demoMode();
+    this.demoMode.set(nextState);
+    if (nextState) {
+      this.applyDemoData();
+      this.toast.info('Modo Captura Activo: Mostrando datos de demostración para screenshot.');
+    } else {
+      const params = this.store.apiParams();
+      this.loadData(params.range, params.bankId, params.type, params.category, params.chartFilterType, params.chartFilterValue);
+      this.toast.info('Modo Captura Desactivado: Restaurando datos reales de tu cuenta.');
+    }
+  }
+
+  private applyDemoData(): void {
+    this.store.setLoading();
+    this.store.setSummary(DEMO_ANALYTICS_DATA.summary);
+    this.store.setMonthlyTrend(DEMO_ANALYTICS_DATA.trend);
+    this.store.setCategoryBreakdown(DEMO_ANALYTICS_DATA.categoryBreakdown);
+    this.store.setDailySpending(DEMO_ANALYTICS_DATA.dailySpending);
+    this.store.setInsights(DEMO_ANALYTICS_DATA.insights.insights);
+    this.store.setTransactions(DEMO_ANALYTICS_DATA.transactions.transactions);
+    this._hourlyData.set(DEMO_ANALYTICS_DATA.hourlyActivity);
+    this._weeklyPatterns.set(DEMO_ANALYTICS_DATA.weeklyPatterns);
+    this.store.setReady();
+  }
+
   private loadData(range?: DateRange, bankId?: string, type?: string, category?: string, chartFilterType?: string, chartFilterValue?: string | number): void {
+    if (this.demoMode()) {
+      this.applyDemoData();
+      return;
+    }
     this.store.setLoading();
 
     // Daily spending range: use the filter range if it spans <= 32 days, otherwise fallback to current week

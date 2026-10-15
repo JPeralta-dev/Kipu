@@ -331,6 +331,36 @@
   color: var(--text-secondary);
 }
 
+.input-wrap {
+  position: relative;
+}
+
+.currency-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: 14px;
+  color: var(--text-tertiary);
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.currency-input {
+  width: 100%;
+  padding-left: 36px;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
 .form-input,
 .form-select {
   padding: 10px 14px;

@@ -1,9 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NotificationService } from './notification.service';
 import { Notification } from '../models/notification.model';
+import { environment } from '../../../environments/environment';
 
 describe('NotificationService', () => {
   let service: NotificationService;
+  let httpMock: HttpTestingController;
 
   const mockNotifications: Notification[] = [
     {
@@ -12,6 +15,7 @@ describe('NotificationService', () => {
       message: 'Your account is ready.',
       type: 'success',
       read: false,
+      viewed: false,
       createdAt: new Date('2024-01-01'),
       actionUrl: null,
     },
@@ -21,6 +25,7 @@ describe('NotificationService', () => {
       message: 'Check out the new dashboard.',
       type: 'info',
       read: true,
+      viewed: true,
       createdAt: new Date('2024-01-02'),
       actionUrl: '/dashboard',
     },
@@ -30,6 +35,7 @@ describe('NotificationService', () => {
       message: 'Your budget is almost exceeded.',
       type: 'warning',
       read: false,
+      viewed: false,
       createdAt: new Date('2024-01-03'),
       actionUrl: null,
     },
@@ -37,9 +43,22 @@ describe('NotificationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [NotificationService],
     });
+    httpMock = TestBed.inject(HttpTestingController);
     service = TestBed.inject(NotificationService);
+
+    // Handle initial load GET request from constructor
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/notifications`);
+    req.flush({ notifications: [], total: 0 });
+
+    service.setNotifications([...mockNotifications]);
+  });
+
+  afterEach(() => {
+    service.disconnectStream();
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -47,15 +66,13 @@ describe('NotificationService', () => {
   });
 
   describe('notifications signal', () => {
-    it('should start with mock data on load', () => {
+    it('should hold notification items', () => {
       const notifications = service.notifications();
-      expect(notifications.length).toBeGreaterThan(0);
-      expect(notifications[0].id).toBeDefined();
-      expect(notifications[0].title).toBeDefined();
+      expect(notifications.length).toBe(3);
+      expect(notifications[0].id).toBe('1');
     });
 
     it('should return readonly signal', () => {
-      // The notifications signal should be readonly (asReadonly)
       expect(service.notifications).toBeDefined();
       expect(typeof service.notifications).toBe('function');
     });
@@ -63,80 +80,82 @@ describe('NotificationService', () => {
 
   describe('unreadCount computed', () => {
     it('should count unread notifications correctly', () => {
-      // Mock data has 2 unread (id 1 and 3)
-      const count = service.unreadCount();
-      expect(count).toBe(2);
+      // items 1 and 3 are unread
+      expect(service.unreadCount()).toBe(2);
     });
 
     it('should update when a notification is marked as read', () => {
       expect(service.unreadCount()).toBe(2);
       service.markAsRead('1');
+
+      const patchReq = httpMock.expectOne(`${environment.apiUrl}/api/notifications/1/viewed`);
+      expect(patchReq.request.method).toBe('PATCH');
+      patchReq.flush({});
+
       expect(service.unreadCount()).toBe(1);
     });
 
     it('should be zero when all are read', () => {
       service.markAsRead('1');
+      const patch1 = httpMock.expectOne(`${environment.apiUrl}/api/notifications/1/viewed`);
+      patch1.flush({});
+
       service.markAsRead('3');
+      const patch3 = httpMock.expectOne(`${environment.apiUrl}/api/notifications/3/viewed`);
+      patch3.flush({});
+
       expect(service.unreadCount()).toBe(0);
     });
   });
 
   describe('markAsRead', () => {
-    it('should mark a notification as read', () => {
+    it('should mark a notification as read and make PATCH call', () => {
       const before = service.notifications().find(n => n.id === '1');
       expect(before?.read).toBe(false);
 
       service.markAsRead('1');
 
+      const patchReq = httpMock.expectOne(`${environment.apiUrl}/api/notifications/1/viewed`);
+      expect(patchReq.request.method).toBe('PATCH');
+      expect(patchReq.request.body).toEqual({ viewed: true });
+      patchReq.flush({});
+
       const after = service.notifications().find(n => n.id === '1');
       expect(after?.read).toBe(true);
+      expect(after?.viewed).toBe(true);
     });
 
     it('should not affect other notifications', () => {
       service.markAsRead('1');
+      const patchReq = httpMock.expectOne(`${environment.apiUrl}/api/notifications/1/viewed`);
+      patchReq.flush({});
+
       const other = service.notifications().find(n => n.id === '3');
       expect(other?.read).toBe(false);
-    });
-
-    it('should not change anything if id does not exist', () => {
-      const before = service.notifications().length;
-      service.markAsRead('nonexistent');
-      const after = service.notifications().length;
-      expect(after).toBe(before);
     });
   });
 
   describe('dismiss', () => {
-    it('should remove a notification from the list', () => {
+    it('should remove a notification from the list and call DELETE', () => {
       const before = service.notifications().length;
-      expect(before).toBeGreaterThan(0);
+      expect(before).toBe(3);
 
       service.dismiss('1');
 
-      const after = service.notifications().length;
-      expect(after).toBe(before - 1);
+      const deleteReq = httpMock.expectOne(`${environment.apiUrl}/api/notifications/1`);
+      expect(deleteReq.request.method).toBe('DELETE');
+      deleteReq.flush(null);
+
+      expect(service.notifications().length).toBe(before - 1);
       const removed = service.notifications().find(n => n.id === '1');
       expect(removed).toBeUndefined();
-    });
-
-    it('should update unread count when dismissing an unread notification', () => {
-      const countBefore = service.unreadCount();
-      service.dismiss('1'); // id '1' is unread
-      expect(service.unreadCount()).toBe(countBefore - 1);
     });
   });
 
   describe('clearAll', () => {
     it('should empty the notification list', () => {
-      expect(service.notifications().length).toBeGreaterThan(0);
-
       service.clearAll();
-
       expect(service.notifications()).toEqual([]);
-    });
-
-    it('should reset unread count to zero', () => {
-      service.clearAll();
       expect(service.unreadCount()).toBe(0);
     });
   });

@@ -27,11 +27,17 @@
             @for (notif of notifications(); track notif.id) {
               <li
                 class="notification-item {{ typeClass(notif.type) }}"
-                [class.notification-item--unread]="!notif.read"
+                [class.notification-item--unread]="!notif.read && !notif.viewed"
+                [class.notification-item--viewed]="notif.read || notif.viewed"
                 (click)="markAsRead(notif)"
               >
                 <div class="notification-item__content">
-                  <span class="notification-item__title">{{ notif.title | translate }}</span>
+                  <div class="notification-item__header-line">
+                    <span class="notification-item__title">{{ notif.title | translate }}</span>
+                    @if (!notif.read && !notif.viewed) {
+                      <span class="notification-item__unread-dot" aria-hidden="true"></span>
+                    }
+                  </div>
                   <span class="notification-item__message">{{ notif.message | translate }}</span>
                 </div>
                 <button

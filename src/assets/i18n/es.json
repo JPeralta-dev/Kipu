@@ -1190,5 +1190,32 @@
       "errorTitle": "Error al cargar canales",
       "errorDesc": "No pudimos cargar la distribución por canal. Intentá de nuevo."
     }
+  },
+  "budgets": {
+    "title": "Presupuestos Mensuales",
+    "subtitle": "Límites de gasto por categoría",
+    "budget": "Presupuesto",
+    "set_budget": "Fijar presupuesto",
+    "edit_budget": "Editar presupuesto",
+    "delete_budget": "Eliminar presupuesto",
+    "limit_amount": "Límite mensual",
+    "alert_threshold": "Umbral de alerta (%)",
+    "alert_threshold_hint": "Te avisaremos cuando alcances este porcentaje de gasto (por defecto 80%).",
+    "saved": "Presupuesto guardado con éxito",
+    "deleted": "Presupuesto eliminado",
+    "save_error": "Error al guardar el presupuesto",
+    "delete_error": "Error al eliminar el presupuesto",
+    "spent_of": "{{spent}} de {{limit}}",
+    "exceeded": "Excedido por {{amount}}",
+    "remaining": "{{amount}} restante",
+    "widget_title": "Presupuesto del Mes",
+    "widget_view_all": "Gestionar límites",
+    "widget_empty_title": "Sin presupuestos activos",
+    "widget_empty_desc": "Definí límites mensuales en tus categorías de gasto para no pasarte este mes.",
+    "widget_empty_cta": "Configurar presupuestos",
+    "widget_total_spent": "Total gastado",
+    "widget_total_limit": "Presupuestado",
+    "confirm_delete_title": "¿Eliminar presupuesto?",
+    "confirm_delete_msg": "¿Seguro que deseas eliminar el límite de presupuesto para esta categoría?"
   }
 }

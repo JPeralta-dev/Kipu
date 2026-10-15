@@ -37,6 +37,7 @@ export class AppComponent implements AfterViewInit {
   private readonly publicRoutes = ['', 'login', 'register'];
 
   readonly showTopbar = signal(false);
+  readonly isLandingRoute = signal(false);
 
   ngAfterViewInit(): void {
     // Boot analytics (idempotent — re-hydrates queue and consent).
@@ -67,9 +68,11 @@ export class AppComponent implements AfterViewInit {
   }
 
   private updateShellVisibility(): void {
-    const currentUrl = this.router.url.split('?')[0].split('#')[0];
+    const rawUrl = this.router.url.split('?')[0].split('#')[0];
+    const currentUrl = rawUrl.replace(/^\//, '');
     const isPublicRoute = this.publicRoutes.includes(currentUrl);
     this.showTopbar.set(!isPublicRoute && this.authService.isAuthenticated());
+    this.isLandingRoute.set(currentUrl === '');
   }
 
   @HostListener('document:keydown', ['$event'])

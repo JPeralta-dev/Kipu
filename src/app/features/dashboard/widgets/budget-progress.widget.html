@@ -1,0 +1,110 @@
+<div class="budget-progress-widget" role="region" aria-labelledby="budgets-title">
+  <!-- Header -->
+  <div class="budget-progress-widget__header">
+    <h2 class="budget-progress-widget__title" id="budgets-title">
+      <span class="budget-progress-widget__icon">
+        <ng-icon name="wallet" size="1.25rem" />
+      </span>
+      <span>{{ 'budgets.widget_title' | translate }}</span>
+    </h2>
+    <a routerLink="/categories" class="budget-progress-widget__link">
+      {{ 'budgets.widget_view_all' | translate }} →
+    </a>
+  </div>
+
+  @switch (state()) {
+    @case ('loading') {
+      <div class="budget-progress-widget__skeleton">
+        @for (_ of [1, 2]; track $index) {
+          <div class="skeleton-budget">
+            <div class="skeleton-budget__header">
+              <div class="skeleton-budget__name"></div>
+              <div class="skeleton-budget__percent"></div>
+            </div>
+            <div class="skeleton-budget__bar"></div>
+          </div>
+        }
+      </div>
+    }
+
+    @case ('empty') {
+      <div class="budget-progress-widget__empty">
+        <span class="budget-progress-widget__empty-icon">
+          <ng-icon name="categories" size="1.75rem" />
+        </span>
+        <h3 class="budget-progress-widget__empty-title">
+          {{ 'budgets.widget_empty_title' | translate }}
+        </h3>
+        <p class="budget-progress-widget__empty-text">
+          {{ 'budgets.widget_empty_desc' | translate }}
+        </p>
+        <a routerLink="/categories" class="budget-progress-widget__empty-btn">
+          {{ 'budgets.widget_empty_cta' | translate }}
+        </a>
+      </div>
+    }
+
+    @case ('error') {
+      <div class="budget-progress-widget__empty">
+        <span class="budget-progress-widget__empty-icon">
+          <ng-icon name="warning" size="1.75rem" />
+        </span>
+        <p class="budget-progress-widget__empty-text">
+          {{ 'common.error' | translate }}
+        </p>
+      </div>
+    }
+
+    @case ('ready') {
+      <!-- Overall summary bar -->
+      <div class="budget-summary-banner">
+        <div class="budget-summary-banner__info">
+          <span class="budget-summary-banner__label">{{ 'budgets.widget_total_spent' | translate }}</span>
+          <span class="budget-summary-banner__values">
+            <strong>{{ totalSpent() | ftCurrency:'short' }}</strong>
+            <span class="budget-summary-banner__separator">/</span>
+            <span>{{ totalBudgeted() | ftCurrency:'short' }}</span>
+          </span>
+        </div>
+        <span class="budget-summary-banner__pct" [class.budget-summary-banner__pct--danger]="overallPercentage() > 100">
+          {{ overallPercentage() }}%
+        </span>
+      </div>
+
+      <!-- Top budgets list -->
+      <div class="budget-progress-widget__list">
+        @for (b of displayBudgets(); track b.id) {
+          <div class="budget-row" [class.budget-row--exceeded]="isExceeded(b)" [class.budget-row--warning]="isWarning(b)">
+            <div class="budget-row__info">
+              <div class="budget-row__title-wrap">
+                @if (b.category?.color) {
+                  <span class="budget-row__cat-dot" [style.background]="b.category?.color"></span>
+                }
+                <span class="budget-row__name">{{ (b.category?.name || b.categoryName || 'Categoría') | categoryTranslate }}</span>
+              </div>
+              <div class="budget-row__meta">
+                <span class="budget-row__amounts">
+                  {{ (b.spending?.spent || 0) | ftCurrency:'short' }} / {{ b.limitAmount | ftCurrency:'short' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="budget-row__right">
+              <span class="budget-row__percent" [class.budget-row__percent--danger]="isExceeded(b)" [class.budget-row__percent--warning]="isWarning(b)">
+                {{ progress(b) }}%
+              </span>
+              <div class="budget-row__bar">
+                <div
+                  class="budget-row__bar-fill"
+                  [style.width.%]="progress(b) > 100 ? 100 : progress(b)"
+                  [class.budget-row__bar-fill--danger]="isExceeded(b)"
+                  [class.budget-row__bar-fill--warning]="isWarning(b)"
+                ></div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

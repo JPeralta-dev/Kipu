@@ -45,11 +45,7 @@ export class FtNumberFormatDirective implements OnInit {
     const input = event.target as HTMLInputElement;
     const raw = this.parseInput(input.value);
 
-    if (raw !== null) {
-      this.ngControl.control?.setValue(raw, { emitModelToViewChange: false });
-    } else {
-      this.ngControl.control?.setValue(null, { emitModelToViewChange: false });
-    }
+    this.updateControlValue(raw);
   }
 
   @HostListener('keydown', ['$event'])
@@ -124,10 +120,17 @@ export class FtNumberFormatDirective implements OnInit {
 
     if (raw !== null && raw > 0) {
       this.setDisplayValue(this.formatNumber(raw));
-      this.ngControl.control?.setValue(raw, { emitModelToViewChange: false });
+      this.updateControlValue(raw);
     } else {
       this.setDisplayValue('');
-      this.ngControl.control?.setValue(null, { emitModelToViewChange: false });
+      this.updateControlValue(null);
+    }
+  }
+
+  private updateControlValue(raw: number | null): void {
+    this.ngControl.control?.setValue(raw, { emitModelToViewChange: false });
+    if ('viewToModelUpdate' in this.ngControl && typeof (this.ngControl as any).viewToModelUpdate === 'function') {
+      (this.ngControl as any).viewToModelUpdate(raw);
     }
   }
 

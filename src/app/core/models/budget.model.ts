@@ -1,35 +1,50 @@
+export interface BudgetCategorySummary {
+  id: string;
+  name: string;
+  icon?: string;
+  color?: string;
+}
+
+export interface BudgetSpending {
+  spent: number;
+  limitAmount: number;
+  remaining: number;
+  percentageUsed: number;
+}
+
 export interface Budget {
   id: string;
   userId: string;
   categoryId: string;
+  category?: BudgetCategorySummary;
   categoryName?: string;
-  monthlyLimit: number;
+  limitAmount: number;
+  period?: 'monthly' | 'weekly';
   alertThreshold: number;
-  spentThisMonth: number;
-  periodStart: string;
+  spending?: BudgetSpending;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface CreateBudgetDto {
   categoryId: string;
-  monthlyLimit: number;
+  limitAmount: number;
+  period?: 'monthly' | 'weekly';
   alertThreshold?: number;
 }
 
 export interface UpdateBudgetDto {
-  monthlyLimit?: number;
+  limitAmount?: number;
   alertThreshold?: number;
 }
 
 export interface BudgetAlert {
-  id: string;
   budgetId: string;
   categoryId: string;
-  categoryName?: string;
-  spentAmount: number;
+  category?: BudgetCategorySummary;
   limitAmount: number;
-  thresholdPercent: number;
-  currentPercent: number;
+  spent: number;
+  percentageUsed: number;
+  alertThreshold: number;
   message: string;
-  createdAt: string;
 }

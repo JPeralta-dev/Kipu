@@ -196,6 +196,49 @@
                   </div>
                   <span class="cat-pct">{{ categoryPercentage(cat) | number: '1.0-0' }}% {{ 'categories.of_expense_total' | translate }}</span>
 
+                  <!-- Budget Integration -->
+                  @if (getCategoryBudget(cat.id); as b) {
+                    <div class="cat-budget" [class.cat-budget--warning]="isBudgetWarning(b)" [class.cat-budget--exceeded]="isBudgetExceeded(b)">
+                      <div class="cat-budget__header">
+                        <span class="cat-budget__title">
+                          <ng-icon name="wallet" size="0.75rem" />
+                          <span>{{ 'budgets.budget' | translate }}</span>
+                        </span>
+                        <div class="cat-budget__header-actions">
+                          <span class="cat-budget__pct">{{ getBudgetPercentage(b) }}%</span>
+                          <button type="button" class="btn-budget-edit" (click)="openBudgetModal(cat)" [attr.aria-label]="'budgets.edit_budget' | translate" [title]="'budgets.edit_budget' | translate">
+                            <ng-icon name="edit" size="0.75rem" />
+                          </button>
+                        </div>
+                      </div>
+                      <div class="cat-budget__bar">
+                        <div
+                          class="cat-budget__fill"
+                          [style.width.%]="getBudgetPercentage(b) > 100 ? 100 : getBudgetPercentage(b)"
+                        ></div>
+                      </div>
+                      <div class="cat-budget__amounts">
+                        <span>{{ getBudgetSpent(b, cat.total || 0) | ftCurrency:'short' }} / {{ b.limitAmount | ftCurrency:'short' }}</span>
+                      </div>
+                      @if (isBudgetExceeded(b)) {
+                        <span class="cat-budget__badge cat-budget__badge--danger">
+                          <ng-icon name="warning" size="0.65rem" />
+                          {{ 'budgets.exceeded' | translate: { amount: (getExceededAmount(b, cat.total || 0) | ftCurrency:'short') } }}
+                        </span>
+                      } @else if (isBudgetWarning(b)) {
+                        <span class="cat-budget__badge cat-budget__badge--warning">
+                          <ng-icon name="warning" size="0.65rem" />
+                          {{ 'budgets.remaining' | translate: { amount: (getRemainingBudget(b, cat.total || 0) | ftCurrency:'short') } }}
+                        </span>
+                      }
+                    </div>
+                  } @else {
+                    <button type="button" class="btn-budget-assign" (click)="openBudgetModal(cat)">
+                      <ng-icon name="plus" size="0.75rem" />
+                      <span>{{ 'budgets.set_budget' | translate }}</span>
+                    </button>
+                  }
+
                   <!-- Link -->
                   <a
                     [routerLink]="['/transactions']"
@@ -373,3 +416,102 @@
   (confirm)="onConfirmDelete()"
   (cancel)="onCancelDelete()"
 />
+
+<!-- Budget Config Modal -->
+<ft-modal
+  [open]="budgetModalOpen()"
+  [size]="'sm'"
+  [headerTitle]="(existingBudgetForModal() ? 'budgets.edit_budget' : 'budgets.set_budget') | translate"
+  (closed)="closeBudgetModal()"
+>
+  <div modalBody class="budget-modal-body">
+    @if (budgetCategory(); as cat) {
+      <div class="budget-modal-category">
+        <div class="cat-icon-wrap" [style.background]="cat.color + '22'">
+          <span class="cat-icon">{{ categoryMark(cat.name) }}</span>
+        </div>
+        <div>
+          <h3 class="budget-modal-category__name">{{ cat.name | categoryTranslate }}</h3>
+          <p class="budget-modal-category__spent">
+            {{ 'budgets.widget_total_spent' | translate }}: <strong>{{ (cat.total || 0) | ftCurrency:'short' }}</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="budget-modal-field">
+        <label for="budgetLimitInput" class="budget-modal-label">
+          {{ 'budgets.limit_amount' | translate }}
+        </label>
+        <div class="budget-input-wrapper">
+          <input
+            id="budgetLimitInput"
+            type="number"
+            min="1"
+            step="1000"
+            class="budget-modal-input"
+            placeholder="0"
+            [ngModel]="budgetAmount()"
+            (ngModelChange)="budgetAmount.set($event)"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="budget-modal-field">
+        <div class="budget-threshold-header">
+          <label for="budgetThresholdInput" class="budget-modal-label">
+            {{ 'budgets.alert_threshold' | translate }}
+          </label>
+          <span class="budget-threshold-val">{{ budgetThreshold() }}%</span>
+        </div>
+        <input
+          id="budgetThresholdInput"
+          type="range"
+          min="50"
+          max="100"
+          step="5"
+          class="budget-range-input"
+          [ngModel]="budgetThreshold()"
+          (ngModelChange)="budgetThreshold.set($event)"
+        />
+        <p class="budget-modal-hint">{{ 'budgets.alert_threshold_hint' | translate }}</p>
+      </div>
+    }
+  </div>
+
+  <div modalFooter class="budget-modal-footer">
+    @if (existingBudgetForModal()) {
+      <button
+        type="button"
+        class="btn-budget-delete"
+        [disabled]="budgetSaving()"
+        (click)="deleteBudget()"
+      >
+        <ng-icon name="close" size="0.875rem" />
+        <span>{{ 'budgets.delete_budget' | translate }}</span>
+      </button>
+    }
+    <div class="budget-modal-footer__right">
+      <button
+        type="button"
+        class="btn-budget-cancel"
+        [disabled]="budgetSaving()"
+        (click)="closeBudgetModal()"
+      >
+        {{ 'common.cancel' | translate }}
+      </button>
+      <button
+        type="button"
+        class="btn-budget-save"
+        [disabled]="budgetSaving() || !budgetAmount() || budgetAmount()! <= 0"
+        (click)="saveBudget()"
+      >
+        @if (budgetSaving()) {
+          <span>{{ 'common.loading' | translate }}</span>
+        } @else {
+          <span>{{ 'common.save' | translate }}</span>
+        }
+      </button>
+    </div>
+  </div>
+</ft-modal>

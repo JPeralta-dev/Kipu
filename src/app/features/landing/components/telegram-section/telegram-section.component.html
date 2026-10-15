@@ -1,31 +1,71 @@
 <section class="telegram-section">
   <div class="telegram-section__inner">
+    <!-- Left Column: Content & 3 Registration Methods -->
     <div class="telegram-section__content" ftSubtleReveal="fade-up" [delay]="100">
       <div class="telegram-section__badge">
-        <img src="/assets/kipu-mark.png" alt="Kipu" class="telegram-section__badge-icon" />
-        {{ 'landing.telegram_section.badge' | translate }}
+        <ng-icon name="telegram" size="1.05rem" class="telegram-section__badge-icon" />
+        <span>TRES FORMAS DE REGISTRAR · TU DINERO A TU MANERA</span>
       </div>
-      <h2 class="telegram-section__title" [innerHTML]="'landing.telegram_section.title' | translate"></h2>
+
+      <h2 class="telegram-section__title">
+        Añade tus movimientos como prefieras.<br />
+        <span class="telegram-section__title-gradient">Registra en 3 segundos.</span>
+      </h2>
+
       <p class="telegram-section__description">
-        {{ 'landing.telegram_section.description' | translate }}
+        No tienes que cambiar tus hábitos: Kipu se adapta a ti. Ya sea chateando por Telegram, con un toque rápido en la app o importando tu extracto bancario con total privacidad.
       </p>
-      <div class="telegram-section__action-container">
-        <div class="telegram-section__hint">
-          <ng-icon name="telegram" size="1.25rem" class="telegram-section__hint-icon" />
-          <span>{{ 'landing.telegram_section.account_hint' | translate }}</span>
-        </div>
-        <a routerLink="/register" class="telegram-section__btn">
-          {{ 'landing.telegram_section.get_started' | translate }}
+
+      <!-- 3 Methods List -->
+      <div class="registration-methods">
+        @for (method of methods; track method.id; let i = $index) {
+          <div
+            class="method-card"
+            [class.method-card--active]="activeMethod() === i"
+            (click)="activeMethod.set(i)"
+            (mouseenter)="activeMethod.set(i)"
+            role="button"
+            tabindex="0"
+          >
+            <div class="method-card__icon-wrap">
+              <ng-icon [name]="method.icon" size="1.2rem" />
+            </div>
+
+            <div class="method-card__body">
+              <div class="method-card__header">
+                <h3 class="method-card__title">{{ method.title }}</h3>
+                @if (method.badge) {
+                  <span class="method-card__badge">{{ method.badge }}</span>
+                }
+              </div>
+              <p class="method-card__desc">{{ method.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="telegram-section__actions">
+        <a [href]="telegramBotUrl" target="_blank" rel="noopener noreferrer" class="telegram-section__btn-telegram">
+          <ng-icon name="telegram" size="1.2rem" />
+          <span>Abrir Bot en Telegram</span>
+        </a>
+
+        <a routerLink="/register" class="telegram-section__btn-app">
+          <span>Crear cuenta gratis</span>
           <ng-icon name="chevronRight" size="1rem" />
         </a>
       </div>
     </div>
+
+    <!-- Right Column: Real Device Phone Mockup -->
     <div class="telegram-section__visual" ftSubtleReveal="fade-up" [delay]="200">
-      <div class="device-mockup">
+      <div class="device-frame">
+        <div class="device-frame__glow"></div>
         <img
           src="/assets/device-mockup_1.5x_postspark_2026-09-04_15-09-00.png"
-          alt="KipuBot en Telegram"
-          class="device-mockup__image"
+          alt="KipuBot interactuando en Telegram"
+          class="device-frame__image"
           fetchpriority="high"
           decoding="async"
         />

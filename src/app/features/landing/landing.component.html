@@ -13,38 +13,16 @@
     <!-- Hero Section -->
     <ft-hero-section />
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-      <div class="features__inner">
-        <div class="features__header" ftSubtleReveal="per-word-crossfade" [delay]="200">
-          <h2 class="features__title">{{ 'landing.features.title' | translate }}</h2>
-          <button class="features__toggle" (click)="showAllFeatures.set(!showAllFeatures())">
-            {{ showAllFeatures() ? ('landing.features.show_less' | translate) : ('landing.features.view_all' | translate) }}
-            <ng-icon name="chevronRight" size="0.875rem" class="features__toggle-icon" [class.features__toggle-icon--open]="showAllFeatures()" />
-          </button>
-        </div>
-        <div class="features__grid" [class.features__grid--expanded]="showAllFeatures()">
-          @for (feature of features; track feature.title; let i = $index) {
-            <ft-feature-card
-              [icon]="feature.icon"
-              [title]="feature.title | translate"
-              [description]="feature.description | translate"
-              ftSubtleReveal="fade-up"
-              [delay]="300 + (i * 100)"
-              [class.features__hidden]="i >= 4 && !showAllFeatures()"
-            />
-          }
-        </div>
-      </div>
-    </section>
+    <!-- Quipu Braiding Scroll Experience (Authentic Andean Differentiator) -->
+    <ft-quipu-braid />
 
-    <!-- Telegram Section -->
+    <!-- Product Showcase (Budgets, Goals, Insights, 3-Way Logging) -->
+    <ft-product-showcase />
+
+    <!-- Registration Methods & Telegram Flagship Section -->
     <section id="telegram" class="telegram-wrapper">
       <div class="telegram-wrapper__inner">
-        <div class="telegram-wrapper__header" ftSubtleReveal="per-word-crossfade" [delay]="200">
-          <h2 class="telegram-wrapper__title">{{ 'landing.telegram.title' | translate }}</h2>
-        </div>
-        <ft-telegram-section ftSubtleReveal="micro-scale-fade" [delay]="400" />
+        <ft-telegram-section />
       </div>
     </section>
 
@@ -54,11 +32,6 @@
         <ft-comparison-table [rows]="comparisonRows" />
       </section>
     }
-
-    <!-- Testimonials -->
-    <section class="testimonials-wrapper">
-      <ft-testimonials [items]="testimonials" />
-    </section>
 
     <!-- FAQ -->
     <section class="faq-wrapper">

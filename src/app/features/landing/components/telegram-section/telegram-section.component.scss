@@ -313,3 +313,112 @@
     }
   }
 }
+
+
+/* ─── Light Mode Overrides ─────────────────────────────────────── */
+:host-context(html.light),
+:host-context(.theme-light) {
+  .telegram-section {
+    color: #2E1065;
+
+    &__inner {
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.94) 0%, rgba(240, 249, 255, 0.98) 100%);
+      border: 1px solid rgba(14, 165, 233, 0.2);
+      box-shadow: 0 20px 50px -15px rgba(2, 132, 199, 0.12),
+                  inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    }
+
+    &__badge {
+      background: rgba(14, 165, 233, 0.1);
+      border-color: rgba(14, 165, 233, 0.25);
+      color: #0284C7;
+
+      &-icon {
+        color: #0284C7;
+      }
+    }
+
+    &__title {
+      color: #0C4A6E;
+
+      &-gradient {
+        background: linear-gradient(135deg, #0C4A6E 20%, #0284C7 70%, #0369A1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    &__description {
+      color: #475569;
+    }
+
+    .method-card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(14, 165, 233, 0.12);
+
+      &:hover {
+        background: #FFFFFF;
+        border-color: rgba(14, 165, 233, 0.3);
+      }
+
+      &--active {
+        background: linear-gradient(135deg, rgba(224, 242, 254, 0.8) 0%, rgba(255, 255, 255, 0.95) 100%);
+        border-color: rgba(14, 165, 233, 0.45);
+        box-shadow: 0 10px 24px -6px rgba(2, 132, 199, 0.14);
+
+        .method-card__icon-wrap {
+          background: rgba(14, 165, 233, 0.15);
+          border-color: rgba(14, 165, 233, 0.35);
+          color: #0284C7;
+        }
+
+        .method-card__title {
+          color: #0C4A6E;
+        }
+
+        .method-card__desc {
+          color: #334155;
+        }
+      }
+
+      &__icon-wrap {
+        background: rgba(14, 165, 233, 0.08);
+        border: 1px solid rgba(14, 165, 233, 0.18);
+        color: #0284C7;
+      }
+
+      &__title {
+        color: #1E293B;
+      }
+
+      &__badge {
+        background: rgba(14, 165, 233, 0.15);
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        color: #0284C7;
+      }
+
+      &__desc {
+        color: #64748B;
+      }
+    }
+
+    &__btn-app {
+      background: #FFFFFF;
+      border: 1px solid rgba(14, 165, 233, 0.25);
+      color: #0284C7;
+
+      &:hover {
+        background: rgba(224, 242, 254, 0.4);
+        border-color: rgba(14, 165, 233, 0.45);
+      }
+    }
+
+    .device-frame__glow {
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.16) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 75%);
+    }
+
+    .device-frame__image {
+      filter: drop-shadow(0 20px 36px rgba(2, 132, 199, 0.18));
+    }
+  }
+}

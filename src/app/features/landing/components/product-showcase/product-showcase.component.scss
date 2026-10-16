@@ -647,3 +647,265 @@
     }
   }
 }
+
+
+/* ─── Light Mode Overrides (Luminous Frosted Lilac & Royal Plum) ──── */
+:host-context(html.light),
+:host-context(.theme-light) {
+  .showcase {
+    color: #2E1065;
+
+    &__badge {
+      background: rgba(124, 58, 237, 0.08);
+      border-color: rgba(124, 58, 237, 0.22);
+      color: #7C3AED;
+
+      &-dot {
+        background: #7C3AED;
+        box-shadow: 0 0 8px rgba(124, 58, 237, 0.5);
+      }
+    }
+
+    &__title {
+      color: #2E1065;
+
+      &-gradient {
+        background: linear-gradient(135deg, #2E1065 20%, #7C3AED 70%, #9333EA 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    &__subtitle {
+      color: #4B5563;
+    }
+  }
+
+  .deck-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 245, 254, 0.98) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.16);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.95) inset,
+      0 -10px 25px -5px rgba(139, 92, 246, 0.06),
+      0 20px 45px -10px rgba(92, 40, 145, 0.12);
+
+    &--01 {
+      --card-tint: 124, 58, 237;
+      --card-accent-border: rgba(124, 58, 237, 0.3);
+    }
+
+    &--02 {
+      --card-tint: 217, 119, 6;
+      --card-accent-border: rgba(217, 119, 6, 0.3);
+    }
+
+    &--03 {
+      --card-tint: 13, 148, 136;
+      --card-accent-border: rgba(13, 148, 136, 0.3);
+    }
+
+    &__glow {
+      background: radial-gradient(ellipse 65% 80% at 50% -20%, rgba(var(--card-tint), 0.1), transparent 70%);
+    }
+
+    &__number {
+      background: rgba(var(--card-tint), 0.1);
+      border-color: rgba(var(--card-tint), 0.3);
+      color: rgb(var(--card-tint));
+      box-shadow: none;
+    }
+
+    &__tag-kicker {
+      color: #6B7280;
+    }
+
+    &__title {
+      color: #2E1065;
+    }
+
+    &__desc {
+      color: #4B5563;
+    }
+
+    &__quote {
+      background: rgba(139, 92, 246, 0.04);
+      border: 1px solid rgba(139, 92, 246, 0.12);
+      color: #374151;
+    }
+  }
+
+  .deck-highlight {
+    color: #374151;
+  }
+
+  .deck-stat {
+    background: rgba(139, 92, 246, 0.04);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+
+    &__value {
+      color: #059669;
+    }
+
+    &__label {
+      color: #6B7280;
+    }
+  }
+
+  .widget-card {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(139, 92, 246, 0.14);
+    box-shadow: 0 12px 32px rgba(92, 40, 145, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    &__top {
+      border-bottom-color: rgba(139, 92, 246, 0.08);
+    }
+
+    &__badge-month {
+      color: #6B7280;
+    }
+
+    &__headline {
+      color: #2E1065;
+    }
+
+    &__pill {
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+      border-color: rgba(16, 185, 129, 0.25);
+
+      &--gold {
+        background: rgba(245, 158, 11, 0.12);
+        color: #D97706;
+        border-color: rgba(245, 158, 11, 0.25);
+      }
+    }
+  }
+
+  .budget-item {
+    background: rgba(248, 245, 254, 0.7);
+    border: 1px solid rgba(139, 92, 246, 0.08);
+
+    &:hover {
+      background: rgba(243, 238, 253, 0.9);
+      border-color: rgba(139, 92, 246, 0.16);
+    }
+
+    &__icon-wrap {
+      background: rgba(124, 58, 237, 0.1);
+      border-color: rgba(124, 58, 237, 0.2);
+      color: #7C3AED;
+    }
+
+    &__name {
+      color: #1F2937;
+    }
+
+    &__amounts {
+      color: #6B7280;
+
+      strong {
+        color: #2E1065;
+      }
+    }
+  }
+
+  .budget-progress {
+    background: rgba(139, 92, 246, 0.1);
+
+    &__bar {
+      background: linear-gradient(90deg, #7C3AED, #A855F7);
+
+      &--exceeded {
+        background: linear-gradient(90deg, #EF4444, #DC2626);
+      }
+    }
+  }
+
+  .budget-status {
+    &--ok {
+      color: #059669;
+    }
+
+    &--danger {
+      color: #DC2626;
+    }
+
+    &__pct {
+      color: #6B7280;
+    }
+  }
+
+  .goal-item {
+    background: rgba(248, 245, 254, 0.7);
+    border: 1px solid rgba(139, 92, 246, 0.08);
+
+    &:hover {
+      background: rgba(243, 238, 253, 0.9);
+      border-color: rgba(139, 92, 246, 0.16);
+    }
+
+    &__icon-wrap {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: rgba(139, 92, 246, 0.16);
+    }
+
+    &__title {
+      color: #1F2937;
+    }
+
+    &__meta {
+      color: #6B7280;
+    }
+
+    &__footer {
+      color: #6B7280;
+
+      strong {
+        color: #2E1065;
+      }
+    }
+  }
+
+  .goal-bar {
+    background: rgba(139, 92, 246, 0.1);
+  }
+
+  .insight-bubble {
+    background: rgba(248, 245, 254, 0.7);
+    border: 1px solid rgba(139, 92, 246, 0.08);
+
+    &:hover {
+      background: rgba(243, 238, 253, 0.9);
+      border-color: rgba(139, 92, 246, 0.16);
+    }
+
+    &--highlight {
+      background: rgba(124, 58, 237, 0.06);
+      border-color: rgba(124, 58, 237, 0.2);
+
+      .insight-bubble__icon {
+        background: rgba(124, 58, 237, 0.15);
+        color: #7C3AED;
+        border-color: rgba(124, 58, 237, 0.3);
+      }
+    }
+
+    &__icon {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: rgba(139, 92, 246, 0.15);
+      color: #7C3AED;
+    }
+
+    &__title {
+      color: #2E1065;
+    }
+
+    &__body {
+      color: #4B5563;
+
+      strong {
+        color: #2E1065;
+      }
+    }
+  }
+}

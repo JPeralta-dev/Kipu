@@ -331,3 +331,30 @@
     font-size: 14px;
   }
 }
+
+
+/* Light Mode Overrides */
+:host-context(html.light),
+:host-context(.theme-light) {
+  .hero-visual__product-shot {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(248, 245, 254, 0.95) 42%,
+      rgba(235, 213, 242, 0.6)
+    );
+    border: 1px solid rgba(139, 92, 246, 0.18);
+    box-shadow:
+      0 20px 45px rgba(92, 40, 145, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    &::after {
+      background: rgba(167, 139, 250, 0.25);
+      filter: blur(48px);
+    }
+
+    img {
+      box-shadow: 0 16px 36px rgba(92, 40, 145, 0.15);
+    }
+  }
+}

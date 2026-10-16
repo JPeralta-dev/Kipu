@@ -18,7 +18,7 @@ export class PublicNavbarComponent {
   readonly themeService = inject(ThemeService);
   readonly mobileMenuOpen = signal(false);
 
-  toggleTheme(): void {
-    this.themeService.toggleTheme();
+  toggleTheme(event?: MouseEvent): void {
+    this.themeService.toggleTheme(event);
   }
 }

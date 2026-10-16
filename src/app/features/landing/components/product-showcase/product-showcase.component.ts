@@ -1,9 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
-
-export type ShowcaseTab = 'budgets' | 'goals' | 'insights';
 
 export interface BudgetPreview {
   category: string;
@@ -31,8 +29,6 @@ export interface GoalPreview {
   styleUrl: './product-showcase.component.scss',
 })
 export class ProductShowcaseComponent {
-  readonly activeTab = signal<ShowcaseTab>('budgets');
-
   readonly budgets: BudgetPreview[] = [
     {
       category: 'Alimentación & Supermercado',

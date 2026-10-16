@@ -1,80 +1,57 @@
 <section id="features" class="showcase">
   <div class="showcase__inner">
-    <!-- Header -->
+    <!-- Section Header -->
     <div class="showcase__header">
       <div class="showcase__badge">
         <span class="showcase__badge-dot"></span>
-        <span>ORGANIZA Y PLANIFICA · SIN AGOBIOS</span>
+        <span>CONTROL & CLARIDAD TOTAL</span>
       </div>
       <h2 class="showcase__title">
         Todo lo que necesitas para<br />
         <span class="showcase__title-gradient">entender de verdad tu dinero.</span>
       </h2>
       <p class="showcase__subtitle">
-        Presupuestos claros, metas que inspiran y análisis inteligente. Todo diseñado para darte paz mental sin publicidad y sin pedirte tus claves bancarias.
+        Presupuestos en tiempo real, metas de ahorro que inspiran e inteligencia analítica privada. Todo diseñado para darte paz mental sin publicidad y sin pedirte tus claves bancarias.
       </p>
     </div>
 
-    <!-- Segmented Navigation Pills -->
-    <div class="showcase__tabs" role="tablist">
-      <button
-        class="showcase__tab"
-        [class.showcase__tab--active]="activeTab() === 'budgets'"
-        (click)="activeTab.set('budgets')"
-        role="tab"
-        [attr.aria-selected]="activeTab() === 'budgets'"
-      >
-        <ng-icon name="chart" size="1rem" class="showcase__tab-icon" />
-        <span>Límites & Presupuestos</span>
-      </button>
+    <!-- Sticky Stacking Cards Deck (01, 02, 03) -->
+    <div class="showcase__deck">
+      <!-- 01 · LÍMITES & PRESUPUESTOS -->
+      <article class="deck-card deck-card--01" style="--card-index: 0">
+        <div class="deck-card__glow"></div>
+        <div class="deck-card__grid">
+          <!-- Editorial Storytelling -->
+          <div class="deck-card__narrative">
+            <div class="deck-card__tag">
+              <span class="deck-card__number">01</span>
+              <span class="deck-card__tag-kicker">CONTROL PROACTIVO</span>
+            </div>
 
-      <button
-        class="showcase__tab"
-        [class.showcase__tab--active]="activeTab() === 'goals'"
-        (click)="activeTab.set('goals')"
-        role="tab"
-        [attr.aria-selected]="activeTab() === 'goals'"
-      >
-        <ng-icon name="goals" size="1rem" class="showcase__tab-icon" />
-        <span>Metas de Ahorro</span>
-      </button>
+            <h3 class="deck-card__title">Límites antes de pasarte</h3>
 
-      <button
-        class="showcase__tab"
-        [class.showcase__tab--active]="activeTab() === 'insights'"
-        (click)="activeTab.set('insights')"
-        role="tab"
-        [attr.aria-selected]="activeTab() === 'insights'"
-      >
-        <ng-icon name="insights" size="1rem" class="showcase__tab-icon" />
-        <span>Insights Inteligentes</span>
-      </button>
-    </div>
-
-    <!-- Tab Panels Container -->
-    <div class="showcase__stage">
-      <!-- 1. TAB: BUDGETS -->
-      @if (activeTab() === 'budgets') {
-        <div class="showcase-panel showcase-panel--budgets">
-          <div class="showcase-panel__text">
-            <span class="showcase-panel__tag">Control Proactivo</span>
-            <h3 class="showcase-panel__heading">Define límites por categoría y sabe cuánto te queda en un segundo.</h3>
-            <p class="showcase-panel__desc">
-              Kipu calcula automáticamente el ritmo de tus gastos. Te acompaña con alertas suaves y colores intuitivos antes de que te pases del presupuesto mensual.
+            <p class="deck-card__desc">
+              Define presupuestos mensuales por categoría y sabe cuánto te queda en un segundo. Alertas suaves y visuales te avisan con anticipación para que nunca más te sorprendas a fin de mes.
             </p>
-            <div class="showcase-panel__stats">
-              <div class="showcase-stat">
-                <span class="showcase-stat__value">100%</span>
-                <span class="showcase-stat__label">Personalizable</span>
+
+            <div class="deck-card__highlights">
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>100% Personalizable por categorías</span>
               </div>
-              <div class="showcase-stat">
-                <span class="showcase-stat__value">0</span>
-                <span class="showcase-stat__label">Cálculos manuales</span>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>0 Cálculos manuales o estimaciones a ciegas</span>
+              </div>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Alertas preventivas antes de excederte</span>
               </div>
             </div>
           </div>
 
-          <div class="showcase-panel__widget">
+          <!-- Micro-UI Widget: Budgets -->
+          <div class="deck-card__widget">
             <div class="widget-card">
               <div class="widget-card__top">
                 <div class="widget-card__title-wrap">
@@ -128,23 +105,44 @@
             </div>
           </div>
         </div>
-      }
+      </article>
 
-      <!-- 2. TAB: GOALS -->
-      @if (activeTab() === 'goals') {
-        <div class="showcase-panel showcase-panel--goals">
-          <div class="showcase-panel__text">
-            <span class="showcase-panel__tag">Visión a Futuro</span>
-            <h3 class="showcase-panel__heading">Ahorrar deja de ser un sacrificio y se vuelve un mapa medible.</h3>
-            <p class="showcase-panel__desc">
-              Cada meta tiene su propio destino. Visualiza cómo cada aporte te acerca a tu fondo de emergencia, tu viaje soñado o tu próxima inversión.
+      <!-- 02 · METAS DE AHORRO -->
+      <article class="deck-card deck-card--02" style="--card-index: 1">
+        <div class="deck-card__glow"></div>
+        <div class="deck-card__grid">
+          <!-- Editorial Storytelling -->
+          <div class="deck-card__narrative">
+            <div class="deck-card__tag">
+              <span class="deck-card__number">02</span>
+              <span class="deck-card__tag-kicker">VISIÓN A FUTURO</span>
+            </div>
+
+            <h3 class="deck-card__title">Metas de ahorro que inspiran</h3>
+
+            <p class="deck-card__desc">
+              Ahorrar deja de ser un sacrificio y se vuelve un mapa tangible. Visualiza cómo cada aporte te acerca a tu fondo de tranquilidad, viajes o inversiones con fechas estimadas reales.
             </p>
-            <div class="showcase-panel__quote">
-              <em>"Ver el progreso de mis metas me quitó la ansiedad de no saber a dónde iba mi sueldo."</em>
+
+            <div class="deck-card__highlights">
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Ritmo y proyección de fechas en tiempo real</span>
+              </div>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Asignación de aportes sin mezclar tus gastos diarios</span>
+              </div>
+            </div>
+
+            <div class="deck-card__quote">
+              <ng-icon name="star" size="0.95rem" class="deck-card__quote-star" />
+              <em>&ldquo;Ver el progreso de mis metas me quitó la ansiedad de no saber a dónde iba mi dinero.&rdquo;</em>
             </div>
           </div>
 
-          <div class="showcase-panel__widget">
+          <!-- Micro-UI Widget: Goals -->
+          <div class="deck-card__widget">
             <div class="widget-card">
               <div class="widget-card__top">
                 <div class="widget-card__title-wrap">
@@ -190,30 +188,50 @@
             </div>
           </div>
         </div>
-      }
+      </article>
 
-      <!-- 3. TAB: INSIGHTS -->
-      @if (activeTab() === 'insights') {
-        <div class="showcase-panel showcase-panel--insights">
-          <div class="showcase-panel__text">
-            <span class="showcase-panel__tag">Claridad Analítica</span>
-            <h3 class="showcase-panel__heading">Inteligencia que te aconseja, no que te juzga.</h3>
-            <p class="showcase-panel__desc">
-              Kipu analiza tus flujos sin vender tus datos. Descubre gastos recurrentes olvidados, variaciones imprevistas y patrones de consumo para tomar decisiones con calma.
+      <!-- 03 · INSIGHTS INTELIGENTES -->
+      <article class="deck-card deck-card--03" style="--card-index: 2">
+        <div class="deck-card__glow"></div>
+        <div class="deck-card__grid">
+          <!-- Editorial Storytelling -->
+          <div class="deck-card__narrative">
+            <div class="deck-card__tag">
+              <span class="deck-card__number">03</span>
+              <span class="deck-card__tag-kicker">CLARIDAD TOTAL</span>
+            </div>
+
+            <h3 class="deck-card__title">Tus números, explicados</h3>
+
+            <p class="deck-card__desc">
+              Kipu analiza tus flujos sin vender tus datos. Descubre gastos recurrentes olvidados, variaciones imprevistas y patrones de consumo para tomar decisiones con total calma.
             </p>
-            <div class="showcase-panel__stats">
-              <div class="showcase-stat">
-                <span class="showcase-stat__value">+28%</span>
-                <span class="showcase-stat__label">Capacidad de ahorro promedio</span>
+
+            <div class="deck-card__stats">
+              <div class="deck-stat">
+                <span class="deck-stat__value">+28%</span>
+                <span class="deck-stat__label">Capacidad de ahorro promedio</span>
               </div>
-              <div class="showcase-stat">
-                <span class="showcase-stat__value">100%</span>
-                <span class="showcase-stat__label">Privado y local</span>
+              <div class="deck-stat">
+                <span class="deck-stat__value">100%</span>
+                <span class="deck-stat__label">Privado y local</span>
+              </div>
+            </div>
+
+            <div class="deck-card__highlights">
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Detección automática de suscripciones fantasma</span>
+              </div>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Consejos accionables sin juicios ni fricción</span>
               </div>
             </div>
           </div>
 
-          <div class="showcase-panel__widget">
+          <!-- Micro-UI Widget: Insights -->
+          <div class="deck-card__widget">
             <div class="widget-card widget-card--insights">
               <div class="insight-bubble insight-bubble--highlight">
                 <div class="insight-bubble__icon">
@@ -253,7 +271,7 @@
             </div>
           </div>
         </div>
-      }
+      </article>
     </div>
   </div>
 </section>

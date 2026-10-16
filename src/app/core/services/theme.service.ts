@@ -1,4 +1,4 @@
-import { Injectable, signal, effect, inject, NgZone } from '@angular/core';
+import { Injectable, signal, effect, inject } from '@angular/core';
 
 export type Theme = 'dark' | 'light';
 
@@ -6,10 +6,11 @@ export type Theme = 'dark' | 'light';
 export class ThemeService {
   private readonly STORAGE_KEY = 'flowr_theme';
   private readonly defaultTheme: Theme = 'dark';
-  private readonly ngZone = inject(NgZone);
 
   private _currentTheme = signal<Theme>(this.defaultTheme);
   readonly currentTheme = this._currentTheme.asReadonly();
+
+  private transitionTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
     this.loadStoredTheme();
@@ -40,61 +41,43 @@ export class ThemeService {
     }
   }
 
-  toggleTheme(event?: MouseEvent): void {
+  toggleTheme(_event?: MouseEvent): void {
     const next: Theme = this._currentTheme() === 'dark' ? 'light' : 'dark';
-
-    // Synchronously update the theme signal and storage
-    this._currentTheme.set(next);
-    localStorage.setItem(this.STORAGE_KEY, next);
 
     const prefersReducedMotion =
       typeof window !== 'undefined' &&
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Fallback: If View Transitions API is not supported or reduced motion requested
-    if (typeof document === 'undefined' || !('startViewTransition' in document) || prefersReducedMotion) {
-      this.applyThemeToDOM(next);
+    // Instant switch if user prefers reduced motion or SSR
+    if (prefersReducedMotion || typeof document === 'undefined') {
+      this.setTheme(next);
       return;
     }
 
-    // Determine origin coordinates for circular wave expansion
-    const x = event?.clientX ?? (typeof window !== 'undefined' ? window.innerWidth / 2 : 0);
-    const y = event?.clientY ?? (typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
+    const docEl = document.documentElement;
 
-    const maxX = typeof window !== 'undefined' ? Math.max(x, window.innerWidth - x) : 0;
-    const maxY = typeof window !== 'undefined' ? Math.max(y, window.innerHeight - y) : 0;
-    const endRadius = Math.hypot(maxX, maxY);
+    // Clear any previous ongoing transition timer if user clicks rapidly
+    if (this.transitionTimer) {
+      clearTimeout(this.transitionTimer);
+      this.transitionTimer = null;
+    }
 
-    this.ngZone.runOutsideAngular(() => {
-      const transition = (document as any).startViewTransition(() => {
-        this.applyThemeToDOM(next);
-      });
+    // 1. Arm all DOM elements with the smooth transition rules
+    docEl.classList.add('theme-transitioning');
 
-      transition.ready
-        .then(() => {
-          try {
-            document.documentElement.animate(
-              {
-                clipPath: [
-                  `circle(0px at ${x}px ${y}px)`,
-                  `circle(${endRadius}px at ${x}px ${y}px)`
-                ]
-              },
-              {
-                duration: 450,
-                easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                pseudoElement: '::view-transition-new(root)'
-              }
-            );
-          } catch {
-            // Graceful fallback if pseudoElement animate is not supported
-          }
-        })
-        .catch(() => {
-          // Transition was aborted or cancelled
-        });
-    });
+    // 2. Force layout recalculation so the browser registers the transition rules
+    // before the new theme variables and classes are applied
+    void docEl.offsetHeight;
+
+    // 3. Apply the new theme synchronously
+    this.setTheme(next);
+
+    // 4. Clean up the transition class after the transition finishes (420ms)
+    this.transitionTimer = setTimeout(() => {
+      docEl.classList.remove('theme-transitioning');
+      this.transitionTimer = null;
+    }, 420);
   }
 
   private loadStoredTheme(): void {

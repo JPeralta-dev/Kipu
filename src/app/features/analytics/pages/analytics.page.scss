@@ -282,6 +282,37 @@
   }
 }
 
+/* ═══ Demo Capture Button ═══ */
+.demo-capture-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-start);
+    background: var(--accent-glow);
+  }
+
+  &--active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+    border-style: solid;
+    border-color: transparent;
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+}
+
 /* ═══ Refresh Indicator (thin animated bar during refetch) ═══ */
 .analytics-refresh-indicator {
   position: relative;

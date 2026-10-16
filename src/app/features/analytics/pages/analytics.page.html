@@ -125,6 +125,16 @@
           <ft-analytics-filters
             [categories]="categoryNames()"
           />
+          <button
+            type="button"
+            class="demo-capture-btn"
+            [class.demo-capture-btn--active]="demoMode()"
+            (click)="toggleDemoMode()"
+            title="Activar o desactivar datos simulados para tomar captura"
+          >
+            <ng-icon [name]="demoMode() ? 'check' : 'chart'" size="0.9rem" />
+            <span>{{ demoMode() ? 'Modo Demo (Activo)' : 'Datos para Captura' }}</span>
+          </button>
         </div>
       </div>
 

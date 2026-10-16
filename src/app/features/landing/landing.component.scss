@@ -9,7 +9,7 @@
 }
 
 .landing__content {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Sections - content-driven height */
@@ -157,20 +157,14 @@
   padding: 0;
 }
 
-/* Testimonials Wrapper */
-.testimonials-wrapper {
-  padding: 0;
-}
+
 
 /* FAQ Wrapper */
 .faq-wrapper {
   padding: 0;
 }
 
-/* Testimonials Wrapper */
-.testimonials-wrapper {
-  padding: 60px 24px;
-}
+
 
 /* Trust Wrapper */
 .trust-wrapper {

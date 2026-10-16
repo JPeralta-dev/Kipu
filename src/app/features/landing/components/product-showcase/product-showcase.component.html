@@ -1,0 +1,277 @@
+<section id="features" class="showcase">
+  <div class="showcase__inner">
+    <!-- Section Header -->
+    <div class="showcase__header">
+      <div class="showcase__badge">
+        <span class="showcase__badge-dot"></span>
+        <span>CONTROL & CLARIDAD TOTAL</span>
+      </div>
+      <h2 class="showcase__title">
+        Todo lo que necesitas para<br />
+        <span class="showcase__title-gradient">entender de verdad tu dinero.</span>
+      </h2>
+      <p class="showcase__subtitle">
+        Presupuestos en tiempo real, metas de ahorro que inspiran e inteligencia analítica privada. Todo diseñado para darte paz mental sin publicidad y sin pedirte tus claves bancarias.
+      </p>
+    </div>
+
+    <!-- Sticky Stacking Cards Deck (01, 02, 03) -->
+    <div class="showcase__deck">
+      <!-- 01 · LÍMITES & PRESUPUESTOS -->
+      <article class="deck-card deck-card--01" style="--card-index: 0">
+        <div class="deck-card__glow"></div>
+        <div class="deck-card__grid">
+          <!-- Editorial Storytelling -->
+          <div class="deck-card__narrative">
+            <div class="deck-card__tag">
+              <span class="deck-card__number">01</span>
+              <span class="deck-card__tag-kicker">CONTROL PROACTIVO</span>
+            </div>
+
+            <h3 class="deck-card__title">Límites antes de pasarte</h3>
+
+            <p class="deck-card__desc">
+              Define presupuestos mensuales por categoría y sabe cuánto te queda en un segundo. Alertas suaves y visuales te avisan con anticipación para que nunca más te sorprendas a fin de mes.
+            </p>
+
+            <div class="deck-card__highlights">
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>100% Personalizable por categorías</span>
+              </div>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>0 Cálculos manuales o estimaciones a ciegas</span>
+              </div>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Alertas preventivas antes de excederte</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Micro-UI Widget: Budgets -->
+          <div class="deck-card__widget">
+            <div class="widget-card">
+              <div class="widget-card__top">
+                <div class="widget-card__title-wrap">
+                  <span class="widget-card__badge-month">Octubre 2026</span>
+                  <h4 class="widget-card__headline">Presupuesto Mensual</h4>
+                </div>
+                <span class="widget-card__pill">Activo</span>
+              </div>
+
+              <div class="widget-card__list">
+                @for (item of budgets; track item.category) {
+                  <div class="budget-item">
+                    <div class="budget-item__row">
+                      <div class="budget-item__info">
+                        <div class="budget-item__icon-wrap">
+                          <ng-icon [name]="item.icon" size="0.95rem" />
+                        </div>
+                        <span class="budget-item__name">{{ item.category }}</span>
+                      </div>
+                      <div class="budget-item__amounts">
+                        <strong>${{ item.spent }}</strong>
+                        <span>/ ${{ item.limit }}</span>
+                      </div>
+                    </div>
+
+                    <div class="budget-progress">
+                      <div
+                        class="budget-progress__bar"
+                        [class.budget-progress__bar--exceeded]="item.status === 'exceeded'"
+                        [style.width.%]="getPercent(item.spent, item.limit)"
+                      ></div>
+                    </div>
+
+                    <div class="budget-item__status">
+                      @if (item.status === 'exceeded') {
+                        <span class="budget-status budget-status--danger">
+                          <ng-icon name="warning" size="0.875rem" />
+                          Te has pasado por ${{ item.spent - item.limit }}
+                        </span>
+                      } @else {
+                        <span class="budget-status budget-status--ok">
+                          <ng-icon name="check" size="0.875rem" />
+                          Quedan ${{ item.limit - item.spent }} disponibles
+                        </span>
+                      }
+                      <span class="budget-status__pct">{{ getPercent(item.spent, item.limit) }}%</span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 · METAS DE AHORRO -->
+      <article class="deck-card deck-card--02" style="--card-index: 1">
+        <div class="deck-card__glow"></div>
+        <div class="deck-card__grid">
+          <!-- Editorial Storytelling -->
+          <div class="deck-card__narrative">
+            <div class="deck-card__tag">
+              <span class="deck-card__number">02</span>
+              <span class="deck-card__tag-kicker">VISIÓN A FUTURO</span>
+            </div>
+
+            <h3 class="deck-card__title">Metas de ahorro que inspiran</h3>
+
+            <p class="deck-card__desc">
+              Ahorrar deja de ser un sacrificio y se vuelve un mapa tangible. Visualiza cómo cada aporte te acerca a tu fondo de tranquilidad, viajes o inversiones con fechas estimadas reales.
+            </p>
+
+            <div class="deck-card__highlights">
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Ritmo y proyección de fechas en tiempo real</span>
+              </div>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Asignación de aportes sin mezclar tus gastos diarios</span>
+              </div>
+            </div>
+
+            <div class="deck-card__quote">
+              <ng-icon name="star" size="0.95rem" class="deck-card__quote-star" />
+              <em>&ldquo;Ver el progreso de mis metas me quitó la ansiedad de no saber a dónde iba mi dinero.&rdquo;</em>
+            </div>
+          </div>
+
+          <!-- Micro-UI Widget: Goals -->
+          <div class="deck-card__widget">
+            <div class="widget-card">
+              <div class="widget-card__top">
+                <div class="widget-card__title-wrap">
+                  <span class="widget-card__badge-month">Metas Activas</span>
+                  <h4 class="widget-card__headline">Tus Reservas de Paz</h4>
+                </div>
+                <span class="widget-card__pill widget-card__pill--gold">3 En curso</span>
+              </div>
+
+              <div class="goals-list">
+                @for (goal of goals; track goal.title) {
+                  <div class="goal-item">
+                    <div class="goal-item__header">
+                      <div class="goal-item__heading-group">
+                        <div class="goal-item__icon-wrap" [style.color]="goal.color">
+                          <ng-icon [name]="goal.icon" size="1.05rem" />
+                        </div>
+                        <div>
+                          <div class="goal-item__title">{{ goal.title }}</div>
+                          <div class="goal-item__meta">{{ goal.category }} · {{ goal.eta }}</div>
+                        </div>
+                      </div>
+                      <div class="goal-item__pct" [style.color]="goal.color">
+                        {{ getPercent(goal.current, goal.target) }}%
+                      </div>
+                    </div>
+
+                    <div class="goal-bar">
+                      <div
+                        class="goal-bar__fill"
+                        [style.width.%]="getPercent(goal.current, goal.target)"
+                        [style.background]="goal.color"
+                      ></div>
+                    </div>
+
+                    <div class="goal-item__footer">
+                      <span>Ahorrado: <strong>${{ goal.current }}</strong></span>
+                      <span>Objetivo: <strong>${{ goal.target }}</strong></span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 · INSIGHTS INTELIGENTES -->
+      <article class="deck-card deck-card--03" style="--card-index: 2">
+        <div class="deck-card__glow"></div>
+        <div class="deck-card__grid">
+          <!-- Editorial Storytelling -->
+          <div class="deck-card__narrative">
+            <div class="deck-card__tag">
+              <span class="deck-card__number">03</span>
+              <span class="deck-card__tag-kicker">CLARIDAD TOTAL</span>
+            </div>
+
+            <h3 class="deck-card__title">Tus números, explicados</h3>
+
+            <p class="deck-card__desc">
+              Kipu analiza tus flujos sin vender tus datos. Descubre gastos recurrentes olvidados, variaciones imprevistas y patrones de consumo para tomar decisiones con total calma.
+            </p>
+
+            <div class="deck-card__stats">
+              <div class="deck-stat">
+                <span class="deck-stat__value">+28%</span>
+                <span class="deck-stat__label">Capacidad de ahorro promedio</span>
+              </div>
+              <div class="deck-stat">
+                <span class="deck-stat__value">100%</span>
+                <span class="deck-stat__label">Privado y local</span>
+              </div>
+            </div>
+
+            <div class="deck-card__highlights">
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Detección automática de suscripciones fantasma</span>
+              </div>
+              <div class="deck-highlight">
+                <ng-icon name="check" size="1rem" class="deck-highlight__icon" />
+                <span>Consejos accionables sin juicios ni fricción</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Micro-UI Widget: Insights -->
+          <div class="deck-card__widget">
+            <div class="widget-card widget-card--insights">
+              <div class="insight-bubble insight-bubble--highlight">
+                <div class="insight-bubble__icon">
+                  <ng-icon name="insights" size="1.25rem" />
+                </div>
+                <div class="insight-bubble__content">
+                  <div class="insight-bubble__title">Ahorro inteligente detectado</div>
+                  <div class="insight-bubble__body">
+                    Gastaste un <strong>18% menos en delivery</strong> que el mes pasado. Si mantienes el ritmo, sumas <strong>$72 adicionales</strong> a tu Fondo de Emergencia.
+                  </div>
+                </div>
+              </div>
+
+              <div class="insight-bubble">
+                <div class="insight-bubble__icon">
+                  <ng-icon name="repeat" size="1.25rem" />
+                </div>
+                <div class="insight-bubble__content">
+                  <div class="insight-bubble__title">Suscripciones recurrentes</div>
+                  <div class="insight-bubble__body">
+                    Identificamos 4 cargos automáticos fijos (Netflix, Spotify, iCloud, Notion) por un total de <strong>$41.90 / mes</strong>.
+                  </div>
+                </div>
+              </div>
+
+              <div class="insight-bubble">
+                <div class="insight-bubble__icon">
+                  <ng-icon name="trendUp" size="1.25rem" />
+                </div>
+                <div class="insight-bubble__content">
+                  <div class="insight-bubble__title">Flujo de caja equilibrado</div>
+                  <div class="insight-bubble__body">
+                    Tu ratio de ahorro actual se ubica en el <strong>24% de tus ingresos</strong>, superando la regla estándar 50/30/20.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

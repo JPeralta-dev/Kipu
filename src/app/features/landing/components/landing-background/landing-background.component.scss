@@ -229,3 +229,20 @@
     opacity: 0.2;
   }
 }
+
+
+/* Light Mode Overrides */
+:host-context(html.light),
+:host-context(.theme-light) {
+  .landing-bg__circle {
+    border-color: rgba(167, 139, 250, 0.12);
+  }
+
+  .landing-bg__line {
+    background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.1), transparent);
+  }
+
+  .landing-bg__glow--cta {
+    background: radial-gradient(ellipse, rgba(167, 139, 250, 0.12) 0%, transparent 70%);
+  }
+}

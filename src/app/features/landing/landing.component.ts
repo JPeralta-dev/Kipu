@@ -6,21 +6,20 @@ import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { PublicNavbarComponent } from './components/public-navbar/public-navbar.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
-import { FeatureCardComponent } from './components/feature-card/feature-card.component';
+import { ProductShowcaseComponent } from './components/product-showcase/product-showcase.component';
 import { TelegramSectionComponent } from './components/telegram-section/telegram-section.component';
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 import { ComparisonTableComponent } from './components/comparison-table/comparison-table.component';
-import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TrustSignalsComponent } from './components/trust-signals/trust-signals.component';
 import { ResourcesSectionComponent } from './components/resources-section/resources-section.component';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
-import { TierCard, TierComparisonRow, Testimonial, FaqItem, TrustBadge } from '../../core/models/tier.model';
+import { TierCard, TierComparisonRow, FaqItem, TrustBadge } from '../../core/models/tier.model';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -32,14 +31,13 @@ import { environment } from '../../../environments/environment';
     NgIcon,
     PublicNavbarComponent,
     HeroSectionComponent,
-    FeatureCardComponent,
+    ProductShowcaseComponent,
     TelegramSectionComponent,
     FinalCtaComponent,
     LandingBackgroundComponent,
     FooterComponent,
     PricingComponent,
     ComparisonTableComponent,
-    TestimonialsComponent,
     FaqComponent,
     TrustSignalsComponent,
     ResourcesSectionComponent,
@@ -57,7 +55,6 @@ export class LandingComponent implements OnInit {
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
   readonly pricingEnabled = environment.pricingEnabled;
-  readonly showAllFeatures = signal(false);
 
   /** Public site URL — used as og:url and twitter:url. */
   readonly siteUrl = environment.production
@@ -128,15 +125,6 @@ export class LandingComponent implements OnInit {
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-  features = [
-    { icon: 'dashboard', title: 'landing.features.dashboard.title', description: 'landing.features.dashboard.description' },
-    { icon: 'transactions', title: 'landing.features.transactions.title', description: 'landing.features.transactions.description' },
-    { icon: 'analytics', title: 'landing.features.analytics.title', description: 'landing.features.analytics.description' },
-    { icon: 'info', title: 'landing.features.ai_insights.title', description: 'landing.features.ai_insights.description' },
-    { icon: 'categories', title: 'landing.features.categories.title', description: 'landing.features.categories.description' },
-    { icon: 'telegram', title: 'landing.features.telegram.title', description: 'landing.features.telegram.description' },
-  ];
 
   /**
    * Tier cards shared with the subscription page.
@@ -209,28 +197,6 @@ export class LandingComponent implements OnInit {
     { featureKey: 'landing.comparison.features.telegram', free: false, premium: false, premiumPlus: true },
     { featureKey: 'landing.comparison.features.export', free: false, premium: false, premiumPlus: true },
     { featureKey: 'landing.comparison.features.priority_support', free: false, premium: false, premiumPlus: true },
-  ];
-
-  /** Placeholder testimonials — swappable via the input array. */
-  readonly testimonials: Testimonial[] = [
-    {
-      nameKey: 'landing.testimonials.items.maria.name',
-      roleKey: 'landing.testimonials.items.maria.role',
-      textKey: 'landing.testimonials.items.maria.text',
-      avatarInitials: 'MG',
-    },
-    {
-      nameKey: 'landing.testimonials.items.carlos.name',
-      roleKey: 'landing.testimonials.items.carlos.role',
-      textKey: 'landing.testimonials.items.carlos.text',
-      avatarInitials: 'CR',
-    },
-    {
-      nameKey: 'landing.testimonials.items.ana.name',
-      roleKey: 'landing.testimonials.items.ana.role',
-      textKey: 'landing.testimonials.items.ana.text',
-      avatarInitials: 'AL',
-    },
   ];
 
   /** FAQ items — single-open accordion, all collapsed by default. */

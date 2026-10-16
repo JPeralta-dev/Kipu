@@ -14,6 +14,8 @@
  */
 
 /* ─── Light Theme — Purple/Lila Palette ──────────────────────────── */
+:root[data-theme='light'],
+html.light,
 .theme-light {
   /* Backgrounds — proposal spec */
   --bg-primary: #FAF8FD;

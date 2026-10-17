@@ -74,5 +74,18 @@ describe('TranslationService', () => {
       // Assert — should not crash, should not be loaded
       expect(service.isLoaded()).toBe(false);
     });
+
+    it('should safely handle localStorage throwing QuotaExceeded or SecurityError in Safari', () => {
+      spyOn(localStorage, 'getItem').and.throwError(new Error('QuotaExceededError'));
+      spyOn(localStorage, 'setItem').and.throwError(new Error('QuotaExceededError'));
+
+      TestBed.configureTestingModule({
+        providers: [TranslationService],
+      });
+      expect(() => {
+        service = TestBed.inject(TranslationService);
+      }).not.toThrow();
+      expect(service.isLoaded()).toBe(false);
+    });
   });
 });

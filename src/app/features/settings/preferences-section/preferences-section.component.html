@@ -9,7 +9,7 @@
       <button
         class="theme-toggle"
         [class.theme-toggle--light]="themeService.currentTheme() === 'light'"
-        (click)="themeService.toggleTheme()"
+        (click)="themeService.toggleTheme($event)"
         [attr.aria-label]="'settings.preferences.toggle_theme' | translate"
       >
         <ng-icon [name]="themeService.currentTheme() === 'dark' ? 'moon' : 'sun'" size="1rem" />

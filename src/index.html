@@ -44,15 +44,21 @@
         }
 
         // Language detection (before Angular boots)
+        var detectedLang = 'es';
         var storedLang = localStorage.getItem('flowr_language');
         if (storedLang && (storedLang === 'es' || storedLang === 'en' || storedLang === 'fr')) {
-          document.documentElement.lang = storedLang;
+          detectedLang = storedLang;
         } else {
-          var browserLang = (navigator.language || '').slice(0, 2);
-          document.documentElement.lang = (browserLang === 'es' || browserLang === 'en' || browserLang === 'fr')
-            ? browserLang
-            : 'en';
+          var navLangs = navigator.languages || [navigator.language || ''];
+          for (var i = 0; i < navLangs.length; i++) {
+            var code = (navLangs[i] || '').slice(0, 2).toLowerCase();
+            if (code === 'es' || code === 'en' || code === 'fr') {
+              detectedLang = code;
+              break;
+            }
+          }
         }
+        document.documentElement.lang = detectedLang;
       } catch(e) {
         document.documentElement.classList.add('dark');
         document.documentElement.lang = 'en';

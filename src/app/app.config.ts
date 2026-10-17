@@ -8,6 +8,7 @@ import { provideIcons } from "@ng-icons/core";
 import { routes } from "./app.routes";
 import { authInterceptor } from "./core/interceptors/auth.interceptor";
 import { ICONS } from "./shared/icons/icon-registry";
+import { TranslationService } from "./core/services/translation.service";
 import { initializeTranslations } from "./core/i18n/translation.initializer";
 
 export const appConfig: ApplicationConfig = {
@@ -22,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       useFactory: initializeTranslations,
-      deps: [HttpClient],
+      deps: [TranslationService],
       multi: true,
     },
   ],

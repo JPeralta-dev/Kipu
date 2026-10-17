@@ -4,27 +4,61 @@ import { firstValueFrom } from 'rxjs';
 
 export type Language = 'es' | 'en' | 'fr';
 
-const SUPPORTED_LANGUAGES: Language[] = ['es', 'en', 'fr'];
-const DEFAULT_LANG: Language = 'en';
+export const SUPPORTED_LANGUAGES: Language[] = ['es', 'en', 'fr'];
+export const DEFAULT_LANG: Language = 'es';
 
 // Pre-compiled regex for {{ paramName }} interpolation — avoids re-compilation on every call
 const PARAM_REGEX = /\{\{\s*(\w+)\s*\}\}/g;
 
 /**
+ * Safe localStorage wrapper that will never throw in Safari Private Browsing,
+ * restricted iframe environments, or when storage quota is exceeded.
+ */
+export function safeGetItem(key: string): string | null {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return window.localStorage.getItem(key);
+    }
+  } catch {
+    // Quota, security, or private browsing restriction
+  }
+  return null;
+}
+
+export function safeSetItem(key: string, value: string): void {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(key, value);
+    }
+  } catch {
+    // Quota, security, or private browsing restriction
+  }
+}
+
+/**
  * Resolves the best initial language:
  * 1. Stored user preference (localStorage)
- * 2. Browser language (navigator.language)
- * 3. Fallback: English
+ * 2. Browser languages (navigator.languages / navigator.language) — case-insensitive
+ * 3. Fallback: Spanish
  */
-function detectBestLanguage(): Language {
+export function detectBestLanguage(): Language {
   // 1. Explicit user preference
-  const stored = localStorage.getItem('flowr_language') as Language | null;
+  const stored = safeGetItem('flowr_language') as Language | null;
   if (stored && SUPPORTED_LANGUAGES.includes(stored)) return stored;
 
-  // 2. Browser preference
+  // 2. Browser preference (inspect navigator.languages first for Safari/iOS)
   try {
-    const browserLang = (navigator.language || '').slice(0, 2) as Language;
-    if (SUPPORTED_LANGUAGES.includes(browserLang)) return browserLang;
+    if (typeof navigator !== 'undefined') {
+      const navLangs = navigator.languages && navigator.languages.length > 0
+        ? navigator.languages
+        : [navigator.language || ''];
+
+      for (const raw of navLangs) {
+        if (!raw) continue;
+        const code = raw.slice(0, 2).toLowerCase() as Language;
+        if (SUPPORTED_LANGUAGES.includes(code)) return code;
+      }
+    }
   } catch {
     // SSR or restricted environment — fall through
   }
@@ -53,14 +87,19 @@ export class TranslationService {
 
   constructor() {
     // Set the `lang` attribute on <html> immediately
-    document.documentElement.lang = this._currentLang();
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = this._currentLang();
+    }
 
-    // Try loading from localStorage first (sync, no blocking)
-    const cached = localStorage.getItem(this.TRANSLATIONS_KEY);
+    // Try loading from localStorage first (sync, safe, non-blocking)
+    const cached = safeGetItem(this.TRANSLATIONS_KEY);
     if (cached) {
       try {
-        this._translations.set(JSON.parse(cached));
-        this._loaded.set(true);
+        const parsed = JSON.parse(cached);
+        if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
+          this._translations.set(parsed);
+          this._loaded.set(true);
+        }
       } catch {
         // Invalid JSON, fall through to async fetch
       }
@@ -72,7 +111,22 @@ export class TranslationService {
     }
   }
 
-  private async fetchTranslations(): Promise<void> {
+  /**
+   * Initializes translations during APP_INITIALIZER.
+   * Guarantees translations are loaded into memory before the app renders.
+   */
+  async init(): Promise<void> {
+    const lang = this._currentLang();
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
+
+    if (!this._loaded()) {
+      await this.fetchTranslations();
+    }
+  }
+
+  async fetchTranslations(): Promise<void> {
     if (!this.http) return;
 
     const lang = this._currentLang();
@@ -80,11 +134,27 @@ export class TranslationService {
       const data = await firstValueFrom(
         this.http.get<Record<string, any>>(`/assets/i18n/${lang}.json`)
       );
-      this._translations.set(data);
-      this._loaded.set(true);
-      localStorage.setItem(this.TRANSLATIONS_KEY, JSON.stringify(data));
+      if (data && typeof data === 'object') {
+        this._translations.set(data);
+        this._loaded.set(true);
+        safeSetItem(this.TRANSLATIONS_KEY, JSON.stringify(data));
+      }
     } catch (error) {
       console.error(`Failed to load language ${lang}`, error);
+      // Fallback: If non-Spanish language failed, fallback to Spanish
+      if (lang !== 'es') {
+        try {
+          const fallback = await firstValueFrom(
+            this.http.get<Record<string, any>>('/assets/i18n/es.json')
+          );
+          if (fallback && typeof fallback === 'object') {
+            this._translations.set(fallback);
+            this._loaded.set(true);
+          }
+        } catch {
+          // Fallback also failed
+        }
+      }
     }
   }
 
@@ -100,8 +170,10 @@ export class TranslationService {
     this._isTransitioning.set(true);
 
     this._currentLang.set(lang);
-    localStorage.setItem(this.STORAGE_KEY, lang);
-    document.documentElement.lang = lang;
+    safeSetItem(this.STORAGE_KEY, lang);
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
 
     // Small delay so the CSS transition starts before text swaps
     await new Promise((r) => setTimeout(r, 50));

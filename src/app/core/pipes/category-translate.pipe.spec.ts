@@ -51,6 +51,7 @@ describe('CategoryTranslatePipe', () => {
   });
 
   it('should re-render when language changes via effect + markForCheck', fakeAsync(() => {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [TestHostComponent, CategoryTranslatePipe],
       providers: [TranslationService],

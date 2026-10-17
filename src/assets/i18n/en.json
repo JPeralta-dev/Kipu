@@ -1184,7 +1184,7 @@
       "transactions": "transactions",
       "emptyTitle": "No channel transactions",
       "emptyDesc": "Record your first transaction to see channel distribution",
-      "errorTitle": "Error loading channels",
+      "errorTitle": "Error loading channels"
     }
   },
   "budgets": {

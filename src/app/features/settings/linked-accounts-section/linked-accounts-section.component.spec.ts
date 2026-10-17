@@ -122,9 +122,12 @@ describe('LinkedAccountsSectionComponent', () => {
     expect(gmailSpy.syncNow).toHaveBeenCalledTimes(1);
   });
 
-  it('onGmailDisconnect should delegate to the GmailLinkService', () => {
+  it('onGmailDisconnect should delegate to the GmailLinkService on confirmation', () => {
     component.onGmailDisconnect();
+    expect(component.gmailDisconnectConfirm()).toBe(true);
+    component.confirmGmailDisconnect();
     expect(gmailSpy.markDisconnected).toHaveBeenCalledTimes(1);
+    expect(component.gmailDisconnectConfirm()).toBe(false);
   });
 
   it('onTelegramConnect should delegate to the TelegramLinkService', () => {

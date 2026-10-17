@@ -29,17 +29,17 @@ const CATEGORY_I18N_MAP: Record<string, Record<string, string>> = {
 @Pipe({
   name: 'categoryTranslate',
   standalone: true,
-  pure: true,
+  pure: false,
 })
 export class CategoryTranslatePipe implements PipeTransform {
   private translationService = inject(TranslationService);
-  private cdr = inject(ChangeDetectorRef);
+  private cdr = inject(ChangeDetectorRef, { optional: true });
 
   constructor() {
     // Re-evaluate when language changes
     effect(() => {
       this.translationService.currentLang();
-      this.cdr.markForCheck();
+      this.cdr?.markForCheck();
     });
   }
 

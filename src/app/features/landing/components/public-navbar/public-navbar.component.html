@@ -15,7 +15,7 @@
       <!-- Desktop Actions -->
       <div class="public-navbar__desktop">
         <!-- Theme Toggle -->
-        <button class="public-navbar__theme" (click)="toggleTheme()" [attr.aria-label]="'Toggle theme'">
+        <button class="public-navbar__theme" (click)="toggleTheme($event)" [attr.aria-label]="'Toggle theme'">
           @if (themeService.currentTheme() === 'dark') {
             <ng-icon name="sun" size="1rem" />
           } @else {
@@ -51,7 +51,7 @@
   @if (mobileMenuOpen()) {
     <div class="public-navbar__mobile-menu">
       <!-- Theme Toggle -->
-      <button class="public-navbar__mobile-item" (click)="toggleTheme()" [attr.aria-label]="'Toggle theme'">
+      <button class="public-navbar__mobile-item" (click)="toggleTheme($event)" [attr.aria-label]="'Toggle theme'">
         @if (themeService.currentTheme() === 'dark') {
           <ng-icon name="sun" size="1rem" />
         } @else {

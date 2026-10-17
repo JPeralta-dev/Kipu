@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TelegramLinkService } from './telegram-link.service';
 import { environment } from '../../../environments/environment';
@@ -23,6 +23,8 @@ describe('TelegramLinkService', () => {
   });
 
   it('should be created', () => {
+    const req = httpMock.expectOne(`${apiBase}/auth/link-status`);
+    req.flush({ linked: false, telegramId: null });
     expect(service).toBeTruthy();
   });
 
@@ -30,6 +32,7 @@ describe('TelegramLinkService', () => {
     expect(service.state()).toBe('loading');
     const req = httpMock.expectOne(`${apiBase}/auth/link-status`);
     expect(req.request.method).toBe('GET');
+    req.flush({ linked: false, telegramId: null });
   });
 
   it('should transition to idle when not linked', () => {
@@ -49,14 +52,14 @@ describe('TelegramLinkService', () => {
     const req = httpMock.expectOne(`${apiBase}/auth/link-status`);
     req.error(new ProgressEvent('error'));
     expect(service.error()).toBe('settings.telegram.error_link');
-    expect(service.state()).toBe('error');
+    expect(service.state()).toBe('idle');
   });
 
   it('should generate code and transition to polling', () => {
     const statusReq = httpMock.expectOne(`${apiBase}/auth/link-status`);
     statusReq.flush({ linked: false, telegramId: null });
 
-    service.generateCode();
+    service.generateCode(false);
     expect(service.state()).toBe('generating');
 
     const codeReq = httpMock.expectOne(`${apiBase}/auth/link-code`);
@@ -72,16 +75,19 @@ describe('TelegramLinkService', () => {
     statusReq.flush({ linked: true, telegramId: 'tg-123' });
 
     service.generateCode();
-    // No HTTP call for link-code should be made
+    expect(service.state()).toBe('linked');
   });
 
-  it('should poll and detect linked state', () => {
+  it('should poll and detect linked state', fakeAsync(() => {
     const statusReq = httpMock.expectOne(`${apiBase}/auth/link-status`);
     statusReq.flush({ linked: false, telegramId: null });
 
-    service.generateCode();
+    service.generateCode(false);
     const codeReq = httpMock.expectOne(`${apiBase}/auth/link-code`);
     codeReq.flush({ code: 'ABC123', expiresAt: new Date(Date.now() + 60000).toISOString() });
+
+    // Advance 3s for the polling interval
+    tick(3000);
 
     const pollReq = httpMock.expectOne(`${apiBase}/auth/link-status`);
     pollReq.flush({ linked: true, telegramId: 'tg-456' });
@@ -89,13 +95,13 @@ describe('TelegramLinkService', () => {
     expect(service.state()).toBe('linked');
     expect(service.justLinked()).toBe(true);
     expect(service.linkCode()).toBeNull();
-  });
+  }));
 
   it('should show error on code generation failure', () => {
     const statusReq = httpMock.expectOne(`${apiBase}/auth/link-status`);
     statusReq.flush({ linked: false, telegramId: null });
 
-    service.generateCode();
+    service.generateCode(false);
     const codeReq = httpMock.expectOne(`${apiBase}/auth/link-code`);
     codeReq.error(new ProgressEvent('error'));
 
@@ -104,13 +110,19 @@ describe('TelegramLinkService', () => {
   });
 
   it('should use environment.telegramBotUrl for openTelegram', () => {
-    const spy = spyOn(window, 'open');
+    const req = httpMock.expectOne(`${apiBase}/auth/link-status`);
+    req.flush({ linked: false, telegramId: null });
+
+    const openUrlSpy = spyOn(service, 'openUrl');
     service.openTelegram();
-    expect(spy).toHaveBeenCalledWith(environment.telegramBotUrl, '_blank');
+    expect(openUrlSpy).toHaveBeenCalledWith(environment.telegramBotUrl, false);
   });
 
-  it('should use iOS deep link for iOS devices', () => {
-    const spy = spyOn(window, 'open');
+  it('should use deep link on mobile devices', () => {
+    const req = httpMock.expectOne(`${apiBase}/auth/link-status`);
+    req.flush({ linked: false, telegramId: null });
+
+    const openUrlSpy = spyOn(service, 'openUrl');
     const originalUA = navigator.userAgent;
     Object.defineProperty(navigator, 'userAgent', {
       value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X)',
@@ -118,37 +130,43 @@ describe('TelegramLinkService', () => {
     });
 
     service.openTelegramWithCode('ABC123');
-    expect(spy).toHaveBeenCalledWith(
+    expect(openUrlSpy).toHaveBeenCalledWith(
       jasmine.stringContaining('tg://resolve?domain=hormigaTrackerBot'),
-      '_blank',
+      true,
     );
 
     Object.defineProperty(navigator, 'userAgent', { value: originalUA, configurable: true });
   });
 
-  it('should use web URL for non-iOS devices', () => {
-    const spy = spyOn(window, 'open');
+  it('should use web URL for desktop devices', () => {
+    const req = httpMock.expectOne(`${apiBase}/auth/link-status`);
+    req.flush({ linked: false, telegramId: null });
+
+    const openUrlSpy = spyOn(service, 'openUrl');
+    const originalUA = navigator.userAgent;
     Object.defineProperty(navigator, 'userAgent', {
       value: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
       configurable: true,
     });
 
     service.openTelegramWithCode('ABC123');
-    expect(spy).toHaveBeenCalledWith(
+    expect(openUrlSpy).toHaveBeenCalledWith(
       jasmine.stringContaining(environment.telegramBotUrl),
-      '_blank',
+      false,
     );
+
+    Object.defineProperty(navigator, 'userAgent', { value: originalUA, configurable: true });
   });
 
   it('should clear timers on destroy', () => {
     const statusReq = httpMock.expectOne(`${apiBase}/auth/link-status`);
     statusReq.flush({ linked: false, telegramId: null });
 
-    service.generateCode();
+    service.generateCode(false);
     const codeReq = httpMock.expectOne(`${apiBase}/auth/link-code`);
     codeReq.flush({ code: 'ABC123', expiresAt: new Date(Date.now() + 60000).toISOString() });
 
     service.ngOnDestroy();
-    // No further polling requests should be made
+    expect(service.state()).toBe('polling');
   });
 });

@@ -59,7 +59,7 @@ export class TelegramLinkService implements OnDestroy {
     });
   }
 
-  generateCode(): void {
+  generateCode(autoOpen = true): void {
     if (this.state() === 'linked') return;
 
     this.state.set('generating');
@@ -76,6 +76,10 @@ export class TelegramLinkService implements OnDestroy {
         this.startCountdown(expiresAt);
         this.startLinkPoll();
         this.state.set('polling');
+
+        if (autoOpen && res.code) {
+          this.openTelegramWithCode(res.code);
+        }
       },
       error: () => {
         this.error.set('settings.telegram.error_generate');
@@ -131,22 +135,54 @@ export class TelegramLinkService implements OnDestroy {
   }
 
   openTelegram(): void {
-    window.open(environment.telegramBotUrl, '_blank');
+    this.openUrl(environment.telegramBotUrl, false);
+  }
+
+  openUrl(url: string, isMobile: boolean): void {
+    if (typeof window === 'undefined') return;
+    if (isMobile) {
+      window.location.href = url;
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   }
 
   openTelegramWithCode(code: string): void {
-    const message = encodeURIComponent(`/link ${code}`);
+    if (!code) return;
+    const command = `/link ${code}`;
+    const message = encodeURIComponent(command);
     const botUsername = environment.telegramBotUrl.split('/').pop() || 'hormigaTrackerBot';
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const url = isIOS
-      ? `tg://resolve?domain=${botUsername}&text=${message}`
-      : `${environment.telegramBotUrl}?text=${message}`;
 
     // Silent safeguard: ensure command is in clipboard in case Telegram suppresses pre-fill on first start
     if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(`/link ${code}`).catch(() => {});
+      navigator.clipboard.writeText(command).catch(() => {});
     }
 
-    window.open(url, '_blank');
+    const isMobile = typeof navigator !== 'undefined' && (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    );
+
+    if (isMobile) {
+      // Mobile (iOS, iPadOS, Android):
+      // Custom scheme opens Telegram directly into the chat with the prefilled message
+      const appUrl = `tg://resolve?domain=${botUsername}&text=${message}`;
+      const webUrl = `https://t.me/${botUsername}?text=${message}`;
+
+      const clickedAt = Date.now();
+      this.openUrl(appUrl, true);
+
+      // Graceful fallback to web URL if Telegram app is not installed
+      setTimeout(() => {
+        if (Date.now() - clickedAt < 2000) {
+          this.openUrl(webUrl, true);
+        }
+      }, 1500);
+    } else {
+      // Desktop (PC, Mac, Linux):
+      // Opens t.me web landing in a new tab which prompts to launch Telegram Desktop with pre-filled text
+      const desktopUrl = `https://t.me/${botUsername}?text=${message}`;
+      this.openUrl(desktopUrl, false);
+    }
   }
 }

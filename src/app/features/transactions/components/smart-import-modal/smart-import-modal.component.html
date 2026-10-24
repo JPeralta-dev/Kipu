@@ -1,0 +1,435 @@
+<ft-modal
+  [open]="open()"
+  (closed)="onClose()"
+  size="xl"
+  [closeOnBackdrop]="step() !== 'analyzing' && step() !== 'committing'"
+  [closeOnEsc]="step() !== 'analyzing' && step() !== 'committing'"
+>
+  <div modalBody class="smart-import-container">
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 1: IDLE / DRAG & DROP ZONE                                   -->
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    @if (step() === 'idle') {
+      <div class="import-dropzone-view">
+        <div class="import-header">
+          <div class="import-header__icon-badge">
+            <ng-icon name="upload" size="1.5rem" />
+          </div>
+          <h2 class="import-header__title">Importa tus Finanzas desde Excel</h2>
+          <p class="import-header__subtitle">
+            Sube tu hoja de cálculo o extracto bancario. Nuestra IA deducirá las columnas y montos automáticamente sin importar su diseño.
+          </p>
+        </div>
+
+        <div
+          class="dropzone-area"
+          [class.dropzone-area--active]="isDragging()"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onFileDrop($event)"
+          (click)="fileInput.click()"
+          role="button"
+          tabindex="0"
+          (keydown.enter)="fileInput.click()"
+          (keydown.space)="fileInput.click()"
+        >
+          <input
+            #fileInput
+            type="file"
+            class="dropzone-area__input"
+            accept=".csv,.xlsx,.xls,.tsv"
+            (change)="onFileInputChange($event)"
+          />
+
+          <div class="dropzone-area__content">
+            <div class="dropzone-area__circle">
+              <ng-icon name="sparkles" size="2rem" />
+            </div>
+
+            <div class="dropzone-area__prompt">
+              <span class="dropzone-area__cta">Arrastra tu archivo aquí</span>
+              <span class="dropzone-area__browse">o haz clic para explorar en tu equipo</span>
+            </div>
+
+            <div class="dropzone-area__pills">
+              <span class="file-pill">.XLSX</span>
+              <span class="file-pill">.CSV</span>
+              <span class="file-pill">.XLS</span>
+              <span class="file-pill">.TSV</span>
+            </div>
+
+            <p class="dropzone-area__hint">
+              Soportamos archivos personales, contables y extractos bancarios de cualquier entidad.
+            </p>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 2: ORBITAL RADAR LOADING SCREEN                              -->
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    @if (step() === 'analyzing') {
+      <div class="radar-orbit-view">
+        <div class="radar-orbit">
+          <!-- Concentric pulse rings -->
+          <div class="radar-orbit__ring radar-orbit__ring--outer"></div>
+          <div class="radar-orbit__ring radar-orbit__ring--mid"></div>
+          <div class="radar-orbit__ring radar-orbit__ring--inner"></div>
+
+          <!-- Central Core Node -->
+          <div class="radar-orbit__core">
+            <ng-icon name="sparkles" size="2rem" />
+          </div>
+
+          <!-- Orbiting Satellites -->
+          <div class="radar-orbit__satellite radar-orbit__satellite--sat1">
+            <span class="sat-chip">
+              <ng-icon name="calendar" size="0.875rem" />
+              <span>Fechas</span>
+            </span>
+          </div>
+
+          <div class="radar-orbit__satellite radar-orbit__satellite--sat2">
+            <span class="sat-chip">
+              <ng-icon name="income" size="0.875rem" />
+              <span>Montos</span>
+            </span>
+          </div>
+
+          <div class="radar-orbit__satellite radar-orbit__satellite--sat3">
+            <span class="sat-chip">
+              <ng-icon name="list" size="0.875rem" />
+              <span>Conceptos</span>
+            </span>
+          </div>
+
+          <div class="radar-orbit__satellite radar-orbit__satellite--sat4">
+            <span class="sat-chip">
+              <ng-icon name="categories" size="0.875rem" />
+              <span>Categorías</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="radar-orbit-footer">
+          <h3 class="radar-orbit-footer__title">Interpretando tu Hoja de Cálculo</h3>
+          <p class="radar-orbit-footer__status">
+            {{ currentLoadingMessage() }}
+          </p>
+          <span class="radar-orbit-footer__filename" *ngIf="selectedFile()">
+            {{ selectedFile()?.name }}
+          </span>
+        </div>
+      </div>
+    }
+
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 3: MATCH CARD & PREVIEW (THE BENTO RESULT)                   -->
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    @if (step() === 'matched' && analysisResult()) {
+      <div class="match-card-view">
+        <!-- Header with Match Pill -->
+        <div class="match-header">
+          <div class="match-header__meta">
+            <div class="match-badge">
+              <span class="match-badge__dot"></span>
+              <span class="match-badge__text">
+                {{ analysisResult()?.matchConfidence }}% Match con tu formato
+              </span>
+            </div>
+            <h2 class="match-header__title">Entendimos la estructura de tus finanzas</h2>
+            <p class="match-header__subtitle">
+              Mapeamos tus columnas y valores. Revisa el resumen y personaliza las opciones antes de importar.
+            </p>
+          </div>
+
+          <button
+            class="match-header__reupload-btn"
+            type="button"
+            (click)="resetState()"
+          >
+            Subir otro archivo
+          </button>
+        </div>
+
+        <!-- Master-Detail Bento Grid -->
+        <div class="match-bento-grid">
+          <!-- Card Left: Diagnóstico y Métricas -->
+          <div class="bento-card bento-card--summary">
+            <div class="bento-card__title-row">
+              <span class="bento-card__icon">📊</span>
+              <h4 class="bento-card__heading">Diagnóstico del Archivo</h4>
+            </div>
+
+            <div class="stats-list">
+              <div class="stat-item">
+                <span class="stat-item__label">Movimientos detectados</span>
+                <span class="stat-item__value">
+                  ~{{ analysisResult()?.summary?.estimatedRows }} transacciones
+                </span>
+              </div>
+
+              <div class="stat-item">
+                <span class="stat-item__label">Periodo identificado</span>
+                <span class="stat-item__value">
+                  {{ analysisResult()?.summary?.dateRangeSample || 'Periodo continuo' }}
+                </span>
+              </div>
+
+              <div class="stat-item">
+                <span class="stat-item__label">Moneda inferida</span>
+                <span class="stat-item__value">
+                  {{ analysisResult()?.summary?.detectedCurrency || 'Moneda local' }}
+                </span>
+              </div>
+
+              <div class="stat-item">
+                <span class="stat-item__label">Estructura contable</span>
+                <span class="stat-item__value stat-item__value--highlight">
+                  {{ analysisResult()?.summary?.patternDescription }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Right: Explicabilidad y Opciones -->
+          <div class="bento-card bento-card--explanation">
+            <div class="bento-card__title-row">
+              <span class="bento-card__icon">🧠</span>
+              <h4 class="bento-card__heading">Por qué entendimos tu archivo</h4>
+            </div>
+
+            <ul class="reasons-list">
+              @for (reason of analysisResult()?.explanation; track reason) {
+                <li class="reason-item">
+                  <span class="reason-item__check">
+                    <ng-icon name="check" size="0.875rem" />
+                  </span>
+                  <span class="reason-item__text">{{ reason }}</span>
+                </li>
+              }
+            </ul>
+
+            <div class="options-group">
+              <div class="option-row">
+                <div class="option-row__info">
+                  <span class="option-row__label">Categorizar con IA</span>
+                  <span class="option-row__desc">
+                    Asigna categorías automáticamente (Supermercado, Transporte, etc.) analizando la descripción de cada gasto.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="toggle-switch"
+                  [class.toggle-switch--on]="autoCategorize()"
+                  (click)="toggleAutoCategorize()"
+                  role="switch"
+                  [attr.aria-checked]="autoCategorize()"
+                >
+                  <span class="toggle-switch__thumb"></span>
+                </button>
+              </div>
+
+              <div class="option-row">
+                <div class="option-row__info">
+                  <span class="option-row__label">Omitir duplicados</span>
+                  <span class="option-row__desc">
+                    Evita registrar dos veces movimientos que ya existan en tu historial.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="toggle-switch"
+                  [class.toggle-switch--on]="skipDuplicates()"
+                  (click)="toggleSkipDuplicates()"
+                  role="switch"
+                  [attr.aria-checked]="skipDuplicates()"
+                >
+                  <span class="toggle-switch__thumb"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion Preview of Parsed Rows -->
+        <div class="preview-accordion">
+          <button
+            class="preview-accordion__toggle"
+            type="button"
+            (click)="togglePreview()"
+          >
+            <div class="preview-accordion__title">
+              <ng-icon name="list" size="1rem" />
+              <span>Vista previa de cómo se guardarán los datos (Primeras filas)</span>
+            </div>
+            <ng-icon
+              [name]="showPreviewTable() ? 'chevronUp' : 'chevronDown'"
+              size="0.875rem"
+            />
+          </button>
+
+          @if (showPreviewTable()) {
+            <div class="preview-table-wrapper">
+              <table class="preview-table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th class="text-right">Monto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of analysisResult()?.previewRows; track $index) {
+                    <tr>
+                      <td class="cell-date">{{ row.date }}</td>
+                      <td class="cell-desc">{{ row.description }}</td>
+                      <td>
+                        <span class="category-badge">
+                          {{ row.originalCategory || 'Por clasificar' }}
+                        </span>
+                      </td>
+                      <td class="text-right">
+                        <span
+                          class="amount-badge"
+                          [class.amount-badge--income]="row.type === 'income'"
+                          [class.amount-badge--expense]="row.type === 'expense'"
+                        >
+                          {{ row.type === 'income' ? '+' : '-' }}${{ row.amount | number:'1.0-2' }}
+                        </span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="match-footer">
+          <button
+            class="btn-secondary"
+            type="button"
+            (click)="onClose()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            class="btn-primary"
+            type="button"
+            (click)="commitImport()"
+          >
+            <span>Confirmar e importar {{ analysisResult()?.summary?.estimatedRows }} movimientos</span>
+            <ng-icon name="arrowRight" size="1rem" />
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 4: COMMITTING / PROGRESS                                     -->
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    @if (step() === 'committing') {
+      <div class="committing-view">
+        <div class="committing-spinner">
+          <div class="committing-spinner__circle"></div>
+        </div>
+        <h3 class="committing-view__title">Guardando tus transacciones...</h3>
+        <p class="committing-view__subtitle">
+          Normalizando registros, aplicando deduplicación y categorizando movimientos.
+        </p>
+      </div>
+    }
+
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 5: SUCCESS CELEBRATION                                       -->
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    @if (step() === 'success' && commitResult()) {
+      <div class="success-view">
+        <div class="success-icon-badge">
+          <ng-icon name="check" size="2rem" />
+        </div>
+
+        <h2 class="success-view__title">¡Importación completada con éxito!</h2>
+        <p class="success-view__subtitle">
+          Tus movimientos ya están integrados en tu balance y gráficos de Kipu.
+        </p>
+
+        <div class="success-metrics-grid">
+          <div class="metric-card">
+            <span class="metric-card__number metric-card__number--primary">
+              {{ commitResult()?.importedCount }}
+            </span>
+            <span class="metric-card__label">Transacciones creadas</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-card__number metric-card__number--skipped">
+              {{ commitResult()?.skippedCount }}
+            </span>
+            <span class="metric-card__label">Duplicados omitidos</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-card__number metric-card__number--income">
+              +${{ commitResult()?.totalIncome | number:'1.0-0' }}
+            </span>
+            <span class="metric-card__label">Total Ingresos</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-card__number metric-card__number--expense">
+              -${{ commitResult()?.totalExpense | number:'1.0-0' }}
+            </span>
+            <span class="metric-card__label">Total Gastos</span>
+          </div>
+        </div>
+
+        <div class="success-footer">
+          <button
+            class="btn-primary"
+            type="button"
+            (click)="onClose()"
+          >
+            Ver mis transacciones
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 6: ERROR CARD                                                -->
+    <!-- ═════════════════════════════════════════════════════════════════ -->
+    @if (step() === 'error') {
+      <div class="error-view">
+        <div class="error-icon-badge">
+          <ng-icon name="warning" size="2rem" />
+        </div>
+
+        <h3 class="error-view__title">No pudimos procesar tu archivo</h3>
+        <p class="error-view__message">{{ errorMessage() }}</p>
+
+        <div class="error-footer">
+          <button
+            class="btn-secondary"
+            type="button"
+            (click)="onClose()"
+          >
+            Cerrar
+          </button>
+          <button
+            class="btn-primary"
+            type="button"
+            (click)="resetState()"
+          >
+            Probar con otro archivo
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</ft-modal>

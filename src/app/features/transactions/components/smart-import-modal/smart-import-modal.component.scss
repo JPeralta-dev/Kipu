@@ -99,7 +99,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 background 0.25s ease,
                 color 0.25s ease,
                 box-shadow 0.25s ease;
@@ -449,7 +449,7 @@
   border: 1px solid rgba(45, 212, 191, 0.35);
   border-radius: 9999px;
   width: fit-content;
-  animation: popInBadge 420ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: popInBadge 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   transform: translateZ(0);
 
   &__dot {
@@ -464,7 +464,7 @@
   &__text {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #0d9488;
+    color: var(--success);
     letter-spacing: 0.02em;
   }
 }
@@ -648,7 +648,7 @@
     border-radius: 50%;
     background: #ffffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform;
   }
 }
@@ -736,7 +736,7 @@
   font-variant-numeric: tabular-nums;
 
   &--income {
-    color: #0d9488;
+    color: var(--success);
   }
 
   &--expense {
@@ -840,14 +840,14 @@
   height: 4.5rem;
   border-radius: 50%;
   background: var(--success-bg);
-  color: #0d9488;
+  color: var(--success);
   border: 2px solid rgba(45, 212, 191, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
   box-shadow: 0 0 30px rgba(45, 212, 191, 0.2);
-  animation: popInBadge 450ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: popInBadge 450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .error-icon-badge {
@@ -861,7 +861,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
-  animation: popInBadge 450ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: popInBadge 450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .success-metrics-grid {
@@ -897,7 +897,7 @@
 
     &--primary { color: var(--accent-end); }
     &--skipped { color: var(--text-tertiary); }
-    &--income { color: #0d9488; }
+    &--income { color: var(--success); }
     &--expense { color: var(--danger); }
   }
 

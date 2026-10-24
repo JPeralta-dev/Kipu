@@ -58,6 +58,14 @@
             </div>
           }
         </div>
+        <button
+          type="button"
+          class="transactions-page__secondary-btn"
+          (click)="openImportModal()"
+        >
+          <ng-icon name="upload" size="0.875rem" />
+          <span>Importar Excel / CSV</span>
+        </button>
         <a routerLink="/transactions/new" class="transactions-page__cta">
           <span class="cta-disc">
             <ng-icon name="plus" size="0.875rem" />
@@ -115,6 +123,14 @@
             </div>
           }
         </div>
+        <button
+          type="button"
+          class="transactions-page__secondary-btn"
+          (click)="openImportModal()"
+        >
+          <ng-icon name="upload" size="0.875rem" />
+          <span>Importar Excel / CSV</span>
+        </button>
         <a routerLink="/transactions/new" class="transactions-page__cta">
           <span class="cta-disc">
             <ng-icon name="plus" size="0.875rem" />
@@ -147,4 +163,9 @@
       (cancel)="onCancelDelete()"
     />
   }
+  <ft-smart-import-modal
+    [open]="showImportModal()"
+    (closed)="showImportModal.set(false)"
+    (imported)="onImportSuccess($event)"
+  />
 </div>

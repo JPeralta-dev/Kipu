@@ -7,7 +7,9 @@ import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../shared/icons/icon-registry';
 
 import { TransactionTableComponent } from '../components/transaction-table/transaction-table.component';
+import { SmartImportModalComponent } from '../components/smart-import-modal/smart-import-modal.component';
 import { TransactionRowData } from '../transaction.types';
+import { SmartCommitResult } from '../../../core/models/smart-import.model';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
@@ -22,7 +24,7 @@ type TransactionsState = 'loading' | 'ready' | 'empty' | 'error';
 @Component({
   selector: 'ft-transactions-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, TransactionTableComponent, EmptyStateComponent, ConfirmDialogComponent, TranslatePipe, FormsModule, NgIcon, ClickOutsideDirective],
+  imports: [CommonModule, RouterLink, TransactionTableComponent, EmptyStateComponent, ConfirmDialogComponent, TranslatePipe, FormsModule, NgIcon, ClickOutsideDirective, SmartImportModalComponent],
   templateUrl: './transactions.page.html',
   styleUrl: './transactions.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +40,7 @@ export class TransactionsPage implements OnInit {
   readonly state = signal<TransactionsState>('loading');
   readonly monthOpen = signal(false);
   readonly bulkDeleting = signal(false);
+  readonly showImportModal = signal(false);
 
   /** Confirm dialog state for bulk delete */
   readonly showDeleteConfirm = signal(false);
@@ -171,6 +174,16 @@ export class TransactionsPage implements OnInit {
   }
 
   retry(): void {
+    this.loadData();
+  }
+
+  openImportModal(): void {
+    this.showImportModal.set(true);
+  }
+
+  onImportSuccess(result: SmartCommitResult): void {
+    this.showImportModal.set(false);
+    this.toast.success(`¡${result.importedCount} transacciones importadas con éxito!`);
     this.loadData();
   }
 }

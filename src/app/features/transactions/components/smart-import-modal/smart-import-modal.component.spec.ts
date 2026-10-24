@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
+import { provideIcons } from '@ng-icons/core';
+import { ICONS } from '../../../../shared/icons/icon-registry';
 import { SmartImportModalComponent } from './smart-import-modal.component';
 import { SmartImportService } from '../../../../core/services/smart-import.service';
 import type {
@@ -57,6 +59,7 @@ describe('SmartImportModalComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SmartImportModalComponent],
       providers: [
+        provideIcons(ICONS),
         { provide: SmartImportService, useValue: mockSmartImportService },
       ],
     }).compileComponents();

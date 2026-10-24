@@ -76,6 +76,8 @@ import {
   heroArrowDownOnSquareStack,
   heroTrash,
   heroFlag,
+  heroSparkles,
+  heroArrowUpTray,
 } from '@ng-icons/heroicons/outline';
 
 // ─── Icon Map ────────────────────────────────────────────────────────────────
@@ -194,6 +196,8 @@ export const ICONS = {
   // Data management
   documentArrowDown: heroArrowDownOnSquareStack,
   trash: heroTrash,
+  sparkles: heroSparkles,
+  upload: heroArrowUpTray,
 };
 
 // ─── Category Icon Mapping ───────────────────────────────────────────────────

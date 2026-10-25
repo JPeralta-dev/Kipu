@@ -134,6 +134,47 @@
     padding: 6px;
   }
 
+  &__shortcuts {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  &__shortcut {
+    flex: 1;
+    padding: 6px 6px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-tertiary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &--active {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+      font-weight: 600;
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    margin: 4px 6px;
+    background: var(--glass-border);
+  }
+
   &__option {
     padding: 10px 14px;
     font-size: 13px;

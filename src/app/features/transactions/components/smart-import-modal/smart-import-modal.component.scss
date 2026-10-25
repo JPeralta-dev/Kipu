@@ -22,6 +22,8 @@
     color: #ffffff;
     box-shadow: 0 8px 24px var(--accent-glow);
     margin-bottom: 1rem;
+    transform: translateZ(0);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   &__title {
@@ -47,21 +49,27 @@
   border-radius: 1.25rem;
   padding: 3rem 2rem;
   background: var(--bg-secondary);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   outline: none;
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
 
   &:hover,
   &--active {
     border-color: var(--accent-end);
     background: var(--bg-elevated);
-    box-shadow: 0 12px 32px var(--accent-glow);
-    transform: translateY(-2px);
+    box-shadow: 0 14px 36px var(--accent-glow);
+    transform: translateY(-2px) scale(1.005);
 
     .dropzone-area__circle {
-      transform: scale(1.08);
+      transform: scale(1.1) rotate(5deg);
       background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
       color: #ffffff;
+      box-shadow: 0 6px 20px var(--accent-glow);
     }
   }
 
@@ -83,15 +91,19 @@
   }
 
   &__circle {
-    width: 4rem;
-    height: 4rem;
+    width: 4.25rem;
+    height: 4.25rem;
     border-radius: 50%;
     background: var(--bg-tertiary);
     color: var(--accent-end);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.25s ease,
+                color 0.25s ease,
+                box-shadow 0.25s ease;
+    will-change: transform;
   }
 
   &__prompt {
@@ -133,13 +145,19 @@
   border-radius: 9999px;
   background: var(--bg-tertiary);
   color: var(--pill-text);
+  border: 1px solid var(--border-subtle);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
 }
 
 /* ═════════════════════════════════════════════════════════════════ */
-/* STEP 2: ORBITAL RADAR VIEW (ACCORDING TO REFERENCE VIDEO)        */
+/* STEP 2: ORBITAL RADAR VIEW (120HZ GPU-ACCELERATED PHYSICS)       */
 /* ═════════════════════════════════════════════════════════════════ */
 .radar-orbit-view {
-  padding: 4rem 1rem 3rem;
+  padding: 3.5rem 1rem 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,89 +166,162 @@
 
 .radar-orbit {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 310px;
+  height: 310px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+  /* Rotating radar beam scanner */
+  &__scanner {
+    position: absolute;
+    width: 290px;
+    height: 290px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 280deg,
+      rgba(167, 139, 250, 0.05) 320deg,
+      rgba(168, 85, 247, 0.22) 360deg
+    );
+    animation: radarSweep 5s linear infinite;
+    will-change: transform;
+    pointer-events: none;
+    z-index: 2;
+  }
 
   /* Concentric pulse rings */
   &__ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid var(--border-strong);
     box-sizing: border-box;
+    pointer-events: none;
+    transform: translateZ(0);
 
     &--inner {
       width: 130px;
       height: 130px;
-      border-color: rgba(167, 139, 250, 0.35);
-      animation: pulseInner 3s ease-in-out infinite;
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      animation: pulseInner 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      will-change: transform, opacity;
+      z-index: 1;
     }
 
     &--mid {
-      width: 200px;
-      height: 200px;
-      border-style: dashed;
-      border-color: rgba(167, 139, 250, 0.25);
-      animation: rotateOrbit 30s linear infinite;
+      width: 210px;
+      height: 210px;
+      border: 1px dashed rgba(167, 139, 250, 0.25);
+      animation: rotateOrbitCounter 45s linear infinite;
+      will-change: transform;
+      z-index: 1;
     }
 
     &--outer {
-      width: 280px;
-      height: 280px;
-      border-color: rgba(167, 139, 250, 0.15);
-      animation: pulseOuter 4s ease-in-out infinite;
+      width: 290px;
+      height: 290px;
+      border: 1px solid rgba(167, 139, 250, 0.16);
+      animation: pulseOuter 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      will-change: transform, opacity;
+      z-index: 1;
+    }
+
+    &--sonar {
+      width: 140px;
+      height: 140px;
+      border: 1.5px solid rgba(168, 85, 247, 0.5);
+      animation: sonarRipple 2.8s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+      will-change: transform, opacity;
+      z-index: 1;
     }
   }
 
-  /* Core center element */
+  /* Central Core Node with layered ambient glow */
   &__core {
     position: relative;
-    z-index: 5;
-    width: 4rem;
-    height: 4rem;
+    z-index: 8;
+    width: 4.25rem;
+    height: 4.25rem;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 35px var(--accent-glow), 0 0 15px rgba(168, 85, 247, 0.4);
-    animation: coreBreath 2.5s ease-in-out infinite;
+    box-shadow: 0 0 28px var(--accent-glow);
+    animation: coreBreath 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    will-change: transform;
+    transform: translateZ(0);
+
+    &-glow {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%);
+      animation: pulseGlow 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
   }
 
-  /* Orbiting satellite chips */
-  &__satellite {
+  /* ── 120Hz Orbital Arms (Counter-Rotating System) ── */
+  &__arm {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    will-change: transform;
     z-index: 6;
 
+    /* Arm 1: Fechas (Inner Orbit track, 16s period) */
     &--sat1 {
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: floatSat 4s ease-in-out infinite;
+      animation: orbitTrack1 16s linear infinite;
+
+      .sat-chip {
+        position: absolute;
+        top: -16px;
+        left: 88px;
+        animation: counterOrbit1 16s linear infinite;
+      }
     }
 
+    /* Arm 2: Montos (Outer Orbit track, 24s period, offset 90deg) */
     &--sat2 {
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      animation: floatSat 4.5s ease-in-out infinite 0.7s;
+      animation: orbitTrack2 24s linear infinite;
+
+      .sat-chip {
+        position: absolute;
+        top: -16px;
+        left: 118px;
+        animation: counterOrbit2 24s linear infinite;
+      }
     }
 
+    /* Arm 3: Conceptos (Mid-Inner Orbit track, 20s period, offset 180deg) */
     &--sat3 {
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: floatSat 4.2s ease-in-out infinite 1.4s;
+      animation: orbitTrack3 20s linear infinite;
+
+      .sat-chip {
+        position: absolute;
+        top: -16px;
+        left: 92px;
+        animation: counterOrbit3 20s linear infinite;
+      }
     }
 
+    /* Arm 4: Categorías (Outer Orbit track, 28s period, offset 270deg) */
     &--sat4 {
-      left: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      animation: floatSat 3.8s ease-in-out infinite 2.1s;
+      animation: orbitTrack4 28s linear infinite;
+
+      .sat-chip {
+        position: absolute;
+        top: -16px;
+        left: 122px;
+        animation: counterOrbit4 28s linear infinite;
+      }
     }
   }
 }
@@ -246,8 +337,10 @@
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   white-space: nowrap;
+  will-change: transform;
+  transform: translateZ(0);
 
   ng-icon {
     color: var(--accent-end);
@@ -255,15 +348,16 @@
 }
 
 .radar-orbit-footer {
-  margin-top: 3rem;
+  margin-top: 2.75rem;
   text-align: center;
-  max-width: 24rem;
+  max-width: 25rem;
 
   &__title {
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
     color: var(--text-primary);
+    letter-spacing: -0.015em;
   }
 
   &__status {
@@ -271,7 +365,7 @@
     color: var(--text-secondary);
     margin: 0 0 0.75rem 0;
     min-height: 1.5rem;
-    transition: opacity 0.3s ease;
+    animation: fadeInText 0.35s ease;
   }
 
   &__filename {
@@ -282,16 +376,19 @@
     padding: 0.25rem 0.75rem;
     border-radius: 0.5rem;
     font-family: monospace;
+    border: 1px solid var(--border-subtle);
   }
 }
 
 /* ═════════════════════════════════════════════════════════════════ */
-/* STEP 3: MATCH BENTO CARD VIEW                                    */
+/* STEP 3: MATCH BENTO CARD VIEW (CHOREOGRAPHED ENTRANCE)           */
 /* ═════════════════════════════════════════════════════════════════ */
 .match-card-view {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  animation: matchViewEnter 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateZ(0);
 }
 
 .match-header {
@@ -332,12 +429,13 @@
     font-size: 0.8125rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
 
     &:hover {
       background: var(--bg-tertiary);
       color: var(--text-primary);
+      transform: translateY(-1px);
     }
   }
 }
@@ -348,9 +446,11 @@
   gap: 0.5rem;
   padding: 0.25rem 0.75rem;
   background: var(--success-bg);
-  border: 1px solid rgba(45, 212, 191, 0.3);
+  border: 1px solid rgba(45, 212, 191, 0.35);
   border-radius: 9999px;
   width: fit-content;
+  animation: popInBadge 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateZ(0);
 
   &__dot {
     width: 0.5rem;
@@ -358,12 +458,13 @@
     border-radius: 50%;
     background: var(--success);
     box-shadow: 0 0 8px var(--success);
+    animation: pulseDot 2s infinite ease-in-out;
   }
 
   &__text {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #0d9488;
+    color: var(--success);
     letter-spacing: 0.02em;
   }
 }
@@ -387,6 +488,15 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  transform: translateZ(0);
+
+  &--summary {
+    animation: slideInLeft 350ms cubic-bezier(0.16, 1, 0.3, 1) 60ms backwards;
+  }
+
+  &--explanation {
+    animation: slideInRight 350ms cubic-bezier(0.16, 1, 0.3, 1) 100ms backwards;
+  }
 
   &__title-row {
     display: flex;
@@ -395,7 +505,16 @@
   }
 
   &__icon {
-    font-size: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: var(--bg-tertiary);
+    color: var(--accent-end);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
   }
 
   &__heading {
@@ -456,6 +575,8 @@
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
+  animation: reasonItemFade 320ms cubic-bezier(0.16, 1, 0.3, 1) calc(140ms + var(--item-idx, 0) * 55ms) backwards;
+  transform: translateZ(0);
 
   &__check {
     color: var(--success);
@@ -513,8 +634,13 @@
   border: none;
   cursor: pointer;
   padding: 2px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
 
   &--on {
     background: var(--accent-end);
@@ -531,7 +657,8 @@
     border-radius: 50%;
     background: #ffffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease;
+    transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
   }
 }
 
@@ -541,6 +668,7 @@
   border-radius: 0.875rem;
   background: var(--bg-secondary);
   overflow: hidden;
+  animation: slideUpFade 350ms cubic-bezier(0.16, 1, 0.3, 1) 180ms backwards;
 
   &__toggle {
     width: 100%;
@@ -554,6 +682,7 @@
     color: var(--text-primary);
     font-size: 0.875rem;
     font-weight: 600;
+    transition: background-color 0.15s ease;
 
     &:hover {
       background: var(--bg-tertiary);
@@ -616,7 +745,7 @@
   font-variant-numeric: tabular-nums;
 
   &--income {
-    color: #0d9488;
+    color: var(--success);
   }
 
   &--expense {
@@ -651,7 +780,9 @@
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 4px 16px var(--accent-glow);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
 
   &:hover {
     transform: translateY(-1px);
@@ -672,11 +803,14 @@
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.15s ease,
+              color 0.15s ease,
+              transform 0.15s ease;
 
   &:hover {
     background: var(--bg-tertiary);
     color: var(--text-primary);
+    transform: translateY(-1px);
   }
 }
 
@@ -691,6 +825,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  animation: matchViewEnter 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .committing-spinner {
@@ -704,7 +839,8 @@
     border-radius: 50%;
     border: 3px solid var(--border-default);
     border-top-color: var(--accent-end);
-    animation: rotateOrbit 1s linear infinite;
+    animation: rotateOrbit 0.9s linear infinite;
+    will-change: transform;
   }
 }
 
@@ -713,13 +849,14 @@
   height: 4.5rem;
   border-radius: 50%;
   background: var(--success-bg);
-  color: #0d9488;
+  color: var(--success);
   border: 2px solid rgba(45, 212, 191, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
   box-shadow: 0 0 30px rgba(45, 212, 191, 0.2);
+  animation: popInBadge 450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .error-icon-badge {
@@ -733,6 +870,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
+  animation: popInBadge 450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .success-metrics-grid {
@@ -756,6 +894,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   &__number {
     font-size: 1.25rem;
@@ -763,7 +906,7 @@
 
     &--primary { color: var(--accent-end); }
     &--skipped { color: var(--text-tertiary); }
-    &--income { color: #0d9488; }
+    &--income { color: var(--success); }
     &--expense { color: var(--danger); }
   }
 
@@ -776,12 +919,17 @@
 }
 
 /* ═════════════════════════════════════════════════════════════════ */
-/* ANIMATION KEYFRAMES                                              */
+/* 120HZ COMPOSITOR KEYFRAMES (GPU-ACCELERATED, NO LAYOUT REFLOW)    */
 /* ═════════════════════════════════════════════════════════════════ */
+@keyframes radarSweep {
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(360deg); }
+}
+
 @keyframes pulseInner {
   0%, 100% {
     transform: scale(0.96);
-    opacity: 0.4;
+    opacity: 0.35;
   }
   50% {
     transform: scale(1.04);
@@ -792,7 +940,7 @@
 @keyframes pulseOuter {
   0%, 100% {
     transform: scale(0.98);
-    opacity: 0.2;
+    opacity: 0.16;
   }
   50% {
     transform: scale(1.02);
@@ -800,27 +948,197 @@
   }
 }
 
+@keyframes sonarRipple {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+  }
+}
+
 @keyframes rotateOrbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(360deg); }
+}
+
+@keyframes rotateOrbitCounter {
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(-360deg); }
 }
 
 @keyframes coreBreath {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 25px var(--accent-glow);
   }
   50% {
     transform: scale(1.06);
-    box-shadow: 0 0 45px var(--accent-glow), 0 0 20px rgba(168, 85, 247, 0.6);
   }
 }
 
-@keyframes floatSat {
+@keyframes pulseGlow {
   0%, 100% {
-    transform: translateY(0);
+    opacity: 0.3;
+    transform: scale(0.95);
   }
   50% {
-    transform: translateY(-6px);
+    opacity: 0.8;
+    transform: scale(1.15);
+  }
+}
+
+/* ── Counter-Rotating Orbit Physics ── */
+/* Track 1: 16s period, start at 0deg */
+@keyframes orbitTrack1 {
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(360deg); }
+}
+@keyframes counterOrbit1 {
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(-360deg); }
+}
+
+/* Track 2: 24s period, start at 90deg */
+@keyframes orbitTrack2 {
+  from { transform: rotateZ(90deg); }
+  to { transform: rotateZ(450deg); }
+}
+@keyframes counterOrbit2 {
+  from { transform: rotateZ(-90deg); }
+  to { transform: rotateZ(-450deg); }
+}
+
+/* Track 3: 20s period, start at 180deg */
+@keyframes orbitTrack3 {
+  from { transform: rotateZ(180deg); }
+  to { transform: rotateZ(540deg); }
+}
+@keyframes counterOrbit3 {
+  from { transform: rotateZ(-180deg); }
+  to { transform: rotateZ(-540deg); }
+}
+
+/* Track 4: 28s period, start at 270deg */
+@keyframes orbitTrack4 {
+  from { transform: rotateZ(270deg); }
+  to { transform: rotateZ(630deg); }
+}
+@keyframes counterOrbit4 {
+  from { transform: rotateZ(-270deg); }
+  to { transform: rotateZ(-630deg); }
+}
+
+/* ── Entrance & Pop Choreography ── */
+@keyframes matchViewEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.985) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes popInBadge {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reasonItemFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInText {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* ACCESSIBILITY: REDUCED MOTION                                    */
+/* ═════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .radar-orbit__scanner,
+  .radar-orbit__ring--inner,
+  .radar-orbit__ring--mid,
+  .radar-orbit__ring--outer,
+  .radar-orbit__ring--sonar,
+  .radar-orbit__core,
+  .radar-orbit__core-glow,
+  .radar-orbit__arm,
+  .sat-chip,
+  .match-badge__dot,
+  .committing-spinner__circle {
+    animation: none !important;
+  }
+
+  .match-card-view,
+  .bento-card--summary,
+  .bento-card--explanation,
+  .reason-item,
+  .preview-accordion,
+  .match-badge {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

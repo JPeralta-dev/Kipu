@@ -38,19 +38,46 @@
             aria-haspopup="listbox"
           >
             <ng-icon name="calendar" size="1rem" />
-            <span>{{ dateRange.currentMonthLabel() }}</span>
+            <span>{{ dateRange.activeLabel() }}</span>
             <ng-icon name="chevronDown" size="0.75rem" />
           </button>
           @if (monthOpen()) {
             <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)" role="listbox">
+              <div class="month-selector__shortcuts">
+                <button
+                  class="month-selector__shortcut"
+                  [class.month-selector__shortcut--active]="dateRange.activePreset() === 'this_week'"
+                  (click)="onSelectPreset('this_week')"
+                  type="button"
+                >
+                  Esta semana
+                </button>
+                <button
+                  class="month-selector__shortcut"
+                  [class.month-selector__shortcut--active]="dateRange.activePreset() === 'this_month'"
+                  (click)="onSelectPreset('this_month')"
+                  type="button"
+                >
+                  Este mes
+                </button>
+                <button
+                  class="month-selector__shortcut"
+                  [class.month-selector__shortcut--active]="dateRange.activePreset() === 'last_30_days'"
+                  (click)="onSelectPreset('last_30_days')"
+                  type="button"
+                >
+                  30 días
+                </button>
+              </div>
+              <div class="month-selector__divider"></div>
               @for (month of dateRange.availableMonths(); track month.start) {
                 <button
                   class="month-selector__option"
-                  [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                  [class.month-selector__option--active]="dateRange.activePreset() === 'month' && dateRange.startDate() === month.start"
                   (click)="onMonthSelect(month)"
                   type="button"
                   role="option"
-                  [attr.aria-selected]="dateRange.startDate() === month.start"
+                  [attr.aria-selected]="dateRange.activePreset() === 'month' && dateRange.startDate() === month.start"
                 >
                   {{ month.label }}
                 </button>
@@ -103,19 +130,46 @@
             aria-haspopup="listbox"
           >
             <ng-icon name="calendar" size="1rem" />
-            <span>{{ dateRange.currentMonthLabel() }}</span>
+            <span>{{ dateRange.activeLabel() }}</span>
             <ng-icon name="chevronDown" size="0.75rem" />
           </button>
           @if (monthOpen()) {
             <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)" role="listbox">
+              <div class="month-selector__shortcuts">
+                <button
+                  class="month-selector__shortcut"
+                  [class.month-selector__shortcut--active]="dateRange.activePreset() === 'this_week'"
+                  (click)="onSelectPreset('this_week')"
+                  type="button"
+                >
+                  Esta semana
+                </button>
+                <button
+                  class="month-selector__shortcut"
+                  [class.month-selector__shortcut--active]="dateRange.activePreset() === 'this_month'"
+                  (click)="onSelectPreset('this_month')"
+                  type="button"
+                >
+                  Este mes
+                </button>
+                <button
+                  class="month-selector__shortcut"
+                  [class.month-selector__shortcut--active]="dateRange.activePreset() === 'last_30_days'"
+                  (click)="onSelectPreset('last_30_days')"
+                  type="button"
+                >
+                  30 días
+                </button>
+              </div>
+              <div class="month-selector__divider"></div>
               @for (month of dateRange.availableMonths(); track month.start) {
                 <button
                   class="month-selector__option"
-                  [class.month-selector__option--active]="dateRange.startDate() === month.start"
+                  [class.month-selector__option--active]="dateRange.activePreset() === 'month' && dateRange.startDate() === month.start"
                   (click)="onMonthSelect(month)"
                   type="button"
                   role="option"
-                  [attr.aria-selected]="dateRange.startDate() === month.start"
+                  [attr.aria-selected]="dateRange.activePreset() === 'month' && dateRange.startDate() === month.start"
                 >
                   {{ month.label }}
                 </button>

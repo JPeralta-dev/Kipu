@@ -128,8 +128,20 @@ export class TransactionsPage implements OnInit {
       });
   }
 
-  onMonthSelect(month: { start: string; end: string }): void {
-    this.dateRange.setMonth(month.start, month.end);
+  onSelectPreset(preset: 'this_week' | 'this_month' | 'last_30_days'): void {
+    if (preset === 'this_week') {
+      this.dateRange.setThisWeek();
+    } else if (preset === 'this_month') {
+      this.dateRange.setThisMonth();
+    } else if (preset === 'last_30_days') {
+      this.dateRange.setLast30Days();
+    }
+    this.monthOpen.set(false);
+    this.loadData();
+  }
+
+  onMonthSelect(month: { label: string; start: string; end: string }): void {
+    this.dateRange.setMonth(month.start, month.end, month.label);
     this.monthOpen.set(false);
     this.loadData();
   }

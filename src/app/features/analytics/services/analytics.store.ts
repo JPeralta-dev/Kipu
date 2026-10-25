@@ -11,6 +11,7 @@
  */
 
 import { Injectable, signal, computed } from '@angular/core';
+import { getThisWeekRange, getThisMonthRange } from '../../../core/services/date-range.service';
 import type {
   AnalyticsSummary,
   MonthlyTrend,
@@ -30,7 +31,7 @@ export type AnalyticsLoadState = 'idle' | 'loading' | 'ready' | 'error';
 export interface AnalyticsFilterState {
   dateRange: DateRange | null;
   bankId: string | null;
-  period: '7d' | '30d' | '90d' | '6m' | '1y' | 'custom';
+  period: 'this_week' | 'this_month' | '7d' | '30d' | '90d' | '6m' | '1y' | 'custom';
   type: 'all' | 'income' | 'expense';
   category: string | null;
 }
@@ -50,6 +51,23 @@ export interface ChartFilter {
  */
 function deriveDateRangeFromPeriod(period: AnalyticsFilterState['period']): DateRange {
   const now = new Date();
+
+  if (period === 'this_week') {
+    const range = getThisWeekRange(now);
+    return {
+      startDate: new Date(range.start + 'T00:00:00Z').toISOString(),
+      endDate: new Date(range.end + 'T23:59:59.999Z').toISOString(),
+    };
+  }
+
+  if (period === 'this_month') {
+    const range = getThisMonthRange(now);
+    return {
+      startDate: new Date(range.start + 'T00:00:00Z').toISOString(),
+      endDate: new Date(range.end + 'T23:59:59.999Z').toISOString(),
+    };
+  }
+
   // Anchor to the user's local calendar day (e.g. Sept 30 in Colombia, not Oct 1 UTC)
   const endUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
 
@@ -82,7 +100,7 @@ export class AnalyticsStore {
   private readonly _filters = signal<AnalyticsFilterState>({
     dateRange: null,
     bankId: null,
-    period: '30d',  // Default to 1m (30 days) on page load
+    period: 'this_month',  // Default to current calendar month
     type: 'all',
     category: null,
   });

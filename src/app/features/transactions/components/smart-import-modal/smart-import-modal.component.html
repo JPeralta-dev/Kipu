@@ -71,48 +71,53 @@
     <!-- ═════════════════════════════════════════════════════════════════ -->
     @if (step() === 'analyzing') {
       <div class="radar-orbit-view">
-        <div class="radar-orbit">
+        <div class="radar-orbit" aria-hidden="true">
+          <!-- Radar beam scanning sweep -->
+          <div class="radar-orbit__scanner"></div>
+
           <!-- Concentric pulse rings -->
           <div class="radar-orbit__ring radar-orbit__ring--outer"></div>
           <div class="radar-orbit__ring radar-orbit__ring--mid"></div>
           <div class="radar-orbit__ring radar-orbit__ring--inner"></div>
+          <div class="radar-orbit__ring radar-orbit__ring--sonar"></div>
 
-          <!-- Central Core Node -->
+          <!-- Central Core Node with ambient glow -->
           <div class="radar-orbit__core">
-            <ng-icon name="sparkles" size="2rem" />
+            <div class="radar-orbit__core-glow"></div>
+            <ng-icon name="sparkles" size="1.875rem" />
           </div>
 
-          <!-- Orbiting Satellites -->
-          <div class="radar-orbit__satellite radar-orbit__satellite--sat1">
-            <span class="sat-chip">
+          <!-- Planetary Orbit Arms (120Hz GPU-accelerated counter-rotating satellites) -->
+          <div class="radar-orbit__arm radar-orbit__arm--sat1">
+            <div class="sat-chip sat-chip--counter1">
               <ng-icon name="calendar" size="0.875rem" />
               <span>Fechas</span>
-            </span>
+            </div>
           </div>
 
-          <div class="radar-orbit__satellite radar-orbit__satellite--sat2">
-            <span class="sat-chip">
+          <div class="radar-orbit__arm radar-orbit__arm--sat2">
+            <div class="sat-chip sat-chip--counter2">
               <ng-icon name="income" size="0.875rem" />
               <span>Montos</span>
-            </span>
+            </div>
           </div>
 
-          <div class="radar-orbit__satellite radar-orbit__satellite--sat3">
-            <span class="sat-chip">
+          <div class="radar-orbit__arm radar-orbit__arm--sat3">
+            <div class="sat-chip sat-chip--counter3">
               <ng-icon name="list" size="0.875rem" />
               <span>Conceptos</span>
-            </span>
+            </div>
           </div>
 
-          <div class="radar-orbit__satellite radar-orbit__satellite--sat4">
-            <span class="sat-chip">
+          <div class="radar-orbit__arm radar-orbit__arm--sat4">
+            <div class="sat-chip sat-chip--counter4">
               <ng-icon name="categories" size="0.875rem" />
               <span>Categorías</span>
-            </span>
+            </div>
           </div>
         </div>
 
-        <div class="radar-orbit-footer">
+        <div class="radar-orbit-footer" role="status" aria-live="polite">
           <h3 class="radar-orbit-footer__title">Interpretando tu Hoja de Cálculo</h3>
           <p class="radar-orbit-footer__status">
             {{ currentLoadingMessage() }}
@@ -158,7 +163,9 @@
           <!-- Card Left: Diagnóstico y Métricas -->
           <div class="bento-card bento-card--summary">
             <div class="bento-card__title-row">
-              <span class="bento-card__icon">📊</span>
+              <span class="bento-card__icon">
+                <ng-icon name="chart" size="1.125rem" />
+              </span>
               <h4 class="bento-card__heading">Diagnóstico del Archivo</h4>
             </div>
 
@@ -196,13 +203,15 @@
           <!-- Card Right: Explicabilidad y Opciones -->
           <div class="bento-card bento-card--explanation">
             <div class="bento-card__title-row">
-              <span class="bento-card__icon">🧠</span>
+              <span class="bento-card__icon">
+                <ng-icon name="sparkles" size="1.125rem" />
+              </span>
               <h4 class="bento-card__heading">Por qué entendimos tu archivo</h4>
             </div>
 
             <ul class="reasons-list">
-              @for (reason of analysisResult()?.explanation; track reason) {
-                <li class="reason-item">
+              @for (reason of analysisResult()?.explanation; track reason; let idx = $index) {
+                <li class="reason-item" [style.--item-idx]="idx">
                   <span class="reason-item__check">
                     <ng-icon name="check" size="0.875rem" />
                   </span>

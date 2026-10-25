@@ -57,30 +57,68 @@
             <div class="month-selector">
               <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
                 <ng-icon name="calendar" size="1rem" />
-                <span>{{ dateRange.currentMonthLabel() }}</span>
+                <span>{{ currentFilterLabel() }}</span>
                 <ng-icon name="chevronDown" size="0.75rem" />
               </button>
               @if (monthOpen()) {
                 <div class="month-selector__dropdown" (clickOutside)="monthOpen.set(false)">
-                  <!-- Period shortcuts -->
+                  <!-- Period shortcuts: Esta semana, Este mes, 30 días, etc. -->
                   <div class="month-selector__shortcuts">
-                    @for (p of periodOptions; track p.value) {
-                      <button
-                        class="month-selector__shortcut"
-                        [class.month-selector__shortcut--active]="!showCustomDates() && headerPeriod() === p.value"
-                        (click)="onPeriodChange(p.value); monthOpen.set(false)"
-                        type="button"
-                      >
-                        {{ p.labelKey | translate }}
-                      </button>
-                    }
+                    <button
+                      class="month-selector__shortcut"
+                      [class.month-selector__shortcut--active]="!showCustomDates() && activeShortcut() === 'week'"
+                      (click)="onSelectWeek(); monthOpen.set(false)"
+                      type="button"
+                    >
+                      Esta semana
+                    </button>
+                    <button
+                      class="month-selector__shortcut"
+                      [class.month-selector__shortcut--active]="!showCustomDates() && activeShortcut() === 'month'"
+                      (click)="onSelectMonth(); monthOpen.set(false)"
+                      type="button"
+                    >
+                      Este mes
+                    </button>
+                    <button
+                      class="month-selector__shortcut"
+                      [class.month-selector__shortcut--active]="!showCustomDates() && activeShortcut() === '30d'"
+                      (click)="onSelect30Days(); monthOpen.set(false)"
+                      type="button"
+                    >
+                      30 días
+                    </button>
+                    <button
+                      class="month-selector__shortcut"
+                      [class.month-selector__shortcut--active]="!showCustomDates() && activeShortcut() === '90d'"
+                      (click)="onPeriodChange('3m'); monthOpen.set(false)"
+                      type="button"
+                    >
+                      3M
+                    </button>
+                    <button
+                      class="month-selector__shortcut"
+                      [class.month-selector__shortcut--active]="!showCustomDates() && activeShortcut() === '6m'"
+                      (click)="onPeriodChange('6m'); monthOpen.set(false)"
+                      type="button"
+                    >
+                      6M
+                    </button>
+                    <button
+                      class="month-selector__shortcut"
+                      [class.month-selector__shortcut--active]="!showCustomDates() && activeShortcut() === '1y'"
+                      (click)="onPeriodChange('1y'); monthOpen.set(false)"
+                      type="button"
+                    >
+                      1A
+                    </button>
                   </div>
                   <div class="month-selector__divider"></div>
-                  <!-- Month list -->
+                  <!-- Month list (strictly from account creation date) -->
                   @for (month of dateRange.availableMonths(); track month.start) {
                     <button
                       class="month-selector__option"
-                      [class.month-selector__option--active]="!showCustomDates() && dateRange.startDate() === month.start"
+                      [class.month-selector__option--active]="!showCustomDates() && activeShortcut() === 'calendar_month' && dateRange.startDate() === month.start"
                       (click)="onMonthSelect(month)"
                       type="button"
                     >

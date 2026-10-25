@@ -80,7 +80,7 @@ export class AuthService {
   private checkSession(): void {
     this.http
       .get<{
-        user: { id: string; email: string; name?: string; image?: string; subscription?: {
+        user: { id: string; email: string; name?: string; image?: string; createdAt?: string; subscription?: {
           tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
         }};
         session: { id: string; expiresAt: string };
@@ -92,7 +92,7 @@ export class AuthService {
             delay(500),
             switchMap(() =>
               this.http.get<{
-                user: { id: string; email: string; name?: string; image?: string; subscription?: {
+                user: { id: string; email: string; name?: string; image?: string; createdAt?: string; subscription?: {
                   tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
                 }};
                 session: { id: string; expiresAt: string };
@@ -120,14 +120,14 @@ export class AuthService {
 
   /** Map session user response to User interface (handles optional subscription) */
   private mapUserFromSession(raw: {
-    id: string; email: string; name?: string; image?: string;
+    id: string; email: string; name?: string; image?: string; createdAt?: string;
     subscription?: { tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string };
   }): User {
     return {
       id: raw.id,
       email: raw.email,
       displayName: raw.name,
-      createdAt: new Date().toISOString(),
+      createdAt: raw.createdAt ? new Date(raw.createdAt).toISOString() : new Date().toISOString(),
       subscription: raw.subscription ? {
         tier: raw.subscription.tier as SubscriptionTier,
         trialStart: raw.subscription.trialStart ?? null,
@@ -145,7 +145,7 @@ export class AuthService {
   ): Observable<User> {
     return this.http
       .post<{
-        user: { id: string; email: string; name?: string };
+        user: { id: string; email: string; name?: string; createdAt?: string };
         session: { id: string; expiresAt: string };
       }>(`${this.base}/sign-in/email`, { email, password }, { withCredentials: true })
       .pipe(
@@ -154,14 +154,14 @@ export class AuthService {
             id: res.user.id,
             email: res.user.email,
             displayName: res.user.name,
-            createdAt: new Date().toISOString(),
+            createdAt: res.user.createdAt ? new Date(res.user.createdAt).toISOString() : new Date().toISOString(),
           });
         }),
         switchMap((res) => of({
           id: res.user.id,
           email: res.user.email,
           displayName: res.user.name,
-          createdAt: new Date().toISOString(),
+            createdAt: res.user.createdAt ? new Date(res.user.createdAt).toISOString() : new Date().toISOString(),
         })),
       );
   }
@@ -174,7 +174,7 @@ export class AuthService {
   ): Observable<User> {
     return this.http
       .post<{
-        user: { id: string; email: string; name?: string };
+        user: { id: string; email: string; name?: string; createdAt?: string };
         session: { id: string; expiresAt: string };
       }>(`${this.base}/sign-up/email`, {
         email,
@@ -189,14 +189,14 @@ export class AuthService {
             id: res.user.id,
             email: res.user.email,
             displayName: res.user.name,
-            createdAt: new Date().toISOString(),
+            createdAt: res.user.createdAt ? new Date(res.user.createdAt).toISOString() : new Date().toISOString(),
           });
         }),
         switchMap((res) => of({
           id: res.user.id,
           email: res.user.email,
           displayName: res.user.name,
-          createdAt: new Date().toISOString(),
+            createdAt: res.user.createdAt ? new Date(res.user.createdAt).toISOString() : new Date().toISOString(),
         })),
       );
   }
@@ -282,7 +282,7 @@ export class AuthService {
         // If no local state, try to refresh from session
         this.http
           .get<{
-            user: { id: string; email: string; name?: string; image?: string; subscription?: {
+            user: { id: string; email: string; name?: string; image?: string; createdAt?: string; subscription?: {
               tier: string; trialStart?: string; trialEnd?: string; premiumStart?: string; premiumEnd?: string; status?: string;
             }};
             session: { id: string; expiresAt: string };

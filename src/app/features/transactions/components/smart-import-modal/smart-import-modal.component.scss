@@ -505,7 +505,16 @@
   }
 
   &__icon {
-    font-size: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: var(--bg-tertiary);
+    color: var(--accent-end);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
   }
 
   &__heading {

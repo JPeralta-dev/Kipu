@@ -159,7 +159,7 @@
     top: calc(100% + 4px);
     left: 0;
     z-index: 50;
-    min-width: 200px;
+    min-width: 230px;
     max-height: 320px;
     overflow-y: auto;
     background: var(--bg-secondary);
@@ -173,6 +173,7 @@
 
   &__shortcuts {
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
     padding: 4px;
   }

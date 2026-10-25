@@ -522,6 +522,7 @@ export class AnalyticsPage implements OnInit {
   readonly isNewUser = computed(() => this.store.isNewUser());
 
   readonly monthOpen = signal(false);
+  readonly activeShortcut = signal<'week' | 'month' | '30d' | '90d' | '6m' | '1y' | 'calendar_month' | 'custom'>('month');
   readonly dailyChartSubtitle = computed<string>(() => {
     const filters = this.store.filters();
     const period = filters.period;
@@ -573,6 +574,23 @@ export class AnalyticsPage implements OnInit {
   readonly filterBankId = computed(() => this.store.filters().bankId);
 
   /** Human-readable date range display */
+  readonly currentFilterLabel = computed<string>(() => {
+    if (this.showCustomDates()) {
+      return this.i18n.translate('analytics.customRange') || 'Personalizado';
+    }
+    const shortcut = this.activeShortcut();
+    if (shortcut === 'week') return 'Esta semana';
+    if (shortcut === 'month') return 'Este mes';
+    if (shortcut === '30d') return 'Últimos 30 días';
+    if (shortcut === '90d') return '3M';
+    if (shortcut === '6m') return '6M';
+    if (shortcut === '1y') return '1A';
+    if (shortcut === 'calendar_month') {
+      return this.dateRange.customLabel() || this.dateRange.currentMonthLabel();
+    }
+    return this.dateRange.activeLabel();
+  });
+
   readonly dateRangeDisplay = computed<string>(() => {
     const params = this.store.apiParams();
     const range = params.range;
@@ -580,8 +598,8 @@ export class AnalyticsPage implements OnInit {
 
     const start = new Date(range.startDate);
     const end = new Date(range.endDate);
-    const startStr = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    const endStr = end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const startStr = start.toLocaleDateString('es-CO', { month: 'short', day: 'numeric', year: 'numeric' });
+    const endStr = end.toLocaleDateString('es-CO', { month: 'short', day: 'numeric', year: 'numeric' });
     return `${startStr} — ${endStr}`;
   });
 
@@ -612,18 +630,44 @@ export class AnalyticsPage implements OnInit {
 
   // ─── Actions ────────────────────────────────────────────────────────────
 
+  onSelectWeek(): void {
+    this.showCustomDates.set(false);
+    this.activeShortcut.set('week');
+    this.dateRange.setThisWeek();
+    this.store.setPeriod('this_week');
+    this.onClearChartFilters();
+  }
+
+  onSelectMonth(): void {
+    this.showCustomDates.set(false);
+    this.activeShortcut.set('month');
+    this.dateRange.setThisMonth();
+    this.store.setPeriod('this_month');
+    this.onClearChartFilters();
+  }
+
+  onSelect30Days(): void {
+    this.showCustomDates.set(false);
+    this.activeShortcut.set('30d');
+    this.dateRange.setLast30Days();
+    this.store.setPeriod('30d');
+    this.onClearChartFilters();
+  }
+
   onPeriodChange(period: PeriodOption): void {
     this.showCustomDates.set(false);
-    // Map header period to store period
-    const storePeriod: '7d' | '30d' | '90d' | '6m' | '1y' =
+    const storePeriod: 'this_week' | 'this_month' | '30d' | '90d' | '6m' | '1y' =
       period === '1m' ? '30d' :
       period === '3m' ? '90d' :
       period === '1y' ? '1y' : '6m';
-    if (period === '1m') {
-      this.dateRange.setCurrentMonth();
+    if (storePeriod === '30d') {
+      this.activeShortcut.set('30d');
+      this.dateRange.setLast30Days();
+    } else {
+      this.activeShortcut.set(storePeriod as any);
+      this.dateRange.clear();
     }
     this.store.setPeriod(storePeriod);
-    // Clear chart filters when changing period
     this.onClearChartFilters();
   }
 
@@ -633,7 +677,8 @@ export class AnalyticsPage implements OnInit {
 
   onFiltersReset(): void {
     this.showCustomDates.set(false);
-    this.dateRange.setCurrentMonth();
+    this.activeShortcut.set('month');
+    this.dateRange.setThisMonth();
     this.store.clearFilters();
   }
 
@@ -641,11 +686,12 @@ export class AnalyticsPage implements OnInit {
     this.monthOpen.update(v => !v);
   }
 
-  onMonthSelect(month: { start: string; end: string }): void {
+  onMonthSelect(month: { label: string; start: string; end: string }): void {
     this.showCustomDates.set(false);
-    this.dateRange.setMonth(month.start, month.end);
+    this.activeShortcut.set('calendar_month');
+    this.dateRange.setMonth(month.start, month.end, month.label);
     const startDate = new Date(month.start + 'T00:00:00Z').toISOString();
-    const endDate = new Date(month.end + 'T23:59:59Z').toISOString();
+    const endDate = new Date(month.end + 'T23:59:59.999Z').toISOString();
     this.store.setDateRange(startDate, endDate);
     this.monthOpen.set(false);
   }
@@ -661,7 +707,8 @@ export class AnalyticsPage implements OnInit {
   /** Handle custom date range from header inputs */
   onCustomDateChange({ start, end }: { start: string; end: string }): void {
     if (start && end) {
-      this.dateRange.setMonth(start, end);
+      this.activeShortcut.set('custom');
+      this.dateRange.setCustomRange(start, end);
       // Convert to UTC ISO strings with proper boundaries
       const startDate = new Date(start + 'T00:00:00Z').toISOString();
       const endDate = new Date(end + 'T23:59:59Z').toISOString();

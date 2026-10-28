@@ -6,6 +6,7 @@ import {
   signal,
   computed,
   inject,
+  effect,
   OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -62,13 +63,28 @@ export class SmartImportModalComponent implements OnDestroy {
 
   private loadingTimer: ReturnType<typeof setInterval> | null = null;
 
+  constructor() {
+    effect(() => {
+      const isOpen = this.open();
+      if (!isOpen) {
+        // Modal was closed. Wait for exit animation to complete before resetting state
+        // to prevent UI flicker while the modal is fading out.
+        setTimeout(() => {
+          if (!this.open()) {
+            this.stopLoadingTimer();
+            this.resetState();
+          }
+        }, 250);
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.stopLoadingTimer();
   }
 
   onClose(): void {
     this.stopLoadingTimer();
-    this.resetState();
     this.closed.emit();
   }
 

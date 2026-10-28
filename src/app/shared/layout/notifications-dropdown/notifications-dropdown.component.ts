@@ -36,6 +36,11 @@ export class NotificationsDropdownComponent {
     this._notificationService.markAsRead(notification.id);
   }
 
+  markAllAsRead(event?: Event): void {
+    event?.stopPropagation();
+    this._notificationService.markAllAsRead();
+  }
+
   dismiss(id: string, event: Event): void {
     event.stopPropagation();
     this._notificationService.dismiss(id);

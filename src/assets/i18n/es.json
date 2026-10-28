@@ -716,7 +716,7 @@
     },
     "settings_notifications": {
       "title": "Notificaciones",
-      "desc": "configura cómo recibes las notificaciones.",
+      "desc": "Configura cómo recibes las notificaciones.",
       "coming_soon": "Próximamente"
     },
     "session": {
@@ -764,7 +764,7 @@
     },
     "gmail": {
       "title": "Conectar Gmail",
-      "desc": "conecta tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
+      "desc": "Conecta tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
       "connect": "Conectar Gmail",
       "connecting": "Conectando a Gmail...",
       "connect_failed": "No se pudo iniciar la conexión con Gmail. Intentá de nuevo.",

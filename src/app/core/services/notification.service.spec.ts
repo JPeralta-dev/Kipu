@@ -135,6 +135,48 @@ describe('NotificationService', () => {
     });
   });
 
+  describe('markAllAsRead', () => {
+    it('should mark all unread notifications as read and send PATCH requests', () => {
+      expect(service.unreadCount()).toBe(2);
+
+      service.markAllAsRead();
+
+      const patch1 = httpMock.expectOne(`${environment.apiUrl}/api/notifications/1/viewed`);
+      expect(patch1.request.method).toBe('PATCH');
+      expect(patch1.request.body).toEqual({ viewed: true });
+      patch1.flush({});
+
+      const patch3 = httpMock.expectOne(`${environment.apiUrl}/api/notifications/3/viewed`);
+      expect(patch3.request.method).toBe('PATCH');
+      expect(patch3.request.body).toEqual({ viewed: true });
+      patch3.flush({});
+
+      expect(service.unreadCount()).toBe(0);
+      expect(service.notifications().every(n => n.read && n.viewed)).toBe(true);
+    });
+
+    it('should do nothing if there are no unread notifications', () => {
+      service.setNotifications([
+        {
+          id: '2',
+          title: 'New feature',
+          message: 'Check out the new dashboard.',
+          type: 'info',
+          read: true,
+          viewed: true,
+          createdAt: new Date('2024-01-02'),
+          actionUrl: '/dashboard',
+        },
+      ]);
+      expect(service.unreadCount()).toBe(0);
+
+      service.markAllAsRead();
+
+      httpMock.expectNone(`${environment.apiUrl}/api/notifications/2/viewed`);
+      expect(service.unreadCount()).toBe(0);
+    });
+  });
+
   describe('dismiss', () => {
     it('should remove a notification from the list and call DELETE', () => {
       const before = service.notifications().length;

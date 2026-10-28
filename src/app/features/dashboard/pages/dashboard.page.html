@@ -211,56 +211,17 @@
         </article>
       </section>
 
-      <!-- ZONE 3: STRATEGIC INTELLIGENCE & GOALS (Side-by-side 2 equal columns) -->
+      <!-- ZONE 3: GOALS & BUDGETS (Side-by-side 2 equal columns) -->
       <section class="dashboard-intelligence" ftSubtleReveal="fade-up" [delay]="150">
-        <!-- AI Insights (Left) -->
+        <!-- Goals (Left) -->
         <div class="intelligence-card">
-          @if (isPremium()) {
-            <ft-ai-insights-card />
-          } @else {
-            <ft-upgrade-prompt
-              feature="insights"
-              titleKey="emptyState.premiumUpsell.insights.title"
-              descriptionKey="emptyState.premiumUpsell.insights.description"
-              ctaKey="emptyState.premiumUpsell.insights.cta"
-            >
-              <div upgradePreview>
-                <ft-ai-insights-card />
-              </div>
-            </ft-upgrade-prompt>
-          }
+          <ft-goals-widget />
         </div>
 
-        <!-- Goals (Right) -->
+        <!-- Budget Progress (Right) -->
         <div class="intelligence-card">
-          @if (isPremium()) {
-            <ft-goals-widget />
-          } @else {
-            <ft-upgrade-prompt
-              feature="goals"
-              titleKey="emptyState.premiumUpsell.goals.title"
-              descriptionKey="emptyState.premiumUpsell.goals.description"
-              ctaKey="emptyState.premiumUpsell.goals.cta"
-            >
-              <div upgradePreview>
-                <ft-goals-widget />
-              </div>
-            </ft-upgrade-prompt>
-          }
-        </div>
-      </section>
-
-      <!-- ZONE 4: ECOSYSTEM & DISTRIBUTION (Budgets, Referral) -->
-      <section class="dashboard-ecosystem" ftSubtleReveal="fade-up" [delay]="180">
-        <div class="ecosystem-card ecosystem-card--full">
           <ft-budget-progress-widget />
         </div>
-
-        @if (isPremium()) {
-          <div class="ecosystem-card ecosystem-card--full">
-            <ft-referral-widget />
-          </div>
-        }
       </section>
 
     </div>

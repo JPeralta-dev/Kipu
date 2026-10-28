@@ -12,11 +12,13 @@
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  animation: ft-modal-overlay-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: ft-modal-overlay-in var(--modal-open-dur, 250ms) var(--modal-ease, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  will-change: opacity;
 }
 
 .ft-modal-overlay--closing {
-  animation: ft-modal-overlay-out 200ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation: ft-modal-overlay-out var(--modal-close-dur, 150ms) var(--modal-ease, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+  pointer-events: none;
 }
 
 @keyframes ft-modal-overlay-in {
@@ -40,22 +42,24 @@
   border-radius: 18px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.2);
   outline: none;
-  animation: ft-modal-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: ft-modal-in var(--modal-open-dur, 250ms) var(--modal-ease, cubic-bezier(0.16, 1, 0.3, 1)) both;
   overflow: hidden;
+  will-change: transform, opacity;
 }
 
 .ft-modal--closing {
-  animation: ft-modal-out 200ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation: ft-modal-out var(--modal-close-dur, 150ms) var(--modal-ease, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+  pointer-events: none;
 }
 
 @keyframes ft-modal-in {
-  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  from { opacity: 0; transform: scale(var(--modal-scale, 0.96)) translateY(6px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @keyframes ft-modal-out {
   from { opacity: 1; transform: scale(1) translateY(0); }
-  to   { opacity: 0; transform: scale(0.96) translateY(4px); }
+  to   { opacity: 0; transform: scale(var(--modal-scale-close, 0.96)) translateY(4px); }
 }
 
 .ft-modal--sm { max-width: 380px; }

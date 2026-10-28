@@ -556,7 +556,8 @@
       "category_increase": "Tu gasto en {{category}} aumentó {{percentage}}% respecto al mes pasado",
       "category_decrease": "Tu gasto en {{category}} disminuyó {{percentage}}% respecto al mes pasado",
       "anomaly_detected": "Detectamos un gasto {{ratio}}x superior a tu promedio en {{category}}",
-      "weekly_pattern": "Los {{dayName}} solés gastar más en {{category}}"
+      "weekly_pattern": "Los {{dayName}} solés gastar más en {{category}}",
+      "goal_savings_plan": "Ajustá tu ahorro mensual para alcanzar tus metas planificadas"
     }
   },
   "transactions": {
@@ -716,7 +717,7 @@
     },
     "settings_notifications": {
       "title": "Notificaciones",
-      "desc": "configura cómo recibes las notificaciones.",
+      "desc": "Configura cómo recibes las notificaciones.",
       "coming_soon": "Próximamente"
     },
     "session": {
@@ -764,7 +765,7 @@
     },
     "gmail": {
       "title": "Conectar Gmail",
-      "desc": "conecta tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
+      "desc": "Conecta tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
       "connect": "Conectar Gmail",
       "connecting": "Conectando a Gmail...",
       "connect_failed": "No se pudo iniciar la conexión con Gmail. Intentá de nuevo.",
@@ -1168,7 +1169,8 @@
     "budget": {
       "title": "Alerta de presupuesto",
       "message": "Tu presupuesto mensual está casi agotado. Revisa tus gastos."
-    }
+    },
+    "markAllAsRead": "Marcar todas como leídas"
   },
   "banks": {
     "new": "Agregar nuevo banco",

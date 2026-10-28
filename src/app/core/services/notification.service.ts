@@ -126,6 +126,27 @@ export class NotificationService {
     }
   }
 
+  markAllAsRead(): void {
+    const unread = this._notifications().filter(n => !n.read || !n.viewed);
+    if (unread.length === 0) return;
+
+    // 1. Optimistic local update
+    this._notifications.update(list =>
+      list.map(n => (!n.read || !n.viewed ? { ...n, read: true, viewed: true } : n))
+    );
+
+    // 2. Call backend PATCH route for each unread notification
+    if (this.http) {
+      unread.forEach(n => {
+        this.http!.patch(`${this.base}/${n.id}/viewed`, { viewed: true }).subscribe({
+          error: (err) => {
+            console.error(`[NotificationService] Failed to mark notification ${n.id} as viewed on backend:`, err);
+          },
+        });
+      });
+    }
+  }
+
   dismiss(id: string): void {
     // 1. Optimistic removal
     this._notifications.update(list => list.filter(n => n.id !== id));

@@ -110,4 +110,14 @@ describe('SmartImportModalComponent', () => {
     expect(component.commitResult()).toEqual(mockCommit);
     expect(component.imported.emit).toHaveBeenCalledWith(mockCommit);
   });
+
+  it('should emit closed without immediately resetting state to prevent animation flicker', () => {
+    spyOn(component.closed, 'emit');
+    component.step.set('matched');
+    component.onClose();
+
+    expect(component.closed.emit).toHaveBeenCalled();
+    // Step should NOT instantly jump to idle while closing animation runs
+    expect(component.step()).toBe('matched');
+  });
 });

@@ -323,7 +323,8 @@
       "category_increase": "Vos dépenses en {{category}} ont augmenté de {{percentage}}% par rapport au mois dernier",
       "category_decrease": "Vos dépenses en {{category}} ont diminué de {{percentage}}% par rapport au mois dernier",
       "anomaly_detected": "Nous avons détecté une dépense {{ratio}}x supérieure à votre moyenne en {{category}}",
-      "weekly_pattern": "Le {{dayName}}, vous dépensez généralement plus en {{category}}"
+      "weekly_pattern": "Le {{dayName}}, vous dépensez généralement plus en {{category}}",
+      "goal_savings_plan": "Ajustez votre épargne mensuelle pour atteindre vos objectifs"
     }
   },
   "transactions": {
@@ -750,7 +751,8 @@
     "budget": {
       "title": "Alerte budget",
       "message": "Votre budget mensuel est presque atteint. Révisez vos dépenses."
-    }
+    },
+    "markAllAsRead": "Tout marquer comme lu"
   },
   "banks": {
     "new": "Ajouter une banque",

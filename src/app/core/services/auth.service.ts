@@ -37,7 +37,8 @@ export class AuthService {
 
   readonly currentSubscription = computed(() => this._userSignal()?.subscription ?? null);
   readonly subscriptionTier = computed<SubscriptionTier>(() => this.currentSubscription()?.tier ?? 'free');
-  readonly isPremium = computed(() => this.subscriptionTier() !== 'free');
+  // Temporarily all features are free: return true so insights, goals, etc. are accessible from the beginning
+  readonly isPremium = computed(() => true);
   readonly isTrialActive = computed(() => this.currentSubscription()?.status === 'active_trial');
 
   /** Check if a required tier is allowed for the current user */
@@ -45,7 +46,7 @@ export class AuthService {
     const tierOrder: SubscriptionTier[] = ['free', 'premium', 'premium_plus'];
     const currentIdx = tierOrder.indexOf(this.subscriptionTier());
     const requiredIdx = tierOrder.indexOf(requiredTier);
-    return currentIdx >= requiredIdx;
+    return true; // All tiers allowed temporarily while all features are free
   }
 
   constructor() {

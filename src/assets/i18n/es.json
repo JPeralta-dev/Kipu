@@ -556,7 +556,8 @@
       "category_increase": "Tu gasto en {{category}} aumentó {{percentage}}% respecto al mes pasado",
       "category_decrease": "Tu gasto en {{category}} disminuyó {{percentage}}% respecto al mes pasado",
       "anomaly_detected": "Detectamos un gasto {{ratio}}x superior a tu promedio en {{category}}",
-      "weekly_pattern": "Los {{dayName}} solés gastar más en {{category}}"
+      "weekly_pattern": "Los {{dayName}} solés gastar más en {{category}}",
+      "goal_savings_plan": "Ajustá tu ahorro mensual para alcanzar tus metas planificadas"
     }
   },
   "transactions": {

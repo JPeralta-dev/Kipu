@@ -71,7 +71,10 @@ const FOCUSABLE = [
         <div
           #dialog
           class="ft-modal"
-          [class]="'ft-modal--' + size()"
+          [class.ft-modal--sm]="size() === 'sm'"
+          [class.ft-modal--md]="size() === 'md'"
+          [class.ft-modal--lg]="size() === 'lg'"
+          [class.ft-modal--xl]="size() === 'xl'"
           [class.ft-modal--closing]="isClosing()"
           [attr.role]="'dialog'"
           [attr.aria-modal]="true"
@@ -263,30 +266,23 @@ export class FtModalComponent {
   private lockBodyScroll(): void {
     if (typeof document === 'undefined') return;
     const scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
     document.body.dataset['ftModalScroll'] = String(scrollY);
+    document.body.style.overflow = 'hidden';
   }
 
   private unlockBodyScroll(): void {
     if (typeof document === 'undefined') return;
-    if (document.body.style.position !== 'fixed') return;
-    const scrollY = parseInt(document.body.dataset['ftModalScroll'] || '0', 10);
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
+    document.body.style.overflow = '';
     delete document.body.dataset['ftModalScroll'];
-    window.scrollTo(0, scrollY);
   }
 
   // ── Animation timing ────────────────────────────────────────────
 
   private readCloseDuration(): number {
-    if (typeof document === 'undefined') return 200;
+    if (typeof document === 'undefined') return 150;
     const v = getComputedStyle(document.documentElement)
       .getPropertyValue('--modal-close-dur')
       .trim();
-    return parseFloat(v) || 200;
+    return parseFloat(v) || 150;
   }
 }

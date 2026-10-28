@@ -78,8 +78,10 @@
             <div class="insight-row" [class]="'insight-row ' + (severityClass(insight.severity))">
               <span class="insight-row__icon"><ft-icon [name]="iconMap[insight.type] || 'chart'" [size]="18" /></span>
               <div class="insight-row__content">
-                <span class="insight-row__title">{{ insight.titleKey }}</span>
-                <span class="insight-row__desc">{{ insight.messageKey }}</span>
+                @if (insight.titleKey) {
+                  <span class="insight-row__title">{{ insight.titleKey | translate: insight.data }}</span>
+                }
+                <span class="insight-row__desc">{{ insight.messageKey | translate: insight.data }}</span>
               </div>
             </div>
           }

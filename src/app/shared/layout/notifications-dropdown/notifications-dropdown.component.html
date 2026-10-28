@@ -15,6 +15,18 @@
     <div class="notifications-dropdown__panel" (click)="onMenuClick($event)">
       <div class="notifications-dropdown__header">
         <h3 class="notifications-dropdown__title">{{ 'notifications.title' | translate }}</h3>
+        @if (unreadCount() > 0) {
+          <button
+            type="button"
+            class="notifications-dropdown__mark-all"
+            (click)="markAllAsRead($event)"
+            [attr.aria-label]="'notifications.markAllAsRead' | translate"
+            [title]="'notifications.markAllAsRead' | translate"
+          >
+            <ng-icon name="check" size="0.85rem" />
+            <span>{{ 'notifications.markAllAsRead' | translate }}</span>
+          </button>
+        }
       </div>
       <div class="notifications-dropdown__body">
         @if (notifications().length === 0) {

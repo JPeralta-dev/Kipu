@@ -556,7 +556,8 @@
       "category_increase": "Your spending on {{category}} increased {{percentage}}% compared to last month",
       "category_decrease": "Your spending on {{category}} decreased {{percentage}}% compared to last month",
       "anomaly_detected": "We detected a {{ratio}}x higher than average expense in {{category}}",
-      "weekly_pattern": "On {{dayName}}s you tend to spend more on {{category}}"
+      "weekly_pattern": "On {{dayName}}s you tend to spend more on {{category}}",
+      "goal_savings_plan": "Adjust your monthly savings to reach your planned goals"
     }
   },
   "transactions": {
@@ -1165,7 +1166,8 @@
     "budget": {
       "title": "Budget alert",
       "message": "Your monthly budget is almost exceeded. Review your spending."
-    }
+    },
+    "markAllAsRead": "Mark all as read"
   },
   "banks": {
     "new": "Add new bank",

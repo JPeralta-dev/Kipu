@@ -1165,7 +1165,8 @@
     "budget": {
       "title": "Budget alert",
       "message": "Your monthly budget is almost exceeded. Review your spending."
-    }
+    },
+    "markAllAsRead": "Mark all as read"
   },
   "banks": {
     "new": "Add new bank",

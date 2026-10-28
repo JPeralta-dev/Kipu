@@ -750,7 +750,8 @@
     "budget": {
       "title": "Alerte budget",
       "message": "Votre budget mensuel est presque atteint. Révisez vos dépenses."
-    }
+    },
+    "markAllAsRead": "Tout marquer comme lu"
   },
   "banks": {
     "new": "Ajouter une banque",

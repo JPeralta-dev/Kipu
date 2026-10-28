@@ -1168,7 +1168,8 @@
     "budget": {
       "title": "Alerta de presupuesto",
       "message": "Tu presupuesto mensual está casi agotado. Revisa tus gastos."
-    }
+    },
+    "markAllAsRead": "Marcar todas como leídas"
   },
   "banks": {
     "new": "Agregar nuevo banco",

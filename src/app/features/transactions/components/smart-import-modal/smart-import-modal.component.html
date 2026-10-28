@@ -2,10 +2,22 @@
   [open]="open()"
   (closed)="onClose()"
   size="xl"
+  [showHeader]="false"
+  [showFooter]="false"
   [closeOnBackdrop]="step() !== 'analyzing' && step() !== 'committing'"
   [closeOnEsc]="step() !== 'analyzing' && step() !== 'committing'"
 >
   <div modalBody class="smart-import-container">
+    @if (step() !== 'analyzing' && step() !== 'committing') {
+      <button
+        type="button"
+        class="smart-import-close-btn"
+        aria-label="Cerrar modal"
+        (click)="onClose()"
+      >
+        <ng-icon name="close" size="1.25rem" />
+      </button>
+    }
     <!-- ═════════════════════════════════════════════════════════════════ -->
     <!-- STEP 1: IDLE / DRAG & DROP ZONE                                   -->
     <!-- ═════════════════════════════════════════════════════════════════ -->

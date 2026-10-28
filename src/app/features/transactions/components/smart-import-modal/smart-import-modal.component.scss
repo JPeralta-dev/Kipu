@@ -1,7 +1,38 @@
 .smart-import-container {
+  position: relative;
   padding: 0.5rem 0.25rem;
   color: var(--text-primary);
   font-family: inherit;
+}
+
+.smart-import-close-btn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.625rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-elevated);
+    border-color: var(--border-default);
+    transform: scale(1.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-end);
+    outline-offset: 2px;
+  }
 }
 
 /* ═════════════════════════════════════════════════════════════════ */

@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotificationsDropdownComponent } from './notifications-dropdown.component';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
+import { provideIcons } from '@ng-icons/core';
+import { ICONS } from '../../../shared/icons/icon-registry';
 import { of } from 'rxjs';
 
 // Mock TranslatePipe
@@ -21,6 +23,7 @@ describe('NotificationsDropdownComponent', () => {
       imports: [NotificationsDropdownComponent],
       providers: [
         NotificationService,
+        provideIcons(ICONS),
         { provide: TranslatePipe, useClass: MockTranslatePipe },
       ],
     }).compileComponents();
@@ -97,6 +100,41 @@ describe('NotificationsDropdownComponent', () => {
         notificationService.unreadCount() + 1
       );
     }
+  });
+
+  it('should mark all notifications as read when markAllAsRead() is called', () => {
+    expect(component.unreadCount()).toBe(1);
+
+    component.markAllAsRead();
+
+    expect(component.unreadCount()).toBe(0);
+    expect(component.notifications().every(n => n.read && n.viewed)).toBe(true);
+  });
+
+  it('should stop event propagation when markAllAsRead is triggered with event', () => {
+    const event = new Event('click');
+    spyOn(event, 'stopPropagation');
+    spyOn(notificationService, 'markAllAsRead');
+
+    component.markAllAsRead(event);
+
+    expect(event.stopPropagation).toHaveBeenCalled();
+    expect(notificationService.markAllAsRead).toHaveBeenCalled();
+  });
+
+  it('should render mark all as read button when open and unreadCount > 0', () => {
+    component.toggleDropdown();
+    fixture.detectChanges();
+
+    const markAllBtn = fixture.nativeElement.querySelector('.notifications-dropdown__mark-all');
+    expect(markAllBtn).toBeTruthy();
+
+    markAllBtn.click();
+    fixture.detectChanges();
+
+    expect(component.unreadCount()).toBe(0);
+    const markAllBtnAfter = fixture.nativeElement.querySelector('.notifications-dropdown__mark-all');
+    expect(markAllBtnAfter).toBeFalsy();
   });
 
   it('should dismiss notification when dismiss button clicked', () => {

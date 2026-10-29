@@ -18,7 +18,9 @@ export type InsightActionType =
   | 'simulate_savings'        // Abre simulador de impacto
   | 'dismiss'
   | 'review_category'
-  | 'view_goal';                // Ocultar insight
+  | 'view_goal'
+  | 'allocate_pocket'
+  | 'create_pocket';                // Ocultar insight
 
 export interface InsightAction {
   id: string;
@@ -61,7 +63,7 @@ export interface ActionableInsight {
 
 export interface FinancialHealthOverview {
   healthScore: number;                // 0 a 100
-  healthLevel: 'critical' | 'fair' | 'good' | 'excellent';
+  healthLevel: 'critical' | 'fair' | 'good' | 'excellent' | 'needs_attention';
   summaryHeadline: string;
   goalsSummary: {
     totalGoals: number;
@@ -70,11 +72,17 @@ export interface FinancialHealthOverview {
     critical: number;
     achieved: number;
   };
-  savingsMetrics: {
+    savingsMetrics: {
+    totalSaved?: number;
+    targetTotal?: number;
+    overallProgressPercent?: number;
     monthlySavingsRate: number;
     targetSavingsRate: number;
     netSavedThisMonth: number;
   };
+  activePocketsCount?: number;
+  monthlySavingsRate?: number;
+  projectedSavings?: number;
   insightsCount: {
     highPriority: number;
     opportunities: number;

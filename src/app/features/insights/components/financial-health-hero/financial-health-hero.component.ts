@@ -17,7 +17,7 @@ export class FinancialHealthHeroComponent {
   readonly overview = input<FinancialHealthOverview | null>(null);
 
   readonly score = computed(() => this.overview()?.healthScore ?? 0);
-  readonly level = computed(() => this.overview()?.healthLevel ?? 'good');
+  readonly level = computed(() => this.overview()?.healthLevel ?? (this.score() === 0 ? 'needs_attention' : 'fair'));
   readonly headline = computed(() => this.overview()?.summaryHeadline ?? '');
 
   readonly goalsSummary = computed(() => this.overview()?.goalsSummary ?? {
@@ -28,10 +28,14 @@ export class FinancialHealthHeroComponent {
     achieved: 0,
   });
 
-  readonly savingsMetrics = computed(() => this.overview()?.savingsMetrics ?? {
-    monthlySavingsRate: 0,
-    targetSavingsRate: 20,
-    netSavedThisMonth: 0,
+  readonly savingsMetrics = computed(() => {
+    const sm = this.overview()?.savingsMetrics;
+    const ov = this.overview() as any;
+    return {
+      monthlySavingsRate: sm?.monthlySavingsRate ?? ov?.monthlySavingsRate ?? 0,
+      targetSavingsRate: sm?.targetSavingsRate ?? 20,
+      netSavedThisMonth: sm?.netSavedThisMonth ?? (ov?.projectedSavings ?? 0),
+    };
   });
 
   readonly strokeDashoffset = computed(() => {

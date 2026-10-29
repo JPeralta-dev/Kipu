@@ -113,7 +113,9 @@ export class InsightsPage implements OnInit {
     }).subscribe({
       next: (res) => {
         this.healthOverview.set(res.overview);
-        this.actionableInsights.set(res.insightsRes.insights || []);
+        const raw = res.insightsRes as any;
+        const list = Array.isArray(raw) ? raw : (raw?.insights || []);
+        this.actionableInsights.set(list);
         this.goals.set(res.goals || []);
         this.pockets.set(res.pockets || []);
         this.pageState.set('ready');

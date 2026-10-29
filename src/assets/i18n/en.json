@@ -449,13 +449,15 @@
       "score": "Health Score",
       "excellent": "Excellent",
       "good": "Healthy",
-      "fair": "Attention Required",
+      "fair": "Fair",
       "critical": "High Risk",
       "goalsOnTrack": "Goals on track",
       "savingsRate": "Actual savings rate",
       "targetSavingsRate": "Target savings rate",
       "netSaved": "Net savings this month",
-      "alertsCount": "Pacing alerts"
+      "alertsCount": "Pacing alerts",
+      "needs_attention": "Attention Required",
+      "unrated": "Not enough activity"
     },
     "radar": {
       "title": "Goals & Limits Radar",
@@ -464,13 +466,15 @@
       "noGoalsDesc": "Create a savings goal or set a monthly ceiling to activate the pacing radar.",
       "createGoalBtn": "Create Goal",
       "pacingProgress": "Total saved",
-      "timeElapsed": "Month elapsed",
+      "timeElapsed": "Time elapsed",
       "dailySafe": "Daily safe allowance",
       "projected": "Month-end projection",
       "projectedDate": "Estimated date",
       "daysLeft": "days left",
       "linkedPocket": "Linked pocket",
-      "fundAction": "Fund"
+      "fundAction": "Fund",
+      "directTracking": "Direct tracking",
+      "manageGoal": "View goal"
     },
     "goalTypes": {
       "savings": "Savings",

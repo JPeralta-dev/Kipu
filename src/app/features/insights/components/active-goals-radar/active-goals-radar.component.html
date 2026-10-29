@@ -67,10 +67,9 @@
             </div>
           </div>
 
-          <!-- Pacing & Progress Bars (Dual track) -->
+          <!-- Pacing & Progress Bar (Exact Match with Percentage) -->
           <div class="goal-radar-card__pacing">
             <div class="pacing-track">
-              <!-- Progress bar with vivid gradient and animation -->
               <div
                 class="pacing-bar pacing-bar--progress"
                 [style.width.%]="goal.pacing?.currentProgressPercent || 0"
@@ -78,15 +77,6 @@
                 [class.bar--warning]="goal.health === 'at_risk'"
                 [class.bar--success]="goal.health === 'on_track' || goal.health === 'achieved'"
               ></div>
-
-              <!-- Time elapsed marker/indicator if available -->
-              @if (goal.pacing?.timeElapsedPercent) {
-                <div
-                  class="pacing-marker"
-                  [style.left.%]="goal.pacing?.timeElapsedPercent"
-                  [title]="('insights.radar.timeElapsed' | translate) + ': ' + goal.pacing?.timeElapsedPercent + '%'"
-                ></div>
-              }
             </div>
 
             <div class="pacing-labels">
@@ -153,7 +143,7 @@
             <div class="goal-radar-card__pocket-action">
               <span class="pocket-name pocket-name--unlinked">
                 <ng-icon name="chart" size="0.875rem" />
-                {{ 'insights.radar.directTracking' | translate }}
+                {{ ('insights.radar.directTracking' | translate) || 'Seguimiento directo' }}
               </span>
               <button
                 type="button"
@@ -161,7 +151,7 @@
                 (click)="createGoal.emit()"
               >
                 <ng-icon name="chevronRight" size="0.875rem" />
-                {{ 'insights.radar.manageGoal' | translate }}
+                {{ ('insights.radar.manageGoal' | translate) || 'Ver meta' }}
               </button>
             </div>
           }

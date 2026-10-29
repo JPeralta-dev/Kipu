@@ -18,7 +18,9 @@ export type InsightActionType =
   | 'simulate_savings'        // Abre simulador de impacto
   | 'dismiss'
   | 'review_category'
-  | 'view_goal';                // Ocultar insight
+  | 'view_goal'
+  | 'allocate_pocket'
+  | 'create_pocket';                // Ocultar insight
 
 export interface InsightAction {
   id: string;

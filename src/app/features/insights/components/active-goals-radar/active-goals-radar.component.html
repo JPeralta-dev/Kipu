@@ -70,7 +70,7 @@
           <!-- Pacing & Progress Bars (Dual track) -->
           <div class="goal-radar-card__pacing">
             <div class="pacing-track">
-              <!-- Progress bar -->
+              <!-- Progress bar with vivid gradient and animation -->
               <div
                 class="pacing-bar pacing-bar--progress"
                 [style.width.%]="goal.pacing?.currentProgressPercent || 0"
@@ -90,7 +90,7 @@
             </div>
 
             <div class="pacing-labels">
-              <span class="pacing-label">
+              <span class="pacing-label" [attr.data-health]="goal.health || 'on_track'">
                 {{ goal.pacing?.currentProgressPercent || 0 }}% {{ goal.type === 'savings' ? 'ahorrado' : 'consumido' }}
               </span>
               @if (goal.pacing?.timeElapsedPercent) {
@@ -122,7 +122,7 @@
               @if (goal.pacing?.projectedCompletionDate) {
                 <div class="footer-chip">
                   <span class="chip-label">{{ 'insights.radar.projectedDate' | translate }}</span>
-                  <span class="chip-val">{{ goal.pacing?.projectedCompletionDate }}</span>
+                  <span class="chip-val">{{ goal.pacing?.projectedCompletionDate | date: 'd MMM y' }}</span>
                 </div>
               }
               @if (goal.pacing?.daysRemaining) {
@@ -133,7 +133,7 @@
             }
           </div>
 
-          <!-- Linked Pocket Button (if exists) -->
+          <!-- Linked Pocket Button / Direct Goal Action -->
           @if (goal.pocketId) {
             <div class="goal-radar-card__pocket-action">
               <span class="pocket-name">
@@ -147,6 +147,21 @@
               >
                 <ng-icon name="plus" size="0.875rem" />
                 {{ 'insights.radar.fundAction' | translate }}
+              </button>
+            </div>
+          } @else {
+            <div class="goal-radar-card__pocket-action">
+              <span class="pocket-name pocket-name--unlinked">
+                <ng-icon name="chart" size="0.875rem" />
+                {{ 'insights.radar.directTracking' | translate }}
+              </span>
+              <button
+                type="button"
+                class="btn-fund-pocket btn-manage-goal"
+                (click)="createGoal.emit()"
+              >
+                <ng-icon name="chevronRight" size="0.875rem" />
+                {{ 'insights.radar.manageGoal' | translate }}
               </button>
             </div>
           }

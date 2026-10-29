@@ -449,13 +449,15 @@
       "score": "Puntuación de Salud",
       "excellent": "Excelente",
       "good": "Saludable",
-      "fair": "Atención requerida",
+      "fair": "Estable",
       "critical": "Riesgo alto",
       "goalsOnTrack": "Metas al día",
       "savingsRate": "Tasa de ahorro real",
       "targetSavingsRate": "Objetivo de ahorro",
       "netSaved": "Ahorro neto este mes",
-      "alertsCount": "Alertas de ritmo"
+      "alertsCount": "Alertas de ritmo",
+      "needs_attention": "Atención requerida",
+      "unrated": "Sin actividad previa"
     },
     "radar": {
       "title": "Radar de Metas y Límites",
@@ -470,7 +472,9 @@
       "projectedDate": "Fecha estimada",
       "daysLeft": "días restantes",
       "linkedPocket": "Bolsillo vinculado",
-      "fundAction": "Aportar"
+      "fundAction": "Aportar",
+      "directTracking": "Seguimiento directo",
+      "manageGoal": "Ver meta"
     },
     "goalTypes": {
       "savings": "Ahorro",

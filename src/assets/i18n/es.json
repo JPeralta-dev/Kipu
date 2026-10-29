@@ -466,7 +466,7 @@
       "noGoalsDesc": "Crea una meta de ahorro o establece un techo mensual para activar el radar de ritmo.",
       "createGoalBtn": "Crear Meta",
       "pacingProgress": "Ahorro acumulado",
-      "timeElapsed": "Tiempo del mes",
+      "timeElapsed": "Tiempo transcurrido",
       "dailySafe": "Presupuesto diario seguro",
       "projected": "Proyección fin de mes",
       "projectedDate": "Fecha estimada",

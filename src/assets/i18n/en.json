@@ -466,7 +466,7 @@
       "noGoalsDesc": "Create a savings goal or set a monthly ceiling to activate the pacing radar.",
       "createGoalBtn": "Create Goal",
       "pacingProgress": "Total saved",
-      "timeElapsed": "Month elapsed",
+      "timeElapsed": "Time elapsed",
       "dailySafe": "Daily safe allowance",
       "projected": "Month-end projection",
       "projectedDate": "Estimated date",

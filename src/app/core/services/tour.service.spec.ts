@@ -1,7 +1,7 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync } from '@angular/core/testing';
 import { FtTourService } from './tour.service';
 import { FtAnalyticsService } from './analytics.service';
-import { DEFAULT_TOUR_STATE } from '../../shared/models/tour.types';
+import { TourStep } from '../../shared/models/tour.types';
 
 describe('FtTourService', () => {
   let service: FtTourService;
@@ -149,5 +149,28 @@ describe('FtTourService', () => {
   it('should set postponedAt on postpone()', () => {
     service.postpone();
     expect(service.tourState().postponedAt).toBeGreaterThan(0);
+  });
+
+  it('should support starting contextual mini-tours', () => {
+    service.startTour('categories');
+    expect(service.activeTourId()).toBe('categories');
+    expect(service.isActive()).toBe(true);
+    expect(service.steps.length).toBe(2);
+    expect(service.currentStepNumber()).toBe(1);
+  });
+
+  it('should allow registering custom tours dynamically', () => {
+    const customSteps: TourStep[] = [
+      {
+        id: 'step-1',
+        titleKey: 'custom.title',
+        descriptionKey: 'custom.desc',
+        targetSelector: 'body',
+      },
+    ];
+    service.registerTour('custom-tour', customSteps);
+    service.startTour('custom-tour');
+    expect(service.activeTourId()).toBe('custom-tour');
+    expect(service.totalSteps).toBe(1);
   });
 });

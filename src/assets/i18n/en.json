@@ -1016,6 +1016,33 @@
     "cta": "Upgrade to Premium"
   },
   "tour": {
+    "checklist": {
+      "title": "Getting started with Kipu",
+      "subtitle": "The essentials to master your finances",
+      "of": "of",
+      "completed": "completed",
+      "startTour": "View interactive tutorial",
+      "tourBtn": "Tour",
+      "allDone": "Awesome! You have configured the essentials of Kipu.",
+      "gotIt": "Close guide",
+      "hide": "Hide this guide",
+      "transaction": {
+        "title": "Log your first transaction",
+        "desc": "Add a manual expense or income to activate your metrics"
+      },
+      "categories": {
+        "title": "Customize your categories",
+        "desc": "Organize how your income and expenses are tracked"
+      },
+      "telegram": {
+        "title": "Connect Telegram bot",
+        "desc": "Log transactions in seconds from any chat"
+      },
+      "tour": {
+        "title": "Take the full Kipu tour",
+        "desc": "Explore key features across the control center"
+      }
+    },
     "progress": "Step {{current}} of {{total}}",
     "skipTour": "Skip tour",
     "previous": "Back",

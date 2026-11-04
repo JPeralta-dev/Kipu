@@ -1019,6 +1019,33 @@
     "cta": "Pasarme a Premium"
   },
   "tour": {
+    "checklist": {
+      "title": "Primeros pasos en Kipu",
+      "subtitle": "Lo esencial para dominar tus finanzas",
+      "of": "de",
+      "completed": "completados",
+      "startTour": "Ver tutorial interactivo",
+      "tourBtn": "Tour",
+      "allDone": "¡Excelente! Ya configuraste lo más importante de Kipu.",
+      "gotIt": "Cerrar guía",
+      "hide": "Ocultar esta guía",
+      "transaction": {
+        "title": "Registrar tu primer movimiento",
+        "desc": "Carga un gasto o ingreso manual para activar tus métricas"
+      },
+      "categories": {
+        "title": "Personalizar tus categorías",
+        "desc": "Organiza cómo se clasifican tus gastos e ingresos"
+      },
+      "telegram": {
+        "title": "Vincular bot de Telegram",
+        "desc": "Registra transacciones en segundos desde cualquier chat"
+      },
+      "tour": {
+        "title": "Completar tour por Kipu",
+        "desc": "Conoce en detalle el centro de control financiero"
+      }
+    },
     "progress": "Paso {{current}} de {{total}}",
     "skipTour": "Saltar tour",
     "previous": "Atrás",

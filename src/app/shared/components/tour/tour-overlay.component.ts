@@ -25,52 +25,54 @@ import { waitForElement } from '../../utils/dom.utils';
   encapsulation: ViewEncapsulation.None,
   styles: [`
     .ft-driver-popover.driver-popover {
-      background: var(--glass-bg);
-      backdrop-filter: blur(var(--glass-blur, 16px));
-      -webkit-backdrop-filter: blur(var(--glass-blur, 16px));
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md, 12px);
-      color: var(--text-primary);
-      box-shadow: var(--shadow-xl);
-      font-family: var(--font-body);
-      padding: 16px;
-      z-index: 100000;
+      background: var(--glass-bg, rgba(29, 20, 38, 0.95));
+      backdrop-filter: blur(var(--glass-blur, 20px));
+      -webkit-backdrop-filter: blur(var(--glass-blur, 20px));
+      border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+      border-radius: var(--radius-md, 14px);
+      color: var(--text-primary, #F3E8FF);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 24px rgba(217, 70, 239, 0.15);
+      font-family: var(--font-body, 'Inter', sans-serif);
+      padding: 18px;
+      min-width: 280px;
+      max-width: 380px;
+      z-index: 100002;
     }
 
     .ft-driver-popover .driver-popover-title {
-      font-family: var(--font-display);
+      font-family: var(--font-display, 'Space Grotesk', sans-serif);
       font-size: 16px;
       font-weight: 700;
-      line-height: 1.3;
-      color: var(--text-primary);
+      line-height: 1.35;
+      color: var(--text-primary, #F3E8FF);
       margin: 0 0 8px;
     }
 
     .ft-driver-popover .driver-popover-description {
-      font-family: var(--font-body);
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--text-secondary);
+      font-family: var(--font-body, 'Inter', sans-serif);
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--text-secondary, rgba(243, 232, 255, 0.8));
       margin: 0 0 16px;
     }
 
     .ft-driver-popover .driver-popover-progress-text {
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--accent-mid);
+      color: var(--accent-start, #D946EF);
     }
 
     .ft-driver-popover .driver-popover-next-btn,
     .ft-driver-popover .driver-popover-prev-btn,
     .ft-driver-popover .driver-popover-close-btn {
-      font-family: var(--font-body);
+      font-family: var(--font-body, 'Inter', sans-serif);
       font-size: 13px;
       font-weight: 600;
       border-radius: var(--radius-sm, 8px);
       padding: 8px 16px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease, background 0.15s ease;
       cursor: pointer;
       min-height: 38px;
       text-shadow: none;
@@ -78,41 +80,43 @@ import { waitForElement } from '../../utils/dom.utils';
     }
 
     .ft-driver-popover .driver-popover-next-btn {
-      background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
+      background: linear-gradient(135deg, var(--accent-start, #D946EF), var(--accent-mid, #A855F7));
       color: #ffffff;
       border: none;
-      box-shadow: var(--glow-accent);
+      box-shadow: 0 0 16px rgba(217, 70, 239, 0.4);
     }
     .ft-driver-popover .driver-popover-next-btn:hover {
       transform: translateY(-1px);
       filter: brightness(1.1);
+      box-shadow: 0 0 22px rgba(217, 70, 239, 0.6);
     }
     .ft-driver-popover .driver-popover-next-btn:active {
       transform: scale(0.97);
     }
 
     .ft-driver-popover .driver-popover-prev-btn {
-      background: transparent;
-      color: var(--text-tertiary);
+      background: var(--bg-tertiary, rgba(42, 30, 53, 0.6));
+      color: var(--text-secondary, rgba(243, 232, 255, 0.7));
+      border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
     }
     .ft-driver-popover .driver-popover-prev-btn:hover {
-      color: var(--text-primary);
-      background: var(--bg-tertiary);
+      color: var(--text-primary, #F3E8FF);
+      background: var(--bg-tertiary, rgba(42, 30, 53, 0.9));
     }
 
     .ft-driver-popover .driver-popover-close-btn {
       background: transparent;
-      color: var(--text-tertiary);
+      color: var(--text-tertiary, rgba(243, 232, 255, 0.45));
     }
     .ft-driver-popover .driver-popover-close-btn:hover {
-      color: var(--text-primary);
-      background: var(--bg-tertiary);
+      color: var(--text-primary, #F3E8FF);
+      background: var(--bg-tertiary, rgba(42, 30, 53, 0.6));
     }
 
     .ft-driver-popover .driver-popover-next-btn:focus-visible,
     .ft-driver-popover .driver-popover-prev-btn:focus-visible,
     .ft-driver-popover .driver-popover-close-btn:focus-visible {
-      outline: 2px solid var(--accent-start);
+      outline: 2px solid var(--accent-start, #D946EF);
       outline-offset: 2px;
     }
 
@@ -120,40 +124,42 @@ import { waitForElement } from '../../utils/dom.utils';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
     }
 
     .ft-driver-popover .driver-popover-arrow {
-      border-color: var(--glass-border);
-      background: var(--glass-bg);
+      border-color: var(--glass-border, rgba(255, 255, 255, 0.12));
+      background: var(--glass-bg, rgba(29, 20, 38, 0.95));
     }
 
     .driver-highlighted-element {
       border-radius: var(--radius-md, 12px) !important;
       box-shadow:
-        0 0 0 2px var(--accent-start),
-        0 0 0 6px var(--tour-pulse-glow-mid, rgba(217, 70, 239, 0.3)),
-        0 0 30px var(--tour-pulse-glow-dim, rgba(217, 70, 239, 0.15)) !important;
-      animation: driver-pulse 2.4s ease-in-out infinite;
+        0 0 0 2px var(--accent-start, #D946EF),
+        0 0 0 6px var(--tour-pulse-glow-mid, rgba(217, 70, 239, 0.35)),
+        0 0 35px var(--tour-pulse-glow-dim, rgba(217, 70, 239, 0.2)) !important;
+      animation: driver-pulse 2.2s ease-in-out infinite;
     }
 
     @keyframes driver-pulse {
       0%, 100% {
         box-shadow:
-          0 0 0 2px var(--accent-start),
-          0 0 0 6px var(--tour-pulse-glow-mid, rgba(217, 70, 239, 0.3)),
-          0 0 30px var(--tour-pulse-glow-dim, rgba(217, 70, 239, 0.15));
+          0 0 0 2px var(--accent-start, #D946EF),
+          0 0 0 6px var(--tour-pulse-glow-mid, rgba(217, 70, 239, 0.35)),
+          0 0 35px var(--tour-pulse-glow-dim, rgba(217, 70, 239, 0.2));
       }
       50% {
         box-shadow:
-          0 0 0 2px var(--accent-start),
-          0 0 0 12px var(--tour-pulse-glow-strong, rgba(217, 70, 239, 0.5)),
-          0 0 40px var(--tour-pulse-glow-bright, rgba(217, 70, 239, 0.25));
+          0 0 0 2px var(--accent-start, #D946EF),
+          0 0 0 12px var(--tour-pulse-glow-strong, rgba(217, 70, 239, 0.55)),
+          0 0 45px var(--tour-pulse-glow-bright, rgba(217, 70, 239, 0.3));
       }
     }
 
     .driver-overlay {
-      background: var(--tour-overlay-bg);
+      background: var(--tour-overlay-bg, rgba(18, 11, 26, 0.88));
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
     }
 
     @media (max-width: 640px) {
@@ -195,7 +201,8 @@ export class FtTourOverlayComponent {
   constructor() {
     effect(() => {
       if (this.tour.isActive()) {
-        this.zone.runOutsideAngular(() => void this.createAndStartDriver());
+        const startIdx = this.tour.currentStepIndex();
+        this.zone.runOutsideAngular(() => void this.navigateToStep(startIdx));
       } else {
         this.zone.runOutsideAngular(() => this.destroyDriver());
       }
@@ -206,43 +213,70 @@ export class FtTourOverlayComponent {
     });
   }
 
-  private async createAndStartDriver(): Promise<void> {
-    const startIndex = this.tour.currentStepIndex();
+  private async navigateToStep(targetIndex: number): Promise<void> {
+    if (this.isProcessingTransition) return;
+    this.isProcessingTransition = true;
+
+    const targetStep = this.tour.steps[targetIndex];
+    if (!targetStep) {
+      this.isProcessingTransition = false;
+      return;
+    }
+
+    this.zone.run(() => this.tour.setNavigating(true));
+
+    // Temporarily destroy active driver before route unload
+    if (this.driverInstance) {
+      this.driverInstance.destroy();
+      this.driverInstance = null;
+    }
+
+    // Check if target step requires navigation to another route
+    const currentRoute = this.router.url.split('?')[0].split('#')[0];
+    if (targetStep.route && currentRoute !== targetStep.route) {
+      try {
+        await this.zone.run(() => this.router.navigateByUrl(targetStep.route!));
+      } catch (err) {
+        console.warn(`[FtTourOverlay] Navigation failed to ${targetStep.route}:`, err);
+      }
+    }
+
+    // Wait for the target element to exist in the DOM
+    if (targetStep.targetSelector && targetStep.targetSelector !== 'body') {
+      try {
+        await waitForElement(targetStep.targetSelector, targetStep.waitForTimeoutMs ?? 5000);
+        // Settle tick for Angular change detection and transitions
+        await new Promise((r) => setTimeout(r, 120));
+      } catch (err) {
+        console.warn(`[FtTourOverlay] Target "${targetStep.targetSelector}" not found in time:`, err);
+      }
+    }
+
+    this.zone.run(() => {
+      this.tour.setNavigating(false);
+      this.tour.syncStepIndex(targetIndex);
+    });
+
+    // Mount and drive the tour at targetIndex
+    this.zone.runOutsideAngular(() => {
+      this.initDriverAndDrive(targetIndex);
+    });
+
+    this.isProcessingTransition = false;
+  }
+
+  private initDriverAndDrive(startIndex: number): void {
     const steps = this.mapSteps();
     const totalSteps = steps.length;
-    const firstStep = this.tour.steps[startIndex];
-
-    if (!firstStep) return;
-
-    // Async Step Handling: navigate to target route if required
-    if (firstStep.route && this.router.url !== firstStep.route) {
-      this.zone.run(() => this.tour.setNavigating(true));
-      try {
-        await this.zone.run(() => this.router.navigateByUrl(firstStep.route!));
-      } catch (err) {
-        console.warn(`[FtTourOverlay] Failed initial route navigation:`, err);
-      }
-    }
-
-    // Wait for the target selector to appear
-    if (firstStep.targetSelector && firstStep.targetSelector !== 'body') {
-      try {
-        await waitForElement(firstStep.targetSelector, firstStep.waitForTimeoutMs ?? 4000);
-      } catch (err) {
-        console.warn(`[FtTourOverlay] Target "${firstStep.targetSelector}" not found in time`, err);
-      }
-    }
-
-    this.zone.run(() => this.tour.setNavigating(false));
 
     this.driverInstance = driver({
       showProgress: true,
-      progressText: '{{current}} of {{total}}',
+      progressText: '{{current}} / {{total}}',
       steps,
       stagePadding: 8,
       stageRadius: 12,
       popoverClass: 'ft-driver-popover',
-      overlayColor: 'var(--tour-overlay-bg)',
+      overlayColor: 'var(--tour-overlay-bg, rgba(18, 11, 26, 0.88))',
       smoothScroll: true,
       allowClose: true,
       animate: true,
@@ -257,7 +291,7 @@ export class FtTourOverlayComponent {
 
       onCloseClick: () => {
         const currentIdx = this.tour.currentStepIndex();
-        this.driverInstance?.destroy();
+        this.destroyDriver();
         if (currentIdx >= totalSteps - 1) {
           this.zone.run(() => this.tour.complete());
         } else {
@@ -275,7 +309,7 @@ export class FtTourOverlayComponent {
         const isLast = currentIdx >= totalSteps - 1;
 
         if (isLast) {
-          this.driverInstance?.destroy();
+          this.destroyDriver();
           this.zone.run(() => this.tour.complete());
           return;
         }
@@ -284,28 +318,17 @@ export class FtTourOverlayComponent {
         const nextStep = this.tour.steps[nextIdx];
 
         if (!nextStep) {
-          this.driverInstance?.destroy();
+          this.destroyDriver();
           this.zone.run(() => this.tour.complete());
           return;
         }
 
-        // Async transition across routes
-        if (nextStep.route && this.router.url !== nextStep.route) {
-          this.isProcessingTransition = true;
-          this.zone.run(() => this.tour.setNavigating(true));
-
-          try {
-            await this.zone.run(() => this.router.navigateByUrl(nextStep.route!));
-            await waitForElement(nextStep.targetSelector, nextStep.waitForTimeoutMs ?? 5000);
-          } catch (err) {
-            console.warn(`[FtTourOverlay] Async transition to step ${nextIdx} warning:`, err);
-          } finally {
-            this.zone.run(() => this.tour.setNavigating(false));
-            this.isProcessingTransition = false;
-          }
-
-          this.driverInstance?.drive(nextIdx);
+        // Multi-page async step: navigate and re-target
+        const currentRoute = this.router.url.split('?')[0].split('#')[0];
+        if (nextStep.route && currentRoute !== nextStep.route) {
+          await this.navigateToStep(nextIdx);
         } else {
+          // In-page step: smooth transition
           this.driverInstance?.moveNext();
         }
       },
@@ -318,21 +341,11 @@ export class FtTourOverlayComponent {
         const prevIdx = currentIdx - 1;
         const prevStep = this.tour.steps[prevIdx];
 
-        if (prevStep?.route && this.router.url !== prevStep.route) {
-          this.isProcessingTransition = true;
-          this.zone.run(() => this.tour.setNavigating(true));
+        if (!prevStep) return;
 
-          try {
-            await this.zone.run(() => this.router.navigateByUrl(prevStep.route!));
-            await waitForElement(prevStep.targetSelector, prevStep.waitForTimeoutMs ?? 5000);
-          } catch (err) {
-            console.warn(`[FtTourOverlay] Async transition back to step ${prevIdx} warning:`, err);
-          } finally {
-            this.zone.run(() => this.tour.setNavigating(false));
-            this.isProcessingTransition = false;
-          }
-
-          this.driverInstance?.drive(prevIdx);
+        const currentRoute = this.router.url.split('?')[0].split('#')[0];
+        if (prevStep.route && currentRoute !== prevStep.route) {
+          await this.navigateToStep(prevIdx);
         } else {
           this.driverInstance?.movePrevious();
         }
@@ -342,7 +355,7 @@ export class FtTourOverlayComponent {
     try {
       this.driverInstance.drive(startIndex);
     } catch (err) {
-      console.warn('[FtTourOverlay] Driver failed to start', err);
+      console.warn('[FtTourOverlay] Driver failed to start:', err);
       this.zone.run(() => this.tour.skip());
       this.driverInstance = null;
     }
@@ -360,22 +373,31 @@ export class FtTourOverlayComponent {
 
     return this.tour.steps.map((step: TourStep, index: number): DriveStep => {
       const isLastStep = isLast(index);
+
+      // Safe translation with fallback to defaultTitle
+      const translatedTitle = this.translation.translate(step.titleKey);
+      const title = (translatedTitle && translatedTitle !== step.titleKey)
+        ? translatedTitle
+        : (step.defaultTitle ?? step.titleKey);
+
+      // Safe translation with fallback to defaultDescription
+      const translatedDesc = this.translation.translate(step.descriptionKey);
+      const description = (translatedDesc && translatedDesc !== step.descriptionKey)
+        ? translatedDesc
+        : (step.defaultDescription ?? step.descriptionKey);
+
       return {
         element: step.targetSelector,
         popover: {
-          title: this.translation.translate(step.titleKey),
-          description: this.translation.translate(step.descriptionKey),
+          title,
+          description,
           side: (step.tooltipPosition === 'auto' ? undefined : step.tooltipPosition),
           showButtons: ['next', 'previous', 'close'],
-          doneBtnText: (isLastStep && step.actionKey)
-            ? this.translation.translate(step.actionKey)
-            : this.translation.translate('tour.finish'),
-          nextBtnText: (isLastStep && step.actionKey)
-            ? this.translation.translate(step.actionKey)
-            : (step.actionKey
-                ? this.translation.translate(step.actionKey)
-                : this.translation.translate('tour.next')),
-          prevBtnText: this.translation.translate('tour.previous'),
+          doneBtnText: this.translation.translate('tour.finish') || 'Entendido',
+          nextBtnText: isLastStep
+            ? (this.translation.translate('tour.finish') || 'Entendido')
+            : (this.translation.translate('tour.next') || 'Siguiente'),
+          prevBtnText: this.translation.translate('tour.previous') || 'Atrás',
         },
       } satisfies DriveStep;
     });

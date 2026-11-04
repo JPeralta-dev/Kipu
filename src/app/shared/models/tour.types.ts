@@ -15,6 +15,10 @@ export interface TourStep {
   titleKey: string;
   /** Translation key for the step body */
   descriptionKey: string;
+  /** Optional fallback title if translation is missing */
+  defaultTitle?: string;
+  /** Optional fallback description if translation is missing */
+  defaultDescription?: string;
   /** CSS selector of the target element to highlight. Use 'body' for full-screen steps. */
   targetSelector: string;
   /** Preferred tooltip position relative to the target */

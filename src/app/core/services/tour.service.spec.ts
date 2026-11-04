@@ -18,9 +18,9 @@ describe('FtTourService', () => {
     service = TestBed.inject(FtTourService);
   });
 
-  it('should expose 5 onboarding steps', () => {
-    expect(service.totalSteps).toBe(5);
-    expect(service.steps.length).toBe(5);
+  it('should expose 6 onboarding steps', () => {
+    expect(service.totalSteps).toBe(6);
+    expect(service.steps.length).toBe(6);
   });
 
   it('should not be active by default', () => {
@@ -54,7 +54,7 @@ describe('FtTourService', () => {
 
   it('should not show trigger card after completion', () => {
     service.start();
-    for (let i = 0; i < 4; i++) service.next();
+    for (let i = 0; i < 5; i++) service.next();
     service.next(); // completes
     expect(service.shouldShowTriggerCard()).toBe(false);
   });
@@ -96,8 +96,8 @@ describe('FtTourService', () => {
 
   it('should complete on next() from the last step', () => {
     service.start();
-    for (let i = 0; i < 4; i++) service.next();
-    expect(service.currentStepNumber()).toBe(5);
+    for (let i = 0; i < 5; i++) service.next();
+    expect(service.currentStepNumber()).toBe(6);
     service.next();
     expect(service.isActive()).toBe(false);
     expect(analyticsMock.trackEvent).toHaveBeenCalledWith('onboarding_tour_completed', jasmine.any(Object));
@@ -151,11 +151,11 @@ describe('FtTourService', () => {
     expect(service.tourState().postponedAt).toBeGreaterThan(0);
   });
 
-  it('should support starting contextual mini-tours', () => {
+  it('should support starting contextual multi-step tours', () => {
     service.startTour('categories');
     expect(service.activeTourId()).toBe('categories');
     expect(service.isActive()).toBe(true);
-    expect(service.steps.length).toBe(2);
+    expect(service.steps.length).toBe(4);
     expect(service.currentStepNumber()).toBe(1);
   });
 

@@ -3,7 +3,7 @@
  *
  * Responsibilities
  * ────────────────
- * - Owns tour definitions (onboarding + feature-specific mini-tours).
+ * - Owns tour definitions (onboarding + feature-specific multi-step tours).
  * - Tracks active tour and step via signals.
  * - Supports async tours across routes and waiting for DOM elements.
  * - Persists state to localStorage so the tour resumes gracefully.
@@ -15,7 +15,6 @@ import {
   TourStep,
   TourState,
   TourStatus,
-  TourDefinition,
   DEFAULT_TOUR_STATE,
 } from '../../shared/models/tour.types';
 import { FtAnalyticsService } from './analytics.service';
@@ -27,67 +26,116 @@ export const ONBOARDING_TOUR_STEPS: TourStep[] = [
   {
     id: 'welcome',
     titleKey: 'tour.steps.welcome.title',
+    defaultTitle: '¡Bienvenido a Kipu!',
     descriptionKey: 'tour.steps.welcome.description',
-    targetSelector: '.dashboard-header, #dashboard-main, body',
+    defaultDescription: 'Tu nuevo centro de control financiero inteligente. Aquí tienes el panorama completo de tu dinero en tiempo real.',
+    targetSelector: '.dashboard-header__welcome, .dashboard-header',
     tooltipPosition: 'bottom',
     route: '/home',
   },
   {
-    id: 'categories',
-    titleKey: 'tour.steps.categories.title',
-    descriptionKey: 'tour.steps.categories.description',
-    targetSelector: '[data-tour="categories"], a[routerLink="/categories"], a[href="/categories"]',
-    tooltipPosition: 'right',
-    actionKey: 'tour.steps.categories.cta',
-    actionRoute: '/categories',
-    route: '/home',
-  },
-  {
-    id: 'log-expense',
-    titleKey: 'tour.steps.logExpense.title',
-    descriptionKey: 'tour.steps.logExpense.description',
-    targetSelector: 'a[routerLink="/transactions/new"], .quick-btn--primary',
+    id: 'kpis',
+    titleKey: 'tour.steps.kpis.title',
+    defaultTitle: 'Tus Indicadores Clave',
+    descriptionKey: 'tour.steps.kpis.description',
+    defaultDescription: 'En estas tarjetas ves tu balance neto, ingresos del mes, gastos y tu capacidad de ahorro calculada automáticamente.',
+    targetSelector: '[data-tour="dashboard-kpis"], .kpi-card--hero, .dashboard-kpis',
     tooltipPosition: 'bottom',
-    actionKey: 'tour.steps.logExpense.cta',
-    actionRoute: '/transactions/new',
     route: '/home',
   },
   {
-    id: 'telegram',
-    titleKey: 'tour.steps.telegram.title',
-    descriptionKey: 'tour.steps.telegram.description',
-    targetSelector: '[data-tour="telegram-connect"], a[routerLink="/settings"], .topbar__right',
+    id: 'newTransactionBtn',
+    titleKey: 'tour.steps.newTransactionBtn.title',
+    defaultTitle: 'Carga rápida de gastos',
+    descriptionKey: 'tour.steps.newTransactionBtn.description',
+    defaultDescription: 'Haz clic en "Nueva Transacción" para registrar cualquier gasto o ingreso en menos de 10 segundos.',
+    targetSelector: '[data-tour="quick-transaction"], a[routerLink="/transactions/new"]',
+    tooltipPosition: 'bottom',
+    route: '/home',
+  },
+  {
+    id: 'categoriesBtn',
+    titleKey: 'tour.steps.categoriesBtn.title',
+    defaultTitle: 'Tus Categorías',
+    descriptionKey: 'tour.steps.categoriesBtn.description',
+    defaultDescription: 'Organiza tus consumos a tu manera: comida, transporte, servicios o suscripciones.',
+    targetSelector: '[data-tour="quick-categories"], a[routerLink="/categories"]',
+    tooltipPosition: 'bottom',
+    route: '/home',
+  },
+  {
+    id: 'telegramNav',
+    titleKey: 'tour.steps.telegramNav.title',
+    defaultTitle: 'Integración con Telegram',
+    descriptionKey: 'tour.steps.telegramNav.description',
+    defaultDescription: 'En Configuración puedes vincular nuestro bot de Telegram para registrar gastos chateando sin abrir la app.',
+    targetSelector: '.topbar__right, a[routerLink="/settings"]',
     tooltipPosition: 'left',
-    actionKey: 'tour.steps.telegram.cta',
-    actionRoute: '/settings',
     route: '/home',
   },
   {
     id: 'done',
     titleKey: 'tour.steps.done.title',
+    defaultTitle: '✅ ¡Todo listo para empezar!',
     descriptionKey: 'tour.steps.done.description',
+    defaultDescription: 'Ya conoces lo esencial de Kipu. ¡El control total de tus finanzas está en tus manos!',
     targetSelector: 'body',
     tooltipPosition: 'auto',
     highlightPadding: 0,
-    actionKey: 'tour.steps.done.cta',
-    actionRoute: '/transactions/new',
   },
 ];
 
 export const NEW_EXPENSE_TOUR_STEPS: TourStep[] = [
   {
-    id: 'expense-cta',
-    titleKey: 'tour.steps.logExpense.title',
-    descriptionKey: 'tour.steps.logExpense.description',
-    targetSelector: 'a[routerLink="/transactions/new"], .quick-btn--primary',
+    id: 'expense-start',
+    titleKey: 'tour.steps.newExpense.step1_cta.title',
+    defaultTitle: '1. Iniciar registro',
+    descriptionKey: 'tour.steps.newExpense.step1_cta.description',
+    defaultDescription: 'Presiona el botón "Nueva Transacción" para abrir la pantalla de carga.',
+    targetSelector: '[data-tour="quick-transaction"], a[routerLink="/transactions/new"]',
     tooltipPosition: 'bottom',
     route: '/home',
   },
   {
-    id: 'expense-form',
-    titleKey: 'tour.steps.logExpense.title',
-    descriptionKey: 'tour.steps.logExpense.description',
-    targetSelector: '.transaction-form, form, body',
+    id: 'expense-type',
+    titleKey: 'tour.steps.newExpense.step2_type.title',
+    defaultTitle: '2. Tipo de movimiento',
+    descriptionKey: 'tour.steps.newExpense.step2_type.description',
+    defaultDescription: 'Elige si es un Gasto (por defecto) o un Ingreso que sumará a tu saldo.',
+    targetSelector: '.type-toggle',
+    tooltipPosition: 'bottom',
+    route: '/transactions/new',
+    waitForTimeoutMs: 5000,
+  },
+  {
+    id: 'expense-amount',
+    titleKey: 'tour.steps.newExpense.step3_amount.title',
+    defaultTitle: '3. Ingresa el monto',
+    descriptionKey: 'tour.steps.newExpense.step3_amount.description',
+    defaultDescription: 'Escribe la cantidad de dinero. Kipu le dará formato automáticamente.',
+    targetSelector: '#amount, .currency-wrap',
+    tooltipPosition: 'bottom',
+    route: '/transactions/new',
+    waitForTimeoutMs: 5000,
+  },
+  {
+    id: 'expense-category',
+    titleKey: 'tour.steps.newExpense.step4_category.title',
+    defaultTitle: '4. Asigna una categoría',
+    descriptionKey: 'tour.steps.newExpense.step4_category.description',
+    defaultDescription: 'Selecciona la categoría correspondiente para tener tus reportes ordenados.',
+    targetSelector: 'ft-category-select, #category',
+    tooltipPosition: 'top',
+    route: '/transactions/new',
+    waitForTimeoutMs: 5000,
+  },
+  {
+    id: 'expense-save',
+    titleKey: 'tour.steps.newExpense.step5_save.title',
+    defaultTitle: '5. Guardar transacción',
+    descriptionKey: 'tour.steps.newExpense.step5_save.description',
+    defaultDescription: 'Presiona "Crear transacción" para guardarla y actualizar tu balance al instante.',
+    targetSelector: '.btn-submit',
     tooltipPosition: 'top',
     route: '/transactions/new',
     waitForTimeoutMs: 5000,
@@ -96,19 +144,45 @@ export const NEW_EXPENSE_TOUR_STEPS: TourStep[] = [
 
 export const CATEGORIES_TOUR_STEPS: TourStep[] = [
   {
-    id: 'categories-nav',
-    titleKey: 'tour.steps.categories.title',
-    descriptionKey: 'tour.steps.categories.description',
-    targetSelector: '[data-tour="categories"], a[routerLink="/categories"]',
-    tooltipPosition: 'right',
+    id: 'cat-nav',
+    titleKey: 'tour.steps.categories.step1_nav.title',
+    defaultTitle: '1. Ir a Categorías',
+    descriptionKey: 'tour.steps.categories.step1_nav.description',
+    defaultDescription: 'Haz clic en este acceso rápido para abrir la gestión de categorías.',
+    targetSelector: '[data-tour="quick-categories"], a[routerLink="/categories"]',
+    tooltipPosition: 'bottom',
     route: '/home',
   },
   {
-    id: 'categories-view',
-    titleKey: 'tour.steps.categories.title',
-    descriptionKey: 'tour.steps.categories.description',
-    targetSelector: '.categories-header, .categories-container, body',
+    id: 'cat-create',
+    titleKey: 'tour.steps.categories.step2_create.title',
+    defaultTitle: '2. Nueva categoría',
+    descriptionKey: 'tour.steps.categories.step2_create.description',
+    defaultDescription: 'Presiona este botón para crear una categoría con tu propio ícono, color y tipo.',
+    targetSelector: '.btn-new, button.btn-new',
     tooltipPosition: 'bottom',
+    route: '/categories',
+    waitForTimeoutMs: 5000,
+  },
+  {
+    id: 'cat-stats',
+    titleKey: 'tour.steps.categories.step3_summary.title',
+    defaultTitle: '3. Métricas de categorías',
+    descriptionKey: 'tour.steps.categories.step3_summary.description',
+    defaultDescription: 'Aquí verás un resumen de cuántas categorías tienes y cuál tiene mayor gasto.',
+    targetSelector: '.stats-row, .page-header',
+    tooltipPosition: 'bottom',
+    route: '/categories',
+    waitForTimeoutMs: 5000,
+  },
+  {
+    id: 'cat-cards',
+    titleKey: 'tour.steps.categories.step4_manage.title',
+    defaultTitle: '4. Administrar tarjetas',
+    descriptionKey: 'tour.steps.categories.step4_manage.description',
+    defaultDescription: 'Haz clic sobre cualquier categoría para ver su historial o editar sus propiedades.',
+    targetSelector: '.cat-grid, .cat-page',
+    tooltipPosition: 'top',
     route: '/categories',
     waitForTimeoutMs: 5000,
   },
@@ -116,18 +190,33 @@ export const CATEGORIES_TOUR_STEPS: TourStep[] = [
 
 export const TELEGRAM_TOUR_STEPS: TourStep[] = [
   {
-    id: 'telegram-dashboard',
-    titleKey: 'tour.steps.telegram.title',
-    descriptionKey: 'tour.steps.telegram.description',
-    targetSelector: '[data-tour="telegram-connect"], a[routerLink="/settings"], .topbar__right',
+    id: 'tg-nav',
+    titleKey: 'tour.steps.telegram.step1_nav.title',
+    defaultTitle: '1. Configuración',
+    descriptionKey: 'tour.steps.telegram.step1_nav.description',
+    defaultDescription: 'Ingresa a Configuración desde tu menú de perfil o navegación.',
+    targetSelector: '.topbar__right, a[routerLink="/settings"]',
     tooltipPosition: 'left',
     route: '/home',
   },
   {
-    id: 'telegram-settings',
-    titleKey: 'tour.steps.telegram.title',
-    descriptionKey: 'tour.steps.telegram.description',
-    targetSelector: 'ft-linked-accounts-section, [data-tour="telegram-card"], body',
+    id: 'tg-card',
+    titleKey: 'tour.steps.telegram.step2_card.title',
+    defaultTitle: '2. Vincular Telegram',
+    descriptionKey: 'tour.steps.telegram.step2_card.description',
+    defaultDescription: 'Ubica la tarjeta de Telegram en la sección de cuentas conectadas.',
+    targetSelector: 'app-linked-channel-card:first-child, .accounts-grid, app-linked-accounts-section',
+    tooltipPosition: 'top',
+    route: '/settings',
+    waitForTimeoutMs: 5000,
+  },
+  {
+    id: 'tg-connect',
+    titleKey: 'tour.steps.telegram.step3_connect.title',
+    defaultTitle: '3. Conectar bot',
+    descriptionKey: 'tour.steps.telegram.step3_connect.description',
+    defaultDescription: 'Haz clic en "Vincular Telegram" para generar tu código y empezar a registrar gastos enviando un mensaje como "Café $5".',
+    targetSelector: '.btn-telegram-direct, app-linked-channel-card .channel-card__btn, app-linked-channel-card',
     tooltipPosition: 'top',
     route: '/settings',
     waitForTimeoutMs: 5000,
@@ -237,7 +326,7 @@ export class FtTourService {
 
   /**
    * Start a tour. Supports starting the main onboarding tour or any
-   * registered contextual mini-tour (e.g., 'new-expense', 'categories', 'telegram').
+   * registered contextual multi-step tour.
    */
   start(tourId = 'onboarding'): void {
     this._activeTourId.set(tourId);
@@ -248,7 +337,6 @@ export class FtTourService {
       resumeStep = Math.max(0, s.currentStep - 1);
     }
 
-    // Clamp resumeStep within current tour steps length
     const maxIdx = Math.max(0, this.steps.length - 1);
     const targetStep = Math.min(resumeStep, maxIdx);
 
@@ -262,7 +350,7 @@ export class FtTourService {
     });
   }
 
-  /** Start a specific contextual tour directly */
+  /** Start a specific contextual tour directly from step 0 */
   startTour(tourId: string, stepIndex = 0): void {
     this._activeTourId.set(tourId);
     this._currentStepIndex.set(Math.max(0, stepIndex));
@@ -331,7 +419,7 @@ export class FtTourService {
     this._isActive.set(false);
   }
 
-  /** Reset state — used by the "Replay tour" button in settings. */
+  /** Reset state — used by the "Replay tour" button in settings or profile. */
   resetTour(): void {
     this._state.set({ ...DEFAULT_TOUR_STATE, updatedAt: Date.now(), postponedAt: undefined });
     this._currentStepIndex.set(0);

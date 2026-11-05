@@ -69,8 +69,8 @@ export const ONBOARDING_TOUR_STEPS: TourStep[] = [
     defaultTitle: 'Integración con Telegram',
     descriptionKey: 'tour.steps.telegramNav.description',
     defaultDescription: 'En Configuración puedes vincular nuestro bot de Telegram para registrar gastos chateando sin abrir la app.',
-    targetSelector: '.topbar__right, a[routerLink="/settings"]',
-    tooltipPosition: 'left',
+    targetSelector: 'ft-profile-dropdown, .topbar__right',
+    tooltipPosition: 'bottom',
     route: '/home',
   },
   {
@@ -195,8 +195,8 @@ export const TELEGRAM_TOUR_STEPS: TourStep[] = [
     defaultTitle: '1. Configuración',
     descriptionKey: 'tour.steps.telegram.step1_nav.description',
     defaultDescription: 'Ingresa a Configuración desde tu menú de perfil o navegación.',
-    targetSelector: '.topbar__right, a[routerLink="/settings"]',
-    tooltipPosition: 'left',
+    targetSelector: 'ft-profile-dropdown, .topbar__right',
+    tooltipPosition: 'bottom',
     route: '/home',
   },
   {

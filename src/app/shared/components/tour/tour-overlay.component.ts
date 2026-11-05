@@ -177,38 +177,86 @@ import { waitForElement } from '../../utils/dom.utils';
       gap: 10px !important;
     }
 
-    .ft-driver-popover .driver-popover-arrow {
-      border-color: var(--glass-border, rgba(255, 255, 255, 0.12)) !important;
-      background: var(--glass-bg, rgba(29, 20, 38, 0.95)) !important;
+    /* ─── Arrow (Triangular pointer with amethyst glow) ─── */
+    .driver-popover-arrow {
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+      border: 8px solid transparent !important;
+      position: absolute !important;
+      z-index: 1000000006 !important;
     }
 
-    .driver-highlighted-element {
+    .driver-popover-arrow-side-bottom {
+      border-color: transparent !important;
+      border-bottom-color: rgba(29, 20, 38, 0.98) !important;
+      bottom: 100% !important;
+      filter: drop-shadow(0 -2px 3px rgba(217, 70, 239, 0.5)) !important;
+    }
+
+    .driver-popover-arrow-side-top {
+      border-color: transparent !important;
+      border-top-color: rgba(29, 20, 38, 0.98) !important;
+      top: 100% !important;
+      filter: drop-shadow(0 2px 3px rgba(217, 70, 239, 0.5)) !important;
+    }
+
+    .driver-popover-arrow-side-right {
+      border-color: transparent !important;
+      border-right-color: rgba(29, 20, 38, 0.98) !important;
+      right: 100% !important;
+      filter: drop-shadow(-2px 0 3px rgba(217, 70, 239, 0.5)) !important;
+    }
+
+    .driver-popover-arrow-side-left {
+      border-color: transparent !important;
+      border-left-color: rgba(29, 20, 38, 0.98) !important;
+      left: 100% !important;
+      filter: drop-shadow(2px 0 3px rgba(217, 70, 239, 0.5)) !important;
+    }
+
+    .driver-popover-arrow-side-over,
+    .driver-popover-arrow-none {
+      display: none !important;
+    }
+
+    /* ─── Active Highlighted Element (Spotlight Box & Frame) ─── */
+    .driver-active-element {
+      position: relative !important;
+      z-index: 10002 !important;
+      outline: 2px solid #D946EF !important;
+      outline-offset: 4px !important;
       border-radius: var(--radius-md, 12px) !important;
       box-shadow:
-        0 0 0 2px var(--accent-start, #D946EF),
-        0 0 0 6px var(--tour-pulse-glow-mid, rgba(217, 70, 239, 0.35)),
-        0 0 35px var(--tour-pulse-glow-dim, rgba(217, 70, 239, 0.2)) !important;
-      animation: driver-pulse 2.2s ease-in-out infinite !important;
+        0 0 0 2px #D946EF,
+        0 0 0 6px rgba(217, 70, 239, 0.4),
+        0 0 35px rgba(217, 70, 239, 0.5) !important;
+      animation: driver-active-pulse 2s ease-in-out infinite !important;
+      pointer-events: auto !important;
+      transition: outline 0.2s ease, box-shadow 0.2s ease !important;
     }
 
-    @keyframes driver-pulse {
+    @keyframes driver-active-pulse {
       0%, 100% {
+        outline-color: #D946EF;
         box-shadow:
-          0 0 0 2px var(--accent-start, #D946EF),
-          0 0 0 6px var(--tour-pulse-glow-mid, rgba(217, 70, 239, 0.35)),
-          0 0 35px var(--tour-pulse-glow-dim, rgba(217, 70, 239, 0.2));
+          0 0 0 2px #D946EF,
+          0 0 0 6px rgba(217, 70, 239, 0.4),
+          0 0 25px rgba(217, 70, 239, 0.35);
       }
       50% {
+        outline-color: #F0ABFC;
         box-shadow:
-          0 0 0 2px var(--accent-start, #D946EF),
-          0 0 0 12px var(--tour-pulse-glow-strong, rgba(217, 70, 239, 0.55)),
-          0 0 45px var(--tour-pulse-glow-bright, rgba(217, 70, 239, 0.3));
+          0 0 0 3px #F0ABFC,
+          0 0 0 10px rgba(217, 70, 239, 0.65),
+          0 0 45px rgba(217, 70, 239, 0.65);
       }
     }
 
+    /* ─── Transparent SVG Overlay so hole/cutout is 100% visible ─── */
     .driver-overlay {
-      background: var(--tour-overlay-bg, rgba(18, 11, 26, 0.88)) !important;
-      pointer-events: none !important;
+      background: transparent !important;
+      pointer-events: auto !important;
     }
 
     @media (max-width: 640px) {
@@ -226,7 +274,7 @@ import { waitForElement } from '../../utils/dom.utils';
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .driver-highlighted-element {
+      .driver-active-element {
         animation: none !important;
       }
       .ft-driver-popover .driver-popover-next-btn,
@@ -316,7 +364,8 @@ export class FtTourOverlayComponent {
       stageRadius: 12,
       popoverOffset: 14,
       popoverClass: 'ft-driver-popover',
-      overlayColor: 'rgba(18, 11, 26, 0.88)',
+      overlayColor: '#0c0714',
+      overlayOpacity: 0.85,
       smoothScroll: true,
       allowClose: true,
       animate: true,

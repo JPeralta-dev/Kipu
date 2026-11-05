@@ -10,7 +10,7 @@
  * - Emits analytics events on every state transition.
  * - Exposes methods for Dashboard and Onboarding Checklist triggers.
  */
-import { Injectable, signal, computed, inject, effect } from '@angular/core';
+import { Injectable, signal, computed, inject, effect, untracked } from '@angular/core';
 import {
   TourStep,
   TourState,
@@ -18,6 +18,7 @@ import {
   DEFAULT_TOUR_STATE,
 } from '../../shared/models/tour.types';
 import { FtAnalyticsService } from './analytics.service';
+import { AuthService } from './auth.service';
 import { OnboardingStep } from '../models/analytics-event.model';
 
 const STORAGE_KEY = 'flowr_onboarding_tour';
@@ -226,6 +227,7 @@ export const TELEGRAM_TOUR_STEPS: TourStep[] = [
 @Injectable({ providedIn: 'root' })
 export class FtTourService {
   private readonly analytics = inject(FtAnalyticsService);
+  private readonly auth = inject(AuthService);
 
   // ── Registered Tours Map ──────────────────────────────────────
   private readonly tourRegistry = new Map<string, TourStep[]>([
@@ -236,6 +238,7 @@ export class FtTourService {
   ]);
 
   // ── Reactive state ─────────────────────────────────────────────
+  private readonly _currentUserId = signal<string | null>(null);
   private readonly _activeTourId = signal<string>('onboarding');
   private readonly _isActive = signal(false);
   private readonly _sessionKey = signal<number>(1);
@@ -271,8 +274,29 @@ export class FtTourService {
 
   constructor() {
     effect(() => {
+      const user = this.auth.currentUser();
+      const userId = user?.id ?? null;
+      untracked(() => {
+        this.switchUser(userId);
+      });
+    });
+
+    effect(() => {
       this.persistState(this._state());
     });
+  }
+
+  private switchUser(userId: string | null): void {
+    if (this._currentUserId() === userId) return;
+    this._currentUserId.set(userId);
+    const loadedState = this.readPersistedState(userId);
+    this._state.set(loadedState);
+    this._currentStepIndex.set(0);
+    this._isActive.set(false);
+  }
+
+  private getStorageKey(userId: string | null = this._currentUserId()): string {
+    return userId ? `${STORAGE_KEY}_${userId}` : STORAGE_KEY;
   }
 
   private readonly POSTPONE_COOLDOWN_MS = 60 * 60 * 1000; // 1 hour
@@ -448,10 +472,11 @@ export class FtTourService {
     });
   }
 
-  private readPersistedState(): TourState {
+  private readPersistedState(userId: string | null = this._currentUserId()): TourState {
     if (typeof localStorage === 'undefined') return { ...DEFAULT_TOUR_STATE, updatedAt: Date.now() };
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const key = this.getStorageKey(userId);
+      const raw = localStorage.getItem(key);
       if (!raw) return { ...DEFAULT_TOUR_STATE, updatedAt: Date.now() };
       const parsed = JSON.parse(raw) as TourState;
       return { ...DEFAULT_TOUR_STATE, ...parsed };
@@ -463,7 +488,8 @@ export class FtTourService {
   private persistState(state: TourState): void {
     if (typeof localStorage === 'undefined') return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const key = this.getStorageKey();
+      localStorage.setItem(key, JSON.stringify(state));
     } catch { /* quota — fine, fresh state next time */ }
   }
 }

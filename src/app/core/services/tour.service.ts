@@ -238,12 +238,14 @@ export class FtTourService {
   // ── Reactive state ─────────────────────────────────────────────
   private readonly _activeTourId = signal<string>('onboarding');
   private readonly _isActive = signal(false);
+  private readonly _sessionKey = signal<number>(1);
   private readonly _currentStepIndex = signal(0); // 0-based internal
   private readonly _state = signal<TourState>(this.readPersistedState());
   private readonly _isNavigatingStep = signal(false);
 
   readonly activeTourId = this._activeTourId.asReadonly();
   readonly isActive = this._isActive.asReadonly();
+  readonly sessionKey = this._sessionKey.asReadonly();
   readonly isNavigatingStep = this._isNavigatingStep.asReadonly();
   readonly currentStepIndex = this._currentStepIndex.asReadonly();
   readonly tourState = this._state.asReadonly();
@@ -329,6 +331,7 @@ export class FtTourService {
    * registered contextual multi-step tour.
    */
   start(tourId = 'onboarding'): void {
+    this._sessionKey.update((k) => k + 1);
     this._activeTourId.set(tourId);
     const s = this._state();
 
@@ -352,6 +355,7 @@ export class FtTourService {
 
   /** Start a specific contextual tour directly from step 0 */
   startTour(tourId: string, stepIndex = 0): void {
+    this._sessionKey.update((k) => k + 1);
     this._activeTourId.set(tourId);
     this._currentStepIndex.set(Math.max(0, stepIndex));
     this._isActive.set(true);

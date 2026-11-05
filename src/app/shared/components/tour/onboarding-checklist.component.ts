@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { IconComponent } from '../../icons/icon.component';
 import { FtTourService } from '../../../core/services/tour.service';
 import { TelegramLinkService } from '../../../core/services/telegram-link.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 export interface ChecklistTask {
@@ -540,6 +541,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
 export class FtOnboardingChecklistComponent implements OnInit {
   private readonly tourService = inject(FtTourService);
   private readonly telegramService = inject(TelegramLinkService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   readonly tasks: ChecklistTask[] = [
@@ -592,6 +594,14 @@ export class FtOnboardingChecklistComponent implements OnInit {
 
   constructor() {
     effect(() => {
+      const user = this.authService.currentUser();
+      untracked(() => {
+        this.restoreState();
+        this.checkAutomaticCompletions();
+      });
+    });
+
+    effect(() => {
       const completed = this.tourService.lastCompletedTour();
       if (completed) {
         untracked(() => {
@@ -640,14 +650,14 @@ export class FtOnboardingChecklistComponent implements OnInit {
     const next = !this.isCollapsed();
     this.isCollapsed.set(next);
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(CHECKLIST_COLLAPSED_KEY, JSON.stringify(next));
+      localStorage.setItem(this.getStorageKey(CHECKLIST_COLLAPSED_KEY), JSON.stringify(next));
     }
   }
 
   dismiss(): void {
     this.isDismissed.set(true);
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(CHECKLIST_DISMISSED_KEY, 'true');
+      localStorage.setItem(this.getStorageKey(CHECKLIST_DISMISSED_KEY), 'true');
     }
   }
 
@@ -666,6 +676,11 @@ export class FtOnboardingChecklistComponent implements OnInit {
     // Minimize checklist during tour so it doesn't obstruct popovers
     this.isCollapsed.set(true);
     this.tourService.startTour(task.tourId);
+  }
+
+  private getStorageKey(baseKey: string): string {
+    const userId = this.authService.currentUser()?.id;
+    return userId ? `${baseKey}_${userId}` : baseKey;
   }
 
   private checkAutomaticCompletions(): void {
@@ -694,20 +709,18 @@ export class FtOnboardingChecklistComponent implements OnInit {
     if (typeof localStorage === 'undefined') return;
 
     try {
-      const dismissed = localStorage.getItem(CHECKLIST_DISMISSED_KEY);
-      if (dismissed === 'true') {
-        this.isDismissed.set(true);
-      }
+      const dismissed = localStorage.getItem(this.getStorageKey(CHECKLIST_DISMISSED_KEY));
+      this.isDismissed.set(dismissed === 'true');
 
-      const collapsed = localStorage.getItem(CHECKLIST_COLLAPSED_KEY);
-      if (collapsed !== null) {
-        this.isCollapsed.set(JSON.parse(collapsed));
-      }
+      const collapsed = localStorage.getItem(this.getStorageKey(CHECKLIST_COLLAPSED_KEY));
+      this.isCollapsed.set(collapsed !== null ? JSON.parse(collapsed) : false);
 
-      const rawTasks = localStorage.getItem(CHECKLIST_STORAGE_KEY);
+      const rawTasks = localStorage.getItem(this.getStorageKey(CHECKLIST_STORAGE_KEY));
       if (rawTasks) {
         const parsed = JSON.parse(rawTasks) as string[];
         this.completedTasks.set(new Set(parsed));
+      } else {
+        this.completedTasks.set(new Set());
       }
     } catch {
       // Ignore localStorage parse errors
@@ -718,7 +731,7 @@ export class FtOnboardingChecklistComponent implements OnInit {
     if (typeof localStorage === 'undefined') return;
     try {
       localStorage.setItem(
-        CHECKLIST_STORAGE_KEY,
+        this.getStorageKey(CHECKLIST_STORAGE_KEY),
         JSON.stringify(Array.from(tasksSet))
       );
     } catch {

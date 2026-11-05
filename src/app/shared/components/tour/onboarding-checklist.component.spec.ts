@@ -4,6 +4,8 @@ import { FtOnboardingChecklistComponent } from './onboarding-checklist.component
 import { FtTourService } from '../../../core/services/tour.service';
 import { TelegramLinkService, TelegramLinkState } from '../../../core/services/telegram-link.service';
 import { TranslationService } from '../../../core/services/translation.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { User } from '../../../core/models/user.model';
 import { Router } from '@angular/router';
 
 describe('FtOnboardingChecklistComponent', () => {
@@ -12,6 +14,7 @@ describe('FtOnboardingChecklistComponent', () => {
   let tourServiceSpy: jasmine.SpyObj<FtTourService>;
   let telegramServiceMock: { state: ReturnType<typeof signal<TelegramLinkState>> };
   let translationServiceMock: { translate: jasmine.Spy };
+  let authServiceMock: { currentUser: ReturnType<typeof signal<User | null>> };
   let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
@@ -29,6 +32,10 @@ describe('FtOnboardingChecklistComponent', () => {
       state: signal<TelegramLinkState>('idle'),
     };
 
+    authServiceMock = {
+      currentUser: signal<User | null>(null),
+    };
+
     translationServiceMock = {
       translate: jasmine.createSpy('translate').and.callFake((key: string) => key),
     };
@@ -40,6 +47,7 @@ describe('FtOnboardingChecklistComponent', () => {
       providers: [
         { provide: FtTourService, useValue: tourServiceSpy },
         { provide: TelegramLinkService, useValue: telegramServiceMock },
+        { provide: AuthService, useValue: authServiceMock },
         { provide: TranslationService, useValue: translationServiceMock },
         { provide: Router, useValue: routerSpy },
       ],

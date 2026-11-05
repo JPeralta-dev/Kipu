@@ -1,18 +1,25 @@
 import { TestBed, fakeAsync } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { FtTourService } from './tour.service';
 import { FtAnalyticsService } from './analytics.service';
+import { AuthService } from './auth.service';
+import { User } from '../models/user.model';
 import { TourStep } from '../../shared/models/tour.types';
 
 describe('FtTourService', () => {
   let service: FtTourService;
   let analyticsMock: jasmine.SpyObj<FtAnalyticsService>;
+  let currentUserSignal: ReturnType<typeof signal<User | null>>;
 
   beforeEach(() => {
     localStorage.clear();
     analyticsMock = jasmine.createSpyObj<FtAnalyticsService>('FtAnalyticsService', ['trackEvent']);
+    currentUserSignal = signal<User | null>(null);
+
     TestBed.configureTestingModule({
       providers: [
         { provide: FtAnalyticsService, useValue: analyticsMock },
+        { provide: AuthService, useValue: { currentUser: currentUserSignal } },
       ],
     });
     service = TestBed.inject(FtTourService);
@@ -181,5 +188,20 @@ describe('FtTourService', () => {
     expect(service.lastCompletedTour()).toEqual(jasmine.objectContaining({
       tourId: 'new-expense',
     }));
+  });
+
+  it('should isolate tour state by user account when switching users', () => {
+    currentUserSignal.set({ id: 'user_A', email: 'a@kipu.com', createdAt: '' } as User);
+    TestBed.flushEffects();
+    service.start();
+    for (let i = 0; i < 5; i++) service.next();
+    service.next(); // completes
+    expect(service.tourState().status).toBe('completed');
+    expect(service.shouldAutoStart()).toBe(false);
+
+    currentUserSignal.set({ id: 'user_B', email: 'b@kipu.com', createdAt: '' } as User);
+    TestBed.flushEffects();
+    expect(service.tourState().status).toBe('not_started');
+    expect(service.shouldAutoStart()).toBe(true);
   });
 });

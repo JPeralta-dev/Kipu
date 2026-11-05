@@ -1,4 +1,4 @@
-<div class="health-hero" [attr.data-level]="level()">
+<div class="health-hero" [attr.data-level]="level()" [attr.data-score]="score()">
   <div class="health-hero__glow"></div>
 
   <div class="health-hero__main">
@@ -29,7 +29,14 @@
     <!-- Health Narrative & Status -->
     <div class="health-hero__narrative">
       <div class="health-hero__badge-row">
-        <span class="health-hero__badge" [class.badge--excellent]="level() === 'excellent'" [class.badge--good]="level() === 'good'" [class.badge--fair]="level() === 'fair'" [class.badge--critical]="level() === 'critical'">
+        <span
+          class="health-hero__badge"
+          [class.badge--excellent]="level() === 'excellent'"
+          [class.badge--good]="level() === 'good'"
+          [class.badge--fair]="level() === 'fair'"
+          [class.badge--needs-attention]="level() === 'needs_attention'"
+          [class.badge--critical]="level() === 'critical'"
+        >
           <ng-icon [name]="level() === 'excellent' || level() === 'good' ? 'shieldCheck' : 'warning'" size="1rem" />
           {{ 'insights.health.' + level() | translate }}
         </span>

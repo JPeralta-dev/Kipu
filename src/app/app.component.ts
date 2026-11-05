@@ -9,6 +9,7 @@ import { CategoryModalComponent } from './shared/ui/category-modal/category-moda
 import { FtConsentBannerComponent } from './shared/components/consent-banner.component';
 import { FtUpgradeModalComponent } from './shared/ui/upgrade-modal/upgrade-modal.component';
 import { FtTourOverlayComponent } from './shared/components/tour/tour-overlay.component';
+import { FtOnboardingChecklistComponent } from './shared/components/tour/onboarding-checklist.component';
 import { CommandService } from './core/services/command.service';
 import { AuthService } from './core/services/auth.service';
 import { FtAnalyticsService } from './core/services/analytics.service';
@@ -17,7 +18,17 @@ import { TranslationService } from './core/services/translation.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TopbarComponent, CommandPaletteComponent, ToastContainerComponent, CategoryModalComponent, FtConsentBannerComponent, FtUpgradeModalComponent, FtTourOverlayComponent],
+  imports: [
+    RouterOutlet,
+    TopbarComponent,
+    CommandPaletteComponent,
+    ToastContainerComponent,
+    CategoryModalComponent,
+    FtConsentBannerComponent,
+    FtUpgradeModalComponent,
+    FtTourOverlayComponent,
+    FtOnboardingChecklistComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   host: {

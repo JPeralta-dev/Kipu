@@ -449,13 +449,15 @@
       "score": "Puntuación de Salud",
       "excellent": "Excelente",
       "good": "Saludable",
-      "fair": "Atención requerida",
+      "fair": "Estable",
       "critical": "Riesgo alto",
       "goalsOnTrack": "Metas al día",
       "savingsRate": "Tasa de ahorro real",
       "targetSavingsRate": "Objetivo de ahorro",
       "netSaved": "Ahorro neto este mes",
-      "alertsCount": "Alertas de ritmo"
+      "alertsCount": "Alertas de ritmo",
+      "needs_attention": "Atención requerida",
+      "unrated": "Sin actividad previa"
     },
     "radar": {
       "title": "Radar de Metas y Límites",
@@ -464,13 +466,15 @@
       "noGoalsDesc": "Crea una meta de ahorro o establece un techo mensual para activar el radar de ritmo.",
       "createGoalBtn": "Crear Meta",
       "pacingProgress": "Ahorro acumulado",
-      "timeElapsed": "Tiempo del mes",
+      "timeElapsed": "Tiempo transcurrido",
       "dailySafe": "Presupuesto diario seguro",
       "projected": "Proyección fin de mes",
       "projectedDate": "Fecha estimada",
       "daysLeft": "días restantes",
       "linkedPocket": "Bolsillo vinculado",
-      "fundAction": "Aportar"
+      "fundAction": "Aportar",
+      "directTracking": "Seguimiento directo",
+      "manageGoal": "Ver meta"
     },
     "goalTypes": {
       "savings": "Ahorro",
@@ -1015,6 +1019,33 @@
     "cta": "Pasarme a Premium"
   },
   "tour": {
+    "checklist": {
+      "title": "Primeros pasos en Kipu",
+      "subtitle": "Lo esencial para dominar tus finanzas",
+      "of": "de",
+      "completed": "completados",
+      "startTour": "Ver tutorial interactivo",
+      "tourBtn": "Tour",
+      "allDone": "¡Excelente! Ya configuraste lo más importante de Kipu.",
+      "gotIt": "Cerrar guía",
+      "hide": "Ocultar esta guía",
+      "transaction": {
+        "title": "Registrar tu primer movimiento",
+        "desc": "Carga un gasto o ingreso manual para activar tus métricas"
+      },
+      "categories": {
+        "title": "Personalizar tus categorías",
+        "desc": "Organiza cómo se clasifican tus gastos e ingresos"
+      },
+      "telegram": {
+        "title": "Vincular bot de Telegram",
+        "desc": "Registra transacciones en segundos desde cualquier chat"
+      },
+      "tour": {
+        "title": "Completar tour por Kipu",
+        "desc": "Conoce en detalle el centro de control financiero"
+      }
+    },
     "progress": "Paso {{current}} de {{total}}",
     "skipTour": "Saltar tour",
     "previous": "Atrás",
@@ -1029,28 +1060,82 @@
     },
     "steps": {
       "welcome": {
-        "title": "Bienvenido a Kipu",
-        "description": "Tu plata, perfectamente organizada. De acá ves tu panorama financiero completo — balance, ingresos, gastos, todo en un solo lugar."
+        "title": "¡Bienvenido a Kipu!",
+        "description": "Tu nuevo centro de control financiero inteligente. Aquí tienes el panorama completo de tu dinero en tiempo real."
       },
-      "telegram": {
-        "title": "Registrá desde cualquier lado",
-        "description": "Conectá Telegram y registrá gastos con solo mandar un mensaje. Sin necesidad de abrir la app cada vez.",
-        "cta": "Conectar Telegram"
+      "kpis": {
+        "title": "Tus Indicadores Clave",
+        "description": "En estas tarjetas ves tu balance neto, ingresos del mes, gastos y tu capacidad de ahorro calculada automáticamente."
       },
-      "categories": {
-        "title": "Organizalo a tu manera",
-        "description": "Las categorías te muestran exactamente en qué se va la plata. Comida, transporte, suscripciones — personalizalas como vos quieras.",
-        "cta": "Configurar categorías"
+      "newTransactionBtn": {
+        "title": "Carga rápida de gastos",
+        "description": "Haz clic en 'Nueva Transacción' para registrar cualquier gasto o ingreso en menos de 10 segundos."
       },
-      "logExpense": {
-        "title": "Tu primer gasto",
-        "description": "Tocá el botón de abajo y registrá algo. Un café, las compras, eso que compraste online. Kipu se encarga del resto.",
-        "cta": "Registrar un gasto"
+      "categoriesBtn": {
+        "title": "Tus Categorías",
+        "description": "Organiza tus consumos a tu manera: comida, transporte, servicios o suscripciones."
+      },
+      "telegramNav": {
+        "title": "Integración con Telegram",
+        "description": "En Configuración puedes vincular nuestro bot de Telegram para registrar gastos chateando sin abrir la app."
       },
       "done": {
-        "title": "✅ Ya estás listo",
-        "description": "Eso es lo esencial de Kipu. Registrá desde cualquier lado, ve todo acá — y este botón te lleva directo a tu primer gasto.",
-        "cta": "Registrar mi primer gasto"
+        "title": "✅ ¡Todo listo para empezar!",
+        "description": "Ya conoces lo esencial de Kipu. ¡El control total de tus finanzas está en tus manos!"
+      },
+      "newExpense": {
+        "step1_cta": {
+          "title": "1. Iniciar registro",
+          "description": "Presiona el botón 'Nueva Transacción' para abrir la pantalla de carga."
+        },
+        "step2_type": {
+          "title": "2. Tipo de movimiento",
+          "description": "Elige si es un Gasto (por defecto) o un Ingreso que sumará a tu saldo."
+        },
+        "step3_amount": {
+          "title": "3. Ingresa el monto",
+          "description": "Escribe la cantidad de dinero. Kipu le dará formato automáticamente."
+        },
+        "step4_category": {
+          "title": "4. Asigna una categoría",
+          "description": "Selecciona la categoría correspondiente para tener tus reportes ordenados."
+        },
+        "step5_save": {
+          "title": "5. Guardar transacción",
+          "description": "Presiona 'Crear transacción' para guardarla y actualizar tu balance al instante."
+        }
+      },
+      "categories": {
+        "step1_nav": {
+          "title": "1. Ir a Categorías",
+          "description": "Haz clic en este acceso rápido para abrir la gestión de categorías."
+        },
+        "step2_create": {
+          "title": "2. Nueva categoría",
+          "description": "Presiona este botón para crear una categoría con tu propio ícono, color y tipo."
+        },
+        "step3_summary": {
+          "title": "3. Métricas de categorías",
+          "description": "Aquí verás un resumen de cuántas categorías tienes y cuál tiene mayor gasto."
+        },
+        "step4_manage": {
+          "title": "4. Administrar tarjetas",
+          "description": "Haz clic sobre cualquier categoría para ver su historial o editar sus propiedades."
+        }
+      },
+      "telegram": {
+        "step1_nav": {
+          "title": "1. Configuración",
+          "description": "Ingresa a Configuración desde tu menú de perfil o navegación."
+        },
+        "step2_card": {
+          "title": "2. Vincular Telegram",
+          "description": "Ubica la tarjeta de Telegram en la sección de cuentas conectadas."
+        },
+        "step3_connect": {
+          "title": "3. Conectar bot",
+          "description": "Haz clic en 'Vincular Telegram' para generar tu código y empezar a registrar gastos enviando un mensaje como 'Café $5'."
+        }
       }
     }
   },

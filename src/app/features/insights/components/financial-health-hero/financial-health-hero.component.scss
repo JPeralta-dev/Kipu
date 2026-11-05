@@ -29,7 +29,15 @@
   }
 
   &[data-level="fair"] &__glow {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, transparent 70%);
+  }
+
+  &[data-level="needs_attention"] &__glow {
     background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, transparent 70%);
+  }
+
+  &[data-score="0"] &__glow {
+    background: radial-gradient(circle, rgba(148, 163, 184, 0.1) 0%, transparent 70%);
   }
 
   &[data-level="critical"] &__glow {
@@ -79,8 +87,10 @@
 
   &[data-level="excellent"] &__ring-progress { stroke: var(--color-success, #22c55e); }
   &[data-level="good"] &__ring-progress { stroke: var(--color-primary, #6366f1); }
-  &[data-level="fair"] &__ring-progress { stroke: var(--color-warning, #f59e0b); }
+  &[data-level="fair"] &__ring-progress { stroke: #38bdf8; }
+  &[data-level="needs_attention"] &__ring-progress { stroke: var(--color-warning, #f59e0b); }
   &[data-level="critical"] &__ring-progress { stroke: var(--color-danger, #ef4444); }
+  &[data-score="0"] &__ring-progress { stroke: rgba(255, 255, 255, 0.18); }
 
   &__score-content {
     position: absolute;
@@ -139,6 +149,11 @@
     }
 
     &.badge--fair {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+    }
+
+    &.badge--needs-attention {
       background: rgba(245, 158, 11, 0.15);
       color: #fbbf24;
     }

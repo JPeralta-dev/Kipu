@@ -67,6 +67,17 @@ export function detectBestLanguage(): Language {
   return DEFAULT_LANG;
 }
 
+const FALLBACK_TRANSLATIONS: Record<string, string> = {
+  'insights.radar.directTracking': 'Seguimiento directo',
+  'insights.radar.manageGoal': 'Ver meta',
+  'insights.radar.timeElapsed': 'Tiempo transcurrido',
+  'insights.radar.pacingProgress': 'Ahorro acumulado',
+  'insights.health.fair': 'Estable',
+  'insights.health.needs_attention': 'Atención requerida',
+  'insights.health.unrated': 'Sin actividad previa',
+  'insights.actions.dismiss': 'Descartar',
+};
+
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private readonly STORAGE_KEY = 'flowr_language';

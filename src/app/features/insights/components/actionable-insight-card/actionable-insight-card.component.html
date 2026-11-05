@@ -24,7 +24,7 @@
     <button
       type="button"
       class="btn-dismiss"
-      [title]="'insights.actions.dismiss' | translate"
+      [title]="('insights.actions.dismiss' | translate) || 'Descartar'"
       (click)="onDismiss()"
     >
       <ng-icon name="close" size="1rem" />
@@ -34,31 +34,19 @@
   <!-- Message Body -->
   <p class="insight-card__message">{{ insight().message }}</p>
 
-  <!-- Metrics Display (if available) -->
-  @if (insight().metrics) {
+  <!-- Metrics Display (rendered ONLY when there are visible formatted metrics) -->
+  @if (formattedMetrics().length > 0) {
     <div class="insight-card__metrics">
-      @if (insight().metrics?.current !== undefined) {
+      @for (m of formattedMetrics(); track m.label) {
         <div class="metric-item">
-          <span class="metric-label">Actual</span>
-          <span class="metric-value">{{ insight().metrics?.current | ftCurrency }}</span>
-        </div>
-      }
-      @if (insight().metrics?.target !== undefined) {
-        <div class="metric-item">
-          <span class="metric-label">Objetivo</span>
-          <span class="metric-value">{{ insight().metrics?.target | ftCurrency }}</span>
-        </div>
-      }
-      @if (insight().metrics?.projected !== undefined) {
-        <div class="metric-item">
-          <span class="metric-label">Proyectado</span>
-          <span class="metric-value metric-value--projected">{{ insight().metrics?.projected | ftCurrency }}</span>
-        </div>
-      }
-      @if (insight().metrics?.impactDays !== undefined) {
-        <div class="metric-item">
-          <span class="metric-label">Impacto</span>
-          <span class="metric-value metric-value--impact">+{{ insight().metrics?.impactDays }} días</span>
+          <span class="metric-label">{{ m.label }}</span>
+          <span
+            class="metric-value"
+            [class.metric-value--warning]="m.variant === 'warning'"
+            [class.metric-value--success]="m.variant === 'success'"
+          >
+            {{ m.value }}
+          </span>
         </div>
       }
     </div>
@@ -66,7 +54,10 @@
 
   <!-- Action Buttons (CTAs) -->
   @if (insight().actions && insight().actions!.length > 0) {
-    <div class="insight-card__actions">
+    <div
+      class="insight-card__actions"
+      [class.insight-card__actions--multiple]="insight().actions!.length > 2"
+    >
       @for (action of insight().actions; track action.id) {
         <button
           type="button"
@@ -77,12 +68,12 @@
         >
           @if (action.actionType === 'filter_transactions') {
             <ng-icon name="search" size="0.875rem" />
-          } @else if (action.actionType === 'fund_pocket') {
+          } @else if (action.actionType === 'fund_pocket' || action.actionType === 'allocate_pocket') {
             <ng-icon name="plus" size="0.875rem" />
           } @else if (action.actionType === 'adjust_goal_limit') {
             <ng-icon name="edit" size="0.875rem" />
           }
-          {{ action.label || ('insights.actions.' + action.actionType | translate) }}
+          <span class="btn-action__label">{{ action.label || ('insights.actions.' + action.actionType | translate) }}</span>
         </button>
       }
     </div>

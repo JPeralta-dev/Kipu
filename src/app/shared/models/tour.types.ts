@@ -15,6 +15,10 @@ export interface TourStep {
   titleKey: string;
   /** Translation key for the step body */
   descriptionKey: string;
+  /** Optional fallback title if translation is missing */
+  defaultTitle?: string;
+  /** Optional fallback description if translation is missing */
+  defaultDescription?: string;
   /** CSS selector of the target element to highlight. Use 'body' for full-screen steps. */
   targetSelector: string;
   /** Preferred tooltip position relative to the target */
@@ -23,6 +27,10 @@ export interface TourStep {
   actionKey?: string;
   /** Optional route to navigate to when CTA is clicked */
   actionRoute?: string;
+  /** Optional target route where this step element exists (auto-navigates if different) */
+  route?: string;
+  /** Max milliseconds to wait for the target selector to appear in DOM (default: 4000) */
+  waitForTimeoutMs?: number;
   /** If true, advance automatically after the action is taken */
   autoAdvanceAfterAction?: boolean;
   /** Optional padding around the highlighted target (px) */
@@ -37,6 +45,13 @@ export interface TourState {
   completedAt: string | null;
   updatedAt: number;
   postponedAt?: number;
+  activeTourId?: string;
+}
+
+export interface TourDefinition {
+  id: string;
+  titleKey?: string;
+  steps: TourStep[];
 }
 
 export const DEFAULT_TOUR_STATE: TourState = {
@@ -45,4 +60,5 @@ export const DEFAULT_TOUR_STATE: TourState = {
   completedAt: null,
   updatedAt: 0,
   postponedAt: undefined,
+  activeTourId: 'onboarding',
 };

@@ -61,13 +61,13 @@
         </div>
 
         <div class="dashboard-header__actions">
-          <a routerLink="/transactions/new" class="quick-btn quick-btn--primary" [ftHoverDepth]="4">
+          <a routerLink="/transactions/new" class="quick-btn quick-btn--primary" data-tour="quick-transaction" [ftHoverDepth]="4">
             <span class="quick-btn__icon-disc">
               <ft-icon name="plus" [size]="15" />
             </span>
             <span>{{ 'dashboard.newTransaction' | translate }}</span>
           </a>
-          <a routerLink="/categories" class="quick-btn quick-btn--ghost" [ftHoverDepth]="3">
+          <a routerLink="/categories" class="quick-btn quick-btn--ghost" data-tour="quick-categories" [ftHoverDepth]="3">
             <ft-icon name="tag" [size]="15" />
             <span>{{ 'dashboard.manageCategories' | translate }}</span>
           </a>
@@ -97,7 +97,7 @@
       }
 
       <!-- ZONE 1: HERO KPI BENTO (4 Cards in unified responsive row) -->
-      <section class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="60" data-tour="categories" [attr.aria-label]="'dashboard.mainIndicators' | translate">
+      <section class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="60" data-tour="dashboard-kpis" [attr.aria-label]="'dashboard.mainIndicators' | translate">
         @for (stat of stats(); track stat.id) {
           <article
             class="kpi-card"

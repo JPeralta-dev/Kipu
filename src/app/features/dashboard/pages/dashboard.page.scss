@@ -75,11 +75,15 @@
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
+  padding: 10px 14px;
+  border-radius: var(--radius-lg, 16px);
 
   &__welcome {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    padding: 4px 8px;
+    border-radius: var(--radius-md, 12px);
   }
 
   &__pill {

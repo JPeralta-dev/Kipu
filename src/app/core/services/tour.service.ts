@@ -30,7 +30,7 @@ export const ONBOARDING_TOUR_STEPS: TourStep[] = [
     defaultTitle: '¡Bienvenido a Kipu!',
     descriptionKey: 'tour.steps.welcome.description',
     defaultDescription: 'Tu nuevo centro de control financiero inteligente. Aquí tienes el panorama completo de tu dinero en tiempo real.',
-    targetSelector: '.dashboard-header__welcome, .dashboard-header',
+    targetSelector: '.dashboard-header__welcome',
     tooltipPosition: 'bottom',
     route: '/home',
   },

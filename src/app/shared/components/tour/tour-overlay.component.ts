@@ -220,36 +220,30 @@ import { waitForElement } from '../../utils/dom.utils';
       display: none !important;
     }
 
-    /* ─── Active Highlighted Element (Spotlight Box & Frame) ─── */
+    /* ─── Active Highlighted Element (Subtle Spotlight Frame) ─── */
     .driver-active-element {
       position: relative !important;
       z-index: 10002 !important;
-      outline: 2px solid #D946EF !important;
-      outline-offset: 4px !important;
+      outline: none !important;
       border-radius: var(--radius-md, 12px) !important;
       box-shadow:
-        0 0 0 2px #D946EF,
-        0 0 0 6px rgba(217, 70, 239, 0.4),
-        0 0 35px rgba(217, 70, 239, 0.5) !important;
-      animation: driver-active-pulse 2s ease-in-out infinite !important;
+        0 0 0 1px rgba(217, 70, 239, 0.75),
+        0 0 16px rgba(217, 70, 239, 0.25) !important;
+      animation: driver-active-subtle-pulse 2.5s ease-in-out infinite !important;
       pointer-events: auto !important;
-      transition: outline 0.2s ease, box-shadow 0.2s ease !important;
+      transition: box-shadow 0.25s ease !important;
     }
 
-    @keyframes driver-active-pulse {
+    @keyframes driver-active-subtle-pulse {
       0%, 100% {
-        outline-color: #D946EF;
         box-shadow:
-          0 0 0 2px #D946EF,
-          0 0 0 6px rgba(217, 70, 239, 0.4),
-          0 0 25px rgba(217, 70, 239, 0.35);
+          0 0 0 1px rgba(217, 70, 239, 0.55),
+          0 0 10px rgba(217, 70, 239, 0.15);
       }
       50% {
-        outline-color: #F0ABFC;
         box-shadow:
-          0 0 0 3px #F0ABFC,
-          0 0 0 10px rgba(217, 70, 239, 0.65),
-          0 0 45px rgba(217, 70, 239, 0.65);
+          0 0 0 1.5px rgba(217, 70, 239, 0.9),
+          0 0 20px rgba(217, 70, 239, 0.35);
       }
     }
 

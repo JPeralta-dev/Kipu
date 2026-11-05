@@ -20,7 +20,9 @@ describe('FtOnboardingChecklistComponent', () => {
     tourServiceSpy = jasmine.createSpyObj('FtTourService', [
       'startTour',
       'hasFinishedTour',
-    ]);
+    ], {
+      lastCompletedTour: signal<{ tourId: string; timestamp: number } | null>(null),
+    });
     tourServiceSpy.hasFinishedTour.and.returnValue(false);
 
     telegramServiceMock = {
@@ -102,5 +104,18 @@ describe('FtOnboardingChecklistComponent', () => {
     component.tasks.forEach((t) => component.toggleTask(t.id));
     expect(component.isAllCompleted()).toBe(true);
     expect(component.progressPercent()).toBe(100);
+  });
+
+  it('should automatically mark task complete and update progress when a tour finishes', () => {
+    expect(component.completedCount()).toBe(0);
+    expect(component.progressPercent()).toBe(0);
+
+    const signalRef = tourServiceSpy.lastCompletedTour as unknown as ReturnType<typeof signal<{ tourId: string; timestamp: number } | null>>;
+    signalRef.set({ tourId: 'new-expense', timestamp: Date.now() });
+    TestBed.flushEffects();
+
+    expect(component.isTaskCompleted('transaction')).toBe(true);
+    expect(component.completedCount()).toBe(1);
+    expect(component.progressPercent()).toBe(25);
   });
 });

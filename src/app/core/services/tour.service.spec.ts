@@ -173,4 +173,13 @@ describe('FtTourService', () => {
     expect(service.activeTourId()).toBe('custom-tour');
     expect(service.totalSteps).toBe(1);
   });
+
+  it('should emit lastCompletedTour signal when complete() is called', () => {
+    expect(service.lastCompletedTour()).toBeNull();
+    service.startTour('new-expense');
+    service.complete();
+    expect(service.lastCompletedTour()).toEqual(jasmine.objectContaining({
+      tourId: 'new-expense',
+    }));
+  });
 });

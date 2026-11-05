@@ -242,6 +242,7 @@ export class FtTourService {
   private readonly _currentStepIndex = signal(0); // 0-based internal
   private readonly _state = signal<TourState>(this.readPersistedState());
   private readonly _isNavigatingStep = signal(false);
+  private readonly _lastCompletedTour = signal<{ tourId: string; timestamp: number } | null>(null);
 
   readonly activeTourId = this._activeTourId.asReadonly();
   readonly isActive = this._isActive.asReadonly();
@@ -249,6 +250,7 @@ export class FtTourService {
   readonly isNavigatingStep = this._isNavigatingStep.asReadonly();
   readonly currentStepIndex = this._currentStepIndex.asReadonly();
   readonly tourState = this._state.asReadonly();
+  readonly lastCompletedTour = this._lastCompletedTour.asReadonly();
 
   /** Current active tour steps */
   get steps(): readonly TourStep[] {
@@ -415,12 +417,14 @@ export class FtTourService {
   }
 
   complete(): void {
+    const tourId = this._activeTourId();
     this.updateStatus('completed', { completedAt: new Date().toISOString() });
     this.analytics.trackEvent('onboarding_tour_completed', {
       step: this.currentStepNumber() as OnboardingStep,
       step_id: this.currentStep()?.id,
     });
     this._isActive.set(false);
+    this._lastCompletedTour.set({ tourId, timestamp: Date.now() });
   }
 
   /** Reset state — used by the "Replay tour" button in settings or profile. */

@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { driver, type Driver, type DriveStep } from 'driver.js';
-import 'driver.js/dist/driver.css';
 
 import { FtTourService } from '../../../core/services/tour.service';
 import { TranslationService } from '../../../core/services/translation.service';
@@ -25,54 +24,71 @@ import { waitForElement } from '../../utils/dom.utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   styles: [`
-    .ft-driver-popover.driver-popover {
-      background: var(--glass-bg, rgba(29, 20, 38, 0.95)) !important;
-      backdrop-filter: blur(20px) !important;
-      -webkit-backdrop-filter: blur(20px) !important;
-      border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.15)) !important;
-      border-radius: var(--radius-md, 14px) !important;
-      color: var(--text-primary, #F3E8FF) !important;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 24px rgba(217, 70, 239, 0.2) !important;
-      font-family: var(--font-body, 'Inter', sans-serif) !important;
-      padding: 18px !important;
-      min-width: 280px !important;
-      max-width: 380px !important;
-      z-index: 1000000001 !important;
+    .driver-popover.ft-driver-popover,
+    .driver-popover {
+      position: fixed !important;
+      display: block !important;
+      box-sizing: border-box !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      z-index: 1000000005 !important;
       pointer-events: auto !important;
+
+      background: var(--glass-bg, rgba(29, 20, 38, 0.98)) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      border: 1px solid rgba(217, 70, 239, 0.35) !important;
+      border-radius: var(--radius-lg, 16px) !important;
+      color: var(--text-primary, #F3E8FF) !important;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(217, 70, 239, 0.25) !important;
+      font-family: var(--font-body, 'Inter', sans-serif) !important;
+      padding: 20px !important;
+      min-width: 290px !important;
+      max-width: 390px !important;
     }
 
     .ft-driver-popover * {
+      box-sizing: border-box !important;
       pointer-events: auto !important;
     }
 
     .ft-driver-popover .driver-popover-title {
+      display: block !important;
       font-family: var(--font-display, 'Space Grotesk', sans-serif) !important;
       font-size: 16px !important;
       font-weight: 700 !important;
       line-height: 1.35 !important;
       color: var(--text-primary, #F3E8FF) !important;
       margin: 0 0 8px !important;
+      padding-right: 28px !important;
     }
 
     .ft-driver-popover .driver-popover-description {
+      display: block !important;
       font-family: var(--font-body, 'Inter', sans-serif) !important;
       font-size: 13.5px !important;
       line-height: 1.55 !important;
-      color: var(--text-secondary, rgba(243, 232, 255, 0.8)) !important;
+      color: var(--text-secondary, rgba(243, 232, 255, 0.85)) !important;
       margin: 0 0 16px !important;
     }
 
     .ft-driver-popover .driver-popover-progress-text {
       font-size: 11px !important;
       font-weight: 700 !important;
-      letter-spacing: 0.06em !important;
+      letter-spacing: 0.08em !important;
       text-transform: uppercase !important;
       color: var(--accent-start, #D946EF) !important;
     }
 
+    .ft-driver-popover .driver-popover-navigation-btns {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin-left: auto !important;
+    }
+
     .ft-driver-popover .driver-popover-next-btn,
-    .ft-driver-popover .driver-popover-prev-btn,
-    .ft-driver-popover .driver-popover-close-btn {
+    .ft-driver-popover .driver-popover-prev-btn {
       font-family: var(--font-body, 'Inter', sans-serif) !important;
       font-size: 13px !important;
       font-weight: 600 !important;
@@ -80,10 +96,37 @@ import { waitForElement } from '../../utils/dom.utils';
       padding: 8px 16px !important;
       transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease, background 0.15s ease !important;
       cursor: pointer !important;
-      min-height: 38px !important;
+      min-height: 36px !important;
       text-shadow: none !important;
-      border: 1px solid transparent !important;
       pointer-events: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .ft-driver-popover .driver-popover-close-btn {
+      position: absolute !important;
+      top: 14px !important;
+      right: 14px !important;
+      width: 28px !important;
+      height: 28px !important;
+      min-height: unset !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 6px !important;
+      background: transparent !important;
+      color: var(--text-tertiary, rgba(243, 232, 255, 0.5)) !important;
+      font-size: 20px !important;
+      line-height: 1 !important;
+      cursor: pointer !important;
+      border: none !important;
+    }
+
+    .ft-driver-popover .driver-popover-close-btn:hover {
+      color: var(--text-primary, #F3E8FF) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
     }
 
     .ft-driver-popover .driver-popover-next-btn {
@@ -271,8 +314,9 @@ export class FtTourOverlayComponent {
       steps,
       stagePadding: 8,
       stageRadius: 12,
+      popoverOffset: 14,
       popoverClass: 'ft-driver-popover',
-      overlayColor: 'var(--tour-overlay-bg, rgba(18, 11, 26, 0.88))',
+      overlayColor: 'rgba(18, 11, 26, 0.88)',
       smoothScroll: true,
       allowClose: true,
       animate: true,
@@ -418,12 +462,15 @@ export class FtTourOverlayComponent {
         ? translatedDesc
         : (step.defaultDescription ?? step.descriptionKey);
 
+      const isTargetBody = !step.targetSelector || step.targetSelector === 'body';
+
       return {
-        element: step.targetSelector,
+        element: isTargetBody ? undefined : step.targetSelector,
         popover: {
           title,
           description,
-          side: (step.tooltipPosition === 'auto' ? undefined : step.tooltipPosition),
+          side: isTargetBody ? undefined : (step.tooltipPosition === 'auto' ? undefined : step.tooltipPosition),
+          align: 'center',
           showButtons: ['next', 'previous', 'close'],
           doneBtnText: this.translation.translate('tour.finish') || 'Entendido',
           nextBtnText: isLastStep

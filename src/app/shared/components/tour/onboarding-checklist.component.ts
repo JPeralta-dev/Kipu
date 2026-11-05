@@ -4,6 +4,8 @@ import {
   inject,
   signal,
   computed,
+  effect,
+  untracked,
   ViewEncapsulation,
   OnInit,
 } from '@angular/core';
@@ -588,6 +590,26 @@ export class FtOnboardingChecklistComponent implements OnInit {
     () => this.completedCount() === this.tasks.length
   );
 
+  constructor() {
+    effect(() => {
+      const completed = this.tourService.lastCompletedTour();
+      if (completed) {
+        untracked(() => {
+          this.handleTourCompleted(completed.tourId);
+        });
+      }
+    });
+
+    effect(() => {
+      const tgState = this.telegramService.state();
+      if (tgState === 'linked') {
+        untracked(() => {
+          this.markTaskDone('telegram');
+        });
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.restoreState();
     this.checkAutomaticCompletions();
@@ -595,6 +617,23 @@ export class FtOnboardingChecklistComponent implements OnInit {
 
   isTaskCompleted(taskId: string): boolean {
     return this.completedTasks().has(taskId);
+  }
+
+  private handleTourCompleted(tourId: string): void {
+    const task = this.tasks.find((t) => t.tourId === tourId);
+    if (task) {
+      this.markTaskDone(task.id);
+      this.isCollapsed.set(false);
+    }
+  }
+
+  private markTaskDone(taskId: string): void {
+    const current = new Set(this.completedTasks());
+    if (!current.has(taskId)) {
+      current.add(taskId);
+      this.completedTasks.set(current);
+      this.persistTasks(current);
+    }
   }
 
   toggleCollapse(): void {

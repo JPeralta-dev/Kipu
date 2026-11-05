@@ -1016,6 +1016,33 @@
     "cta": "Upgrade to Premium"
   },
   "tour": {
+    "checklist": {
+      "title": "Getting started with Kipu",
+      "subtitle": "The essentials to master your finances",
+      "of": "of",
+      "completed": "completed",
+      "startTour": "View interactive tutorial",
+      "tourBtn": "Tour",
+      "allDone": "Awesome! You have configured the essentials of Kipu.",
+      "gotIt": "Close guide",
+      "hide": "Hide this guide",
+      "transaction": {
+        "title": "Log your first transaction",
+        "desc": "Add a manual expense or income to activate your metrics"
+      },
+      "categories": {
+        "title": "Customize your categories",
+        "desc": "Organize how your income and expenses are tracked"
+      },
+      "telegram": {
+        "title": "Connect Telegram bot",
+        "desc": "Log transactions in seconds from any chat"
+      },
+      "tour": {
+        "title": "Take the full Kipu tour",
+        "desc": "Explore key features across the control center"
+      }
+    },
     "progress": "Step {{current}} of {{total}}",
     "skipTour": "Skip tour",
     "previous": "Back",
@@ -1031,27 +1058,81 @@
     "steps": {
       "welcome": {
         "title": "Welcome to Kipu",
-        "description": "Your money, perfectly organized. From here you see your full financial picture — balance, income, expenses, all in one place."
+        "description": "Your intelligent financial command center. See your complete money overview in real time."
       },
-      "telegram": {
-        "title": "Log from anywhere",
-        "description": "Connect Telegram and register expenses by just sending a message. No need to open the app every time.",
-        "cta": "Connect Telegram"
+      "kpis": {
+        "title": "Key Indicators",
+        "description": "These cards show your net balance, monthly income, expenses, and savings at a glance."
       },
-      "categories": {
-        "title": "Organize your way",
-        "description": "Categories let you see exactly where your money goes. Food, transport, subscriptions — customize them to match your life.",
-        "cta": "Set up categories"
+      "newTransactionBtn": {
+        "title": "Log transactions",
+        "description": "Click this 'New Transaction' button to record any expense or income in under 10 seconds."
       },
-      "logExpense": {
-        "title": "Your first expense",
-        "description": "Tap the button below and log something. Coffee, groceries, that thing you bought online. Kipu handles the rest.",
-        "cta": "Log an expense"
+      "categoriesBtn": {
+        "title": "Organize categories",
+        "description": "Classify your spending your way: food, transport, bills, or subscriptions."
+      },
+      "telegramNav": {
+        "title": "Telegram Bot integration",
+        "description": "In Settings you can link our Telegram bot to log expenses straight from your chat without opening the app."
       },
       "done": {
-        "title": "✅ You're all set",
-        "description": "That's the core of Kipu. Log from anywhere, see everything here — and this button takes you straight to your first expense.",
-        "cta": "Log my first expense"
+        "title": "✅ You're all set!",
+        "description": "You know the essentials now. Start by logging your first movement or customizing your categories."
+      },
+      "newExpense": {
+        "step1_cta": {
+          "title": "1. Start new transaction",
+          "description": "Click the 'New Transaction' button to open the entry form."
+        },
+        "step2_type": {
+          "title": "2. Movement type",
+          "description": "Choose Expense (default) or Income to add funds to your balance."
+        },
+        "step3_amount": {
+          "title": "3. Enter amount",
+          "description": "Type the money amount. Kipu formats the currency automatically."
+        },
+        "step4_category": {
+          "title": "4. Select category",
+          "description": "Pick the category that matches this movement to keep your reports organized."
+        },
+        "step5_save": {
+          "title": "5. Save transaction",
+          "description": "Click 'Create transaction' to save and instantly update your financial metrics."
+        }
+      },
+      "categories": {
+        "step1_nav": {
+          "title": "1. Go to Categories",
+          "description": "Click here to navigate to your category management dashboard."
+        },
+        "step2_create": {
+          "title": "2. Create category",
+          "description": "Click this button to add a new category with custom icon, color, and budget."
+        },
+        "step3_summary": {
+          "title": "3. Category stats",
+          "description": "View summary metrics showing total categories and your top expense category."
+        },
+        "step4_manage": {
+          "title": "4. Manage cards",
+          "description": "Click on any category card to edit details or inspect transaction breakdown."
+        }
+      },
+      "telegram": {
+        "step1_nav": {
+          "title": "1. Settings",
+          "description": "Open Settings from your navigation menu or user profile."
+        },
+        "step2_card": {
+          "title": "2. Telegram channel",
+          "description": "Find the Telegram integration card in the linked accounts section."
+        },
+        "step3_connect": {
+          "title": "3. Connect bot",
+          "description": "Click 'Connect Telegram' to generate your code and start logging by messaging 'Coffee $5'."
+        }
       }
     }
   },

@@ -10,6 +10,8 @@
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  padding: 8px 12px;
+  border-radius: var(--radius-lg, 16px);
 }
 
 .page-title {
@@ -389,6 +391,8 @@
 /* Grid */
 .cat-grid {
   display: grid;
+  padding: 6px;
+  border-radius: var(--radius-lg, 16px);
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 20px;
 }

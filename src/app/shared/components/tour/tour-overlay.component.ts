@@ -220,31 +220,34 @@ import { waitForElement } from '../../utils/dom.utils';
       display: none !important;
     }
 
-    /* ─── Active Highlighted Element (Subtle Spotlight Frame) ─── */
+    /* ─── Active Highlighted Element (Subtle Spotlight Frame with Breathing Room) ─── */
     .driver-active-element {
       position: relative !important;
       z-index: 10002 !important;
-      outline: none !important;
+      outline: 1px solid rgba(217, 70, 239, 0.75) !important;
+      outline-offset: 6px !important;
       border-radius: var(--radius-md, 12px) !important;
-      box-shadow:
-        0 0 0 1px rgba(217, 70, 239, 0.75),
-        0 0 16px rgba(217, 70, 239, 0.25) !important;
+      box-shadow: 0 0 16px rgba(217, 70, 239, 0.22) !important;
       animation: driver-active-subtle-pulse 2.5s ease-in-out infinite !important;
       pointer-events: auto !important;
-      transition: box-shadow 0.25s ease !important;
+      transition: outline-color 0.25s ease, box-shadow 0.25s ease !important;
     }
 
     @keyframes driver-active-subtle-pulse {
       0%, 100% {
-        box-shadow:
-          0 0 0 1px rgba(217, 70, 239, 0.55),
-          0 0 10px rgba(217, 70, 239, 0.15);
+        outline-color: rgba(217, 70, 239, 0.55);
+        box-shadow: 0 0 10px rgba(217, 70, 239, 0.15);
       }
       50% {
-        box-shadow:
-          0 0 0 1.5px rgba(217, 70, 239, 0.9),
-          0 0 20px rgba(217, 70, 239, 0.35);
+        outline-color: rgba(217, 70, 239, 0.95);
+        box-shadow: 0 0 22px rgba(217, 70, 239, 0.35);
       }
+    }
+
+    html.light .driver-active-element {
+      outline: 1px solid rgba(168, 85, 247, 0.7) !important;
+      outline-offset: 6px !important;
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.2) !important;
     }
 
     /* ─── Transparent SVG Overlay so hole/cutout is 100% visible ─── */
@@ -354,9 +357,9 @@ export class FtTourOverlayComponent {
       showProgress: true,
       progressText: '{{current}} / {{total}}',
       steps,
-      stagePadding: 8,
-      stageRadius: 12,
-      popoverOffset: 14,
+      stagePadding: 14,
+      stageRadius: 14,
+      popoverOffset: 16,
       popoverClass: 'ft-driver-popover',
       overlayColor: '#0c0714',
       overlayOpacity: 0.85,

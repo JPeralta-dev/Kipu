@@ -1,63 +1,101 @@
 .kpis-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   @media (min-width: 1024px) {
     grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
   }
 }
 
 .kpis-skeleton {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 
   &__card {
-    height: 150px;
+    height: 110px;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    padding: 20px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+
+    @media (min-width: 768px) {
+      height: 150px;
+      padding: 20px;
+      gap: 12px;
+    }
   }
 
   &__icon {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-radius: var(--radius-sm);
     background: var(--bg-elevated);
     animation: shimmer 1.5s ease-in-out infinite alternate;
+
+    @media (min-width: 768px) {
+      width: 28px;
+      height: 28px;
+    }
   }
 
   &__label {
-    height: 13px;
-    width: 80px;
+    height: 12px;
+    width: 70px;
     background: var(--bg-elevated);
     border-radius: 4px;
     animation: shimmer 1.5s ease-in-out infinite alternate;
+
+    @media (min-width: 768px) {
+      height: 13px;
+      width: 80px;
+    }
   }
 
   &__value {
-    height: 26px;
-    width: 140px;
+    height: 22px;
+    width: 100px;
     background: var(--bg-elevated);
     border-radius: var(--radius-sm);
     animation: shimmer 1.5s ease-in-out infinite alternate;
+
+    @media (min-width: 768px) {
+      height: 26px;
+      width: 140px;
+    }
   }
 
   &__trend {
-    height: 18px;
-    width: 60px;
+    height: 16px;
+    width: 50px;
     background: var(--bg-elevated);
     border-radius: 4px;
     animation: shimmer 1.5s ease-in-out infinite alternate;
+
+    @media (min-width: 768px) {
+      height: 18px;
+      width: 60px;
+    }
   }
 }
 

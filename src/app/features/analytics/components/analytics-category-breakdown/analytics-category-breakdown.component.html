@@ -7,13 +7,20 @@
 } @else {
   <div class="category-breakdown">
     @for (cat of categories().slice(0, max()); track cat.name) {
-      <div class="category-breakdown__row"
-           [class.category-breakdown__row--active]="store.crossFilter().categoryId === cat.id"
-           (click)="onCategoryClick(cat.id, cat.name)"
-           ftSubtleReveal="fade-up" [delay]="$index * 50">
+      <div
+        class="category-breakdown__row"
+        [class.category-breakdown__row--active]="store.crossFilter().categoryId === cat.id"
+        (click)="onCategoryClick(cat.id, cat.name)"
+        (keydown.enter)="onCategoryClick(cat.id, cat.name)"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="cat.name + ': ' + formatAmount(cat.total)"
+        ftSubtleReveal="fade-up"
+        [delay]="$index * 40"
+      >
         <div class="category-breakdown__info">
           <span class="category-breakdown__icon" [style.background]="cat.color + '20'" [style.color]="cat.color">
-            <ng-icon [name]="cat.icon" size="0.9rem" />
+            <ng-icon [name]="cat.icon" size="0.95rem" />
           </span>
           <div class="category-breakdown__meta">
             <span class="category-breakdown__name">{{ cat.name }}</span>
@@ -28,14 +35,7 @@
           ></div>
         </div>
         <div class="category-breakdown__stats">
-          <span class="category-breakdown__change" [class.negative]="cat.trend === 'up'">
-            @if (cat.trend === 'up') {
-              <ng-icon name="trendUp" size="0.75rem" />
-            } @else if (cat.trend === 'down') {
-              <ng-icon name="trendDown" size="0.75rem" />
-            }
-            {{ cat.change > 0 ? '+' : '' }}{{ cat.change.toFixed(1) }}%
-          </span>
+          <span class="category-breakdown__amount">{{ formatAmount(cat.total) }}</span>
         </div>
       </div>
     }

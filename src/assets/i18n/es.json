@@ -923,7 +923,14 @@
       "accept": "Aceptar",
       "decline": "Rechazar",
       "learnMore": "Más información"
-    }
+    },
+    "tabs": {
+      "summary": "Resumen",
+      "categories": "Categorías",
+      "patterns": "Hábitos"
+    },
+    "categoryRanking": "Ranking de Categorías",
+    "categoryRankingSubtitle": "Desglose detallado por monto y porcentaje"
   },
   "profile": {
     "title": "Perfil",

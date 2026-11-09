@@ -55,9 +55,17 @@
           <!-- Single date-range control: month selector as primary, shortcuts + custom behind dropdown -->
           <div class="date-control">
             <div class="month-selector">
-              <button class="month-selector__btn" (click)="toggleMonthDropdown()" type="button">
-                <ng-icon name="calendar" size="1rem" />
-                <span>{{ currentFilterLabel() }}</span>
+              <button
+                class="month-selector__btn"
+                (click)="toggleMonthDropdown()"
+                type="button"
+                aria-haspopup="listbox"
+                [attr.aria-expanded]="monthOpen()"
+              >
+                <div class="month-selector__btn-left">
+                  <ng-icon name="calendar" size="1rem" />
+                  <span>{{ currentFilterLabel() }}</span>
+                </div>
                 <ng-icon name="chevronDown" size="0.75rem" />
               </button>
               @if (monthOpen()) {
@@ -186,7 +194,7 @@
           ftSubtleReveal="fade-up"
         >
           <span>{{ 'analytics.filtered' | translate:{ name: store.crossFilter().categoryName || store.chartFilter()?.label || store.crossFilter().categoryId || '' } }}</span>
-          <ng-icon name="x" size="0.8rem" aria-hidden="true" />
+          <ng-icon name="close" size="0.8rem" aria-hidden="true" />
         </button>
       }
 
@@ -195,15 +203,57 @@
         <div class="analytics-refresh-indicator" role="progressbar" aria-label="Loading updated data"></div>
       }
 
-      <!-- 2. KPI Cards Row (always visible) -->
+      <!-- 2. KPI Cards Row (2x2 on mobile, 4-col on desktop) -->
       <div class="analytics-kpis-row" ftSubtleReveal="fade-up" [delay]="50">
         <ft-analytics-kpis [kpis]="kpis()" [loading]="false" />
       </div>
 
-      <!-- 3. Charts Grid (Bento Layout) -->
+      <!-- Mobile Navigation Segmented Tabs (Option A) -->
+      <div class="analytics-mobile-tabs" role="tablist" aria-label="Secciones de análisis" ftSubtleReveal="fade-up" [delay]="70">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="mobileTab() === 'summary'"
+          class="analytics-mobile-tabs__btn"
+          [class.analytics-mobile-tabs__btn--active]="mobileTab() === 'summary'"
+          (click)="selectMobileTab('summary')"
+        >
+          <ng-icon name="chart" size="0.95rem" />
+          <span>{{ 'analytics.tabs.summary' | translate }}</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="mobileTab() === 'categories'"
+          class="analytics-mobile-tabs__btn"
+          [class.analytics-mobile-tabs__btn--active]="mobileTab() === 'categories'"
+          (click)="selectMobileTab('categories')"
+        >
+          <ng-icon name="categories" size="0.95rem" />
+          <span>{{ 'analytics.tabs.categories' | translate }}</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="mobileTab() === 'patterns'"
+          class="analytics-mobile-tabs__btn"
+          [class.analytics-mobile-tabs__btn--active]="mobileTab() === 'patterns'"
+          (click)="selectMobileTab('patterns')"
+        >
+          <ng-icon name="calendar" size="0.95rem" />
+          <span>{{ 'analytics.tabs.patterns' | translate }}</span>
+        </button>
+      </div>
+
+      <!-- 3. Charts Grid (Bento Layout on desktop, tabbed on mobile) -->
       <div class="analytics-charts-row">
-        <!-- Monthly Trends (wide) -->
-        <div class="analytics-charts-row__trends" ftSubtleReveal="fade-up" [delay]="100">
+        <!-- Monthly Trends (wide) — Tab: summary -->
+        <div
+          class="analytics-charts-row__trends"
+          [class.analytics-tab-pane--hidden]="mobileTab() !== 'summary'"
+          ftSubtleReveal="fade-up"
+          [delay]="100"
+        >
           <ft-analytics-chart-card
             [title]="trendChartTitle()"
             [subtitle]="trendChartSubtitle()"
@@ -227,8 +277,13 @@
           </ft-analytics-chart-card>
         </div>
 
-        <!-- Daily Spending (narrow) -->
-        <div class="analytics-charts-row__daily" ftSubtleReveal="fade-up" [delay]="200">
+        <!-- Daily Spending (narrow) — Tab: summary -->
+        <div
+          class="analytics-charts-row__daily"
+          [class.analytics-tab-pane--hidden]="mobileTab() !== 'summary'"
+          ftSubtleReveal="fade-up"
+          [delay]="150"
+        >
           <ft-analytics-chart-card
             [title]="'analytics.dailySpending' | translate"
             [subtitle]="dailyChartSubtitle()"
@@ -252,8 +307,13 @@
           </ft-analytics-chart-card>
         </div>
 
-        <!-- Recent Transactions (narrow) -->
-        <div class="analytics-charts-row__transactions" ftSubtleReveal="fade-up" [delay]="250">
+        <!-- Recent Transactions (narrow) — Tab: summary -->
+        <div
+          class="analytics-charts-row__transactions"
+          [class.analytics-tab-pane--hidden]="mobileTab() !== 'summary'"
+          ftSubtleReveal="fade-up"
+          [delay]="200"
+        >
           <ft-recent-activity
             [items]="activityItems()"
             [loading]="isLoading()"
@@ -261,8 +321,13 @@
           />
         </div>
 
-        <!-- Hourly Activity (wide) -->
-        <div class="analytics-charts-row__hourly" ftSubtleReveal="fade-up" [delay]="250">
+        <!-- Hourly Activity (wide) — Tab: patterns -->
+        <div
+          class="analytics-charts-row__hourly"
+          [class.analytics-tab-pane--hidden]="mobileTab() !== 'patterns'"
+          ftSubtleReveal="fade-up"
+          [delay]="200"
+        >
           <ft-analytics-chart-card
             [title]="'analytics.hourlyActivity' | translate"
             [subtitle]="'analytics.hourlySubtitle' | translate"
@@ -287,8 +352,13 @@
           </ft-analytics-chart-card>
         </div>
 
-        <!-- Weekly Patterns (narrow) -->
-        <div class="analytics-charts-row__weekly" ftSubtleReveal="fade-up" [delay]="300">
+        <!-- Weekly Patterns (narrow) — Tab: patterns -->
+        <div
+          class="analytics-charts-row__weekly"
+          [class.analytics-tab-pane--hidden]="mobileTab() !== 'patterns'"
+          ftSubtleReveal="fade-up"
+          [delay]="250"
+        >
           <ft-analytics-chart-card
             [title]="'analytics.weeklyPatterns' | translate"
             [subtitle]="'analytics.weeklyAverage' | translate"
@@ -317,8 +387,13 @@
           </ft-analytics-chart-card>
         </div>
 
-        <!-- Category Breakdown (narrow) -->
-        <div class="analytics-charts-row__category" ftSubtleReveal="fade-up" [delay]="350">
+        <!-- Category Breakdown (narrow) — Tab: categories -->
+        <div
+          class="analytics-charts-row__category"
+          [class.analytics-tab-pane--hidden]="mobileTab() !== 'categories'"
+          ftSubtleReveal="fade-up"
+          [delay]="200"
+        >
           <ft-analytics-chart-card
             [title]="'analytics.byCategory' | translate"
             [subtitle]="'analytics.expenseBreakdown' | translate"
@@ -339,6 +414,25 @@
                 </div>
               </ng-container>
             </ft-echart>
+          </ft-analytics-chart-card>
+        </div>
+
+        <!-- Category Ranking List — Tab: categories (and bottom row on desktop) -->
+        <div
+          class="analytics-charts-row__breakdown"
+          [class.analytics-tab-pane--hidden]="mobileTab() !== 'categories'"
+          ftSubtleReveal="fade-up"
+          [delay]="250"
+        >
+          <ft-analytics-chart-card
+            [title]="'analytics.categoryRanking' | translate"
+            [subtitle]="'analytics.categoryRankingSubtitle' | translate"
+          >
+            <ft-analytics-category-breakdown
+              [categories]="categoryAnalysis()"
+              [loading]="isLoading()"
+              [max]="10"
+            />
           </ft-analytics-chart-card>
         </div>
       </div>

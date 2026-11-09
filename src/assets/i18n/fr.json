@@ -696,7 +696,14 @@
       "fri": "Ven",
       "sat": "Sam",
       "sun": "Dim"
-    }
+    },
+    "tabs": {
+      "summary": "Résumé",
+      "categories": "Catégories",
+      "patterns": "Habitudes"
+    },
+    "categoryRanking": "Classement des catégories",
+    "categoryRankingSubtitle": "Répartition détaillée par montant et pourcentage"
   },
   "profile": {
     "title": "Profil",

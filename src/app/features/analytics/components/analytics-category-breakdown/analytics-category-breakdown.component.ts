@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../../../shared/directives/ft-subtle-reveal.directive';
-import { ICONS } from '../../../../shared/icons/icon-registry';
+import { CurrencyService } from '../../../../core/services/currency.service';
 import type { CategoryAnalysis } from '../../analytics.types';
 import { AnalyticsStore } from '../../services/analytics.store';
 
@@ -17,10 +17,15 @@ import { AnalyticsStore } from '../../services/analytics.store';
 })
 export class AnalyticsCategoryBreakdownComponent {
   readonly store = inject(AnalyticsStore);
+  private readonly currencyService = inject(CurrencyService);
 
   categories = input.required<CategoryAnalysis[]>();
   loading = input(false);
   max = input(7);
+
+  formatAmount(amount: number): string {
+    return this.currencyService.format(amount);
+  }
 
   onCategoryClick(categoryId: string, categoryName: string): void {
     const current = this.store.crossFilter().categoryId;

@@ -155,7 +155,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
                     [title]="'tour.checklist.startTour' | translate"
                   >
                     <ft-icon [name]="task.icon" [size]="14" />
-                    <span>{{ 'tour.checklist.tourBtn' | translate }}</span>
+                    <span>{{ (isTaskCompleted(task.id) ? 'tour.checklist.replayBtn' : 'tour.checklist.tourBtn') | translate }}</span>
                   </button>
                 </li>
               }
@@ -618,6 +618,15 @@ export class FtOnboardingChecklistComponent implements OnInit {
         });
       }
     });
+
+    effect(() => {
+      const req = this.tourService.checklistOpenRequest();
+      if (req > 0) {
+        untracked(() => {
+          this.reopen();
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -661,6 +670,15 @@ export class FtOnboardingChecklistComponent implements OnInit {
     }
   }
 
+  reopen(): void {
+    this.isDismissed.set(false);
+    this.isCollapsed.set(false);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(this.getStorageKey(CHECKLIST_DISMISSED_KEY));
+      localStorage.setItem(this.getStorageKey(CHECKLIST_COLLAPSED_KEY), 'false');
+    }
+  }
+
   toggleTask(taskId: string): void {
     const current = new Set(this.completedTasks());
     if (current.has(taskId)) {
@@ -675,7 +693,7 @@ export class FtOnboardingChecklistComponent implements OnInit {
   startTaskTour(task: ChecklistTask): void {
     // Minimize checklist during tour so it doesn't obstruct popovers
     this.isCollapsed.set(true);
-    this.tourService.startTour(task.tourId);
+    this.tourService.replayTour(task.tourId);
   }
 
   private getStorageKey(baseKey: string): string {

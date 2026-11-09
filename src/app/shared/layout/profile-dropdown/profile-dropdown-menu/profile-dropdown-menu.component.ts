@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
+import { FtTourService } from '../../../../core/services/tour.service';
 import type { User } from '../../../../core/models/user.model';
 
 @Component({
@@ -14,6 +15,8 @@ import type { User } from '../../../../core/models/user.model';
   styleUrl: './profile-dropdown-menu.component.scss',
 })
 export class ProfileDropdownMenuComponent {
+  private readonly tourService = inject(FtTourService);
+
   user = input.required<User | null>();
   initials = input.required<string>();
   displayName = input.required<string>();
@@ -32,5 +35,10 @@ export class ProfileDropdownMenuComponent {
 
   onLogout(): void {
     this.logoutRequested.emit();
+  }
+
+  onOpenTutorials(): void {
+    this.onClose();
+    this.tourService.openTutorialsHub();
   }
 }

@@ -774,6 +774,7 @@ export class EchartsThemeMapper {
     data: number[],
     title?: string,
     customColors?: string[],
+    isMobile = false,
   ): EChartsOption {
     const css = this.cssVars();
     const colors = this.categoryColors();
@@ -800,24 +801,37 @@ export class EchartsThemeMapper {
             <div>${this.formatCurrency(p.value)} (${pct}%)${countStr}</div>`;
         },
       },
-      legend: {
-        type: 'scroll',
-        orient: 'vertical',
-        right: 12,
-        top: 'middle',
-        bottom: 12,
-        itemWidth: 10,
-        itemHeight: 10,
-        itemGap: 10,
-        textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
-        pageIconColor: css.textPrimary,
-        pageTextStyle: { color: css.textSecondary },
-      },
+      legend: isMobile
+        ? {
+            type: 'scroll',
+            orient: 'horizontal',
+            bottom: 4,
+            left: 'center',
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 12,
+            textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+            pageIconColor: css.textPrimary,
+            pageTextStyle: { color: css.textSecondary },
+          }
+        : {
+            type: 'scroll',
+            orient: 'vertical',
+            right: 12,
+            top: 'middle',
+            bottom: 12,
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 10,
+            textStyle: { color: css.textSecondary, fontFamily: "'Inter', sans-serif", fontSize: 11 },
+            pageIconColor: css.textPrimary,
+            pageTextStyle: { color: css.textSecondary },
+          },
       series: [
         {
           type: 'pie',
-          radius: ['48%', '72%'],
-          center: ['38%', '50%'],
+          radius: isMobile ? ['38%', '62%'] : ['48%', '72%'],
+          center: isMobile ? ['50%', '42%'] : ['38%', '50%'],
           avoidLabelOverlap: true,
           itemStyle: {
             borderRadius: 6,

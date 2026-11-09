@@ -246,6 +246,7 @@ export class FtTourService {
   private readonly _state = signal<TourState>(this.readPersistedState());
   private readonly _isNavigatingStep = signal(false);
   private readonly _lastCompletedTour = signal<{ tourId: string; timestamp: number } | null>(null);
+  private readonly _checklistOpenRequest = signal<number>(0);
 
   readonly activeTourId = this._activeTourId.asReadonly();
   readonly isActive = this._isActive.asReadonly();
@@ -254,6 +255,7 @@ export class FtTourService {
   readonly currentStepIndex = this._currentStepIndex.asReadonly();
   readonly tourState = this._state.asReadonly();
   readonly lastCompletedTour = this._lastCompletedTour.asReadonly();
+  readonly checklistOpenRequest = this._checklistOpenRequest.asReadonly();
 
   /** Current active tour steps */
   get steps(): readonly TourStep[] {
@@ -308,6 +310,11 @@ export class FtTourService {
     this.tourRegistry.set(id, steps);
   }
 
+  /** Request opening the Onboarding Checklist/Tutorials hub */
+  openTutorialsHub(): void {
+    this._checklistOpenRequest.update((n) => n + 1);
+  }
+
   /** Has the user completed or skipped the main tour before? */
   hasFinishedTour(): boolean {
     const s = this._state();
@@ -322,8 +329,16 @@ export class FtTourService {
   /** Returns true when the trigger card should be visible */
   shouldShowTriggerCard(): boolean {
     const s = this._state();
-    if (s.status === 'completed' || s.status === 'skipped') return false;
+    if (s.status === 'completed') return false;
     if (s.status === 'in_progress') return false;
+    if (s.status === 'skipped') {
+      // Allow showing the card so users who closed it by habit can reopen it!
+      if (s.postponedAt) {
+        const elapsed = Date.now() - s.postponedAt;
+        return elapsed >= this.POSTPONE_COOLDOWN_MS;
+      }
+      return true;
+    }
     if (s.status === 'not_started') {
       if (s.postponedAt) {
         const elapsed = Date.now() - s.postponedAt;
@@ -376,6 +391,19 @@ export class FtTourService {
     this.analytics.trackEvent('onboarding_tour_started', {
       step: this.currentStepNumber() as OnboardingStep,
       step_id: this.steps[targetStep]?.id,
+    });
+  }
+
+  /** Replay a tour from step 0 even if completed or skipped previously */
+  replayTour(tourId = 'onboarding'): void {
+    this._sessionKey.update((k) => k + 1);
+    this._activeTourId.set(tourId);
+    this._currentStepIndex.set(0);
+    this._isActive.set(true);
+    this.updateStatus('in_progress', { activeTourId: tourId, currentStep: 1 });
+    this.analytics.trackEvent('onboarding_tour_started', {
+      step: 1 as OnboardingStep,
+      step_id: this.steps[0]?.id,
     });
   }
 

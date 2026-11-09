@@ -920,7 +920,14 @@
       "accept": "Accept",
       "decline": "Decline",
       "learnMore": "Learn more"
-    }
+    },
+    "tabs": {
+      "summary": "Summary",
+      "categories": "Categories",
+      "patterns": "Habits"
+    },
+    "categoryRanking": "Category Ranking",
+    "categoryRankingSubtitle": "Detailed breakdown by amount and percentage"
   },
   "profile": {
     "title": "Profile",

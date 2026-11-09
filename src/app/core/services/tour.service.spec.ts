@@ -1,26 +1,33 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { FtTourService } from './tour.service';
 import { FtAnalyticsService } from './analytics.service';
-import { DEFAULT_TOUR_STATE } from '../../shared/models/tour.types';
+import { AuthService } from './auth.service';
+import { User } from '../models/user.model';
+import { TourStep } from '../../shared/models/tour.types';
 
 describe('FtTourService', () => {
   let service: FtTourService;
   let analyticsMock: jasmine.SpyObj<FtAnalyticsService>;
+  let currentUserSignal: ReturnType<typeof signal<User | null>>;
 
   beforeEach(() => {
     localStorage.clear();
     analyticsMock = jasmine.createSpyObj<FtAnalyticsService>('FtAnalyticsService', ['trackEvent']);
+    currentUserSignal = signal<User | null>(null);
+
     TestBed.configureTestingModule({
       providers: [
         { provide: FtAnalyticsService, useValue: analyticsMock },
+        { provide: AuthService, useValue: { currentUser: currentUserSignal } },
       ],
     });
     service = TestBed.inject(FtTourService);
   });
 
-  it('should expose 5 onboarding steps', () => {
-    expect(service.totalSteps).toBe(5);
-    expect(service.steps.length).toBe(5);
+  it('should expose 6 onboarding steps', () => {
+    expect(service.totalSteps).toBe(6);
+    expect(service.steps.length).toBe(6);
   });
 
   it('should not be active by default', () => {
@@ -54,7 +61,7 @@ describe('FtTourService', () => {
 
   it('should not show trigger card after completion', () => {
     service.start();
-    for (let i = 0; i < 4; i++) service.next();
+    for (let i = 0; i < 5; i++) service.next();
     service.next(); // completes
     expect(service.shouldShowTriggerCard()).toBe(false);
   });
@@ -96,8 +103,8 @@ describe('FtTourService', () => {
 
   it('should complete on next() from the last step', () => {
     service.start();
-    for (let i = 0; i < 4; i++) service.next();
-    expect(service.currentStepNumber()).toBe(5);
+    for (let i = 0; i < 5; i++) service.next();
+    expect(service.currentStepNumber()).toBe(6);
     service.next();
     expect(service.isActive()).toBe(false);
     expect(analyticsMock.trackEvent).toHaveBeenCalledWith('onboarding_tour_completed', jasmine.any(Object));
@@ -149,5 +156,52 @@ describe('FtTourService', () => {
   it('should set postponedAt on postpone()', () => {
     service.postpone();
     expect(service.tourState().postponedAt).toBeGreaterThan(0);
+  });
+
+  it('should support starting contextual multi-step tours', () => {
+    service.startTour('categories');
+    expect(service.activeTourId()).toBe('categories');
+    expect(service.isActive()).toBe(true);
+    expect(service.steps.length).toBe(4);
+    expect(service.currentStepNumber()).toBe(1);
+  });
+
+  it('should allow registering custom tours dynamically', () => {
+    const customSteps: TourStep[] = [
+      {
+        id: 'step-1',
+        titleKey: 'custom.title',
+        descriptionKey: 'custom.desc',
+        targetSelector: 'body',
+      },
+    ];
+    service.registerTour('custom-tour', customSteps);
+    service.startTour('custom-tour');
+    expect(service.activeTourId()).toBe('custom-tour');
+    expect(service.totalSteps).toBe(1);
+  });
+
+  it('should emit lastCompletedTour signal when complete() is called', () => {
+    expect(service.lastCompletedTour()).toBeNull();
+    service.startTour('new-expense');
+    service.complete();
+    expect(service.lastCompletedTour()).toEqual(jasmine.objectContaining({
+      tourId: 'new-expense',
+    }));
+  });
+
+  it('should isolate tour state by user account when switching users', () => {
+    currentUserSignal.set({ id: 'user_A', email: 'a@kipu.com', createdAt: '' } as User);
+    TestBed.flushEffects();
+    service.start();
+    for (let i = 0; i < 5; i++) service.next();
+    service.next(); // completes
+    expect(service.tourState().status).toBe('completed');
+    expect(service.shouldAutoStart()).toBe(false);
+
+    currentUserSignal.set({ id: 'user_B', email: 'b@kipu.com', createdAt: '' } as User);
+    TestBed.flushEffects();
+    expect(service.tourState().status).toBe('not_started');
+    expect(service.shouldAutoStart()).toBe(true);
   });
 });

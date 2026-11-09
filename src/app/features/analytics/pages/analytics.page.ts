@@ -23,6 +23,7 @@ import type { PeriodOption } from '../components/analytics-header/analytics-head
 import { AnalyticsKpisComponent } from '../components/analytics-kpis/analytics-kpis.component';
 import { AnalyticsFiltersComponent } from '../components/analytics-filters/analytics-filters.component';
 import { AnalyticsChartCardComponent } from '../components/analytics-chart-card/analytics-chart-card.component';
+import { AnalyticsCategoryBreakdownComponent } from '../components/analytics-category-breakdown/analytics-category-breakdown.component';
 import { RecentActivityComponent, ActivityItem } from '../../../features/dashboard/components/recent-activity/recent-activity.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
@@ -237,6 +238,7 @@ export function generateMonthStories(
     AnalyticsKpisComponent,
     AnalyticsFiltersComponent,
     AnalyticsChartCardComponent,
+    AnalyticsCategoryBreakdownComponent,
   ],
   templateUrl: './analytics.page.html',
   styleUrl: './analytics.page.scss',
@@ -262,6 +264,21 @@ export class AnalyticsPage implements OnInit {
   ];
 
   readonly demoMode = signal(false);
+
+  /** Active mobile tab: summary | categories | patterns */
+  readonly mobileTab = signal<'summary' | 'categories' | 'patterns'>('summary');
+
+  /** Screen breakpoint tracking */
+  readonly isMobile = signal(false);
+
+  selectMobileTab(tab: 'summary' | 'categories' | 'patterns'): void {
+    this.mobileTab.set(tab);
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+      }, 60);
+    }
+  }
 
   // ─── Derived signals from store ─────────────────────────────────────────
 
@@ -416,7 +433,7 @@ export class AnalyticsPage implements OnInit {
       colors.push(defaultColors[5] || '#6E48AA');
     }
 
-    return this.themeMapper.buildDonutOption(labels, data, undefined, colors);
+    return this.themeMapper.buildDonutOption(labels, data, undefined, colors, this.isMobile());
   });
 
   readonly dailyChartOptions = computed<EChartsOption | undefined>(() => {
@@ -625,6 +642,16 @@ export class AnalyticsPage implements OnInit {
   }
 
   ngOnInit(): void {
+    if (typeof window !== 'undefined') {
+      const mql = window.matchMedia('(max-width: 767px)');
+      this.isMobile.set(mql.matches);
+      const handler = (e: MediaQueryListEvent) => {
+        this.isMobile.set(e.matches);
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 60);
+      };
+      mql.addEventListener('change', handler);
+      this.destroyRef.onDestroy(() => mql.removeEventListener('change', handler));
+    }
     this.loadBanks();
   }
 

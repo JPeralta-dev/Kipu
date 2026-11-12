@@ -1033,9 +1033,14 @@
       "completed": "completados",
       "startTour": "Ver tutorial interactivo",
       "tourBtn": "Tour",
+      "replayBtn": "Repetir",
       "allDone": "¡Excelente! Ya configuraste lo más importante de Kipu.",
       "gotIt": "Cerrar guía",
       "hide": "Ocultar esta guía",
+      "minimize": "Minimizar guía",
+      "openGuide": "Abrir guía de primeros pasos",
+      "markPending": "Marcar como pendiente",
+      "markCompleted": "Marcar como completado",
       "transaction": {
         "title": "Registrar tu primer movimiento",
         "desc": "Carga un gasto o ingreso manual para activar tus métricas"

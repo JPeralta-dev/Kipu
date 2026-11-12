@@ -22,9 +22,11 @@ describe('FtOnboardingChecklistComponent', () => {
 
     tourServiceSpy = jasmine.createSpyObj('FtTourService', [
       'startTour',
+      'replayTour',
       'hasFinishedTour',
     ], {
       lastCompletedTour: signal<{ tourId: string; timestamp: number } | null>(null),
+      checklistOpenRequest: signal<number>(0),
     });
     tourServiceSpy.hasFinishedTour.and.returnValue(false);
 
@@ -105,7 +107,7 @@ describe('FtOnboardingChecklistComponent', () => {
     component.startTaskTour(task);
 
     expect(component.isCollapsed()).toBe(true);
-    expect(tourServiceSpy.startTour).toHaveBeenCalledWith(task.tourId);
+    expect(tourServiceSpy.replayTour).toHaveBeenCalledWith(task.tourId);
   });
 
   it('should mark all completed when all tasks are checked', () => {

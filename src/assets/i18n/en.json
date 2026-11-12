@@ -920,7 +920,14 @@
       "accept": "Accept",
       "decline": "Decline",
       "learnMore": "Learn more"
-    }
+    },
+    "tabs": {
+      "summary": "Summary",
+      "categories": "Categories",
+      "patterns": "Habits"
+    },
+    "categoryRanking": "Category Ranking",
+    "categoryRankingSubtitle": "Detailed breakdown by amount and percentage"
   },
   "profile": {
     "title": "Profile",
@@ -1023,9 +1030,14 @@
       "completed": "completed",
       "startTour": "View interactive tutorial",
       "tourBtn": "Tour",
+      "replayBtn": "Replay",
       "allDone": "Awesome! You have configured the essentials of Kipu.",
       "gotIt": "Close guide",
       "hide": "Hide this guide",
+      "minimize": "Minimize guide",
+      "openGuide": "Open getting started guide",
+      "markPending": "Mark as pending",
+      "markCompleted": "Mark as completed",
       "transaction": {
         "title": "Log your first transaction",
         "desc": "Add a manual expense or income to activate your metrics"

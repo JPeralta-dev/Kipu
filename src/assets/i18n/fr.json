@@ -559,6 +559,38 @@
     }
   },
   "tour": {
+    "checklist": {
+      "title": "Premiers pas sur Kipu",
+      "subtitle": "L'essentiel pour maîtriser vos finances",
+      "of": "sur",
+      "completed": "complétés",
+      "startTour": "Voir le tutoriel interactif",
+      "tourBtn": "Tour",
+      "replayBtn": "Revoir",
+      "allDone": "Super ! Vous avez configuré l'essentiel de Kipu.",
+      "gotIt": "Fermer le guide",
+      "hide": "Masquer ce guide",
+      "minimize": "Réduire le guide",
+      "openGuide": "Ouvrir le guide de démarrage",
+      "markPending": "Marquer comme en attente",
+      "markCompleted": "Marquer comme terminé",
+      "transaction": {
+        "title": "Enregistrer votre premier mouvement",
+        "desc": "Ajoutez une dépense ou un revenu manuel pour activer vos indicateurs"
+      },
+      "categories": {
+        "title": "Personnaliser vos catégories",
+        "desc": "Organisez le suivi de vos revenus et dépenses"
+      },
+      "telegram": {
+        "title": "Connecter le bot Telegram",
+        "desc": "Enregistrez des transactions en quelques secondes depuis un chat"
+      },
+      "tour": {
+        "title": "Suivre le tour complet de Kipu",
+        "desc": "Explorez les fonctionnalités clés du centre de contrôle"
+      }
+    },
     "progress": "Étape {{current}} sur {{total}}",
     "skipTour": "Passer le tour",
     "previous": "Retour",
@@ -574,27 +606,81 @@
     "steps": {
       "welcome": {
         "title": "Bienvenue sur Kipu",
-        "description": "Votre argent, parfaitement organisé. Ici, vous voyez votre situation financière complète — solde, revenus, dépenses, tout au même endroit."
+        "description": "Votre centre de contrôle financier intelligent. Voyez la vue complète de votre argent en temps réel."
       },
-      "telegram": {
-        "title": "Enregistrez depuis n'importe où",
-        "description": "Connectez Telegram et enregistrez vos dépenses en envoyant simplement un message. Plus besoin d'ouvrir l'application à chaque fois.",
-        "cta": "Connecter Telegram"
+      "kpis": {
+        "title": "Indicateurs Clés",
+        "description": "Ces cartes affichent votre solde net, vos revenus mensuels, vos dépenses et votre épargne en un coup d'œil."
       },
-      "categories": {
-        "title": "Organisez à votre façon",
-        "description": "Les catégories vous montrent exactement où va votre argent. Alimentation, transport, abonnements — personnalisez-les selon votre vie.",
-        "cta": "Configurer les catégories"
+      "newTransactionBtn": {
+        "title": "Enregistrer des transactions",
+        "description": "Cliquez sur 'Nouvelle Transaction' pour enregistrer une dépense ou un revenu en moins de 10 secondes."
       },
-      "logExpense": {
-        "title": "Votre première dépense",
-        "description": "Appuyez sur le bouton ci-dessous et enregistrez quelque chose. Un café, les courses, cet achat en ligne. Kipu s'occupe du reste.",
-        "cta": "Enregistrer une dépense"
+      "categoriesBtn": {
+        "title": "Vos Catégories",
+        "description": "Classez vos dépenses à votre façon : alimentation, transport, factures ou abonnements."
+      },
+      "telegramNav": {
+        "title": "Intégration Telegram",
+        "description": "Dans les Paramètres, connectez notre bot Telegram pour enregistrer vos dépenses par message sans ouvrir l'application."
       },
       "done": {
-        "title": "✅ Vous êtes prêt",
-        "description": "C'est l'essentiel de Kipu. Enregistrez de n'importe où, voyez tout ici — et ce bouton vous emmène directement à votre première dépense.",
-        "cta": "Enregistrer ma première dépense"
+        "title": "✅ Vous êtes prêt !",
+        "description": "Vous connaissez maintenant l'essentiel de Kipu. Le contrôle total de vos finances est entre vos mains !"
+      },
+      "newExpense": {
+        "step1_cta": {
+          "title": "1. Nouvelle transaction",
+          "description": "Cliquez sur le bouton 'Nouvelle Transaction' pour ouvrir le formulaire."
+        },
+        "step2_type": {
+          "title": "2. Type de mouvement",
+          "description": "Choisissez Dépense (par défaut) ou Revenu pour ajouter des fonds à votre solde."
+        },
+        "step3_amount": {
+          "title": "3. Saisir le montant",
+          "description": "Saisissez le montant. Kipu formate automatiquement la devise."
+        },
+        "step4_category": {
+          "title": "4. Choisir une catégorie",
+          "description": "Sélectionnez la catégorie correspondante pour garder vos rapports organisés."
+        },
+        "step5_save": {
+          "title": "5. Enregistrer la transaction",
+          "description": "Cliquez sur 'Créer la transaction' pour l'enregistrer et mettre à jour votre solde instantanément."
+        }
+      },
+      "categories": {
+        "step1_nav": {
+          "title": "1. Aller aux Catégories",
+          "description": "Cliquez sur ce raccourci pour ouvrir la gestion des catégories."
+        },
+        "step2_create": {
+          "title": "2. Nouvelle catégorie",
+          "description": "Cliquez sur ce bouton pour ajouter une catégorie avec votre icône, couleur et type."
+        },
+        "step3_summary": {
+          "title": "3. Statistiques des catégories",
+          "description": "Consultez le résumé du nombre total de catégories et de votre principale catégorie de dépenses."
+        },
+        "step4_manage": {
+          "title": "4. Gérer les cartes",
+          "description": "Cliquez sur une carte de catégorie pour voir son historique ou modifier ses propriétés."
+        }
+      },
+      "telegram": {
+        "step1_nav": {
+          "title": "1. Paramètres",
+          "description": "Ouvrez les Paramètres depuis votre menu de navigation ou profil."
+        },
+        "step2_card": {
+          "title": "2. Connecter Telegram",
+          "description": "Trouvez la carte Telegram dans la section des comptes connectés."
+        },
+        "step3_connect": {
+          "title": "3. Connecter le bot",
+          "description": "Cliquez sur 'Connecter Telegram' pour générer votre code et enregistrer vos dépenses en envoyant 'Café $5'."
+        }
       }
     }
   },
@@ -696,7 +782,14 @@
       "fri": "Ven",
       "sat": "Sam",
       "sun": "Dim"
-    }
+    },
+    "tabs": {
+      "summary": "Résumé",
+      "categories": "Catégories",
+      "patterns": "Habitudes"
+    },
+    "categoryRanking": "Classement des catégories",
+    "categoryRankingSubtitle": "Répartition détaillée par montant et pourcentage"
   },
   "profile": {
     "title": "Profil",

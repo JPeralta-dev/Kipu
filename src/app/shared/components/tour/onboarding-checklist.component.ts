@@ -40,7 +40,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
         class="onboarding-checklist"
         [class.onboarding-checklist--collapsed]="isCollapsed()"
         [class.onboarding-checklist--all-done]="isAllCompleted()"
-        aria-label="Guía de primeros pasos"
+        [attr.aria-label]="'tour.checklist.title' | translate"
       >
         <!-- COLLAPSED PILL VIEW -->
         @if (isCollapsed()) {
@@ -48,7 +48,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
             type="button"
             class="checklist-pill-btn"
             (click)="toggleCollapse()"
-            aria-label="Abrir guía de primeros pasos"
+            [attr.aria-label]="'tour.checklist.openGuide' | translate"
           >
             <div class="checklist-pill-btn__sparkle">
               <ft-icon name="sparkles" [size]="15" />
@@ -87,8 +87,8 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
                   type="button"
                   class="icon-btn"
                   (click)="toggleCollapse()"
-                  title="Minimizar"
-                  aria-label="Minimizar guía"
+                  [title]="'tour.checklist.minimize' | translate"
+                  [attr.aria-label]="'tour.checklist.minimize' | translate"
                 >
                   <ft-icon name="chevron-down" [size]="16" />
                 </button>
@@ -96,8 +96,8 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
                   type="button"
                   class="icon-btn"
                   (click)="dismiss()"
-                  title="Ocultar definitivamente"
-                  aria-label="Ocultar guía definitivamente"
+                  [title]="'tour.checklist.hide' | translate"
+                  [attr.aria-label]="'tour.checklist.hide' | translate"
                 >
                   <ft-icon name="x" [size]="16" />
                 </button>
@@ -132,7 +132,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
                     class="task-check-btn"
                     [class.task-check-btn--checked]="isTaskCompleted(task.id)"
                     (click)="toggleTask(task.id)"
-                    [attr.aria-label]="isTaskCompleted(task.id) ? 'Marcar como pendiente' : 'Marcar como completado'"
+                    [attr.aria-label]="(isTaskCompleted(task.id) ? 'tour.checklist.markPending' : 'tour.checklist.markCompleted') | translate"
                   >
                     @if (isTaskCompleted(task.id)) {
                       <ft-icon name="check" [size]="14" />
@@ -155,7 +155,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
                     [title]="'tour.checklist.startTour' | translate"
                   >
                     <ft-icon [name]="task.icon" [size]="14" />
-                    <span>{{ 'tour.checklist.tourBtn' | translate }}</span>
+                    <span>{{ (isTaskCompleted(task.id) ? 'tour.checklist.replayBtn' : 'tour.checklist.tourBtn') | translate }}</span>
                   </button>
                 </li>
               }
@@ -438,12 +438,16 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
       font-weight: 600;
       color: var(--text-primary, #F3E8FF);
       line-height: 1.3;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .task-desc {
       font-size: 11px;
       color: var(--text-secondary, rgba(243, 232, 255, 0.65));
       line-height: 1.4;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .task-action-btn {
@@ -618,6 +622,15 @@ export class FtOnboardingChecklistComponent implements OnInit {
         });
       }
     });
+
+    effect(() => {
+      const req = this.tourService.checklistOpenRequest();
+      if (req > 0) {
+        untracked(() => {
+          this.reopen();
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -661,6 +674,15 @@ export class FtOnboardingChecklistComponent implements OnInit {
     }
   }
 
+  reopen(): void {
+    this.isDismissed.set(false);
+    this.isCollapsed.set(false);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(this.getStorageKey(CHECKLIST_DISMISSED_KEY));
+      localStorage.setItem(this.getStorageKey(CHECKLIST_COLLAPSED_KEY), 'false');
+    }
+  }
+
   toggleTask(taskId: string): void {
     const current = new Set(this.completedTasks());
     if (current.has(taskId)) {
@@ -675,7 +697,7 @@ export class FtOnboardingChecklistComponent implements OnInit {
   startTaskTour(task: ChecklistTask): void {
     // Minimize checklist during tour so it doesn't obstruct popovers
     this.isCollapsed.set(true);
-    this.tourService.startTour(task.tourId);
+    this.tourService.replayTour(task.tourId);
   }
 
   private getStorageKey(baseKey: string): string {

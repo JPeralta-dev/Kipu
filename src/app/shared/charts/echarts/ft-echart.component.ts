@@ -101,11 +101,13 @@ export interface ChartClickEvent {
       position: relative;
       width: 100%;
       overflow: hidden;
+      touch-action: pan-y;
     }
 
     .ft-echart-canvas {
       width: 100%;
       height: 100%;
+      touch-action: pan-y;
     }
 
     .ft-echart-canvas--hidden {

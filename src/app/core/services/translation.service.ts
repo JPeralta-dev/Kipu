@@ -76,6 +76,80 @@ const FALLBACK_TRANSLATIONS: Record<string, string> = {
   'insights.health.needs_attention': 'Atención requerida',
   'insights.health.unrated': 'Sin actividad previa',
   'insights.actions.dismiss': 'Descartar',
+  'tour.checklist.title': 'Primeros pasos en Kipu',
+  'tour.checklist.subtitle': 'Lo esencial para dominar tus finanzas',
+  'tour.checklist.of': 'de',
+  'tour.checklist.completed': 'completados',
+  'tour.checklist.startTour': 'Ver tutorial interactivo',
+  'tour.checklist.tourBtn': 'Tour',
+  'tour.checklist.replayBtn': 'Repetir',
+  'tour.checklist.allDone': '¡Excelente! Ya configuraste lo más importante de Kipu.',
+  'tour.checklist.gotIt': 'Cerrar guía',
+  'tour.checklist.hide': 'Ocultar esta guía',
+  'tour.checklist.minimize': 'Minimizar guía',
+  'tour.checklist.openGuide': 'Abrir guía de primeros pasos',
+  'tour.checklist.markPending': 'Marcar como pendiente',
+  'tour.checklist.markCompleted': 'Marcar como completado',
+  'tour.checklist.transaction.title': 'Registrar tu primer movimiento',
+  'tour.checklist.transaction.desc': 'Carga un gasto o ingreso manual para activar tus métricas',
+  'tour.checklist.categories.title': 'Personalizar tus categorías',
+  'tour.checklist.categories.desc': 'Organiza cómo se clasifican tus gastos e ingresos',
+  'tour.checklist.telegram.title': 'Vincular bot de Telegram',
+  'tour.checklist.telegram.desc': 'Registra transacciones en segundos desde cualquier chat',
+  'tour.checklist.tour.title': 'Completar tour por Kipu',
+  'tour.checklist.tour.desc': 'Conoce en detalle el centro de control financiero',
+};
+
+const FALLBACK_TRANSLATIONS_BY_LANG: Record<Language, Record<string, string>> = {
+  es: FALLBACK_TRANSLATIONS,
+  en: {
+    'tour.checklist.title': 'Getting started with Kipu',
+    'tour.checklist.subtitle': 'The essentials to master your finances',
+    'tour.checklist.of': 'of',
+    'tour.checklist.completed': 'completed',
+    'tour.checklist.startTour': 'View interactive tutorial',
+    'tour.checklist.tourBtn': 'Tour',
+    'tour.checklist.replayBtn': 'Replay',
+    'tour.checklist.allDone': 'Awesome! You have configured the essentials of Kipu.',
+    'tour.checklist.gotIt': 'Close guide',
+    'tour.checklist.hide': 'Hide this guide',
+    'tour.checklist.minimize': 'Minimize guide',
+    'tour.checklist.openGuide': 'Open getting started guide',
+    'tour.checklist.markPending': 'Mark as pending',
+    'tour.checklist.markCompleted': 'Mark as completed',
+    'tour.checklist.transaction.title': 'Log your first transaction',
+    'tour.checklist.transaction.desc': 'Add a manual expense or income to activate your metrics',
+    'tour.checklist.categories.title': 'Customize your categories',
+    'tour.checklist.categories.desc': 'Organize how your income and expenses are tracked',
+    'tour.checklist.telegram.title': 'Connect Telegram bot',
+    'tour.checklist.telegram.desc': 'Log transactions in seconds from any chat',
+    'tour.checklist.tour.title': 'Take the full Kipu tour',
+    'tour.checklist.tour.desc': 'Explore key features across the control center',
+  },
+  fr: {
+    'tour.checklist.title': 'Premiers pas sur Kipu',
+    'tour.checklist.subtitle': "L'essentiel pour maîtriser vos finances",
+    'tour.checklist.of': 'sur',
+    'tour.checklist.completed': 'complétés',
+    'tour.checklist.startTour': 'Voir le tutoriel interactif',
+    'tour.checklist.tourBtn': 'Tour',
+    'tour.checklist.replayBtn': 'Revoir',
+    'tour.checklist.allDone': "Super ! Vous avez configuré l'essentiel de Kipu.",
+    'tour.checklist.gotIt': 'Fermer le guide',
+    'tour.checklist.hide': 'Masquer ce guide',
+    'tour.checklist.minimize': 'Réduire le guide',
+    'tour.checklist.openGuide': 'Ouvrir le guide de démarrage',
+    'tour.checklist.markPending': 'Marquer comme en attente',
+    'tour.checklist.markCompleted': 'Marquer comme terminé',
+    'tour.checklist.transaction.title': 'Enregistrer votre premier mouvement',
+    'tour.checklist.transaction.desc': 'Ajoutez une dépense ou un revenu manuel pour activer vos indicateurs',
+    'tour.checklist.categories.title': 'Personnaliser vos catégories',
+    'tour.checklist.categories.desc': 'Organisez le suivi de vos revenus et dépenses',
+    'tour.checklist.telegram.title': 'Connecter le bot Telegram',
+    'tour.checklist.telegram.desc': 'Enregistrez des transactions en quelques secondes depuis un chat',
+    'tour.checklist.tour.title': 'Suivre le tour complet de Kipu',
+    'tour.checklist.tour.desc': 'Explorez les fonctionnalités clés du centre de contrôle',
+  },
 };
 
 @Injectable({ providedIn: 'root' })
@@ -124,7 +198,8 @@ export class TranslationService {
 
   /**
    * Initializes translations during APP_INITIALIZER.
-   * Guarantees translations are loaded into memory before the app renders.
+   * Always refreshes translations from assets so stale localStorage caches
+   * never hide newly added translation keys after an update.
    */
   async init(): Promise<void> {
     const lang = this._currentLang();
@@ -132,9 +207,7 @@ export class TranslationService {
       document.documentElement.lang = lang;
     }
 
-    if (!this._loaded()) {
-      await this.fetchTranslations();
-    }
+    await this.fetchTranslations();
   }
 
   async fetchTranslations(): Promise<void> {
@@ -208,11 +281,16 @@ export class TranslationService {
       if (value && typeof value === 'object' && k in value) {
         value = value[k];
       } else {
-        return key;
+        value = undefined;
+        break;
       }
     }
 
-    let result = typeof value === 'string' ? value : key;
+    const lang = this._currentLang();
+    let result =
+      typeof value === 'string'
+        ? value
+        : (FALLBACK_TRANSLATIONS_BY_LANG[lang]?.[key] ?? FALLBACK_TRANSLATIONS[key] ?? key);
 
     // Interpolate params: {{ paramName }} — use pre-compiled regex (single pass)
     if (params && typeof result === 'string') {

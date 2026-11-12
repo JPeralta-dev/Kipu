@@ -518,13 +518,18 @@ export class FtTourOverlayComponent {
           side: isTargetBody ? undefined : (step.tooltipPosition === 'auto' ? undefined : step.tooltipPosition),
           align: 'center',
           showButtons: ['next', 'previous', 'close'],
-          doneBtnText: this.translation.translate('tour.finish') || 'Entendido',
+          doneBtnText: this.translateWithFallback('tour.finish', 'Entendido'),
           nextBtnText: isLastStep
-            ? (this.translation.translate('tour.finish') || 'Entendido')
-            : (this.translation.translate('tour.next') || 'Siguiente'),
-          prevBtnText: this.translation.translate('tour.previous') || 'Atrás',
+            ? this.translateWithFallback('tour.finish', 'Entendido')
+            : this.translateWithFallback('tour.next', 'Siguiente'),
+          prevBtnText: this.translateWithFallback('tour.previous', 'Atrás'),
         },
       } satisfies DriveStep;
     });
+  }
+
+  private translateWithFallback(key: string, fallback: string): string {
+    const val = this.translation.translate(key);
+    return val && val !== key ? val : fallback;
   }
 }

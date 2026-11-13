@@ -1,49 +1,69 @@
 <div class="pref-row" ftSubtleReveal="fade-up" [delay]="delay()">
-  <div class="pref-label">
-    <ng-icon name="tag" size="1.25rem" />
-    <span>{{ 'settings.preferences.default_category' | translate }}</span>
+  <div class="pref-label-group">
+    <div class="pref-label">
+      <ng-icon [name]="selectedIconName()" size="1.25rem" />
+      <span>{{ 'settings.preferences.default_category' | translate }}</span>
+    </div>
+    <p class="pref-hint">{{ 'settings.preferences.default_category_hint' | translate }}</p>
   </div>
 
   <div class="pref-control">
     @if (loading()) {
-      <span class="loading-text">{{ 'common.loading' | translate }}...</span>
+      <div class="loading-pill" role="status">
+        <span class="spinner-xs"></span>
+        <span class="loading-text">{{ 'common.loading' | translate }}</span>
+      </div>
     } @else if (error() && expenseCategories.length === 0) {
-      <span class="helper-text">{{ error() }}</span>
-    } @else {
-      <div class="category-select-row">
-        <select
-          class="category-select"
-          [ngModel]="selectedId() ?? ''"
-          (ngModelChange)="selectedId.set($event || null); success.set(false); error.set(null)"
-          [disabled]="saving()"
-        >
-          <option value="">{{ 'settings.preferences.select_category' | translate }}</option>
-          @for (cat of expenseCategories; track cat.id) {
-            <option [value]="cat.id">{{ cat.icon }} {{ cat.name }}</option>
-          }
-        </select>
-
-        <button
-          class="save-btn"
-          [class.save-btn--saving]="saving()"
-          [disabled]="saving() || !hasChanges"
-          (click)="save()"
-        >
-          @if (saving()) {
-            <ng-icon name="loader" size="1rem" class="spin" />
-          } @else {
-            <ng-icon name="check" size="1rem" />
-          }
-          <span>{{ 'common.save' | translate }}</span>
+      <div class="error-inline">
+        <span class="helper-text error">{{ error()! | translate }}</span>
+        <button type="button" class="retry-chip" (click)="load()">
+          <ng-icon name="arrowPath" size="0.875rem" />
+          <span>{{ 'dashboard.retry' | translate }}</span>
         </button>
       </div>
+    } @else {
+      <div class="category-select-row">
+        <div class="select-wrapper" [class.select-wrapper--saving]="saving()">
+          @if (selectedCategory(); as cat) {
+            <span
+              class="select-dot"
+              [style.background]="cat.color"
+              aria-hidden="true"
+            ></span>
+          }
+          <select
+            id="default-category-select"
+            class="category-select"
+            [class.category-select--with-dot]="!!selectedCategory()"
+            [attr.aria-label]="'settings.preferences.default_category' | translate"
+            [ngModel]="selectedId() ?? ''"
+            (ngModelChange)="onCategoryChange($event)"
+            [disabled]="saving()"
+          >
+            <option value="">{{ 'settings.preferences.select_category' | translate }}</option>
+            @for (cat of expenseCategories; track cat.id) {
+              <option [value]="cat.id">{{ cat.name | categoryTranslate }}</option>
+            }
+          </select>
+        </div>
 
-      @if (success()) {
-        <span class="success-text">{{ 'settings.preferences.saved' | translate }}</span>
-      }
-      @if (error()) {
-        <span class="helper-text error">{{ error() }}</span>
-      }
+        @if (saving()) {
+          <span class="status-chip status-chip--saving" role="status">
+            <span class="spinner-xs"></span>
+            <span>{{ 'transactions.form.saving' | translate }}</span>
+          </span>
+        } @else if (success()) {
+          <span class="status-chip status-chip--success" role="status">
+            <ng-icon name="check" size="0.875rem" />
+            <span>{{ 'settings.preferences.saved' | translate }}</span>
+          </span>
+        } @else if (error()) {
+          <button type="button" class="retry-chip retry-chip--danger" (click)="save()">
+            <ng-icon name="arrowPath" size="0.875rem" />
+            <span>{{ error()! | translate }}</span>
+          </button>
+        }
+      </div>
     }
   </div>
 </div>

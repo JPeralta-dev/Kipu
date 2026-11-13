@@ -2,22 +2,22 @@
   <div class="hero__inner">
     <!-- Left: Content -->
     <div class="hero__content">
-      <div class="hero__badge" ftSubtleReveal="fade-up" [delay]="100">
+      <div class="hero__badge">
         <span class="hero__badge-dot"></span>
         {{ 'landing.heroBadge' | translate }}
       </div>
-      <h1 class="hero__title" ftSubtleReveal="fade-up" [delay]="200" [innerHTML]="'landing.heroTitle' | translate">
+      <h1 class="hero__title" [innerHTML]="'landing.heroTitle' | translate">
       </h1>
-      <p class="hero__subtitle" ftSubtleReveal="fade-up" [delay]="300">
+      <p class="hero__subtitle">
         {{ 'landing.heroSubtitle' | translate }}
       </p>
-      <div class="hero__actions" ftSubtleReveal="fade-up" [delay]="400">
+      <div class="hero__actions">
         <a routerLink="/register" class="hero__btn hero__btn--primary">
           {{ 'landing.cta.button' | translate }}
           <ng-icon name="chevronRight" size="1rem" />
         </a>
       </div>
-      <div class="hero__trust" ftSubtleReveal="fade-up" [delay]="500">
+      <div class="hero__trust">
         <span class="hero__trust-item">
           <ng-icon name="check" size="0.875rem" />
           {{ 'landing.trustFree' | translate }}
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Right: Visual -->
-    <div class="hero__visual" ftSubtleReveal="fade-up" [delay]="300">
+    <div class="hero__visual">
       <ft-hero-visual />
     </div>
   </div>

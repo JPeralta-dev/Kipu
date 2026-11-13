@@ -27,7 +27,25 @@
   <meta name="twitter:image" content="https://kipufinance.online/assets/og/og-image.png?v=2">
   <meta name="twitter:image:alt" content="Kipu — Personal finance tracker with instant Telegram logging, real-time budgets, and AI insights">
 
-  <link rel="icon" type="image/png" href="/assets/kipu-mark.png">
+  <link rel="canonical" href="https://kipufinance.online/">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/kipu-mark.png">
+  <link rel="apple-touch-icon" sizes="64x64" href="/assets/kipu-mark.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Kipu Finance",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "url": "https://kipufinance.online/",
+      "description": "Personal finance tracker with instant Telegram logging, real-time budgets, savings goals, and AI spending insights.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
   <script>
     (function() {
       try {
@@ -68,7 +86,8 @@
   </script>
 
   <!-- Preconnect to backend for faster TLS handshake -->
-  <link rel="preconnect" href="https://finance-tracker-backend-production-2573.up.railway.app">
+  <link rel="preconnect" href="https://api.kipufinance.online">
+  <link rel="dns-prefetch" href="https://api.kipufinance.online">
 </head>
 <body>
   <app-root></app-root>

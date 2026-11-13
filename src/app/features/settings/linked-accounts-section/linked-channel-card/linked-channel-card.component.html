@@ -63,26 +63,56 @@
             </div>
           }
 
-          <div class="channel-card__actions">
-            <button
-              type="button"
-              class="channel-card__btn channel-card__btn--ghost"
-              (click)="onSync()"
-              [attr.aria-label]="syncLabel() | translate"
-            >
-              <ng-icon name="arrowPath" size="0.875rem" />
-              <span>{{ syncLabel() | translate }}</span>
-            </button>
-            <button
-              type="button"
-              class="channel-card__btn channel-card__btn--danger-ghost"
-              (click)="onDisconnect()"
-              [attr.aria-label]="disconnectLabel() | translate"
-            >
-              <ng-icon name="link" size="0.875rem" />
-              <span>{{ disconnectLabel() | translate }}</span>
-            </button>
-          </div>
+          @if (errorMessage()) {
+            <p class="channel-card__error" role="alert">
+              {{ errorMessage()! | translate }}
+            </p>
+          }
+
+          @if (confirmingDisconnect()) {
+            <div class="channel-card__confirm" role="region" [attr.aria-label]="disconnectLabel() | translate">
+              <p class="channel-card__confirm-text">
+                {{ 'settings.accounts.disconnect_confirm' | translate }}
+              </p>
+              <div class="channel-card__confirm-actions">
+                <button
+                  type="button"
+                  class="channel-card__btn channel-card__btn--ghost"
+                  (click)="onCancelDisconnect()"
+                >
+                  <span>{{ 'common.cancel' | translate }}</span>
+                </button>
+                <button
+                  type="button"
+                  class="channel-card__btn channel-card__btn--danger-solid"
+                  (click)="onConfirmDisconnect()"
+                >
+                  <span>{{ disconnectLabel() | translate }}</span>
+                </button>
+              </div>
+            </div>
+          } @else {
+            <div class="channel-card__actions">
+              <button
+                type="button"
+                class="channel-card__btn channel-card__btn--ghost"
+                (click)="onSync()"
+                [attr.aria-label]="syncLabel() | translate"
+              >
+                <ng-icon name="arrowPath" size="0.875rem" />
+                <span>{{ syncLabel() | translate }}</span>
+              </button>
+              <button
+                type="button"
+                class="channel-card__btn channel-card__btn--danger-ghost"
+                (click)="onDisconnect()"
+                [attr.aria-label]="disconnectLabel() | translate"
+              >
+                <ng-icon name="link" size="0.875rem" />
+                <span>{{ disconnectLabel() | translate }}</span>
+              </button>
+            </div>
+          }
 
           @if (recent().length > 0) {
             <div class="channel-card__recent">
@@ -118,7 +148,7 @@
               (click)="onConnect()"
               [disabled]="showComingSoon()"
             >
-              <ng-icon name="link" size="0.875rem" />
+              <ng-icon [name]="showComingSoon() ? 'clock' : 'link'" size="0.875rem" />
               <span class="channel-card__btn-text">{{ connectLabel() | translate }}</span>
               <span class="channel-card__btn-spinner" aria-hidden="true">
                 <span class="spinner-sm"></span>

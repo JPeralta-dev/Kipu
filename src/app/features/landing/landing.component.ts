@@ -62,7 +62,7 @@ export class LandingComponent implements OnInit {
     : 'http://localhost:4200';
 
   /** Absolute 1200×630 PNG used by social link-preview crawlers. */
-  readonly ogImageUrl = 'https://kipufinance.online/assets/og/og-image.png';
+  readonly ogImageUrl = 'https://kipufinance.online/assets/og/og-image.png?v=2';
 
   private scrollTicking = false;
 
@@ -88,6 +88,7 @@ export class LandingComponent implements OnInit {
     this.meta.updateTag({ name: 'keywords', content: keywords });
 
     // Open Graph
+    this.meta.updateTag({ property: 'og:site_name', content: 'Kipu' });
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
@@ -97,7 +98,10 @@ export class LandingComponent implements OnInit {
     this.meta.updateTag({ property: 'og:image:type', content: 'image/png' });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
-    this.meta.updateTag({ property: 'og:image:alt', content: 'Kipu personal finance tracker' });
+    this.meta.updateTag({
+      property: 'og:image:alt',
+      content: 'Kipu — Personal finance tracker with instant Telegram logging, real-time budgets, and AI insights',
+    });
     this.meta.updateTag({ property: 'og:locale', content: this.translationService.currentLang() });
 
     // Twitter Card
@@ -105,7 +109,10 @@ export class LandingComponent implements OnInit {
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
     this.meta.updateTag({ name: 'twitter:image', content: this.ogImageUrl });
-    this.meta.updateTag({ name: 'twitter:image:alt', content: 'Kipu personal finance tracker' });
+    this.meta.updateTag({
+      name: 'twitter:image:alt',
+      content: 'Kipu — Personal finance tracker with instant Telegram logging, real-time budgets, and AI insights',
+    });
   }
 
   @HostListener('window:scroll', [])

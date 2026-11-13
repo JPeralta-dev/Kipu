@@ -22,10 +22,6 @@ export interface LinkedChannelRecentItem {
  * - disconnected  → CTA button
  * - connecting    → disabled button with spinner + shimmering line
  * - connected     → success check (first time only) + green tint + actions + recent
- *
- * The first-time "flash" animation is gated by `isFirstConnect` and the
- * section is responsible for flipping that flag to false after the
- * animation has played.
  */
 @Component({
   selector: 'app-linked-channel-card',
@@ -57,6 +53,8 @@ export class LinkedChannelCardComponent {
 
   readonly isFirstConnect = input<boolean>(false);
   readonly showComingSoon = input<boolean>(false);
+  readonly confirmingDisconnect = input<boolean>(false);
+  readonly errorMessage = input<string | null>(null);
 
   readonly recent = input<LinkedChannelRecentItem[]>([]);
   readonly recentTitle = input<string>('Recent imports');
@@ -65,8 +63,7 @@ export class LinkedChannelCardComponent {
    * Optional override for the disconnected-state body. When projected
    * via `<ng-content select="[slot=disconnected]">`, the card's own
    * "Connect" button is hidden and the consumer's content is rendered
-   * instead. Useful for flows that need richer UI than a single CTA
-   * (e.g. Telegram's code-generation flow).
+   * instead.
    */
   readonly hasCustomDisconnected = input<boolean>(false);
 
@@ -74,6 +71,8 @@ export class LinkedChannelCardComponent {
   readonly connect = output<void>();
   readonly sync = output<void>();
   readonly disconnect = output<void>();
+  readonly confirmDisconnect = output<void>();
+  readonly cancelDisconnect = output<void>();
 
   // ── Computed ──────────────────────────────────────────────────────
   readonly isConnected = computed(() => this.state() === 'connected');
@@ -92,5 +91,12 @@ export class LinkedChannelCardComponent {
   onDisconnect(): void {
     if (!this.isConnected()) return;
     this.disconnect.emit();
+  }
+  onConfirmDisconnect(): void {
+    if (!this.isConnected()) return;
+    this.confirmDisconnect.emit();
+  }
+  onCancelDisconnect(): void {
+    this.cancelDisconnect.emit();
   }
 }

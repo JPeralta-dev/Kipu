@@ -66,9 +66,8 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
-    loadComponent: () =>
-      import('./features/profile/profile.page').then(m => m.ProfilePage),
-    canActivate: [authGuard],
+    redirectTo: 'settings',
+    pathMatch: 'full',
   },
   {
     path: 'forgot-password',

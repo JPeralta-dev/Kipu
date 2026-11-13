@@ -138,6 +138,23 @@ export class TelegramLinkService implements OnDestroy {
     this.openUrl(environment.telegramBotUrl, false);
   }
 
+  markDisconnected(): void {
+    this.stopCountdown();
+    this.stopLinkPoll();
+    this.telegramId.set(null);
+    this.linkCode.set(null);
+    this.justLinked.set(false);
+    this.error.set(null);
+    this.state.set('idle');
+  }
+
+  unlink(): void {
+    this.http.post(`${this.api}/auth/unlink`, {}).subscribe({
+      next: () => this.markDisconnected(),
+      error: () => this.markDisconnected(),
+    });
+  }
+
   openUrl(url: string, isMobile: boolean): void {
     if (typeof window === 'undefined') return;
     if (isMobile) {

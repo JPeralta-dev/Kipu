@@ -472,11 +472,13 @@
       "title": "Session",
       "sign_out": "Déconnexion",
       "confirm_message": "Êtes-vous sûr de vouloir vous déconnecter ?",
-      "confirm_sign_out": "Oui, déconnexion"
+      "confirm_sign_out": "Oui, déconnexion",
+      "sign_out_error": "Échec de la déconnexion. Vérifiez votre connexion et réessayez."
     },
     "accounts": {
       "title": "Comptes liés",
-      "desc": "Connectez vos comptes de messagerie."
+      "desc": "Connectez vos comptes de messagerie et banques pour enregistrer vos transactions.",
+      "disconnect_confirm": "Êtes-vous sûr de vouloir déconnecter ce canal ? L'importation automatique s'arrêtera."
     },
     "telegram": {
       "title": "Lier Telegram",
@@ -527,12 +529,16 @@
     },
     "profile": {
       "title": "Profil",
+      "desc": "Votre identité et l'e-mail associé à votre compte.",
       "display_name": "Nom affiché",
-      "email": "E-mail"
+      "email": "E-mail",
+      "verified": "Vérifié",
+      "load_error": "Impossible de charger le profil. Veuillez réessayer.",
+      "save_error": "Impossible de mettre à jour le nom. Veuillez réessayer."
     },
     "preferences": {
       "title": "Préférences",
-      "desc": "Personnalisez votre expérience.",
+      "desc": "Personnalisez le thème, la langue, la devise et la catégorie par défaut.",
       "theme": "Thème",
       "toggle_theme": "Changer de thème",
       "dark": "Sombre",
@@ -540,8 +546,11 @@
       "language": "Langue",
       "currency": "Devise",
       "default_category": "Catégorie par défaut",
+      "default_category_hint": "Présélectionnée lors de l'ajout d'une dépense.",
       "select_category": "Sélectionner une catégorie...",
-      "saved": "Préférence enregistrée"
+      "saved": "Préférence enregistrée",
+      "load_error": "Erreur lors du chargement des préférences",
+      "save_error": "Erreur lors de l'enregistrement"
     },
     "data": {
       "title": "Mes Données",

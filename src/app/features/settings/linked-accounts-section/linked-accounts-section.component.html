@@ -24,12 +24,14 @@
       [connectedMeta]="'settings.telegram.last_sync'"
       [isFirstConnect]="telegramFirstConnect()"
       [hasCustomDisconnected]="true"
+      [confirmingDisconnect]="telegramDisconnectConfirm()"
+      [errorMessage]="svc.error()"
       (connect)="onTelegramConnect()"
       (sync)="svc.openTelegram()"
       (disconnect)="onTelegramDisconnect()"
+      (confirmDisconnect)="confirmTelegramDisconnect()"
+      (cancelDisconnect)="cancelTelegramDisconnect()"
     >
-      <!-- Telegram has its own rich code-generation UI for the disconnected
-           state. Slot it into the card via the projection hook. -->
       <div slot="disconnected">
         @if (svc.linkCode(); as code) {
           <div class="code-display">
@@ -94,7 +96,7 @@
           </button>
         }
         @if (svc.error(); as err) {
-          <p class="link-error">{{ err | translate }}</p>
+          <p class="link-error" role="alert">{{ err | translate }}</p>
         }
       </div>
     </app-linked-channel-card>
@@ -116,27 +118,14 @@
       [connectedStatus]="gmailConnectedStatus()"
       [connectedMeta]="gmailLastSync()"
       [connectedMetaExtra]="'settings.gmail.ready_line'"
+      [confirmingDisconnect]="gmailDisconnectConfirm()"
+      [errorMessage]="gmail.error()"
       (connect)="connectGmail()"
       (sync)="onGmailSync()"
       (disconnect)="onGmailDisconnect()"
+      (confirmDisconnect)="confirmGmailDisconnect()"
+      (cancelDisconnect)="cancelGmailDisconnect()"
     />
-
-    <!-- Gmail disconnect confirmation (two-step guard) -->
-    @if (gmailDisconnectConfirm()) {
-      <div class="disconnect-confirm">
-        <p class="disconnect-confirm__text">
-          {{ 'settings.accounts.disconnect_confirm' | translate }}
-        </p>
-        <div class="disconnect-confirm__actions">
-          <button class="btn-cancel" (click)="cancelGmailDisconnect()">
-            {{ 'common.cancel' | translate }}
-          </button>
-          <button class="btn-confirm-danger" (click)="confirmGmailDisconnect()">
-            {{ 'settings.linked.disconnect' | translate }}
-          </button>
-        </div>
-      </div>
-    }
 
     <!-- ── WhatsApp (coming soon) ────────────────────────────────── -->
     <app-linked-channel-card

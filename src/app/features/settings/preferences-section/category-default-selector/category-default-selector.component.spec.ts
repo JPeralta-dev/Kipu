@@ -22,8 +22,8 @@ describe('CategoryDefaultSelectorComponent', () => {
   it('should filter categories to expense only', () => {
     const comp = fixture.componentInstance;
     comp.categories.set([
-      { id: '1', name: 'Food', icon: '🍔', color: '#f00', total: 100, kind: 'expense', isDefault: false },
-      { id: '2', name: 'Salary', icon: '💼', color: '#0f0', total: 5000, kind: 'income', isDefault: false },
+      { id: '1', name: 'Food', icon: '🍔', color: '#D946EF', total: 100, kind: 'expense', isDefault: false },
+      { id: '2', name: 'Salary', icon: '💼', color: '#06D6A0', total: 5000, kind: 'income', isDefault: false },
     ]);
     const expense = comp.expenseCategories;
     expect(expense.length).toBe(1);
@@ -40,8 +40,14 @@ describe('CategoryDefaultSelectorComponent', () => {
   it('should show no changes when selection matches saved', () => {
     const comp = fixture.componentInstance;
     comp.selectedId.set('cat_1');
-    // Private _savedId starts as null — need to simulate saved state
-    // This is covered by the real save() integration test
     expect(comp.hasChanges).toBeTrue(); // no save called yet
+  });
+
+  it('should trigger save automatically when category changes', () => {
+    const comp = fixture.componentInstance;
+    const saveSpy = spyOn(comp, 'save').and.returnValue(Promise.resolve());
+    comp.onCategoryChange('cat_expense_1');
+    expect(comp.selectedId()).toBe('cat_expense_1');
+    expect(saveSpy).toHaveBeenCalledTimes(1);
   });
 });

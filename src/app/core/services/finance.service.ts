@@ -1,6 +1,6 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject, signal } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, tap, catchError, of } from "rxjs";
 
 import { environment } from "../../../environments/environment";
 import { Summary } from "../models/summary.model";
@@ -119,13 +119,59 @@ export class FinanceService {
 
   // ── Preferences ───────────────────────────────────────────────────────────
 
+  private readonly DEFAULT_CAT_KEY = 'flowr_default_category';
+  readonly defaultCategoryId = signal<string | null>(this.readStoredDefaultCategory());
+
   getDefaultCategory(): Observable<{ defaultCategoryId: string | null }> {
-    return this.http.get<{ defaultCategoryId: string | null }>(`${this.base}/users/me/preferences`);
+    return this.http.get<{ defaultCategoryId: string | null }>(`${this.base}/users/me/preferences`).pipe(
+      tap((res) => {
+        const id = res?.defaultCategoryId ?? null;
+        this.defaultCategoryId.set(id);
+        this.writeStoredDefaultCategory(id);
+      }),
+      catchError(() => {
+        const fallback = this.readStoredDefaultCategory();
+        this.defaultCategoryId.set(fallback);
+        return of({ defaultCategoryId: fallback });
+      }),
+    );
   }
 
   setDefaultCategory(categoryId: string | null): Observable<{ defaultCategoryId: string | null }> {
+    this.defaultCategoryId.set(categoryId);
+    this.writeStoredDefaultCategory(categoryId);
     return this.http.patch<{ defaultCategoryId: string | null }>(`${this.base}/users/me/preferences`, {
       defaultCategoryId: categoryId,
-    });
+    }).pipe(
+      tap((res) => {
+        const resolved = res?.defaultCategoryId !== undefined ? res.defaultCategoryId : categoryId;
+        this.defaultCategoryId.set(resolved ?? null);
+        this.writeStoredDefaultCategory(resolved ?? null);
+      }),
+      catchError(() => of({ defaultCategoryId: categoryId })),
+    );
+  }
+
+  private readStoredDefaultCategory(): string | null {
+    if (typeof window === 'undefined') return null;
+    try {
+      const val = window.localStorage.getItem(this.DEFAULT_CAT_KEY);
+      return val && val.trim().length > 0 ? val : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private writeStoredDefaultCategory(id: string | null): void {
+    if (typeof window === 'undefined') return;
+    try {
+      if (id) {
+        window.localStorage.setItem(this.DEFAULT_CAT_KEY, id);
+      } else {
+        window.localStorage.removeItem(this.DEFAULT_CAT_KEY);
+      }
+    } catch {
+      /* ignore storage errors */
+    }
   }
 }

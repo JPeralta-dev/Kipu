@@ -1,29 +1,25 @@
 import { Component, signal, inject, OnInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { catchError, forkJoin, of } from 'rxjs';
+import { catchError, forkJoin, of, tap } from 'rxjs';
 
-import { StatsGridComponent } from '../components/stats-grid/stats-grid.component';
-import { FtEChartComponent, EchartsThemeMapper } from '../../../shared/charts';
-import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
+import { FtEChartComponent } from '../../../shared/charts/echarts/ft-echart.component';
+import { EchartsThemeMapper } from '../../../shared/charts/echarts/echarts-theme.mapper';
+import { RecentActivityComponent } from '../components/recent-activity/recent-activity.component';
+import type { ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { EmptyStateComponent } from '../../../shared/components/empty-state.component';
 import { FtTrialBannerComponent } from '../../../shared/components/trial-banner.component';
-import { FtUpgradePromptComponent } from '../../../shared/components/upgrade-prompt.component';
 import { FtTourService } from '../../../core/services/tour.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { TranslationService } from '../../../core/services/translation.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { DateRangeService } from '../../../core/services/date-range.service';
-import { AiInsightsCardComponent } from '../components/ai-insights-card/ai-insights-card.component';
 import { GoalsWidgetComponent } from '../components/goals-widget/goals-widget.component';
-import { PocketProgressWidget } from '../widgets/pocket-progress.widget';
 import { BudgetProgressWidget } from '../widgets/budget-progress.widget';
-import { ChannelDistributionWidgetComponent } from '../widgets/channel-distribution-widget.component';
-import { FtReferralWidgetComponent } from '../../referral/components/referral-widget.component';
 import { IconComponent } from '../../../shared/icons/icon.component';
 import { FtCurrencyPipe } from '../../../core/pipes/ft-currency.pipe';
 import type { EChartsOption } from 'echarts';
@@ -57,21 +53,15 @@ class ChartColorCache {
   imports: [
     CommonModule,
     RouterLink,
-    StatsGridComponent,
     FtEChartComponent,
     RecentActivityComponent,
     HoverDepthDirective,
     EmptyStateComponent,
     FtTrialBannerComponent,
-    FtUpgradePromptComponent,
     TranslatePipe,
     FtCurrencyPipe,
-    AiInsightsCardComponent,
     GoalsWidgetComponent,
-    PocketProgressWidget,
     BudgetProgressWidget,
-    ChannelDistributionWidgetComponent,
-    FtReferralWidgetComponent,
     IconComponent,
   ],
   templateUrl: './dashboard.page.html',
@@ -90,7 +80,9 @@ export class DashboardPage implements OnInit {
 
   readonly isPremium = this.authService.isPremium;
 
-  readonly stats = signal<StatCardData[]>([]);
+  readonly stats = signal<StatCardData[]>(
+    this.mapSummary({ totalBalance: 0, totalIncome: 0, totalExpenses: 0, savingsRate: 0 })
+  );
   readonly activity = signal<ActivityItem[]>([]);
   readonly state = signal<DashboardState>('loading');
 
@@ -143,7 +135,14 @@ export class DashboardPage implements OnInit {
     const dateParams = this.dateRange.getApiParams();
 
     forkJoin({
-      summary: this.financeService.getSummary(dateParams).pipe(catchError(() => of(null))),
+      summary: this.financeService.getSummary(dateParams).pipe(
+        catchError(() => of(null)),
+        tap((summary) => {
+          if (summary && typeof summary.totalIncome === 'number') {
+            this.stats.set(this.mapSummary(summary));
+          }
+        })
+      ),
       chart: this.financeService.getMonthlyChart(this.chartMonths).pipe(catchError(() => of(null))),
       transactions: this.financeService.getTransactions({
         limit: 10,

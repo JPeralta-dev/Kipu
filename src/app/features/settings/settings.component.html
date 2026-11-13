@@ -1,22 +1,19 @@
 <div class="settings-page" ftSubtleReveal="fade-up">
-  <!-- ── Header row with gear icon ─────────────────────────────────── -->
+  <!-- ── Page Header ───────────────────────────────────────────────── -->
   <div class="page-header">
-    <h1 class="page-title">{{ 'settings.title' | translate }}</h1>
-    <button
-      class="gear-btn"
-      [attr.aria-label]="'settings.preferences.title' | translate"
-      (click)="togglePreferencesDrawer()"
-    >
-      <ng-icon name="settings" size="1.5rem" />
-    </button>
+    <div class="page-header__titles">
+      <h1 class="page-title">{{ 'settings.title' | translate }}</h1>
+      <p class="page-subtitle">{{ 'settings.subtitle' | translate }}</p>
+    </div>
   </div>
 
-  <!-- Order: Profile → Linked Accounts → Data → Session → Back link -->
+  <!-- Order: Profile → Preferences (Inline) → Linked Accounts → My Data → Session → Back link -->
   <app-profile-section [delay]="25" />
-  <app-linked-accounts-section [delay]="50" />
+  <app-preferences-section [delay]="50" />
+  <app-linked-accounts-section [delay]="75" />
 
   <!-- ── My Data (GDPR) ──────────────────────────────────────────────── -->
-  <div class="settings-section" ftSubtleReveal="fade-up" [delay]="150">
+  <div class="settings-section" ftSubtleReveal="fade-up" [delay]="100">
     <div class="section-header">
       <div class="section-icon section-icon--info">
         <ng-icon name="documentArrowDown" size="1.5rem" />
@@ -28,50 +25,83 @@
     </div>
 
     <!-- Export Data -->
-    <div class="data-actions">
-      <button class="btn-data btn-data--export" (click)="onExportData()" [disabled]="exportLoading()">
-        @if (exportLoading()) {
-          <span class="spinner-sm"></span>
-        } @else {
-          <ng-icon name="documentArrowDown" size="1rem" />
+    <div class="data-row">
+      <div class="data-row__info">
+        <span class="data-row__label">{{ 'settings.data.export_button' | translate }}</span>
+        <span class="data-row__hint">JSON (GDPR Art. 20)</span>
+      </div>
+      <div class="data-actions">
+        <button
+          type="button"
+          class="btn-data btn-data--export"
+          (click)="onExportData()"
+          [disabled]="exportLoading()"
+        >
+          @if (exportLoading()) {
+            <span class="spinner-sm"></span>
+          } @else {
+            <ng-icon name="documentArrowDown" size="1rem" />
+          }
+          <span>{{ 'settings.data.export_button' | translate }}</span>
+        </button>
+        @if (exportSuccess()) {
+          <span class="export-success" role="status">
+            <ng-icon name="check" size="0.875rem" />
+            <span>{{ 'settings.preferences.saved' | translate }}</span>
+          </span>
         }
-        {{ 'settings.data.export_button' | translate }}
-      </button>
-      @if (exportError()) {
-        <p class="data-error">{{ exportError() | translate }}</p>
-      }
+        @if (exportError()) {
+          <p class="data-error" role="alert">{{ exportError() | translate }}</p>
+        }
+      </div>
     </div>
 
     <!-- Delete Account -->
     <div class="data-actions data-actions--danger">
       @if (!confirmDelete()) {
-        <button class="btn-data btn-data--delete" (click)="onRequestDelete()">
-          <ng-icon name="trash" size="1rem" />
-          {{ 'settings.data.delete_button' | translate }}
-        </button>
+        <div class="danger-row">
+          <div class="data-row__info">
+            <span class="data-row__label data-row__label--danger">{{ 'settings.data.delete_button' | translate }}</span>
+            <span class="data-row__hint">{{ 'settings.data.delete_warning' | translate }}</span>
+          </div>
+          <button type="button" class="btn-data btn-data--delete" (click)="onRequestDelete()">
+            <ng-icon name="trash" size="1rem" />
+            <span>{{ 'settings.data.delete_button' | translate }}</span>
+          </button>
+        </div>
       } @else {
-        <div class="delete-confirm">
+        <div class="delete-confirm" role="region" [attr.aria-label]="'settings.data.delete_button' | translate">
           <p class="delete-confirm__warning">{{ 'settings.data.delete_warning' | translate }}</p>
-          <p class="delete-confirm__instruction">{{ 'settings.data.delete_instruction' | translate }}</p>
+          <label for="delete-confirm-input" class="delete-confirm__instruction">
+            {{ 'settings.data.delete_instruction' | translate }}
+          </label>
           <input
+            id="delete-confirm-input"
             type="text"
             class="delete-confirm__input"
             [placeholder]="'settings.data.delete_placeholder' | translate"
-            [(ngModel)]="deleteConfirmText"
+            [ngModel]="deleteConfirmText()"
+            (ngModelChange)="deleteConfirmText.set($event); deleteError.set('')"
             (keydown.enter)="onConfirmDelete()"
+            (keydown.escape)="onCancelDelete()"
           />
           @if (deleteError()) {
-            <p class="delete-confirm__error">{{ deleteError() | translate }}</p>
+            <p class="delete-confirm__error" role="alert">{{ deleteError() | translate }}</p>
           }
           <div class="delete-confirm__actions">
-            <button class="btn-cancel" (click)="onCancelDelete()">
+            <button type="button" class="btn-cancel" (click)="onCancelDelete()">
               {{ 'common.cancel' | translate }}
             </button>
-            <button class="btn-confirm-delete" (click)="onConfirmDelete()" [disabled]="deleteLoading()">
+            <button
+              type="button"
+              class="btn-confirm-delete"
+              (click)="onConfirmDelete()"
+              [disabled]="deleteLoading()"
+            >
               @if (deleteLoading()) {
                 <span class="spinner-sm"></span>
               } @else {
-                {{ 'settings.data.delete_confirm_button' | translate }}
+                <span>{{ 'settings.data.delete_confirm_button' | translate }}</span>
               }
             </button>
           </div>
@@ -80,67 +110,57 @@
     </div>
   </div>
 
-  <!-- Session / Account section -->
-  <div class="settings-section settings-section--danger" ftSubtleReveal="fade-up" [delay]="300">
-    <div class="session-actions">
-      @if (!confirmLogout()) {
-        <button class="btn-sign-out" (click)="onRequestSignOut()">
-          <ng-icon name="logout" size="1.25rem" />
-          {{ 'settings.session.sign_out' | translate }}
-        </button>
-      } @else {
-        <div class="logout-confirm">
-          <p>{{ 'settings.session.confirm_message' | translate }}</p>
-          @if (logoutError()) {
-            <p class="logout-error">{{ logoutError() }}</p>
-          }
-          <div class="logout-confirm__actions">
-            <button
-              class="btn-cancel"
-              (click)="confirmLogout.set(false); logoutError.set('')"
-            >
-              {{ 'common.cancel' | translate }}
-            </button>
-            <button class="btn-confirm" (click)="onSignOut()" [disabled]="logoutLoading()">
-              @if (logoutLoading()) {
-                <span class="spinner-sm"></span>
-              }
-              {{ 'settings.session.confirm_sign_out' | translate }}
-            </button>
-          </div>
-        </div>
-      }
+  <!-- ── Session section (Calm neutral secondary styling) ──────────── -->
+  <div class="settings-section settings-section--session" ftSubtleReveal="fade-up" [delay]="125">
+    <div class="session-row">
+      <div class="section-info">
+        <h2 class="section-title">{{ 'settings.session.title' | translate }}</h2>
+      </div>
+      <div class="session-actions">
+        @if (!confirmLogout()) {
+          <button type="button" class="btn-sign-out" (click)="onRequestSignOut()">
+            <ng-icon name="logout" size="1.125rem" />
+            <span>{{ 'settings.session.sign_out' | translate }}</span>
+          </button>
+        }
+      </div>
     </div>
+
+    @if (confirmLogout()) {
+      <div class="logout-confirm" role="region" [attr.aria-label]="'settings.session.sign_out' | translate">
+        <p>{{ 'settings.session.confirm_message' | translate }}</p>
+        @if (logoutError()) {
+          <p class="logout-error" role="alert">{{ logoutError() | translate }}</p>
+        }
+        <div class="logout-confirm__actions">
+          <button
+            type="button"
+            class="btn-cancel"
+            (click)="confirmLogout.set(false); logoutError.set('')"
+          >
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn-confirm"
+            (click)="onSignOut()"
+            [disabled]="logoutLoading()"
+          >
+            @if (logoutLoading()) {
+              <span class="spinner-sm"></span>
+            }
+            <span>{{ 'settings.session.confirm_sign_out' | translate }}</span>
+          </button>
+        </div>
+      </div>
+    }
   </div>
 
   <!-- Back to dashboard -->
   <div class="back-link-wrap">
-    <a routerLink="/dashboard" class="back-link">
+    <a routerLink="/home" class="back-link">
       <ng-icon name="chevronLeft" size="1rem" />
-      {{ 'settings.back_to_dashboard' | translate }}
+      <span>{{ 'settings.back_to_dashboard' | translate }}</span>
     </a>
   </div>
-
-  <!-- ── Inline Preferences Drawer ──────────────────────────────────── -->
-  @if (showPreferencesDrawer()) {
-    <div
-      class="drawer-backdrop"
-      (click)="togglePreferencesDrawer(); $event.stopPropagation()"
-    ></div>
-    <aside class="preferences-drawer">
-      <div class="drawer-header">
-        <h2 class="drawer-title">{{ 'settings.preferences.title' | translate }}</h2>
-        <button
-          class="drawer-close"
-          aria-label="Close preferences"
-          (click)="togglePreferencesDrawer()"
-        >
-          ×
-        </button>
-      </div>
-      <div class="drawer-body">
-        <app-preferences-section [delay]="0" />
-      </div>
-    </aside>
-  }
 </div>

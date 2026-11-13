@@ -1,10 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, input } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ProfileDropdownMenuComponent } from './profile-dropdown-menu.component';
 import type { User } from '../../../../core/models/user.model';
 
 @Component({
+  standalone: true,
   template: `<app-profile-dropdown-menu
     [user]="user"
     [initials]="initials"
@@ -40,7 +43,7 @@ describe('ProfileDropdownMenuComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -68,10 +71,9 @@ describe('ProfileDropdownMenuComponent', () => {
     expect(email.textContent.trim()).toBe('test@example.com');
   });
 
-  it('should emit closed event when profile link clicked', () => {
+  it('should NOT render duplicate profile link since profile is centralized in settings', () => {
     const link = fixture.nativeElement.querySelector('a[routerlink="/profile"]');
-    link.click();
-    expect(hostComponent.closedCount).toBe(1);
+    expect(link).toBeNull();
   });
 
   it('should emit closed event when settings link clicked', () => {

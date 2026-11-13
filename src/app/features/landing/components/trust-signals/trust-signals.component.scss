@@ -50,10 +50,9 @@
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: border-color var(--duration-normal) var(--ease-out), background var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal) var(--ease-out);
   height: 100%;
-  opacity: 0;
-  animation: badgeFadeIn 0.5s var(--ease-out) forwards;
+  will-change: transform, opacity;
 
   &:hover {
     border-color: var(--glass-border-hover);

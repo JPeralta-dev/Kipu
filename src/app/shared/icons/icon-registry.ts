@@ -49,18 +49,14 @@ import {
   heroClipboardDocumentList,
   heroCog6Tooth,
   heroUser,
-  heroArrowRightOnRectangle,
-  heroQuestionMarkCircle,
-  heroPaperAirplane,
+  heroArrowRightOnRectangle,  heroPaperAirplane,
   heroSun,
   heroMoon,
   heroPencilSquare,
   heroGlobeAlt,
   heroClock,
   heroLockClosed,
-  heroShieldCheck,
-  heroChatBubbleLeftRight,
-  heroUserGroup,
+  heroShieldCheck,  heroUserGroup,
   heroCurrencyDollar,
   heroEnvelope,
   heroDocumentText,
@@ -108,9 +104,7 @@ export const ICONS = {
   filter: heroFunnel,
   arrowUp: heroArrowUp,
   arrowDown: heroArrowDown,
-  arrowRight: heroArrowRight,
-  ellipsis: heroEllipsisHorizontal,
-
+  arrowRight: heroArrowRight,
   // Finance / Categories
   wallet: heroWallet,
   income: heroBanknotes,
@@ -156,7 +150,6 @@ export const ICONS = {
 
   // Profile
   user: heroUser,
-  help: heroQuestionMarkCircle,
   list: heroClipboardDocumentList,
 
   // Communication & Channels
@@ -179,9 +172,7 @@ export const ICONS = {
   // Misc
   clock: heroClock,
   lockClosed: heroLockClosed,
-  shieldCheck: heroShieldCheck,
-  chatBubble: heroChatBubbleLeftRight,
-  userGroup: heroUserGroup,
+  shieldCheck: heroShieldCheck,  userGroup: heroUserGroup,
 
   // Hero background art
   currencyDollar: heroCurrencyDollar,

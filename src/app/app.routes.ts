@@ -3,12 +3,13 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { redirectIfAuthGuard } from './core/guards/redirect-if-auth.guard';
 import { premiumGuard } from './core/guards/premium.guard';
+import { LandingComponent } from './features/landing/landing.component';
+import { DashboardPage } from './features/dashboard/pages/dashboard.page';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./features/landing/landing.component').then(m => m.LandingComponent),
+    component: LandingComponent,
     canActivate: [redirectIfAuthGuard],
   },
   {
@@ -25,8 +26,7 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () =>
-      import('./features/dashboard/pages/dashboard.page').then(m => m.DashboardPage),
+    component: DashboardPage,
     canActivate: [authGuard],
   },
   {

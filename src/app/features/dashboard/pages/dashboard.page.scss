@@ -27,40 +27,11 @@
   }
 }
 
-/* Cross-fade content layers */
+/* Content layers */
 .dashboard-content-layer {
   display: flex;
   flex-direction: column;
   gap: 28px;
-
-  &--ready {
-    opacity: 0;
-    animation: content-fade-in var(--duration-slow, 400ms) var(--ease-out) forwards;
-  }
-
-  &--loading {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    animation: skeleton-fade-out var(--duration-slow, 400ms) var(--ease-out) forwards;
-  }
-}
-
-@keyframes skeleton-fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes content-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dashboard-content-layer--loading,
-  .dashboard-content-layer--ready {
-    animation-duration: 0.01ms;
-  }
 }
 
 /* ── Banner Rows ─────────────────────────────────────────────────── */

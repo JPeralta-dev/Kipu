@@ -1,11 +1,15 @@
 <div class="landing">
   <!-- Global Background Art -->
-  <ft-landing-background />
+  @defer (on interaction) {
+    <ft-landing-background />
+  } @placeholder {
+    <span hidden></span>
+  }
 
   <!-- All sections — constrained with overflow hidden for parallax safety -->
   <div class="landing__content">
     <!-- Scroll Progress Indicator -->
-    <div class="scroll-progress" [style.transform]="'scaleX(' + scrollProgress() / 100 + ')'"></div>
+    <div class="scroll-progress"></div>
 
     <!-- Public Navbar -->
     <ft-public-navbar />
@@ -14,38 +18,66 @@
     <ft-hero-section />
 
     <!-- Product Showcase (Budgets, Goals, Insights - Sticky Stacking Card Deck) -->
-    <ft-product-showcase />
+    @defer (on viewport) {
+      <ft-product-showcase />
+    } @placeholder {
+      <div style="min-height: 600px"></div>
+    }
 
     <!-- Registration Methods & Telegram Flagship Section -->
     <section id="telegram" class="telegram-wrapper">
       <div class="telegram-wrapper__inner">
-        <ft-telegram-section />
+        @defer (on viewport) {
+          <ft-telegram-section />
+        } @placeholder {
+          <div style="min-height: 500px"></div>
+        }
       </div>
     </section>
 
     <!-- Comparison Table -->
     @if (pricingEnabled) {
       <section class="comparison-wrapper" id="compare-plans">
-        <ft-comparison-table [rows]="comparisonRows" />
+        @defer (on viewport) {
+          <ft-comparison-table [rows]="comparisonRows" />
+        } @placeholder {
+          <div style="min-height: 500px"></div>
+        }
       </section>
     }
 
     <!-- FAQ -->
     <section class="faq-wrapper">
-      <ft-faq [items]="faqItems" />
+      @defer (on viewport) {
+        <ft-faq [items]="faqItems" />
+      } @placeholder {
+        <div style="min-height: 400px"></div>
+      }
     </section>
 
     <!-- Trust Signals -->
     <section class="trust-wrapper">
-      <ft-trust-signals [badges]="trustBadges" />
+      @defer (on viewport) {
+        <ft-trust-signals [badges]="trustBadges" />
+      } @placeholder {
+        <div style="min-height: 240px"></div>
+      }
     </section>
 
     <!-- Resources teaser -->
-    <ft-resources-section />
+    @defer (on viewport) {
+      <ft-resources-section />
+    } @placeholder {
+      <div style="min-height: 400px"></div>
+    }
 
     <!-- Final CTA -->
     <section class="final-cta-wrapper">
-      <ft-final-cta />
+      @defer (on viewport) {
+        <ft-final-cta />
+      } @placeholder {
+        <div style="min-height: 320px"></div>
+      }
     </section>
 
     <!-- Back to top -->
@@ -60,5 +92,9 @@
   </div>
 
   <!-- Footer — outside constrained content so it breaks out to full viewport width -->
-  <ft-footer />
+  @defer (on viewport) {
+    <ft-footer />
+  } @placeholder {
+    <div style="min-height: 320px"></div>
+  }
 </div>

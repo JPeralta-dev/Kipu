@@ -1,8 +1,18 @@
-import { Component, HostListener, OnInit, signal, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  NgZone,
+  OnInit,
+  afterNextRender,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { NgIcon } from '@ng-icons/core';
+import type gsap from 'gsap';
 import { ICONS } from '../../shared/icons/icon-registry';
 import { PublicNavbarComponent } from './components/public-navbar/public-navbar.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
@@ -11,12 +21,10 @@ import { TelegramSectionComponent } from './components/telegram-section/telegram
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { PricingComponent } from './components/pricing/pricing.component';
 import { ComparisonTableComponent } from './components/comparison-table/comparison-table.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TrustSignalsComponent } from './components/trust-signals/trust-signals.component';
 import { ResourcesSectionComponent } from './components/resources-section/resources-section.component';
-import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { TranslationService } from '../../core/services/translation.service';
 import { TierCard, TierComparisonRow, FaqItem, TrustBadge } from '../../core/models/tier.model';
@@ -36,12 +44,10 @@ import { environment } from '../../../environments/environment';
     FinalCtaComponent,
     LandingBackgroundComponent,
     FooterComponent,
-    PricingComponent,
     ComparisonTableComponent,
     FaqComponent,
     TrustSignalsComponent,
     ResourcesSectionComponent,
-    FtSubtleRevealDirective,
     TranslatePipe,
   ],
   templateUrl: './landing.component.html',
@@ -51,6 +57,9 @@ export class LandingComponent implements OnInit {
   private readonly translationService = inject(TranslationService);
   private readonly meta = inject(Meta);
   private readonly title = inject(Title);
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly scrollProgress = signal(0);
   readonly telegramBotUrl = environment.telegramBotUrl;
@@ -64,7 +73,84 @@ export class LandingComponent implements OnInit {
   /** Absolute 1200×630 PNG used by social link-preview crawlers. */
   readonly ogImageUrl = 'https://kipufinance.online/assets/og/og-image.png?v=2';
 
-  private scrollTicking = false;
+  constructor() {
+    let ctx: gsap.Context | undefined;
+    let destroyed = false;
+    let removeScrollListener: (() => void) | undefined;
+
+    afterNextRender(() => {
+      const initScrollAnimations = (): void => {
+        if (destroyed) return;
+        this.ngZone.runOutsideAngular(async () => {
+          const [{ default: gsapLib }, { ScrollTrigger }] = await Promise.all([
+            import('gsap'),
+            import('gsap/ScrollTrigger'),
+          ]);
+          if (destroyed) return;
+
+          gsapLib.registerPlugin(ScrollTrigger);
+
+          ctx = gsapLib.context(() => {
+            const landingRoot = this.el.nativeElement.querySelector('.landing') ?? this.el.nativeElement;
+
+            gsapLib.set('.scroll-progress', { scaleX: 0, transformOrigin: '0% 50%' });
+
+            gsapLib.to('.scroll-progress', {
+              scaleX: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: landingRoot,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.15,
+                onUpdate: (self) => {
+                  const pct = Math.round(self.progress * 100);
+                  const wasVisible = this.scrollProgress() > 5;
+                  const isVisible = pct > 5;
+                  if (wasVisible !== isVisible) {
+                    this.ngZone.run(() => this.scrollProgress.set(pct));
+                  }
+                },
+              },
+            });
+
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              const targets = this.el.nativeElement.querySelectorAll<HTMLElement>(
+                '.trust-badge, .resource-card, .comparison__scroll'
+              );
+
+              if (targets.length > 0) {
+                gsapLib.set(targets, { autoAlpha: 0, y: 24 });
+                ScrollTrigger.batch(targets, {
+                  start: 'top 88%',
+                  once: true,
+                  onEnter: (batch) =>
+                    gsapLib.to(batch, {
+                      autoAlpha: 1,
+                      y: 0,
+                      duration: 0.8,
+                      stagger: 0.07,
+                      ease: 'power3.out',
+                      overwrite: true,
+                    }),
+                });
+              }
+            }
+          }, this.el.nativeElement);
+        });
+      };
+
+      const onFirstScroll = () => initScrollAnimations();
+      window.addEventListener('scroll', onFirstScroll, { once: true, passive: true });
+      removeScrollListener = () => window.removeEventListener('scroll', onFirstScroll);
+    });
+
+    this.destroyRef.onDestroy(() => {
+      destroyed = true;
+      removeScrollListener?.();
+      ctx?.revert();
+    });
+  }
 
   ngOnInit(): void {
     this.setSeoTags();
@@ -113,20 +199,6 @@ export class LandingComponent implements OnInit {
       name: 'twitter:image:alt',
       content: 'Kipu — Personal finance tracker with instant Telegram logging, real-time budgets, and AI insights',
     });
-  }
-
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    if (!this.scrollTicking) {
-      requestAnimationFrame(() => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        this.scrollProgress.set(Math.min(100, Math.max(0, progress)));
-        this.scrollTicking = false;
-      });
-      this.scrollTicking = true;
-    }
   }
 
   scrollToTop(): void {

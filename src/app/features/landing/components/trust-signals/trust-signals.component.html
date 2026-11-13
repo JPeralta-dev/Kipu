@@ -5,7 +5,7 @@
       <p class="trust__subtitle">{{ 'landing.trust.section_subtitle' | translate }}</p>
     </div>
 
-    <div class="trust__grid" role="list" ftSubtleReveal="fade-up" [delay]="200">
+    <div class="trust__grid" role="list">
       @for (badge of badges(); track badge.icon; let i = $index) {
         <div 
           class="trust-badge" 

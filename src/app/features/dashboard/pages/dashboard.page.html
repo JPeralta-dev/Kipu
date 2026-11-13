@@ -8,16 +8,18 @@
       [actionLabel]="'dashboard.retry' | translate"
       (action)="retry()"
     />
-  } @else if (state() === 'ready') {
-    <div id="dashboard-main" class="dashboard-content-layer dashboard-content-layer--ready">
+  } @else {
+    <div id="dashboard-main" class="dashboard-content-layer" [class.dashboard-content-layer--ready]="state() === 'ready'">
       <!-- ROW 0: Trial countdown banner (only when active trial) -->
-      <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="20">
-        <ft-trial-banner />
-      </div>
+      @defer (when authService.isTrialActive()) {
+        <div class="dashboard-row dashboard-row--banner">
+          <ft-trial-banner />
+        </div>
+      }
 
       <!-- ROW 0b: Tour trigger card (new users who haven't completed tour) -->
       @if (tour.shouldShowTriggerCard()) {
-        <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="30">
+        <div class="dashboard-row dashboard-row--banner">
           <article class="tour-trigger-card" aria-labelledby="tour-trigger-title">
             <div class="tour-trigger-card__body">
               <h3 id="tour-trigger-title" class="tour-trigger-card__title">
@@ -47,8 +49,8 @@
         </div>
       }
 
-      <!-- Header: Greeting & Quick Action Island -->
-      <header class="dashboard-header" ftSubtleReveal="fade-up">
+      <!-- Header: Greeting & Quick Action Island (rendered immediately without waiting for APIs) -->
+      <header class="dashboard-header">
         <div class="dashboard-header__welcome">
           <div class="dashboard-header__pill">
             <span class="live-dot" aria-hidden="true"></span>
@@ -78,26 +80,8 @@
         </div>
       </header>
 
-      <!-- Welcome banner (zero-data onboarding) -->
-      @if (!hasData()) {
-        <div class="dashboard-welcome-banner" ftSubtleReveal="fade-up" [delay]="25">
-          <div class="dashboard-welcome-banner__info">
-            <div class="dashboard-welcome-banner__icon">
-              <ft-icon name="sparkles" [size]="20" />
-            </div>
-            <div>
-              <span class="dashboard-welcome-banner__title">{{ 'dashboard.welcomeBanner' | translate }}</span>
-              <p class="dashboard-welcome-banner__desc">{{ 'dashboard.welcomeSubtitle' | translate }}</p>
-            </div>
-          </div>
-          <a routerLink="/transactions/new" class="dashboard-welcome-banner__cta">
-            {{ 'dashboard.addTransaction' | translate }}
-          </a>
-        </div>
-      }
-
-      <!-- ZONE 1: HERO KPI BENTO (4 Cards in unified responsive row) -->
-      <section class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="60" data-tour="dashboard-kpis" [attr.aria-label]="'dashboard.mainIndicators' | translate">
+      <!-- ZONE 1: HERO KPI BENTO (Rendered on Frame 0 so LCP paints immediately without waiting for API round-trips) -->
+      <section class="dashboard-kpis" data-tour="dashboard-kpis" [attr.aria-label]="'dashboard.mainIndicators' | translate">
         @for (stat of stats(); track stat.id) {
           <article
             class="kpi-card"
@@ -116,7 +100,7 @@
                 @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="20" /> }
               </div>
               <div class="kpi-card__label-group">
-                <span class="kpi-card__label" [id]="stat.id === 'savings' ? 'savings-label' : null">
+                <span class="kpi-card__label" [attr.id]="stat.id === 'savings' ? 'savings-label' : null">
                   {{ stat.label | translate }}
                 </span>
                 @if (stat.id === 'savings') {
@@ -166,111 +150,118 @@
         }
       </section>
 
-      <!-- ZONE 2: CORE PULSE BENTO (Chart 65% + Recent Activity 35%) -->
-      <section class="dashboard-pulse" ftSubtleReveal="fade-up" [delay]="110">
-        <!-- Monthly Flow Chart Card -->
-        <article class="pulse-card pulse-card--chart">
-          <div class="pulse-card__container">
-            <div class="pulse-card__header">
+      @if (state() === 'ready') {
+        <!-- Welcome banner (zero-data onboarding) -->
+        @if (!hasData()) {
+          <div class="dashboard-welcome-banner">
+            <div class="dashboard-welcome-banner__info">
+              <div class="dashboard-welcome-banner__icon">
+                <ft-icon name="sparkles" [size]="20" />
+              </div>
               <div>
-                <h2 class="pulse-card__title">{{ 'dashboard.monthlyOverview' | translate }}</h2>
-                <span class="pulse-card__subtitle">{{ 'dashboard.last6Months' | translate }}</span>
-              </div>
-              <div class="pulse-card__legend">
-                <span class="legend-badge legend-badge--income">
-                  <span class="legend-badge__dot"></span>
-                  {{ 'transactions.form.income' | translate }}
-                </span>
-                <span class="legend-badge legend-badge--expense">
-                  <span class="legend-badge__dot"></span>
-                  {{ 'transactions.form.expense' | translate }}
-                </span>
+                <span class="dashboard-welcome-banner__title">{{ 'dashboard.welcomeBanner' | translate }}</span>
+                <p class="dashboard-welcome-banner__desc">{{ 'dashboard.welcomeSubtitle' | translate }}</p>
               </div>
             </div>
-
-            <div class="pulse-card__body">
-              <ft-echart [options]="areaChartOptions()" [loading]="false" height="290px">
-                <ng-container loading><div class="chart-skeleton"></div></ng-container>
-                <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
-                <ng-container error>
-                  <div class="chart-error">
-                    {{ 'dashboard.chartError' | translate }}
-                    <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
-                  </div>
-                </ng-container>
-              </ft-echart>
-            </div>
-          </div>
-        </article>
-
-        <!-- Recent Activity Card -->
-        <article class="pulse-card pulse-card--activity">
-          <div class="pulse-card__container">
-            <ft-recent-activity [items]="activity()" [pageSize]="5" />
-          </div>
-        </article>
-      </section>
-
-      <!-- ZONE 3: GOALS & BUDGETS (Side-by-side 2 equal columns) -->
-      <section class="dashboard-intelligence" ftSubtleReveal="fade-up" [delay]="150">
-        <!-- Goals (Left) -->
-        <div class="intelligence-card">
-          <ft-goals-widget />
-        </div>
-
-        <!-- Budget Progress (Right) -->
-        <div class="intelligence-card">
-          <ft-budget-progress-widget />
-        </div>
-      </section>
-
-    </div>
-  }
-
-  <!-- Loading State (Mirrors the Bento Geometry) -->
-  @if (state() === 'loading') {
-    <div class="dashboard-content-layer dashboard-content-layer--loading" aria-busy="true" aria-label="Cargando panel financiero">
-      <!-- Header Skeleton -->
-      <div class="dashboard-header" ftSubtleReveal="fade-up">
-        <div class="dashboard-header__welcome">
-          <div class="skeleton-pill"></div>
-          <div class="skeleton-title"></div>
-          <div class="skeleton-subtitle"></div>
-        </div>
-        <div class="dashboard-header__actions">
-          <div class="skeleton-btn"></div>
-          <div class="skeleton-btn"></div>
-        </div>
-      </div>
-
-      <!-- KPI Grid Skeleton -->
-      <div class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="50">
-        @for (_ of [1, 2, 3, 4]; track $index) {
-          <div class="kpi-card kpi-card--skeleton">
-            <div class="kpi-card__top">
-              <div class="skeleton-icon-box"></div>
-              <div class="skeleton-label-line"></div>
-            </div>
-            <div class="skeleton-value-line"></div>
-            <div class="skeleton-footer-line"></div>
+            <a routerLink="/transactions/new" class="dashboard-welcome-banner__cta">
+              {{ 'dashboard.addTransaction' | translate }}
+            </a>
           </div>
         }
-      </div>
 
-      <!-- Pulse Skeleton -->
-      <div class="dashboard-pulse" ftSubtleReveal="fade-up" [delay]="100">
-        <div class="pulse-card pulse-card--chart pulse-card--skeleton">
-          <div class="pulse-card__container">
-            <div class="skeleton-chart-header"></div>
-            <div class="skeleton-chart-body"></div>
+        <!-- ZONE 2: CORE PULSE BENTO (Chart 65% + Recent Activity 35%) -->
+        <section class="dashboard-pulse">
+          <!-- Monthly Flow Chart Card -->
+          <article class="pulse-card pulse-card--chart">
+            <div class="pulse-card__container">
+              <div class="pulse-card__header">
+                <div>
+                  <h2 class="pulse-card__title">{{ 'dashboard.monthlyOverview' | translate }}</h2>
+                  <span class="pulse-card__subtitle">{{ 'dashboard.last6Months' | translate }}</span>
+                </div>
+                <div class="pulse-card__legend">
+                  <span class="legend-badge legend-badge--income">
+                    <span class="legend-badge__dot"></span>
+                    {{ 'transactions.form.income' | translate }}
+                  </span>
+                  <span class="legend-badge legend-badge--expense">
+                    <span class="legend-badge__dot"></span>
+                    {{ 'transactions.form.expense' | translate }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="pulse-card__body">
+                @defer (on viewport) {
+                  <ft-echart [options]="areaChartOptions()" [loading]="false" height="290px">
+                    <ng-container loading><div class="chart-skeleton"></div></ng-container>
+                    <ng-container empty><div class="chart-empty">{{ 'dashboard.noChartData' | translate }}</div></ng-container>
+                    <ng-container error>
+                      <div class="chart-error">
+                        {{ 'dashboard.chartError' | translate }}
+                        <button class="chart-retry-btn" (click)="retry()" type="button">{{ 'dashboard.retry' | translate }}</button>
+                      </div>
+                    </ng-container>
+                  </ft-echart>
+                } @placeholder {
+                  <div class="chart-skeleton" style="height: 290px"></div>
+                }
+              </div>
+            </div>
+          </article>
+
+          <!-- Recent Activity Card -->
+          <article class="pulse-card pulse-card--activity">
+            <div class="pulse-card__container">
+              @defer (on viewport) {
+                <ft-recent-activity [items]="activity()" [pageSize]="5" />
+              } @placeholder {
+                <div class="skeleton-chart-body"></div>
+              }
+            </div>
+          </article>
+        </section>
+
+        <!-- ZONE 3: GOALS & BUDGETS (Side-by-side 2 equal columns) -->
+        <section class="dashboard-intelligence">
+          <!-- Goals (Left) -->
+          <div class="intelligence-card">
+            @defer (on viewport) {
+              <ft-goals-widget />
+            } @placeholder {
+              <div style="min-height: 220px"></div>
+            }
+          </div>
+
+          <!-- Budget Progress (Right) -->
+          <div class="intelligence-card">
+            @defer (on viewport) {
+              <ft-budget-progress-widget />
+            } @placeholder {
+              <div style="min-height: 220px"></div>
+            }
+          </div>
+        </section>
+      } @else {
+        <!-- Loading State (Mirrors Pulse Bento below Frame-0 KPI Grid) -->
+        <div class="dashboard-content-layer dashboard-content-layer--loading" aria-busy="true" aria-label="Cargando panel financiero">
+          <!-- Pulse Skeleton -->
+          <div class="dashboard-pulse">
+            <div class="pulse-card pulse-card--chart pulse-card--skeleton">
+              <div class="pulse-card__container">
+                <div class="skeleton-chart-header"></div>
+                <div class="skeleton-chart-body"></div>
+              </div>
+            </div>
+            <div class="pulse-card pulse-card--activity pulse-card--skeleton">
+              <div class="pulse-card__container">
+                <div class="skeleton-chart-header"></div>
+                <div class="skeleton-chart-body"></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="pulse-card pulse-card--activity pulse-card--skeleton">
-          <div class="pulse-card__container">
-            <ft-recent-activity [loading]="true" [items]="[]" />
-          </div>
-        </div>
-      </div>
+      }
     </div>
   }
 </div>

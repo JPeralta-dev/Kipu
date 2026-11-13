@@ -9,8 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, of } from 'rxjs';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ICONS } from '../../../shared/icons/icon-registry';
+import { NgIcon } from '@ng-icons/core';
 import { BudgetsService } from '../../../core/services/budgets.service';
 import { CurrencyService } from '../../../core/services/currency.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
@@ -34,7 +33,6 @@ type BudgetsWidgetState = 'loading' | 'ready' | 'empty' | 'error';
   templateUrl: './budget-progress.widget.html',
   styleUrl: './budget-progress.widget.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideIcons(ICONS)],
 })
 export class BudgetProgressWidget implements OnInit {
   private readonly budgetsService = inject(BudgetsService);

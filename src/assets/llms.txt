@@ -1,0 +1,15 @@
+# Kipu Finance
+
+> Personal finance tracker with 3-second Telegram expense logging, real-time budgets, savings goals, bank statement imports, and private AI spending insights.
+
+## Public Pages
+
+- [Home & Overview](https://kipufinance.online/): Product overview, interactive features, Telegram bot workflow, and security commitments.
+- [Create Free Account](https://kipufinance.online/register): Sign up to start tracking personal expenses, budgets, and goals.
+- [Sign In](https://kipufinance.online/login): Log in to an existing Kipu Finance workspace.
+
+## Legal & Security
+
+- [Privacy Policy](https://kipufinance.online/privacy): How Kipu protects and processes user financial data.
+- [Terms of Service](https://kipufinance.online/legal/terms): Usage terms and service conditions.
+- [Cookie Policy](https://kipufinance.online/legal/cookies): Cookie and analytics consent preferences.

@@ -367,16 +367,16 @@ export class FtEChartComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   private async _initChartAsync(): Promise<void> {
-    await registerECharts();
-    const { init } = await import('echarts/core');
-
     const opts = this.options();
 
-    // Check for empty data
+    // Check for empty data before loading the ECharts bundle
     if (!opts || this.isEmptyOptions(opts)) {
       this._state.set('empty');
       return;
     }
+
+    await registerECharts();
+    const { init } = await import('echarts/core');
 
     if (!this.containerRef) {
       this._state.set('error');

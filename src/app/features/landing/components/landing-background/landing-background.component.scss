@@ -11,7 +11,7 @@
   position: absolute;
   color: var(--accent-start);
   opacity: 0.04;
-  transition: transform 0.4s ease-out;
+  /* transform driven by GSAP quickTo outside Angular zone */
   will-change: transform;
 
   ng-icon {
@@ -72,7 +72,7 @@
   position: absolute;
   border: 1px solid rgba(217, 70, 239, 0.06);
   border-radius: 50%;
-  transition: transform 0.4s ease-out;
+  /* transform driven by GSAP quickTo outside Angular zone */
   will-change: transform;
 
   &--1 {
@@ -106,7 +106,7 @@
   position: absolute;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(217, 70, 239, 0.08), transparent);
-  transition: transform 0.4s ease-out;
+  /* transform driven by GSAP quickTo outside Angular zone */
   will-change: transform;
 
   &--1 {
@@ -142,7 +142,7 @@
   border-radius: 50%;
   background: var(--accent-start);
   opacity: 0.08;
-  transition: transform 0.4s ease-out;
+  /* transform driven by GSAP quickTo outside Angular zone */
   will-change: transform;
   animation: float-slow 8s ease-in-out infinite;
 

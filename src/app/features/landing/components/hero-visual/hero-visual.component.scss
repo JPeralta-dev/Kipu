@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 380px;
+  perspective: 1200px;
 }
 
 .hero-visual__product-shot {
@@ -26,23 +27,23 @@
   box-shadow:
     0 18px 36px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  animation: product-shot-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
 }
 
 .hero-visual__product-shot::after {
   content: '';
   position: absolute;
-  inset: 22% 8% 8%;
+  inset: 14% 2% 2%;
   z-index: -1;
   border-radius: 50%;
-  background: rgba(124, 58, 237, 0.22);
-  filter: blur(48px);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.25) 0%, transparent 70%);
 }
 
 .hero-visual__product-shot img {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 1350 / 1080;
   border-radius: 12px;
   box-shadow: 0 20px 36px rgba(0, 0, 0, 0.28);
 }
@@ -259,7 +260,6 @@
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  filter: blur(120px);
   opacity: 0.12;
   z-index: 0;
   pointer-events: none;
@@ -349,8 +349,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.95);
 
     &::after {
-      background: rgba(167, 139, 250, 0.25);
-      filter: blur(48px);
+      background: radial-gradient(circle, rgba(167, 139, 250, 0.25) 0%, transparent 70%);
     }
 
     img {

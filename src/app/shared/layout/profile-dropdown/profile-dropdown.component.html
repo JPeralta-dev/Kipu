@@ -6,14 +6,16 @@
     (toggled)="toggleDropdown()"
   />
 
-  @if (isOpen()) {
-    <app-profile-dropdown-menu
-      [user]="user()"
-      [initials]="initials()"
-      [displayName]="displayName()"
-      [isLoggingOut]="isLoggingOut()"
-      (closed)="closeDropdown()"
-      (logoutRequested)="onLogout()"
-    />
+  @defer (when isOpen()) {
+    @if (isOpen()) {
+      <app-profile-dropdown-menu
+        [user]="user()"
+        [initials]="initials()"
+        [displayName]="displayName()"
+        [isLoggingOut]="isLoggingOut()"
+        (closed)="closeDropdown()"
+        (logoutRequested)="onLogout()"
+      />
+    }
   }
 </div>

@@ -14,6 +14,10 @@ import { CommandService } from './core/services/command.service';
 import { AuthService } from './core/services/auth.service';
 import { FtAnalyticsService } from './core/services/analytics.service';
 import { TranslationService } from './core/services/translation.service';
+import { ModalService } from './core/services/modal.service';
+import { UpgradeModalService } from './core/services/upgrade-modal.service';
+import { FtTourService } from './core/services/tour.service';
+import { ToastService } from './core/services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -36,19 +40,38 @@ import { TranslationService } from './core/services/translation.service';
   },
 })
 export class AppComponent implements AfterViewInit {
-  private commandService = inject(CommandService);
+  readonly commandService = inject(CommandService);
   private router = inject(Router);
   private authService = inject(AuthService);
   private analytics = inject(FtAnalyticsService);
   private destroyRef = inject(DestroyRef);
 
-  translationService = inject(TranslationService);
+  readonly translationService = inject(TranslationService);
+  readonly modalService = inject(ModalService);
+  readonly upgradeModalService = inject(UpgradeModalService);
+  readonly tourService = inject(FtTourService);
+  readonly toastService = inject(ToastService);
 
   // Rutas públicas donde no se muestra el topbar privado
-  private readonly publicRoutes = ['', 'login', 'register'];
+  private readonly publicRoutes = [
+    '',
+    'login',
+    'register',
+    'forgot-password',
+    'privacy',
+    'privacidad',
+    'terms',
+    'legal/terms',
+    'legal/privacy',
+    'legal/cookies',
+  ];
 
   readonly showTopbar = signal(false);
   readonly isLandingRoute = signal(false);
+
+  constructor() {
+    this.updateShellVisibility(typeof window !== 'undefined' ? window.location.pathname : this.router.url);
+  }
 
   ngAfterViewInit(): void {
     // Boot analytics (idempotent — re-hydrates queue and consent).
@@ -69,20 +92,25 @@ export class AppComponent implements AfterViewInit {
       takeUntilDestroyed(this.destroyRef),
     ).subscribe((event) => {
       const nav = event as NavigationEnd;
-      this.updateShellVisibility();
+      this.updateShellVisibility(nav.urlAfterRedirects);
       // Track page views for analytics (deferred so it doesn't block render).
       setTimeout(() => this.analytics.trackPageView(nav.urlAfterRedirects), 0);
     });
+
+    this.authService.authReady$.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(() => this.updateShellVisibility());
 
     // Initial check
     this.updateShellVisibility();
   }
 
-  private updateShellVisibility(): void {
-    const rawUrl = this.router.url.split('?')[0].split('#')[0];
+  private updateShellVisibility(rawPath?: string): void {
+    const sourceUrl = rawPath ?? (typeof window !== 'undefined' ? window.location.pathname : this.router.url);
+    const rawUrl = sourceUrl.split('?')[0].split('#')[0];
     const currentUrl = rawUrl.replace(/^\//, '');
     const isPublicRoute = this.publicRoutes.includes(currentUrl);
-    this.showTopbar.set(!isPublicRoute && this.authService.isAuthenticated());
+    this.showTopbar.set(!isPublicRoute && (this.authService.isAuthenticated() || !this.authService.authReady()));
     this.isLandingRoute.set(currentUrl === '');
   }
 

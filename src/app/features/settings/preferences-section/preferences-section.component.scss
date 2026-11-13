@@ -1,20 +1,70 @@
-/* ── Local accent token ────────────────────────────────────────── */
-$accent-hover-border: rgba(217, 70, 239, 0.3);
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--accent-glow);
+  color: var(--accent-start);
+  border: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.section-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.section-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+.pref-list {
+  display: flex;
+  flex-direction: column;
+}
 
 .pref-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 0;
+  gap: 16px;
+  padding: 16px 0;
   border-bottom: 1px solid var(--glass-border);
 
-  &:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  &:first-of-type {
-    padding-top: 0;
+  &:first-child {
+    padding-top: 4px;
   }
 }
 
@@ -27,7 +77,7 @@ $accent-hover-border: rgba(217, 70, 239, 0.3);
   font-weight: 500;
 
   ng-icon {
-    color: var(--text-secondary);
+    color: var(--accent-start);
   }
 }
 
@@ -36,13 +86,13 @@ $accent-hover-border: rgba(217, 70, 239, 0.3);
   align-items: center;
 }
 
-/* Theme Toggle */
+/* ── Segmented Theme Switcher ────────────────────────────────────── */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: var(--glass-bg);
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-tertiary);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
@@ -50,32 +100,50 @@ $accent-hover-border: rgba(217, 70, 239, 0.3);
   font-weight: 500;
   font-family: var(--font-body);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: border-color var(--duration-fast) var(--ease-smooth);
 
   &:hover {
-    background: var(--accent-glow);
-    border-color: $accent-hover-border;
-    color: var(--accent-start);
+    border-color: var(--accent-start);
   }
 
-  &--light {
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
+  &:focus-visible {
+    outline: 2px solid var(--accent-start);
+    outline-offset: 2px;
   }
 }
 
-/* Language Options */
-.lang-options {
-  display: flex;
-  gap: 6px;
-}
-
-.lang-btn {
+.theme-toggle__option {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: var(--glass-bg);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: all var(--duration-fast) var(--ease-smooth);
+
+  &.is-active {
+    background: var(--accent-glow);
+    color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px var(--accent-start);
+  }
+}
+
+/* ── Language & Currency Options ─────────────────────────────────── */
+.lang-options,
+.currency-options {
+  display: flex;
+  gap: 8px;
+}
+
+.lang-btn,
+.currency-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--bg-tertiary);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
@@ -83,88 +151,69 @@ $accent-hover-border: rgba(217, 70, 239, 0.3);
   font-weight: 500;
   font-family: var(--font-body);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
 
   &:hover {
     background: var(--accent-glow);
-    border-color: $accent-hover-border;
-    color: var(--accent-start);
+    border-color: var(--accent-start);
+    color: var(--text-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-start);
+    outline-offset: 2px;
   }
 
   &--active {
-    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-    border-color: transparent;
-    color: #fff;
+    background: var(--accent-glow);
+    border-color: var(--accent-start);
+    color: var(--text-primary);
+    font-weight: 600;
   }
 }
 
 .lang-btn__flag {
-  font-size: 16px;
-  line-height: 1;
-}
-
-/* Currency Options */
-.currency-options {
-  display: flex;
-  gap: 6px;
-}
-
-.currency-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 500;
-  font-family: var(--font-body);
-  cursor: pointer;
-  transition: all 0.15s ease;
-
-  &:hover {
-    background: var(--accent-glow);
-    border-color: $accent-hover-border;
-    color: var(--accent-start);
-  }
-
-  &--active {
-    background: linear-gradient(135deg, var(--accent-start), var(--accent-mid));
-    border-color: transparent;
-    color: #fff;
-  }
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-secondary);
+  color: var(--accent-start);
+  line-height: 1.2;
 }
 
 .currency-btn__symbol {
-  font-weight: 700;
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--accent-start);
 }
 
 @media (max-width: 640px) {
-/* ── Local accent token ────────────────────────────────────────── */
-$accent-hover-border: rgba(217, 70, 239, 0.3);
+  .settings-section {
+    padding: 20px;
+  }
 
-.pref-row {
+  .pref-row {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 12px;
   }
 
+  .theme-toggle,
   .lang-options,
   .currency-options {
     width: 100%;
     justify-content: space-between;
   }
 
+  .theme-toggle__option,
   .lang-btn,
   .currency-btn {
     flex: 1;
     justify-content: center;
     min-height: 44px;
-    padding-top: 10px;
-    padding-bottom: 10px;
   }
 }
-

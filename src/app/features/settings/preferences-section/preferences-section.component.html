@@ -1,71 +1,93 @@
 <div class="settings-section" ftSubtleReveal="fade-up" [delay]="delay()">
-  <!-- Theme -->
-  <div class="pref-row">
-    <div class="pref-label">
-      <ng-icon name="sun" size="1.25rem" />
-      <span>{{ 'settings.preferences.theme' | translate }}</span>
+  <div class="section-header">
+    <div class="section-icon">
+      <ng-icon name="settings" size="1.5rem" />
     </div>
-    <div class="pref-control">
-      <button
-        class="theme-toggle"
-        [class.theme-toggle--light]="themeService.currentTheme() === 'light'"
-        (click)="themeService.toggleTheme($event)"
-        [attr.aria-label]="'settings.preferences.toggle_theme' | translate"
-      >
-        <ng-icon [name]="themeService.currentTheme() === 'dark' ? 'moon' : 'sun'" size="1rem" />
-        <span>{{ themeService.currentTheme() === 'dark' ? ('settings.preferences.dark' | translate) : ('settings.preferences.light' | translate) }}</span>
-      </button>
+    <div class="section-info">
+      <h2 class="section-title">{{ 'settings.preferences.title' | translate }}</h2>
+      <p class="section-desc">{{ 'settings.preferences.desc' | translate }}</p>
     </div>
   </div>
 
-  <!-- Language -->
-  <div class="pref-row">
-    <div class="pref-label">
-      <ng-icon name="language" size="1.25rem" />
-      <span>{{ 'settings.preferences.language' | translate }}</span>
-    </div>
-    <div class="pref-control">
-      <div class="lang-options">
-        @for (lang of languages; track lang.code) {
-          <button
-            class="lang-btn"
-            [class.lang-btn--active]="translationService.currentLang() === lang.code"
-            (click)="translationService.setLanguage(lang.code)"
-            [attr.aria-label]="lang.label"
-            [attr.aria-pressed]="translationService.currentLang() === lang.code"
-          >
-            <span class="lang-btn__flag" aria-hidden="true">{{ lang.flag }}</span>
-            <span>{{ lang.label }}</span>
-          </button>
-        }
+  <div class="pref-list">
+    <!-- Theme -->
+    <div class="pref-row">
+      <div class="pref-label">
+        <ng-icon [name]="themeService.currentTheme() === 'dark' ? 'moon' : 'sun'" size="1.25rem" />
+        <span>{{ 'settings.preferences.theme' | translate }}</span>
+      </div>
+      <div class="pref-control">
+        <button
+          type="button"
+          class="theme-toggle"
+          [class.theme-toggle--light]="themeService.currentTheme() === 'light'"
+          (click)="themeService.toggleTheme($event)"
+          [attr.aria-label]="'settings.preferences.toggle_theme' | translate"
+          [attr.aria-pressed]="themeService.currentTheme() === 'light'"
+        >
+          <span class="theme-toggle__option" [class.is-active]="themeService.currentTheme() === 'dark'">
+            <ng-icon name="moon" size="0.875rem" />
+            <span>{{ 'settings.preferences.dark' | translate }}</span>
+          </span>
+          <span class="theme-toggle__option" [class.is-active]="themeService.currentTheme() === 'light'">
+            <ng-icon name="sun" size="0.875rem" />
+            <span>{{ 'settings.preferences.light' | translate }}</span>
+          </span>
+        </button>
       </div>
     </div>
-  </div>
 
-  <!-- Currency -->
-  <div class="pref-row">
-    <div class="pref-label">
-      <ng-icon name="dollar" size="1.25rem" />
-      <span>{{ 'settings.preferences.currency' | translate }}</span>
-    </div>
-    <div class="pref-control">
-      <div class="currency-options">
-        @for (curr of currencies; track curr.code) {
-          <button
-            class="currency-btn"
-            [class.currency-btn--active]="currencyService.currencyConfig().code === curr.code"
-            (click)="currencyService.setCurrency(curr)"
-            [attr.aria-label]="curr.code + ' — ' + curr.displaySymbol"
-            [attr.aria-pressed]="currencyService.currencyConfig().code === curr.code"
-          >
-            <span class="currency-btn__symbol">{{ curr.displaySymbol }}</span>
-            <span>{{ curr.code }}</span>
-          </button>
-        }
+    <!-- Language -->
+    <div class="pref-row">
+      <div class="pref-label">
+        <ng-icon name="language" size="1.25rem" />
+        <span>{{ 'settings.preferences.language' | translate }}</span>
+      </div>
+      <div class="pref-control">
+        <div class="lang-options" role="group" [attr.aria-label]="'settings.preferences.language' | translate">
+          @for (lang of languages; track lang.code) {
+            <button
+              type="button"
+              class="lang-btn"
+              [class.lang-btn--active]="translationService.currentLang() === lang.code"
+              (click)="translationService.setLanguage(lang.code)"
+              [attr.aria-label]="lang.label"
+              [attr.aria-pressed]="translationService.currentLang() === lang.code"
+            >
+              <span class="lang-btn__flag" aria-hidden="true">{{ lang.flag }}</span>
+              <span>{{ lang.label }}</span>
+            </button>
+          }
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Default Category -->
-  <app-category-default-selector [delay]="delay() + 3" />
+    <!-- Currency -->
+    <div class="pref-row">
+      <div class="pref-label">
+        <ng-icon name="dollar" size="1.25rem" />
+        <span>{{ 'settings.preferences.currency' | translate }}</span>
+      </div>
+      <div class="pref-control">
+        <div class="currency-options" role="group" [attr.aria-label]="'settings.preferences.currency' | translate">
+          @for (curr of currencies; track curr.code) {
+            <button
+              type="button"
+              class="currency-btn"
+              [class.currency-btn--active]="currencyService.currencyConfig().code === curr.code"
+              (click)="currencyService.setCurrency(curr)"
+              [attr.aria-label]="curr.code + ' — ' + curr.displaySymbol"
+              [attr.aria-pressed]="currencyService.currencyConfig().code === curr.code"
+            >
+              <span class="currency-btn__symbol">{{ curr.displaySymbol }}</span>
+              <span>{{ curr.code }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Default Category -->
+    <app-category-default-selector [delay]="delay() + 3" />
+  </div>
 </div>

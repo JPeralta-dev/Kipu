@@ -68,6 +68,69 @@ export function detectBestLanguage(): Language {
 }
 
 const FALLBACK_TRANSLATIONS: Record<string, string> = {
+  'auth.createAccount': 'Crear cuenta',
+  'auth.signIn': 'Iniciar sesión',
+  'theme.toggle': 'Cambiar tema',
+  'nav.home': 'Inicio',
+  'nav.dashboard': 'Inicio',
+  'nav.transactions': 'Transacciones',
+  'nav.categories': 'Categorías',
+  'nav.pockets': 'Bolsillos',
+  'nav.goals': 'Metas',
+  'nav.analytics': 'Análisis',
+  'nav.insights': 'Insights',
+  'nav.settings': 'Configuración',
+  'landing.heroBadge': 'Categorización Inteligente',
+  'landing.heroTitle': 'Tu dinero, <br />perfectamente organizado',
+  'landing.heroSubtitle': 'Rastrea, analiza y optimiza tus gastos con información en tiempo real. Conecta tus cuentas o usa nuestro bot de Telegram para registrar al instante.',
+  'landing.getStarted': 'Comenzar',
+  'landing.telegramBot': 'Bot de Telegram',
+  'landing.tryTelegramBot': 'o prueba nuestro bot de Telegram',
+  'landing.trustFree': 'Gratis para siempre',
+  'landing.trustNoCard': 'Sin tarjeta de crédito',
+  'landing.trustEncrypted': 'Encriptado',
+  'landing.cta.button': 'Comienza tu prueba gratis de 30 días',
+  'dashboard.greeting_morning': 'Buenos días',
+  'dashboard.greeting_afternoon': 'Buenas tardes',
+  'dashboard.greeting_evening': 'Buenas noches',
+  'dashboard.greetingSubtitle': 'Aquí tienes tu resumen financiero de este mes.',
+  'dashboard.newTransaction': 'Nueva Transacción',
+  'dashboard.manageCategories': 'Categorías',
+  'dashboard.viewAnalytics': 'Ver Analytics',
+  'dashboard.mainIndicators': 'Indicadores Principales',
+  'dashboard.totalBalance': 'Balance Total',
+  'dashboard.monthlyIncome': 'Ingreso Mensual',
+  'dashboard.monthlyExpenses': 'Gastos Mensuales',
+  'dashboard.savingsRate': 'Tasa de Ahorro',
+  'dashboard.savingsRateTooltip': 'Porcentaje de tus ingresos que estás ahorrando este mes',
+  'dashboard.positiveBalance': 'Balance positivo',
+  'dashboard.noBalance': 'Sin balance',
+  'dashboard.positiveFlow': 'Flujo positivo',
+  'dashboard.periodOutflows': 'Salidas del período',
+  'dashboard.onTrack': 'En camino',
+  'dashboard.couldImprove': 'Podría mejorar',
+  'dashboard.monthlyOverview': 'Resumen Mensual',
+  'dashboard.last6Months': 'Últimos 6 meses',
+  'dashboard.noChartData': 'Sin datos de gráfico aún',
+  'dashboard.chartError': 'Error al cargar gráfico',
+  'dashboard.retry': 'Reintentar',
+  'dashboard.errorTitle': 'Algo salió mal',
+  'dashboard.errorDesc': 'No pudimos cargar los datos del dashboard. Intenta nuevamente.',
+  'dashboard.welcomeBanner': 'Comienza tu viaje financiero',
+  'dashboard.welcomeSubtitle': 'Comienza a rastrear tus finanzas agregando tu primera transacción.',
+  'dashboard.addTransaction': 'Agregar transacción',
+  'transactions.form.income': 'Ingreso',
+  'transactions.form.expense': 'Gasto',
+  'common.toasts.dashboard_load_failed': 'Error al cargar los datos del dashboard. Intentá de nuevo.',
+  'common.toasts.dashboard_load_failed_short': 'Error al cargar los datos del dashboard.',
+  'tour.triggerCard.title': '¿Sos nuevo por acá?',
+  'tour.triggerCard.description': 'Un tour de 30 segundos por tu centro de control financiero.',
+  'tour.triggerCard.start': 'Mostrame',
+  'tour.triggerCard.later': 'Ahora no',
+  'analytics.consent.message': 'Usamos cookies y herramientas de análisis para entender cómo mejoramos Kipu. Vos decidís.',
+  'analytics.consent.learnMore': 'Política de cookies',
+  'analytics.consent.accept': 'Aceptar',
+  'analytics.consent.decline': 'Rechazar',
   'insights.radar.directTracking': 'Seguimiento directo',
   'insights.radar.manageGoal': 'Ver meta',
   'insights.radar.timeElapsed': 'Tiempo transcurrido',
@@ -103,6 +166,69 @@ const FALLBACK_TRANSLATIONS: Record<string, string> = {
 const FALLBACK_TRANSLATIONS_BY_LANG: Record<Language, Record<string, string>> = {
   es: FALLBACK_TRANSLATIONS,
   en: {
+    'auth.createAccount': 'Create account',
+    'auth.signIn': 'Sign in',
+    'theme.toggle': 'Toggle theme',
+    'nav.home': 'Home',
+    'nav.dashboard': 'Dashboard',
+    'nav.transactions': 'Transactions',
+    'nav.categories': 'Categories',
+    'nav.pockets': 'Pockets',
+    'nav.goals': 'Goals',
+    'nav.analytics': 'Analytics',
+    'nav.insights': 'Insights',
+    'nav.settings': 'Settings',
+    'landing.heroBadge': 'Smart Categorization',
+    'landing.heroTitle': 'Your money, <br />perfectly organized',
+    'landing.heroSubtitle': 'Track, analyze, and optimize your spending with real-time insights. Connect your accounts or use our Telegram bot for instant logging.',
+    'landing.getStarted': 'Get Started',
+    'landing.telegramBot': 'Telegram Bot',
+    'landing.tryTelegramBot': 'or try our Telegram bot',
+    'landing.trustFree': 'Free forever',
+    'landing.trustNoCard': 'No credit card',
+    'landing.trustEncrypted': 'Encrypted',
+    'landing.cta.button': 'Start your 30-day free trial',
+    'dashboard.greeting_morning': 'Good morning',
+    'dashboard.greeting_afternoon': 'Good afternoon',
+    'dashboard.greeting_evening': 'Good evening',
+    'dashboard.greetingSubtitle': "Here's your financial overview for this month.",
+    'dashboard.newTransaction': 'New Transaction',
+    'dashboard.manageCategories': 'Manage Categories',
+    'dashboard.viewAnalytics': 'View Analytics',
+    'dashboard.mainIndicators': 'Key Indicators',
+    'dashboard.totalBalance': 'Total Balance',
+    'dashboard.monthlyIncome': 'Monthly Income',
+    'dashboard.monthlyExpenses': 'Monthly Expenses',
+    'dashboard.savingsRate': 'Savings Rate',
+    'dashboard.savingsRateTooltip': "Percentage of your income you're saving this month",
+    'dashboard.positiveBalance': 'Positive balance',
+    'dashboard.noBalance': 'No balance',
+    'dashboard.positiveFlow': 'Positive cashflow',
+    'dashboard.periodOutflows': 'Period outflows',
+    'dashboard.onTrack': 'On track',
+    'dashboard.couldImprove': 'Could improve',
+    'dashboard.monthlyOverview': 'Monthly Overview',
+    'dashboard.last6Months': 'Last 6 months',
+    'dashboard.noChartData': 'No chart data yet',
+    'dashboard.chartError': 'Error loading chart',
+    'dashboard.retry': 'Retry',
+    'dashboard.errorTitle': 'Something went wrong',
+    'dashboard.errorDesc': "We couldn't load your dashboard data. Please try again.",
+    'dashboard.welcomeBanner': 'Start your financial journey',
+    'dashboard.welcomeSubtitle': 'Start tracking your finances by adding your first transaction.',
+    'dashboard.addTransaction': 'Add transaction',
+    'transactions.form.income': 'Income',
+    'transactions.form.expense': 'Expense',
+    'common.toasts.dashboard_load_failed': 'Failed to load dashboard data. Please try again.',
+    'common.toasts.dashboard_load_failed_short': 'Failed to load dashboard data.',
+    'tour.triggerCard.title': 'New around here?',
+    'tour.triggerCard.description': 'Take a 30-second tour of your financial command center.',
+    'tour.triggerCard.start': 'Show me around',
+    'tour.triggerCard.later': 'Not now',
+    'analytics.consent.message': "We use cookies and analytics tools to understand how to improve Kipu. It's your call.",
+    'analytics.consent.learnMore': 'Cookie Policy',
+    'analytics.consent.accept': 'Accept',
+    'analytics.consent.decline': 'Decline',
     'tour.checklist.title': 'Getting started with Kipu',
     'tour.checklist.subtitle': 'The essentials to master your finances',
     'tour.checklist.of': 'of',
@@ -157,13 +283,17 @@ export class TranslationService {
   private readonly STORAGE_KEY = 'flowr_language';
   private readonly TRANSLATIONS_KEY = 'flowr_translations';
 
-  // Lazy-inject HttpClient — only needed for async fetch, not for constructor
+  // Lazy-inject HttpClient — only needed for async fetch of non-default languages
   private http = inject(HttpClient, { optional: true });
 
   private _translations = signal<Record<string, any>>({});
   private _currentLang = signal<Language>(detectBestLanguage());
-  private _loaded = signal(false);
+  private _loaded = signal(true);
   private _isTransitioning = signal(false);
+  private flatCache = new Map<string, string>();
+  private pendingFetch: Promise<void> | null = null;
+  private pendingLang: Language | null = null;
+  private deferredScheduled = false;
 
   readonly currentLang = this._currentLang.asReadonly();
   readonly translations = this._translations.asReadonly();
@@ -171,35 +301,72 @@ export class TranslationService {
   readonly isTransitioning = this._isTransitioning.asReadonly();
 
   constructor() {
-    // Set the `lang` attribute on <html> immediately
+    const lang = this._currentLang();
     if (typeof document !== 'undefined') {
-      document.documentElement.lang = this._currentLang();
+      document.documentElement.lang = lang;
     }
 
-    // Try loading from localStorage first (sync, safe, non-blocking)
-    const cached = safeGetItem(this.TRANSLATIONS_KEY);
+    this.preloadFallbackCache(lang);
+
+    const cached = safeGetItem(`${this.TRANSLATIONS_KEY}_${lang}`);
     if (cached) {
       try {
         const parsed = JSON.parse(cached);
         if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
-          this._translations.set(parsed);
-          this._loaded.set(true);
+          this.applyTranslations(parsed);
+          return;
         }
       } catch {
         // Invalid JSON, fall through to async fetch
       }
     }
 
-    // If not cached, fetch async in background
-    if (!this._loaded()) {
-      this.fetchTranslations();
+    this.scheduleDeferredFetch();
+  }
+
+  private scheduleDeferredFetch(): void {
+    if (this.deferredScheduled || typeof window === 'undefined') return;
+    const lang = this._currentLang();
+    const path = window.location.pathname;
+    if ((path !== '/' && path !== '/home') || lang === 'fr') {
+      this.deferredScheduled = true;
+      void this.fetchTranslations();
+      return;
     }
+
+    this.deferredScheduled = true;
+    const events: Array<keyof WindowEventMap> = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
+    const trigger = () => {
+      for (const ev of events) {
+        window.removeEventListener(ev, trigger);
+      }
+      void this.fetchTranslations();
+    };
+    for (const ev of events) {
+      window.addEventListener(ev, trigger, { once: true, passive: true });
+    }
+  }
+
+  private preloadFallbackCache(lang: Language): void {
+    const fallbacks = FALLBACK_TRANSLATIONS_BY_LANG[lang] ?? FALLBACK_TRANSLATIONS;
+    for (const [k, v] of Object.entries(FALLBACK_TRANSLATIONS)) {
+      this.flatCache.set(k, fallbacks[k] ?? v);
+    }
+    for (const [k, v] of Object.entries(fallbacks)) {
+      this.flatCache.set(k, v);
+    }
+  }
+
+  private applyTranslations(data: Record<string, any>): void {
+    this.flatCache.clear();
+    this._translations.set(data);
+    this._loaded.set(true);
   }
 
   /**
    * Initializes translations during APP_INITIALIZER.
-   * Always refreshes translations from assets so stale localStorage caches
-   * never hide newly added translation keys after an update.
+   * Uses inline above-the-fold fallbacks synchronously so bootstrap never blocks,
+   * while streaming the full translation dictionary in the background.
    */
   async init(): Promise<void> {
     const lang = this._currentLang();
@@ -207,39 +374,45 @@ export class TranslationService {
       document.documentElement.lang = lang;
     }
 
-    await this.fetchTranslations();
+    if (Object.keys(this._translations()).length === 0) {
+      this.scheduleDeferredFetch();
+    }
+    return;
   }
 
   async fetchTranslations(): Promise<void> {
-    if (!this.http) return;
-
     const lang = this._currentLang();
-    try {
-      const data = await firstValueFrom(
-        this.http.get<Record<string, any>>(`/assets/i18n/${lang}.json`)
-      );
-      if (data && typeof data === 'object') {
-        this._translations.set(data);
-        this._loaded.set(true);
-        safeSetItem(this.TRANSLATIONS_KEY, JSON.stringify(data));
-      }
-    } catch (error) {
-      console.error(`Failed to load language ${lang}`, error);
-      // Fallback: If non-Spanish language failed, fallback to Spanish
-      if (lang !== 'es') {
-        try {
-          const fallback = await firstValueFrom(
-            this.http.get<Record<string, any>>('/assets/i18n/es.json')
-          );
-          if (fallback && typeof fallback === 'object') {
-            this._translations.set(fallback);
-            this._loaded.set(true);
-          }
-        } catch {
-          // Fallback also failed
+
+    if (!this.http) return;
+    if (this.pendingFetch && this.pendingLang === lang) {
+      return this.pendingFetch;
+    }
+
+    this.pendingLang = lang;
+    this.pendingFetch = (async () => {
+      try {
+        const data = await firstValueFrom(
+          this.http!.get<Record<string, any>>(`/assets/i18n/${lang}.json`)
+        );
+        if (data && typeof data === 'object' && this._currentLang() === lang) {
+          this.applyTranslations(data);
+          safeSetItem(`${this.TRANSLATIONS_KEY}_${lang}`, JSON.stringify(data));
+        }
+      } catch (error) {
+        console.error(`Failed to load language ${lang}`, error);
+        if (this._currentLang() === lang) {
+          this.preloadFallbackCache(lang);
+          this._loaded.set(true);
+        }
+      } finally {
+        if (this.pendingLang === lang) {
+          this.pendingFetch = null;
+          this.pendingLang = null;
         }
       }
-    }
+    })();
+
+    return this.pendingFetch;
   }
 
   /**
@@ -274,28 +447,34 @@ export class TranslationService {
     if (!key || typeof key !== 'string') return '';
     if (!this._loaded()) return key;
 
-    const keys = key.split('.');
-    let value: any = this._translations();
+    // Read signal unconditionally so Angular tracks changes when async i18n JSON arrives
+    const translations = this._translations();
+    let result = this.flatCache.get(key);
+    if (result === undefined) {
+      const keys = key.split('.');
+      let value: any = translations;
 
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        value = undefined;
-        break;
+      for (const k of keys) {
+        if (value && typeof value === 'object' && k in value) {
+          value = value[k];
+        } else {
+          value = undefined;
+          break;
+        }
       }
-    }
 
-    const lang = this._currentLang();
-    let result =
-      typeof value === 'string'
-        ? value
-        : (FALLBACK_TRANSLATIONS_BY_LANG[lang]?.[key] ?? FALLBACK_TRANSLATIONS[key] ?? key);
+      const lang = this._currentLang();
+      result =
+        typeof value === 'string'
+          ? value
+          : (FALLBACK_TRANSLATIONS_BY_LANG[lang]?.[key] ?? FALLBACK_TRANSLATIONS[key] ?? key);
+      this.flatCache.set(key, result);
+    }
 
     // Interpolate params: {{ paramName }} — use pre-compiled regex (single pass)
     if (params && typeof result === 'string') {
-      result = result.replace(PARAM_REGEX, (match, key: string) => {
-        const trimmed = key.trim();
+      result = result.replace(PARAM_REGEX, (match, paramKey: string) => {
+        const trimmed = paramKey.trim();
         return trimmed in params ? String(params[trimmed]) : match;
       });
     }

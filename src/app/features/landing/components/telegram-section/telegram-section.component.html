@@ -1,7 +1,7 @@
 <section class="telegram-section">
   <div class="telegram-section__inner">
     <!-- Left Column: Content & 3 Registration Methods -->
-    <div class="telegram-section__content" ftSubtleReveal="fade-up" [delay]="100">
+    <div class="telegram-section__content">
       <div class="telegram-section__badge">
         <ng-icon name="telegram" size="1.05rem" class="telegram-section__badge-icon" />
         <span>TRES FORMAS DE REGISTRAR · TU DINERO A TU MANERA</span>
@@ -22,8 +22,8 @@
           <div
             class="method-card"
             [class.method-card--active]="activeMethod() === i"
-            (click)="activeMethod.set(i)"
-            (mouseenter)="activeMethod.set(i)"
+            (click)="selectMethod(i)"
+            (mouseenter)="selectMethod(i)"
             role="button"
             tabindex="0"
           >
@@ -59,14 +59,16 @@
     </div>
 
     <!-- Right Column: Real Device Phone Mockup -->
-    <div class="telegram-section__visual" ftSubtleReveal="fade-up" [delay]="200">
+    <div class="telegram-section__visual">
       <div class="device-frame">
         <div class="device-frame__glow"></div>
         <img
-          src="/assets/device-mockup_1.5x_postspark_2026-09-04_15-09-00.png"
+          src="/assets/device-mockup_1.5x_postspark_2026-09-04_15-09-00.webp"
           alt="KipuBot interactuando en Telegram"
           class="device-frame__image"
-          fetchpriority="high"
+          width="550"
+          height="930"
+          loading="lazy"
           decoding="async"
         />
       </div>

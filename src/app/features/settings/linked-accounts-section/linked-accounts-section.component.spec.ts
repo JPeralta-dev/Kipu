@@ -179,4 +179,14 @@ describe('LinkedAccountsSectionComponent', () => {
     expect(component.copyCommand).toHaveBeenCalledWith('123456');
     expect(svcSpy.openTelegramWithCode).toHaveBeenCalledWith('123456');
   });
+
+  it('gmailConnectedStatus should NOT expose numeric OAuth accountId (e.g. 105102440865768224116)', () => {
+    (gmailSpy.email as any).set('105102440865768224116');
+    expect(component.gmailConnectedStatus()).toBe('settings.gmail.no_email');
+  });
+
+  it('telegramConnectedStatus should NOT expose numeric Telegram ID', () => {
+    (svcSpy.telegramId as any).set('987654321');
+    expect(component.telegramConnectedStatus()).toBe('settings.telegram.already_linked');
+  });
 });

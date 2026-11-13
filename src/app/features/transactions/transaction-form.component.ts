@@ -61,6 +61,7 @@ export class TransactionFormComponent implements OnInit {
   readonly categories = signal<CategoryOption[]>([]);
   readonly banks = signal<BankSummary[]>([]);
   readonly selectedType = signal<'income' | 'expense'>('expense');
+  readonly defaultCategoryId = signal<string | null>(null);
 
   // Filtered categories based on selected type
   readonly filteredCategories = computed(() => {
@@ -83,9 +84,10 @@ export class TransactionFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loadCategories();
-    this.loadBanks();
     this.checkEditMode();
+    this.loadCategories();
+    this.loadDefaultCategory();
+    this.loadBanks();
     this.modalService.categorySaved$.pipe(
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(() => {
@@ -106,8 +108,39 @@ export class TransactionFormComponent implements OnInit {
           iconKey: getCategoryIcon(cat.name),
         }));
         this.categories.set(options);
+        this.applyDefaultCategoryIfNeeded();
       },
     });
+  }
+
+  private loadDefaultCategory(): void {
+    if (this.isEdit()) return;
+    this.financeService.getDefaultCategory().pipe(
+      catchError(() => of({ defaultCategoryId: null })),
+    ).subscribe({
+      next: (pref) => {
+        this.defaultCategoryId.set(pref?.defaultCategoryId ?? null);
+        this.applyDefaultCategoryIfNeeded();
+      },
+    });
+  }
+
+  private applyDefaultCategoryIfNeeded(): void {
+    if (this.isEdit() || this.selectedType() !== 'expense') return;
+    const currentVal = this.form.get('category')?.value;
+    if (currentVal) return;
+
+    const defId = this.defaultCategoryId() ?? this.financeService.defaultCategoryId();
+    const cats = this.categories();
+    if (!cats.length) return;
+
+    const matched = defId
+      ? cats.find(c => (c.id === defId || c.name === defId) && (c.kind === 'expense' || c.kind === 'mixed'))
+      : cats.find(c => c.isDefault && (c.kind === 'expense' || c.kind === 'mixed'));
+
+    if (matched) {
+      this.form.get('category')?.setValue(matched.name);
+    }
   }
 
   private loadBanks(): void {
@@ -164,6 +197,9 @@ export class TransactionFormComponent implements OnInit {
     this.selectedType.set(type);
     this.form.get('type')?.setValue(type);
     this.form.get('category')?.setValue('');
+    if (type === 'expense') {
+      this.applyDefaultCategoryIfNeeded();
+    }
   }
 
   isInvalid(field: string): boolean {

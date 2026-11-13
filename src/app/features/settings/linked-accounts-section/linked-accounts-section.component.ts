@@ -35,6 +35,7 @@ export class LinkedAccountsSectionComponent implements OnInit {
   readonly svc = inject(TelegramLinkService);
   private readonly auth = inject(AuthService);
   protected readonly gmail = inject(GmailLinkService);
+  protected readonly translationService = inject(TranslationService);
 
   delay = input<number>(0);
 
@@ -75,14 +76,9 @@ export class LinkedAccountsSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // The "first connect" flash is gated by a localStorage flag read
-    // by GmailLinkService. Plant the flag eagerly so the FIRST
-    // successful connection the user makes (after the OAuth round
-    // trip) will trigger the celebration animation.
     this.plantFirstConnectFlagIfMissing();
   }
 
-  /** Set the flag in localStorage so GmailLinkService picks it up. */
   private plantFirstConnectFlagIfMissing(): void {
     if (typeof window === 'undefined') return;
     try {
@@ -97,14 +93,13 @@ export class LinkedAccountsSectionComponent implements OnInit {
   // ── Gmail actions ─────────────────────────────────────────────
   /** Two-step confirmation guard for Gmail disconnect. */
   readonly gmailDisconnectConfirm = signal(false);
+  /** Two-step confirmation guard for Telegram disconnect. */
+  readonly telegramDisconnectConfirm = signal(false);
 
   connectGmail(): void {
     if (this.gmailConnecting() || this.gmail.state() === 'connected') return;
     this.gmailConnecting.set(true);
     this.auth.signInWithGoogle(this.GMAIL_SCOPES);
-    // The OAuth round-trip will redirect, so we don't reset the
-    // 'connecting' flag here. On return the section is unmounted
-    // and the new mount will refresh GmailLinkService status.
   }
 
   onGmailSync(): void {
@@ -112,7 +107,6 @@ export class LinkedAccountsSectionComponent implements OnInit {
   }
 
   onGmailDisconnect(): void {
-    // First click: show confirmation instead of disconnecting immediately.
     this.gmailDisconnectConfirm.set(true);
   }
 
@@ -125,7 +119,7 @@ export class LinkedAccountsSectionComponent implements OnInit {
     this.gmailDisconnectConfirm.set(false);
   }
 
-  // ── Telegram actions (used in the template's connected/disconnected states) ─
+  // ── Telegram actions ──────────────────────────────────────────
   readonly codeCopied = signal(false);
   readonly commandCopied = signal(false);
 
@@ -151,8 +145,20 @@ export class LinkedAccountsSectionComponent implements OnInit {
   }
 
   onTelegramDisconnect(): void {
-    // Disconnect is a future feature — gracefully no-op for now
-    // so the click is at least handled.
+    this.telegramDisconnectConfirm.set(true);
+  }
+
+  confirmTelegramDisconnect(): void {
+    if (typeof this.svc.unlink === 'function') {
+      this.svc.unlink();
+    } else if (typeof this.svc.markDisconnected === 'function') {
+      this.svc.markDisconnected();
+    }
+    this.telegramDisconnectConfirm.set(false);
+  }
+
+  cancelTelegramDisconnect(): void {
+    this.telegramDisconnectConfirm.set(false);
   }
 
   onTelegramConnect(): void {
@@ -172,8 +178,9 @@ export class LinkedAccountsSectionComponent implements OnInit {
   });
 
   readonly gmailConnectedStatus = computed(() => {
-    const email = this.gmail.email();
-    if (!email) return 'settings.gmail.no_email';
+    const email = this.gmail.email()?.trim();
+    // Never expose raw numeric OAuth accountId (e.g. 105102440865768224116); only display valid email addresses
+    if (!email || !email.includes('@')) return 'settings.gmail.no_email';
     return this.translateInterpolate('settings.gmail.connected_status', { email });
   });
 
@@ -185,8 +192,9 @@ export class LinkedAccountsSectionComponent implements OnInit {
   });
 
   readonly telegramConnectedStatus = computed(() => {
-    const id = this.svc.telegramId();
-    if (!id) return 'settings.telegram.already_linked';
+    const id = this.svc.telegramId()?.trim();
+    // Never expose raw numeric Telegram chat/user IDs; only display non-numeric @handles
+    if (!id || /^\d+$/.test(id)) return 'settings.telegram.already_linked';
     return this.translateInterpolate('settings.telegram.connected_status', { handle: id });
   });
 
@@ -196,9 +204,6 @@ export class LinkedAccountsSectionComponent implements OnInit {
 
   // ── Private helpers ───────────────────────────────────────────
   private translateInterpolate(key: string, params: Record<string, string>): string {
-    // The TranslatePipe does the interpolation via the TranslationService.
-    // We don't have direct access here, but the service exposes a `translate`
-    // method that we can call. Reuse it for derived strings.
     return this.translationService.translate(key, params);
   }
 
@@ -208,13 +213,23 @@ export class LinkedAccountsSectionComponent implements OnInit {
     if (Number.isNaN(then)) return '';
     const diff = Date.now() - then;
     const min = Math.floor(diff / 60_000);
-    if (min < 1) return 'just now';
-    if (min < 60) return `${min} min ago`;
-    const hr = Math.floor(min / 60);
-    if (hr < 24) return `${hr}h ago`;
-    const day = Math.floor(hr / 24);
-    if (day < 7) return `${day}d ago`;
-    return new Date(iso).toLocaleDateString();
+    const lang = typeof this.translationService.currentLang === 'function'
+      ? (this.translationService.currentLang() || 'es')
+      : 'es';
+
+    try {
+      const rtf = new Intl.RelativeTimeFormat(lang, { numeric: 'auto', style: 'short' });
+      if (min < 1) return rtf.format(0, 'second');
+      if (min < 60) return rtf.format(-min, 'minute');
+      const hr = Math.floor(min / 60);
+      if (hr < 24) return rtf.format(-hr, 'hour');
+      const day = Math.floor(hr / 24);
+      if (day < 7) return rtf.format(-day, 'day');
+    } catch {
+      if (min < 1) return 'just now';
+      if (min < 60) return `${min}m`;
+    }
+    return new Date(iso).toLocaleDateString(lang);
   }
 
   private formatAmount(amount: number, currency: string): string {
@@ -228,7 +243,4 @@ export class LinkedAccountsSectionComponent implements OnInit {
       return `${amount} ${currency}`;
     }
   }
-
-  // Exposed for template access
-  protected readonly translationService = inject(TranslationService);
 }

@@ -1,9 +1,8 @@
-import { Component, signal, inject, HostListener } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
-import { ICONS } from '../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { FtSubtleRevealDirective } from '../../shared/directives/ft-subtle-reveal.directive';
 import { AuthService } from '../../core/services/auth.service';
@@ -41,33 +40,16 @@ export class SettingsComponent {
 
   /** Data management */
   exportLoading = signal(false);
+  exportSuccess = signal(false);
   exportError = signal('');
   confirmDelete = signal(false);
   deleteLoading = signal(false);
   deleteError = signal('');
   deleteConfirmText = signal('');
 
-  /** Inline preferences drawer visibility. */
-  showPreferencesDrawer = signal(false);
-
-  togglePreferencesDrawer(): void {
-    const next = !this.showPreferencesDrawer();
-    this.showPreferencesDrawer.set(next);
-    document.body.style.overflow = next ? 'hidden' : '';
-  }
-
-  @HostListener('document:keydown.escape')
-  onEscapeKey(): void {
-    if (this.showPreferencesDrawer()) {
-      this.showPreferencesDrawer.set(false);
-      document.body.style.overflow = '';
-    }
-  }
-
   /** Toggle confirmation and move focus to the Cancel button. */
   onRequestSignOut(): void {
     this.confirmLogout.set(true);
-    // Focus the Cancel button after the template re-renders
     setTimeout(() => {
       const cancelBtn = document.querySelector<HTMLElement>(
         '.logout-confirm .btn-cancel',
@@ -90,9 +72,7 @@ export class SettingsComponent {
         this.router.navigate(['/login']);
       },
       error: () => {
-        this.logoutError.set(
-          'Sign out failed. Please check your connection and try again.',
-        );
+        this.logoutError.set('settings.session.sign_out_error');
       },
     });
   }
@@ -102,6 +82,7 @@ export class SettingsComponent {
   onExportData(): void {
     this.exportLoading.set(true);
     this.exportError.set('');
+    this.exportSuccess.set(false);
 
     this.userDataService.exportData().pipe(
       finalize(() => this.exportLoading.set(false)),
@@ -110,11 +91,12 @@ export class SettingsComponent {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `kipu-export-${Date.now()}.json`;
+        a.download = `flowr-export-${Date.now()}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
+        this.exportSuccess.set(true);
       },
       error: () => {
         this.exportError.set('settings.data.export_error');
@@ -135,7 +117,8 @@ export class SettingsComponent {
   }
 
   onConfirmDelete(): void {
-    if (this.deleteConfirmText().toLowerCase() !== 'delete') {
+    const confirmVal = this.deleteConfirmText().trim().toLowerCase();
+    if (confirmVal !== 'delete' && confirmVal !== 'eliminar' && confirmVal !== 'supprimer') {
       this.deleteError.set('settings.data.delete_confirm_mismatch');
       return;
     }

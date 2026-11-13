@@ -1,24 +1,107 @@
 <div class="settings-section" ftSubtleReveal="fade-up" [delay]="delay()">
   <div class="section-header">
-    <div class="section-icon">
-      <ng-icon name="user" size="1.5rem" />
+    <div class="avatar-badge" aria-hidden="true">
+      {{ initials() }}
     </div>
     <div class="section-info">
       <h2 class="section-title">{{ 'settings.profile.title' | translate }}</h2>
+      <p class="section-desc">{{ 'settings.profile.desc' | translate }}</p>
     </div>
+
+    @if (!isEditing() && !profileError() && !loading()) {
+      <button
+        type="button"
+        class="btn-edit-profile"
+        (click)="startEditing()"
+      >
+        <ng-icon name="pencil" size="0.875rem" />
+        <span>{{ 'common.edit' | translate }}</span>
+      </button>
+    }
   </div>
 
   @if (profileError()) {
-    <p class="profile-error">{{ profileError() }}</p>
+    <div class="profile-error-row" role="alert">
+      <p class="profile-error">{{ profileError() | translate }}</p>
+      <button type="button" class="btn-retry" (click)="loadProfile()">
+        <ng-icon name="arrowPath" size="0.875rem" />
+        <span>{{ 'dashboard.retry' | translate }}</span>
+      </button>
+    </div>
   } @else {
     <div class="profile-details">
-      <div class="profile-field">
-        <span class="field-label">{{ 'settings.profile.display_name' | translate }}</span>
-        <span class="field-value">{{ displayName() }}</span>
+      <!-- Display Name (Interactive inline edit) -->
+      <div class="profile-field" [class.profile-field--editing]="isEditing()">
+        <label class="field-label" for="settings-display-name">
+          {{ 'settings.profile.display_name' | translate }}
+        </label>
+
+        @if (!isEditing()) {
+          <div class="field-value-group">
+            <span class="field-value">{{ displayName() || '—' }}</span>
+            @if (saveSuccess()) {
+              <span class="saved-pill" role="status">
+                <ng-icon name="check" size="0.75rem" />
+                <span>{{ 'settings.preferences.saved' | translate }}</span>
+              </span>
+            }
+          </div>
+        } @else {
+          <div class="inline-editor">
+            <div class="inline-editor__input-row">
+              <input
+                id="settings-display-name"
+                type="text"
+                class="inline-editor__input"
+                maxlength="60"
+                [placeholder]="'profile.displayNamePlaceholder' | translate"
+                [ngModel]="editName()"
+                (ngModelChange)="editName.set($event); saveError.set('')"
+                (keydown.enter)="saveProfile()"
+                (keydown.escape)="cancelEditing()"
+                [disabled]="saving()"
+              />
+              <div class="inline-editor__actions">
+                <button
+                  type="button"
+                  class="btn-inline-cancel"
+                  (click)="cancelEditing()"
+                  [disabled]="saving()"
+                >
+                  {{ 'common.cancel' | translate }}
+                </button>
+                <button
+                  type="button"
+                  class="btn-inline-save"
+                  (click)="saveProfile()"
+                  [disabled]="saving()"
+                >
+                  @if (saving()) {
+                    <span class="spinner-xs"></span>
+                  } @else {
+                    <ng-icon name="check" size="0.875rem" />
+                  }
+                  <span>{{ 'common.save' | translate }}</span>
+                </button>
+              </div>
+            </div>
+            @if (saveError()) {
+              <p class="inline-editor__error">{{ saveError() | translate }}</p>
+            }
+          </div>
+        }
       </div>
+
+      <!-- Email (Read-only account identifier) -->
       <div class="profile-field">
         <span class="field-label">{{ 'settings.profile.email' | translate }}</span>
-        <span class="field-value">{{ email() }}</span>
+        <div class="field-value-group">
+          <span class="field-value field-value--mono">{{ email() || '—' }}</span>
+          <span class="readonly-badge">
+            <ng-icon name="lockClosed" size="0.75rem" />
+            <span>{{ 'settings.profile.verified' | translate }}</span>
+          </span>
+        </div>
       </div>
     </div>
   }

@@ -711,8 +711,12 @@
     "coming_soon": "Coming Soon...",
     "profile": {
       "title": "Profile",
+      "desc": "Your identity and account email.",
       "display_name": "Display name",
-      "email": "Email"
+      "email": "Email",
+      "verified": "Verified",
+      "load_error": "Unable to load profile. Please try again.",
+      "save_error": "Unable to update display name. Please try again."
     },
     "security": {
       "title": "Security",
@@ -728,11 +732,13 @@
       "title": "Session",
       "sign_out": "Sign out",
       "confirm_message": "Are you sure you want to sign out?",
-      "confirm_sign_out": "Yes, sign out"
+      "confirm_sign_out": "Yes, sign out",
+      "sign_out_error": "Sign out failed. Please check your connection and try again."
     },
     "accounts": {
       "title": "Linked accounts",
-      "desc": "Connect your messaging accounts."
+      "desc": "Connect your messaging and bank channels to log transactions automatically.",
+      "disconnect_confirm": "Are you sure you want to disconnect this channel? Automatic transaction imports will stop."
     },
     "telegram": {
       "title": "Link Telegram",
@@ -790,7 +796,7 @@
     },
     "preferences": {
       "title": "Preferences",
-      "desc": "Customize your experience.",
+      "desc": "Customize your theme, language, currency, and default expense category.",
       "theme": "Theme",
       "toggle_theme": "Toggle theme",
       "dark": "Dark",
@@ -798,8 +804,11 @@
       "language": "Language",
       "currency": "Currency",
       "default_category": "Default category",
+      "default_category_hint": "Pre-selected when creating a new expense.",
       "select_category": "Select a category...",
-      "saved": "Preference saved"
+      "saved": "Preference saved",
+      "load_error": "Error loading preferences",
+      "save_error": "Error saving preference"
     },
     "data": {
       "title": "My Data",

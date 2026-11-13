@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, computed, inject, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Notification, NotificationType } from '../models/notification.model';
 import { environment } from '../../../environments/environment';
@@ -22,6 +22,7 @@ interface NotificationApiResponse {
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   private readonly http = inject(HttpClient, { optional: true });
+  private readonly ngZone = inject(NgZone);
   private readonly base = `${environment.apiUrl}/api/notifications`;
 
   private readonly _notifications = signal<Notification[]>([]);
@@ -35,8 +36,12 @@ export class NotificationService {
   private reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
-    this.loadNotifications();
-    this.connectToStream();
+    this.ngZone.runOutsideAngular(() => {
+      setTimeout(() => {
+        this.loadNotifications();
+        this.connectToStream();
+      }, 3500);
+    });
   }
 
   loadNotifications(): void {
@@ -46,7 +51,9 @@ export class NotificationService {
       next: (response) => {
         if (response && Array.isArray(response.notifications)) {
           const mapped = response.notifications.map(item => this.mapApiNotification(item));
-          this._notifications.set(mapped);
+          this.ngZone.run(() => {
+            this._notifications.set(mapped);
+          });
         }
       },
       error: () => {
@@ -69,15 +76,17 @@ export class NotificationService {
         try {
           const raw = JSON.parse(event.data);
           const mapped = this.mapApiNotification(raw);
-          this._notifications.update(list => {
-            const existing = list.find(n => n.id === mapped.id);
-            if (existing) {
-              if (existing.read || existing.viewed) {
-                return list;
+          this.ngZone.run(() => {
+            this._notifications.update(list => {
+              const existing = list.find(n => n.id === mapped.id);
+              if (existing) {
+                if (existing.read || existing.viewed) {
+                  return list;
+                }
+                return [mapped, ...list.filter(n => n.id !== mapped.id)];
               }
-              return [mapped, ...list.filter(n => n.id !== mapped.id)];
-            }
-            return [mapped, ...list];
+              return [mapped, ...list];
+            });
           });
         } catch {
           // Ignore malformed payloads

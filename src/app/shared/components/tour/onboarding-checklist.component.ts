@@ -112,7 +112,14 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
                 </span>
                 <span class="checklist-progress__percent">{{ progressPercent() }}%</span>
               </div>
-              <div class="checklist-progress__track" role="progressbar" [attr.aria-valuenow]="progressPercent()" aria-valuemin="0" aria-valuemax="100">
+              <div
+                class="checklist-progress__track"
+                role="progressbar"
+                [attr.aria-label]="'tour.checklist.title' | translate"
+                [attr.aria-valuenow]="progressPercent()"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
                 <div
                   class="checklist-progress__fill"
                   [style.width.%]="progressPercent()"
@@ -517,7 +524,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
       background: transparent;
       border: none;
       font-size: 11px;
-      color: var(--text-tertiary, rgba(243, 232, 255, 0.45));
+      color: var(--text-secondary, rgba(243, 232, 255, 0.75));
       cursor: pointer;
       transition: color 0.15s ease;
     }

@@ -22,7 +22,12 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/assets"],
+            "assets": [
+              "src/assets",
+              { "glob": "robots.txt", "input": "src/assets", "output": "/" },
+              { "glob": "sitemap.xml", "input": "src/assets", "output": "/" },
+              { "glob": "llms.txt", "input": "src/assets", "output": "/" }
+            ],
             "styles": ["src/styles.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -39,7 +44,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "15kb",
+                  "maximumWarning": "20kb",
                   "maximumError": "25kb"
                 }
               ],
@@ -86,7 +91,12 @@
             "karmaConfig": "karma.conf.js",
             "styles": ["src/styles.scss"],
             "scripts": [],
-            "assets": ["src/assets"],
+            "assets": [
+              "src/assets",
+              { "glob": "robots.txt", "input": "src/assets", "output": "/" },
+              { "glob": "sitemap.xml", "input": "src/assets", "output": "/" },
+              { "glob": "llms.txt", "input": "src/assets", "output": "/" }
+            ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             }

@@ -18,11 +18,31 @@
       "destination": "/assets/robots.txt"
     },
     {
-      "source": "/(.*)",
+      "source": "/sitemap.xml",
+      "destination": "/assets/sitemap.xml"
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "/assets/llms.txt"
+    },
+    {
+      "source": "/((?!api/|assets/|media/|\\.well-known/|.*\\..*).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/assets/i18n/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
     {
       "source": "/media/(.*)",
       "headers": [

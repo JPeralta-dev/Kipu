@@ -27,7 +27,25 @@
   <meta name="twitter:image" content="https://kipufinance.online/assets/og/og-image.png?v=2">
   <meta name="twitter:image:alt" content="Kipu — Personal finance tracker with instant Telegram logging, real-time budgets, and AI insights">
 
-  <link rel="icon" type="image/png" href="/assets/kipu-mark.png">
+  <link rel="canonical" href="https://kipufinance.online/">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/kipu-mark.png">
+  <link rel="apple-touch-icon" sizes="64x64" href="/assets/kipu-mark.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Kipu Finance",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "url": "https://kipufinance.online/",
+      "description": "Personal finance tracker with instant Telegram logging, real-time budgets, savings goals, and AI spending insights.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
   <script>
     (function() {
       try {
@@ -64,13 +82,49 @@
         document.documentElement.classList.add('dark');
         document.documentElement.lang = 'en';
       }
+      if (window.location.pathname !== '/') {
+        document.documentElement.classList.add('is-app-route');
+      }
     })();
   </script>
 
   <!-- Preconnect to backend for faster TLS handshake -->
-  <link rel="preconnect" href="https://finance-tracker-backend-production-2573.up.railway.app">
+  <link rel="preconnect" href="https://api.kipufinance.online">
+  <link rel="dns-prefetch" href="https://api.kipufinance.online">
+
+  <!-- Early discovery preload for Landing Hero LCP image -->
+  <link
+    rel="preload"
+    as="image"
+    href="/assets/device-mockup_1.5x_postspark_2026-08-19_16-24-41-750w.webp"
+    imagesrcset="/assets/device-mockup_1.5x_postspark_2026-08-19_16-24-41-750w.webp 750w, /assets/device-mockup_1.5x_postspark_2026-08-19_16-24-41.webp 1350w"
+    imagesizes="(max-width: 768px) 92vw, 820px"
+    fetchpriority="high"
+  >
+  <style>.is-app-route .shell-hero-img{display:none!important}</style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div style="max-width:1440px;margin:0 auto;padding:0 16px">
+      <div style="height:64px;display:flex;align-items:center">
+        <span style="font-family:system-ui,-apple-system,sans-serif;font-weight:700;font-size:18px;color:#F3E8FF;letter-spacing:-0.02em">Kipu</span>
+      </div>
+      <div style="padding:8px 0">
+        <p style="font-family:system-ui,-apple-system,sans-serif;font-weight:700;font-size:28px;line-height:1.25;color:#F3E8FF;margin:0 0 16px">Tu centro de control financiero inteligente para organizar ingresos, gastos, presupuestos y metas en tiempo real</p>
+        <img
+          class="shell-hero-img"
+          src="/assets/device-mockup_1.5x_postspark_2026-08-19_16-24-41-750w.webp"
+          srcset="/assets/device-mockup_1.5x_postspark_2026-08-19_16-24-41-750w.webp 750w, /assets/device-mockup_1.5x_postspark_2026-08-19_16-24-41.webp 1350w"
+          sizes="(max-width: 768px) 92vw, 820px"
+          alt="Kipu running on a Mac, showing the financial analysis dashboard"
+          width="1350"
+          height="1080"
+          fetchpriority="high"
+          decoding="sync"
+          style="width:100%;max-width:820px;height:auto;aspect-ratio:1350/1080;display:block;border-radius:12px"
+        >
+      </div>
+    </div>
+  </app-root>
 </body>
 </html>

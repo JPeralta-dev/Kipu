@@ -42,10 +42,11 @@ const CHANNEL_CONFIG: Record<string, ChannelConfig> = {
     @if (config()) {
       <span
         class="channel-badge"
+        role="img"
         [attr.aria-label]="'channels.from' | translate:{ channel: config()!.labelKey | translate }"
         [title]="config()!.labelKey | translate"
       >
-        <ng-icon [name]="config()!.icon" [size]="iconSize()" [style.color]="config()!.color" />
+        <ng-icon [name]="config()!.icon" [size]="iconSize()" [style.color]="config()!.color" aria-hidden="true" />
         @if (showLabel()) {
           <span class="channel-badge__label">{{ config()!.labelKey | translate }}</span>
         }

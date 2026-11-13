@@ -11,13 +11,13 @@
   } @else if (state() === 'ready') {
     <div id="dashboard-main" class="dashboard-content-layer dashboard-content-layer--ready">
       <!-- ROW 0: Trial countdown banner (only when active trial) -->
-      <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="20">
+      <div class="dashboard-row dashboard-row--banner">
         <ft-trial-banner />
       </div>
 
       <!-- ROW 0b: Tour trigger card (new users who haven't completed tour) -->
       @if (tour.shouldShowTriggerCard()) {
-        <div class="dashboard-row dashboard-row--banner" ftSubtleReveal="fade-up" [delay]="30">
+        <div class="dashboard-row dashboard-row--banner">
           <article class="tour-trigger-card" aria-labelledby="tour-trigger-title">
             <div class="tour-trigger-card__body">
               <h3 id="tour-trigger-title" class="tour-trigger-card__title">
@@ -48,7 +48,7 @@
       }
 
       <!-- Header: Greeting & Quick Action Island -->
-      <header class="dashboard-header" ftSubtleReveal="fade-up">
+      <header class="dashboard-header">
         <div class="dashboard-header__welcome">
           <div class="dashboard-header__pill">
             <span class="live-dot" aria-hidden="true"></span>
@@ -80,7 +80,7 @@
 
       <!-- Welcome banner (zero-data onboarding) -->
       @if (!hasData()) {
-        <div class="dashboard-welcome-banner" ftSubtleReveal="fade-up" [delay]="25">
+        <div class="dashboard-welcome-banner">
           <div class="dashboard-welcome-banner__info">
             <div class="dashboard-welcome-banner__icon">
               <ft-icon name="sparkles" [size]="20" />
@@ -97,7 +97,7 @@
       }
 
       <!-- ZONE 1: HERO KPI BENTO (4 Cards in unified responsive row) -->
-      <section class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="60" data-tour="dashboard-kpis" [attr.aria-label]="'dashboard.mainIndicators' | translate">
+      <section class="dashboard-kpis" data-tour="dashboard-kpis" [attr.aria-label]="'dashboard.mainIndicators' | translate">
         @for (stat of stats(); track stat.id) {
           <article
             class="kpi-card"
@@ -116,7 +116,7 @@
                 @if (stat.icon === 'subscription') { <ft-icon name="chart" [size]="20" /> }
               </div>
               <div class="kpi-card__label-group">
-                <span class="kpi-card__label" [id]="stat.id === 'savings' ? 'savings-label' : null">
+                <span class="kpi-card__label" [attr.id]="stat.id === 'savings' ? 'savings-label' : null">
                   {{ stat.label | translate }}
                 </span>
                 @if (stat.id === 'savings') {
@@ -167,7 +167,7 @@
       </section>
 
       <!-- ZONE 2: CORE PULSE BENTO (Chart 65% + Recent Activity 35%) -->
-      <section class="dashboard-pulse" ftSubtleReveal="fade-up" [delay]="110">
+      <section class="dashboard-pulse">
         <!-- Monthly Flow Chart Card -->
         <article class="pulse-card pulse-card--chart">
           <div class="pulse-card__container">
@@ -212,7 +212,7 @@
       </section>
 
       <!-- ZONE 3: GOALS & BUDGETS (Side-by-side 2 equal columns) -->
-      <section class="dashboard-intelligence" ftSubtleReveal="fade-up" [delay]="150">
+      <section class="dashboard-intelligence">
         <!-- Goals (Left) -->
         <div class="intelligence-card">
           <ft-goals-widget />
@@ -231,7 +231,7 @@
   @if (state() === 'loading') {
     <div class="dashboard-content-layer dashboard-content-layer--loading" aria-busy="true" aria-label="Cargando panel financiero">
       <!-- Header Skeleton -->
-      <div class="dashboard-header" ftSubtleReveal="fade-up">
+      <div class="dashboard-header">
         <div class="dashboard-header__welcome">
           <div class="skeleton-pill"></div>
           <div class="skeleton-title"></div>
@@ -244,7 +244,7 @@
       </div>
 
       <!-- KPI Grid Skeleton -->
-      <div class="dashboard-kpis" ftSubtleReveal="fade-up" [delay]="50">
+      <div class="dashboard-kpis">
         @for (_ of [1, 2, 3, 4]; track $index) {
           <div class="kpi-card kpi-card--skeleton">
             <div class="kpi-card__top">
@@ -258,7 +258,7 @@
       </div>
 
       <!-- Pulse Skeleton -->
-      <div class="dashboard-pulse" ftSubtleReveal="fade-up" [delay]="100">
+      <div class="dashboard-pulse">
         <div class="pulse-card pulse-card--chart pulse-card--skeleton">
           <div class="pulse-card__container">
             <div class="skeleton-chart-header"></div>

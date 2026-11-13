@@ -9,7 +9,7 @@ import {
   DestroyRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { driver, type Driver, type DriveStep } from 'driver.js';
+import type { Driver, DriveStep } from 'driver.js';
 
 import { FtTourService } from '../../../core/services/tour.service';
 import { TranslationService } from '../../../core/services/translation.service';
@@ -340,16 +340,17 @@ export class FtTourOverlayComponent {
     }
 
     this.zone.runOutsideAngular(() => {
-      this.startDriverAt(targetIndex);
+      void this.startDriverAt(targetIndex);
     });
   }
 
-  private startDriverAt(stepIndex: number): void {
+  private async startDriverAt(stepIndex: number): Promise<void> {
     if (this.driverInstance) {
       this.driverInstance.destroy();
       this.driverInstance = null;
     }
 
+    const { driver } = await import('driver.js');
     const steps = this.mapSteps();
     const totalSteps = steps.length;
 
@@ -430,7 +431,7 @@ export class FtTourOverlayComponent {
 
             this.tour.syncStepIndex(nextIdx);
             this.zone.runOutsideAngular(() => {
-              this.startDriverAt(nextIdx);
+              void this.startDriverAt(nextIdx);
             });
           });
         } else {
@@ -464,7 +465,7 @@ export class FtTourOverlayComponent {
 
             this.tour.syncStepIndex(prevIdx);
             this.zone.runOutsideAngular(() => {
-              this.startDriverAt(prevIdx);
+              void this.startDriverAt(prevIdx);
             });
           });
         } else {

@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit, AfterViewInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, inject, OnInit, computed, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
@@ -7,7 +7,6 @@ import { StatsGridComponent } from '../components/stats-grid/stats-grid.componen
 import { FtEChartComponent, EchartsThemeMapper } from '../../../shared/charts';
 import { RecentActivityComponent, ActivityItem } from '../components/recent-activity/recent-activity.component';
 import { StatCardData } from '../components/stat-card/stat-card.types';
-import { FtSubtleRevealDirective } from '../../../shared/directives/ft-subtle-reveal.directive';
 import { HoverDepthDirective } from '../../../shared/directives/hover-depth.directive';
 import { FinanceService } from '../../../core/services/finance.service';
 import { ToastService } from '../../../core/services/toast.service';
@@ -61,7 +60,6 @@ class ChartColorCache {
     StatsGridComponent,
     FtEChartComponent,
     RecentActivityComponent,
-    FtSubtleRevealDirective,
     HoverDepthDirective,
     EmptyStateComponent,
     FtTrialBannerComponent,
@@ -80,7 +78,7 @@ class ChartColorCache {
   styleUrl: './dashboard.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardPage implements OnInit, AfterViewInit {
+export class DashboardPage implements OnInit {
   private readonly financeService = inject(FinanceService);
   private readonly toast = inject(ToastService);
   readonly i18n = inject(TranslationService);
@@ -138,16 +136,6 @@ export class DashboardPage implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadData();
-  }
-
-  ngAfterViewInit(): void {
-    if (this.authService.isAuthenticated()) {
-      setTimeout(() => {
-        if (this.tour.shouldAutoStart()) {
-          this.tour.start();
-        }
-      }, 1500);
-    }
   }
 
   private loadData(): void {

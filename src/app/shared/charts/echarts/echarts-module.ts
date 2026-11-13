@@ -1,32 +1,41 @@
 let registered = false;
+let registrationPromise: Promise<void> | null = null;
 
-export async function registerECharts(): Promise<void> {
+export function registerECharts(): Promise<void> {
   if (registered) {
-    return;
+    return Promise.resolve();
   }
-  registered = true;
-
-  try {
-    const { use } = await import('echarts/core');
-    const { CanvasRenderer } = await import('echarts/renderers');
-    const [
-      { LineChart, BarChart, PieChart, GaugeChart, HeatmapChart },
-      { TooltipComponent, LegendComponent, GridComponent, TitleComponent, DataZoomComponent, DatasetComponent },
-    ] = await Promise.all([
-      import('echarts/charts'),
-      import('echarts/components'),
-    ]);
-
-    use([
-      CanvasRenderer,
-      LineChart, BarChart, PieChart, GaugeChart, HeatmapChart,
-      TooltipComponent, LegendComponent, GridComponent, TitleComponent, DataZoomComponent, DatasetComponent,
-    ]);
-  } catch (error) {
-    registered = false; // Reset on failure so retry can work
-    console.error('[registerECharts] FAILED:', error);
-    throw error;
+  if (registrationPromise) {
+    return registrationPromise;
   }
+
+  registrationPromise = (async () => {
+    try {
+      const { use } = await import('echarts/core');
+      const { CanvasRenderer } = await import('echarts/renderers');
+      const [
+        { LineChart, BarChart, PieChart, GaugeChart, HeatmapChart },
+        { TooltipComponent, LegendComponent, GridComponent, TitleComponent, DataZoomComponent, DatasetComponent },
+      ] = await Promise.all([
+        import('echarts/charts'),
+        import('echarts/components'),
+      ]);
+
+      use([
+        CanvasRenderer,
+        LineChart, BarChart, PieChart, GaugeChart, HeatmapChart,
+        TooltipComponent, LegendComponent, GridComponent, TitleComponent, DataZoomComponent, DatasetComponent,
+      ]);
+      registered = true;
+    } catch (error) {
+      registered = false; // Reset on failure so retry can work
+      registrationPromise = null;
+      console.error('[registerECharts] FAILED:', error);
+      throw error;
+    }
+  })();
+
+  return registrationPromise;
 }
 
 export function isEChartsRegistered(): boolean {

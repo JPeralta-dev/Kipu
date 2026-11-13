@@ -13,13 +13,23 @@
   </main>
 
   <!-- Global overlays -->
-  <ft-command-palette />
+  @defer (on idle) {
+    <ft-command-palette />
+  }
   <ft-toast-container />
-  <ft-category-modal />
-  <ft-upgrade-modal />
+  @defer (on idle) {
+    <ft-category-modal />
+  }
+  @defer (on idle) {
+    <ft-upgrade-modal />
+  }
   <ft-consent-banner />
-  <ft-tour-overlay />
+  @defer (on idle) {
+    <ft-tour-overlay />
+  }
   @if (showTopbar()) {
-    <ft-onboarding-checklist />
+    @defer (on idle) {
+      <ft-onboarding-checklist />
+    }
   }
 </div>

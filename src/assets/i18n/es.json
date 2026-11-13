@@ -711,12 +711,16 @@
     "coming_soon": "Próximamente...",
     "profile": {
       "title": "Perfil",
+      "desc": "Tu identidad y correo asociado a la cuenta.",
       "display_name": "Nombre visible",
-      "email": "Correo"
+      "email": "Correo",
+      "verified": "Verificado",
+      "load_error": "No se pudo cargar el perfil. Intentá nuevamente.",
+      "save_error": "No se pudo actualizar el nombre. Intentá nuevamente."
     },
     "security": {
       "title": "Seguridad",
-      "desc": "configura la seguridad de tu cuenta.",
+      "desc": "Configura la seguridad de tu cuenta.",
       "coming_soon": "Próximamente"
     },
     "settings_notifications": {
@@ -728,11 +732,13 @@
       "title": "Sesión",
       "sign_out": "Cerrar sesión",
       "confirm_message": "¿Estás seguro de que quieres cerrar sesión?",
-      "confirm_sign_out": "Sí, cerrar sesión"
+      "confirm_sign_out": "Sí, cerrar sesión",
+      "sign_out_error": "No se pudo cerrar sesión. Verificá tu conexión e intentá de nuevo."
     },
     "accounts": {
       "title": "Cuentas vinculadas",
-      "desc": "conecta tus cuentas de mensajería."
+      "desc": "Conecta tus cuentas de mensajería y bancos para registrar movimientos automáticamente.",
+      "disconnect_confirm": "¿Seguro que querés desconectar este canal? Dejarán de importarse nuevas transacciones."
     },
     "telegram": {
       "title": "Vincular Telegram",
@@ -757,7 +763,7 @@
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "desc": "recibe tus transacciones directo en tu WhatsApp.",
+      "desc": "Recibe y registra tus transacciones directo en tu WhatsApp.",
       "coming_soon": "Próximamente",
       "link_whatsapp": "Vincular WhatsApp"
     },
@@ -790,7 +796,7 @@
     },
     "preferences": {
       "title": "Preferencias",
-      "desc": "Personalizá tu experiencia.",
+      "desc": "Personalizá el tema visual, idioma, moneda y categoría predeterminada.",
       "theme": "Tema",
       "toggle_theme": "Cambiar tema",
       "dark": "Oscuro",
@@ -798,8 +804,11 @@
       "language": "Idioma",
       "currency": "Moneda",
       "default_category": "Categoría por defecto",
+      "default_category_hint": "Se preselecciona al registrar un nuevo gasto.",
       "select_category": "Seleccionar categoría...",
-      "saved": "Preferencia guardada"
+      "saved": "Preferencia guardada",
+      "load_error": "Error al cargar preferencias",
+      "save_error": "Error al guardar preferencia"
     },
     "data": {
       "title": "Mis Datos",

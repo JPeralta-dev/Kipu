@@ -54,9 +54,11 @@
 </header>
 
 <!-- Mobile Menu -->
-<ft-mobile-menu
-  [items]="mobileItems"
-  [isOpen]="mobileMenuOpen()"
-  [user]="currentUser()"
-  (close)="onCloseMenu()"
-/>
+@defer (when mobileMenuOpen()) {
+  <ft-mobile-menu
+    [items]="mobileItems"
+    [isOpen]="mobileMenuOpen()"
+    [user]="currentUser()"
+    (close)="onCloseMenu()"
+  />
+}

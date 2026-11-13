@@ -241,7 +241,7 @@ export class ProductShowcaseComponent {
               initAnimations();
             }
           },
-          { rootMargin: '250px 0px' }
+          { rootMargin: '0px' }
         );
         observer.observe(this.el.nativeElement);
       } else {

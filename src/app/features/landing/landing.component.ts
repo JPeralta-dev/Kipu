@@ -21,7 +21,6 @@ import { TelegramSectionComponent } from './components/telegram-section/telegram
 import { FinalCtaComponent } from './components/final-cta/final-cta.component';
 import { LandingBackgroundComponent } from './components/landing-background/landing-background.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { PricingComponent } from './components/pricing/pricing.component';
 import { ComparisonTableComponent } from './components/comparison-table/comparison-table.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TrustSignalsComponent } from './components/trust-signals/trust-signals.component';
@@ -45,7 +44,6 @@ import { environment } from '../../../environments/environment';
     FinalCtaComponent,
     LandingBackgroundComponent,
     FooterComponent,
-    PricingComponent,
     ComparisonTableComponent,
     FaqComponent,
     TrustSignalsComponent,

@@ -13,23 +13,31 @@
   </main>
 
   <!-- Global overlays -->
-  @defer (on idle) {
+  @defer (when commandService.open()) {
     <ft-command-palette />
   }
-  <ft-toast-container />
-  @defer (on idle) {
+  @defer (when toastService.toasts().length > 0) {
+    <ft-toast-container />
+  }
+  @defer (when modalService.categoryModal().isOpen) {
     <ft-category-modal />
   }
-  @defer (on idle) {
+  @defer (when upgradeModalService.open()) {
     <ft-upgrade-modal />
   }
-  <ft-consent-banner />
-  @defer (on idle) {
+  @defer (on interaction) {
+    <ft-consent-banner />
+  } @placeholder {
+    <span hidden></span>
+  }
+  @defer (when tourService.isActive()) {
     <ft-tour-overlay />
   }
   @if (showTopbar()) {
-    @defer (on idle) {
+    @defer (on interaction) {
       <ft-onboarding-checklist />
+    } @placeholder {
+      <span hidden></span>
     }
   }
 </div>

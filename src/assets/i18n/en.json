@@ -27,7 +27,8 @@
       "dashboard_load_failed_short": "Failed to load dashboard data.",
       "deleted_single": "Transaction deleted",
       "deleted_multiple": "{{count}} transactions deleted"
-    }
+    },
+    "retry": "Retry"
   },
   "auth": {
     "login": "Sign In",
@@ -431,7 +432,15 @@
     },
     "mainIndicators": "Key Indicators",
     "positiveFlow": "Positive cashflow",
-    "periodOutflows": "Period outflows"
+    "periodOutflows": "Period outflows",
+    "channels": {
+      "title": "Channel Distribution",
+      "transactions": "transactions",
+      "emptyTitle": "No transactions by channel",
+      "emptyDesc": "Log transactions to see distribution across channels (manual, Telegram, etc.)",
+      "errorTitle": "Failed to load channels",
+      "errorDesc": "Could not load channel distribution. Please try again."
+    }
   },
   "insights": {
     "title": "Insights & Goals Radar",
@@ -509,7 +518,11 @@
       "fund_pocket": "Fund Pocket",
       "adjust_goal_limit": "Adjust Limit",
       "simulate_savings": "Simulate Savings",
-      "dismiss": "Dismiss"
+      "dismiss": "Dismiss",
+      "review_category": "Review Category",
+      "view_goal": "View Goal",
+      "allocate_pocket": "Allocate Pocket",
+      "create_pocket": "Create Pocket"
     },
     "fundModal": {
       "title": "Fund Pocket",
@@ -561,8 +574,43 @@
       "category_decrease": "Your spending on {{category}} decreased {{percentage}}% compared to last month",
       "anomaly_detected": "We detected a {{ratio}}x higher than average expense in {{category}}",
       "weekly_pattern": "On {{dayName}}s you tend to spend more on {{category}}",
-      "goal_savings_plan": "Adjust your monthly savings to reach your planned goals"
-    }
+      "goal_savings_plan": "Adjust your monthly savings to reach your planned goals",
+      "leak_optimization": "Optimize small recurring expenses in {{category}} to save up to ${{savings}} per month"
+    },
+    "viewDetail": "View analysis",
+    "modalDetailTitle": "Diagnosis & Opportunity",
+    "modalClose": "Close",
+    "diagnosticLabel": "Diagnosis",
+    "actionsAvailable": "action available",
+    "actionsAvailablePlural": "actions available",
+    "severity": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "critical": "Critical"
+    },
+    "metrics": {
+      "suggestedMonthlySavings": "Suggested contribution",
+      "potentialSavings": "Potential savings",
+      "monthsRemaining": "Estimated timeframe",
+      "remainingGoalAmount": "Remaining amount",
+      "cashMargin": "Free cash flow",
+      "current": "Current",
+      "target": "Target",
+      "projected": "Projected",
+      "impactDays": "Impact",
+      "perMonth": "/mo",
+      "monthsFormat": "~{{count}} months",
+      "daysFormat": "+{{count}} days"
+    },
+    "spendingTrend": "Spending Trend",
+    "spendingTrendMsg": "Your spending shows a variation compared to your recent average",
+    "budgetAlert": "Budget Alert",
+    "budgetAlertMsg": "You are close to reaching your budgeted limit for this period",
+    "highSpending": "High Spending",
+    "highSpendingMsg": "We detected spending above your regular average",
+    "savingsGoal": "Savings Goal",
+    "savingsGoalMsg": "Check your goal progress to stay on track"
   },
   "transactions": {
     "title": "Transactions",
@@ -759,7 +807,9 @@
       "copy_code": "Copy code",
       "copied": "Copied!",
       "copy_command": "Copy /link command",
-      "step_hint": "Tap to open the bot with your link command ready to send."
+      "step_hint": "Tap to open the bot with your link command ready to send.",
+      "error_link": "Could not link Telegram account. Please try again.",
+      "error_generate": "Could not generate linking code. Please try again."
     },
     "whatsapp": {
       "title": "WhatsApp",
@@ -936,7 +986,10 @@
       "patterns": "Habits"
     },
     "categoryRanking": "Category Ranking",
-    "categoryRankingSubtitle": "Detailed breakdown by amount and percentage"
+    "categoryRankingSubtitle": "Detailed breakdown by amount and percentage",
+    "dailySpendingSubtitle": "Income vs Expenses day by day",
+    "monthTrend": "Monthly Trend",
+    "weekdayAverage": "Daily Average by Day of Week"
   },
   "profile": {
     "title": "Profile",
@@ -1020,7 +1073,8 @@
       "upgradeToPremium": "Upgrade to Premium",
       "upgradeToPlus": "Upgrade to Premium Plus",
       "continueWithPremium": "Continue with Premium"
-    }
+    },
+    "title": "Choose your plan"
   },
   "banner": {
     "dismiss": "Dismiss"
@@ -1032,6 +1086,7 @@
     "cta": "Upgrade to Premium"
   },
   "tour": {
+    "topbarBtn": "Tutorial",
     "checklist": {
       "title": "Getting started with Kipu",
       "subtitle": "The essentials to master your finances",
@@ -1051,9 +1106,25 @@
         "title": "Log your first transaction",
         "desc": "Add a manual expense or income to activate your metrics"
       },
+      "transactionsList": {
+        "title": "Explore history & filters",
+        "desc": "Learn how to search, filter by date, and import transactions"
+      },
       "categories": {
         "title": "Customize your categories",
         "desc": "Organize how your income and expenses are tracked"
+      },
+      "analytics": {
+        "title": "Analytics and reports",
+        "desc": "Explore spending trends, savings growth, and monthly comparisons"
+      },
+      "goals": {
+        "title": "Create savings goals",
+        "desc": "Set financial targets and track your percentage progress"
+      },
+      "pockets": {
+        "title": "Organize budgets (Pockets)",
+        "desc": "Control monthly spending caps using virtual envelopes"
       },
       "telegram": {
         "title": "Connect Telegram bot",
@@ -1141,6 +1212,74 @@
           "description": "Click on any category card to edit details or inspect transaction breakdown."
         }
       },
+      "transactionsList": {
+        "header": {
+          "title": "Transaction History",
+          "description": "Here is the full chronological record of all your income and expenses."
+        },
+        "range": {
+          "title": "Date Range Selector",
+          "description": "Filter your transactions quickly by this week, this month, last 30 days, or custom periods."
+        },
+        "import": {
+          "title": "Import Excel or CSV",
+          "description": "Upload bank statements in Excel or CSV format to import hundreds of transactions in seconds."
+        },
+        "table": {
+          "title": "Transaction Details",
+          "description": "Inspect category, bank account, date, and amount for each entry. Click to view or edit."
+        },
+        "cta": {
+          "title": "New Transaction",
+          "description": "Click here to record a new income or expense manually at any time."
+        }
+      },
+      "analytics": {
+        "header": {
+          "title": "Financial Analytics",
+          "description": "Discover spending patterns, savings evolution, and monthly comparisons."
+        },
+        "range": {
+          "title": "Interactive Date Range",
+          "description": "Select weeks, months, quarters, or custom dates to see how your financial health evolves."
+        },
+        "charts": {
+          "title": "Smart Charts",
+          "description": "Visualize income vs expenses, cash flow, and category distribution with interactive charts."
+        },
+        "insights": {
+          "title": "Diagnostics & Insights",
+          "description": "Explore AI recommendations generated from your habits to detect leaks and save more."
+        }
+      },
+      "goals": {
+        "header": {
+          "title": "Savings Goals",
+          "description": "Set clear targets (vacations, emergency funds, gear) and give purpose to your money."
+        },
+        "create": {
+          "title": "Create a New Goal",
+          "description": "Set your target amount and deadline. Kipu calculates your recommended savings pace."
+        },
+        "tracking": {
+          "title": "Real-time Tracking",
+          "description": "Monitor progress visually with milestone progress bars and target completion dates."
+        }
+      },
+      "pockets": {
+        "header": {
+          "title": "Financial Pockets",
+          "description": "Allocate money into virtual envelopes to stay on top of dining, shopping, and subscriptions."
+        },
+        "create": {
+          "title": "Create a Pocket",
+          "description": "Set a monthly cap and link categories to automatically keep spending within limits."
+        },
+        "tracking": {
+          "title": "Budget Monitoring",
+          "description": "Visual warnings alert you when you approach your cap so you never overspend."
+        }
+      },
       "telegram": {
         "step1_nav": {
           "title": "1. Settings",
@@ -1155,6 +1294,29 @@
           "description": "Click 'Connect Telegram' to generate your code and start logging by messaging 'Coffee $5'."
         }
       }
+    },
+    "menu": {
+      "title": "Tutorial Center",
+      "subtitle": "Step-by-step interactive guides",
+      "mainTour": "Welcome Tour",
+      "mainTourDesc": "Overview of your financial command center",
+      "allGuides": "Getting Started Checklist",
+      "allGuidesDesc": "View all feature guides and your progress",
+      "reset": "Reset all tutorials",
+      "txListTour": "History Guide",
+      "txListTourDesc": "Learn to filter, search and export records",
+      "txNewTour": "Transaction Guide",
+      "txNewTourDesc": "How to record income and expenses",
+      "catTour": "Categories Guide",
+      "catTourDesc": "Create and organize expense categories",
+      "analyticsTour": "Analytics Guide",
+      "analyticsTourDesc": "Understand trends, metrics and balances",
+      "goalsTour": "Savings Goals Guide",
+      "goalsTourDesc": "Learn how to create and fund goals",
+      "pocketsTour": "Budgets (Pockets) Guide",
+      "pocketsTourDesc": "Manage spending limits with digital envelopes",
+      "settingsTour": "Settings & Telegram Guide",
+      "settingsTourDesc": "Connect bots and adjust preferences"
     }
   },
   "upgradePrompt": {
@@ -1253,7 +1415,8 @@
       "subtitle_one": "Invite {{count}} friend and you both get 1 month free.",
       "subtitle_other": "Invite {{count}} friends and you both get 1 month free.",
       "copy": "Copy link",
-      "openFull": "See referrals"
+      "openFull": "See referrals",
+      "subtitle": "Invite friends to Kipu and you both get 1 month of Premium free."
     }
   },
   "notifications": {
@@ -1292,7 +1455,8 @@
       "transactions": "transactions",
       "emptyTitle": "No channel transactions",
       "emptyDesc": "Record your first transaction to see channel distribution",
-      "errorTitle": "Error loading channels"
+      "errorTitle": "Error loading channels",
+      "errorDesc": "Could not load channel distribution. Please try again."
     }
   },
   "budgets": {

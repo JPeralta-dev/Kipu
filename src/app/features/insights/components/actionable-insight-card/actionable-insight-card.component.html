@@ -2,11 +2,16 @@
   class="insight-card"
   [attr.data-category]="insight().category"
   [class]="getSeverityClass(insight().severity)"
+  tabindex="0"
+  role="button"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+  (keydown.space)="$event.preventDefault(); onCardClick()"
 >
   <!-- Card Header -->
   <div class="insight-card__header">
     <div class="insight-card__icon-wrap">
-      <ng-icon [name]="getCategoryIcon(insight().category)" size="1.25rem" />
+      <ng-icon [name]="getCategoryIcon(insight().category)" size="1.15rem" />
     </div>
 
     <div class="insight-card__title-meta">
@@ -15,67 +20,56 @@
           {{ 'insights.categories.' + insight().category | translate }}
         </span>
         <span class="severity-badge" [class]="getSeverityClass(insight().severity)">
-          {{ insight().severity }}
+          {{ getSeverityLabel(insight().severity) }}
         </span>
       </div>
-      <h4 class="insight-card__title">{{ insight().title }}</h4>
     </div>
 
     <button
       type="button"
       class="btn-dismiss"
       [title]="('insights.actions.dismiss' | translate) || 'Descartar'"
-      (click)="onDismiss()"
+      [attr.aria-label]="('insights.actions.dismiss' | translate) || 'Descartar'"
+      (click)="onDismiss($event)"
     >
-      <ng-icon name="close" size="1rem" />
+      <ng-icon name="close" size="0.875rem" />
     </button>
   </div>
 
-  <!-- Message Body -->
-  <p class="insight-card__message">{{ insight().message }}</p>
+  <!-- Title & Message Preview -->
+  <div class="insight-card__body">
+    <h4 class="insight-card__title">{{ insight().title }}</h4>
+    <p class="insight-card__message">{{ insight().message }}</p>
+  </div>
 
-  <!-- Metrics Display (rendered ONLY when there are visible formatted metrics) -->
-  @if (formattedMetrics().length > 0) {
-    <div class="insight-card__metrics">
-      @for (m of formattedMetrics(); track m.label) {
-        <div class="metric-item">
-          <span class="metric-label">{{ m.label }}</span>
-          <span
-            class="metric-value"
-            [class.metric-value--warning]="m.variant === 'warning'"
-            [class.metric-value--success]="m.variant === 'success'"
-          >
-            {{ m.value }}
-          </span>
-        </div>
-      }
-    </div>
-  }
-
-  <!-- Action Buttons (CTAs) -->
-  @if (insight().actions && insight().actions!.length > 0) {
-    <div
-      class="insight-card__actions"
-      [class.insight-card__actions--multiple]="insight().actions!.length > 2"
-    >
-      @for (action of insight().actions; track action.id) {
-        <button
-          type="button"
-          class="btn-action"
-          [class.btn-action--primary]="action.isPrimary"
-          [class.btn-action--secondary]="!action.isPrimary"
-          (click)="onAction(action)"
+  <!-- Card Footer (Always Uniform & Anchored) -->
+  <div class="insight-card__footer">
+    <div class="footer-teaser">
+      @if (highlightMetric()) {
+        <span
+          class="metric-chip"
+          [class.metric-chip--success]="highlightMetric()!.variant === 'success'"
+          [class.metric-chip--warning]="highlightMetric()!.variant === 'warning'"
         >
-          @if (action.actionType === 'filter_transactions') {
-            <ng-icon name="search" size="0.875rem" />
-          } @else if (action.actionType === 'fund_pocket' || action.actionType === 'allocate_pocket') {
-            <ng-icon name="plus" size="0.875rem" />
-          } @else if (action.actionType === 'adjust_goal_limit') {
-            <ng-icon name="edit" size="0.875rem" />
-          }
-          <span class="btn-action__label">{{ action.label || ('insights.actions.' + action.actionType | translate) }}</span>
-        </button>
+          <span class="metric-chip__label">{{ getMetricLabel(highlightMetric()!) }}:</span>
+          <span class="metric-chip__val">{{ highlightMetric()!.value }}</span>
+        </span>
+      } @else if (actionCount() > 0) {
+        <span class="action-chip">
+          {{ actionCount() }} {{ (actionCount() === 1 ? 'insights.actionsAvailable' : 'insights.actionsAvailablePlural') | translate }}
+        </span>
+      } @else {
+        <span class="status-chip">
+          {{ 'insights.diagnosticLabel' | translate }}
+        </span>
       }
     </div>
-  }
+
+    <div class="footer-action">
+      <span class="action-link">
+        <span>{{ 'insights.viewDetail' | translate }}</span>
+        <ng-icon name="arrowRight" size="0.875rem" />
+      </span>
+    </div>
+  </div>
 </div>

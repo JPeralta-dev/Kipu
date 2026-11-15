@@ -139,6 +139,7 @@ const FALLBACK_TRANSLATIONS: Record<string, string> = {
   'insights.health.needs_attention': 'Atención requerida',
   'insights.health.unrated': 'Sin actividad previa',
   'insights.actions.dismiss': 'Descartar',
+  'tour.topbarBtn': 'Tutorial',
   'tour.checklist.title': 'Primeros pasos en Kipu',
   'tour.checklist.subtitle': 'Lo esencial para dominar tus finanzas',
   'tour.checklist.of': 'de',
@@ -155,12 +156,37 @@ const FALLBACK_TRANSLATIONS: Record<string, string> = {
   'tour.checklist.markCompleted': 'Marcar como completado',
   'tour.checklist.transaction.title': 'Registrar tu primer movimiento',
   'tour.checklist.transaction.desc': 'Carga un gasto o ingreso manual para activar tus métricas',
+  'tour.checklist.transactionsList.title': 'Explorar historial y filtros',
+  'tour.checklist.transactionsList.desc': 'Aprende a buscar, filtrar por fecha e importar transacciones',
   'tour.checklist.categories.title': 'Personalizar tus categorías',
   'tour.checklist.categories.desc': 'Organiza cómo se clasifican tus gastos e ingresos',
+  'tour.checklist.analytics.title': 'Analíticas y reportes',
+  'tour.checklist.analytics.desc': 'Visualiza tendencias de gastos, ahorros y comparativas mensuales',
+  'tour.checklist.goals.title': 'Crear metas de ahorro',
+  'tour.checklist.goals.desc': 'Define objetivos financieros y sigue tu porcentaje de avance',
+  'tour.checklist.pockets.title': 'Organizar presupuestos (Pockets)',
+  'tour.checklist.pockets.desc': 'Controla tus límites mensuales de gasto por sobres virtuales',
   'tour.checklist.telegram.title': 'Vincular bot de Telegram',
   'tour.checklist.telegram.desc': 'Registra transacciones en segundos desde cualquier chat',
   'tour.checklist.tour.title': 'Completar tour por Kipu',
   'tour.checklist.tour.desc': 'Conoce en detalle el centro de control financiero',
+  'insights.severity.high': 'Alta',
+  'insights.severity.medium': 'Media',
+  'insights.severity.low': 'Baja',
+  'insights.severity.critical': 'Crítica',
+  'insights.metrics.suggestedMonthlySavings': 'Aporte sugerido',
+  'insights.metrics.potentialSavings': 'Ahorro potencial',
+  'insights.metrics.monthsRemaining': 'Plazo estimado',
+  'insights.metrics.remainingGoalAmount': 'Falta recaudar',
+  'insights.metrics.cashMargin': 'Margen libre',
+  'insights.metrics.current': 'Actual',
+  'insights.metrics.target': 'Objetivo',
+  'insights.metrics.projected': 'Proyectado',
+  'insights.metrics.impactDays': 'Impacto',
+  'insights.metrics.perMonth': '/mes',
+  'insights.metrics.monthsFormat': '~{{count}} meses',
+  'insights.metrics.daysFormat': '+{{count}} días',
+  'insights.viewDetail': 'Ver análisis',
 };
 
 const FALLBACK_TRANSLATIONS_BY_LANG: Record<Language, Record<string, string>> = {
@@ -229,6 +255,7 @@ const FALLBACK_TRANSLATIONS_BY_LANG: Record<Language, Record<string, string>> = 
     'analytics.consent.learnMore': 'Cookie Policy',
     'analytics.consent.accept': 'Accept',
     'analytics.consent.decline': 'Decline',
+    'tour.topbarBtn': 'Tutorial',
     'tour.checklist.title': 'Getting started with Kipu',
     'tour.checklist.subtitle': 'The essentials to master your finances',
     'tour.checklist.of': 'of',
@@ -245,14 +272,40 @@ const FALLBACK_TRANSLATIONS_BY_LANG: Record<Language, Record<string, string>> = 
     'tour.checklist.markCompleted': 'Mark as completed',
     'tour.checklist.transaction.title': 'Log your first transaction',
     'tour.checklist.transaction.desc': 'Add a manual expense or income to activate your metrics',
+    'tour.checklist.transactionsList.title': 'Explore history & filters',
+    'tour.checklist.transactionsList.desc': 'Learn to search, filter by date, and import transactions',
     'tour.checklist.categories.title': 'Customize your categories',
     'tour.checklist.categories.desc': 'Organize how your income and expenses are tracked',
+    'tour.checklist.analytics.title': 'Analytics and reports',
+    'tour.checklist.analytics.desc': 'Explore spending trends, savings growth, and monthly comparisons',
+    'tour.checklist.goals.title': 'Create savings goals',
+    'tour.checklist.goals.desc': 'Define financial objectives and track your progress percentage',
+    'tour.checklist.pockets.title': 'Organize budgets (Pockets)',
+    'tour.checklist.pockets.desc': 'Control your monthly spending caps with virtual envelopes',
     'tour.checklist.telegram.title': 'Connect Telegram bot',
     'tour.checklist.telegram.desc': 'Log transactions in seconds from any chat',
     'tour.checklist.tour.title': 'Take the full Kipu tour',
     'tour.checklist.tour.desc': 'Explore key features across the control center',
+    'insights.severity.high': 'High',
+    'insights.severity.medium': 'Medium',
+    'insights.severity.low': 'Low',
+    'insights.severity.critical': 'Critical',
+    'insights.metrics.suggestedMonthlySavings': 'Suggested contribution',
+    'insights.metrics.potentialSavings': 'Potential savings',
+    'insights.metrics.monthsRemaining': 'Estimated timeframe',
+    'insights.metrics.remainingGoalAmount': 'Remaining amount',
+    'insights.metrics.cashMargin': 'Free cash flow',
+    'insights.metrics.current': 'Current',
+    'insights.metrics.target': 'Target',
+    'insights.metrics.projected': 'Projected',
+    'insights.metrics.impactDays': 'Impact',
+    'insights.metrics.perMonth': '/mo',
+    'insights.metrics.monthsFormat': '~{{count}} months',
+    'insights.metrics.daysFormat': '+{{count}} days',
+    'insights.viewDetail': 'View analysis',
   },
   fr: {
+    'tour.topbarBtn': 'Tutoriel',
     'tour.checklist.title': 'Premiers pas sur Kipu',
     'tour.checklist.subtitle': "L'essentiel pour maîtriser vos finances",
     'tour.checklist.of': 'sur',
@@ -269,19 +322,45 @@ const FALLBACK_TRANSLATIONS_BY_LANG: Record<Language, Record<string, string>> = 
     'tour.checklist.markCompleted': 'Marquer comme terminé',
     'tour.checklist.transaction.title': 'Enregistrer votre premier mouvement',
     'tour.checklist.transaction.desc': 'Ajoutez une dépense ou un revenu manuel pour activer vos indicateurs',
+    'tour.checklist.transactionsList.title': 'Explorer l\'historique et filtres',
+    'tour.checklist.transactionsList.desc': 'Apprenez à rechercher, filtrer par date et importer des transactions',
     'tour.checklist.categories.title': 'Personnaliser vos catégories',
     'tour.checklist.categories.desc': 'Organisez le suivi de vos revenus et dépenses',
+    'tour.checklist.analytics.title': 'Analyses et rapports',
+    'tour.checklist.analytics.desc': 'Explorez les tendances de dépenses, l\'épargne et les bilans mensuels',
+    'tour.checklist.goals.title': 'Créer des objectifs d\'épargne',
+    'tour.checklist.goals.desc': 'Définissez des objectifs financiers et suivez votre progression',
+    'tour.checklist.pockets.title': 'Organiser des budgets (Pockets)',
+    'tour.checklist.pockets.desc': 'Contrôlez vos plafonds mensuels de dépenses par compartiments virtuels',
     'tour.checklist.telegram.title': 'Connecter le bot Telegram',
     'tour.checklist.telegram.desc': 'Enregistrez des transactions en quelques secondes depuis un chat',
     'tour.checklist.tour.title': 'Suivre le tour complet de Kipu',
     'tour.checklist.tour.desc': 'Explorez les fonctionnalités clés du centre de contrôle',
+    'insights.severity.high': 'Élevée',
+    'insights.severity.medium': 'Moyenne',
+    'insights.severity.low': 'Faible',
+    'insights.severity.critical': 'Critique',
+    'insights.metrics.suggestedMonthlySavings': 'Apport suggéré',
+    'insights.metrics.potentialSavings': 'Économies potentielles',
+    'insights.metrics.monthsRemaining': 'Délai estimé',
+    'insights.metrics.remainingGoalAmount': 'Reste à financer',
+    'insights.metrics.cashMargin': 'Marge disponible',
+    'insights.metrics.current': 'Actuel',
+    'insights.metrics.target': 'Objectif',
+    'insights.metrics.projected': 'Projeté',
+    'insights.metrics.impactDays': 'Impact',
+    'insights.metrics.perMonth': '/mois',
+    'insights.metrics.monthsFormat': '~{{count}} mois',
+    'insights.metrics.daysFormat': '+{{count}} jours',
+    'insights.viewDetail': 'Voir l\'analyse',
   },
 };
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
+  private readonly I18N_VERSION = 'v7';
   private readonly STORAGE_KEY = 'flowr_language';
-  private readonly TRANSLATIONS_KEY = 'flowr_translations';
+  private readonly TRANSLATIONS_KEY = 'flowr_translations_v7';
 
   // Lazy-inject HttpClient — only needed for async fetch of non-default languages
   private http = inject(HttpClient, { optional: true });
@@ -306,6 +385,17 @@ export class TranslationService {
       document.documentElement.lang = lang;
     }
 
+    // Purge legacy caches
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        ['flowr_translations', 'flowr_translations_es', 'flowr_translations_en', 'flowr_translations_fr', 'flowr_translations_v2', 'flowr_translations_v3', 'flowr_translations_v4', 'flowr_translations_v5', 'flowr_translations_v6'].forEach((k) => {
+          window.localStorage.removeItem(k);
+        });
+      }
+    } catch {
+      // Ignore
+    }
+
     this.preloadFallbackCache(lang);
 
     const cached = safeGetItem(`${this.TRANSLATIONS_KEY}_${lang}`);
@@ -314,14 +404,14 @@ export class TranslationService {
         const parsed = JSON.parse(cached);
         if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
           this.applyTranslations(parsed);
-          return;
         }
       } catch {
         // Invalid JSON, fall through to async fetch
       }
     }
 
-    this.scheduleDeferredFetch();
+    // Always fetch fresh translations in background (SWR)
+    void this.fetchTranslations();
   }
 
   private scheduleDeferredFetch(): void {
@@ -392,7 +482,7 @@ export class TranslationService {
     this.pendingFetch = (async () => {
       try {
         const data = await firstValueFrom(
-          this.http!.get<Record<string, any>>(`/assets/i18n/${lang}.json`)
+          this.http!.get<Record<string, any>>(`/assets/i18n/${lang}.json?v=${this.I18N_VERSION}`)
         );
         if (data && typeof data === 'object' && this._currentLang() === lang) {
           this.applyTranslations(data);

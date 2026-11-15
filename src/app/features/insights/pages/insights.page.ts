@@ -22,6 +22,7 @@ import { FinancialHealthHeroComponent } from '../components/financial-health-her
 import { ActiveGoalsRadarComponent } from '../components/active-goals-radar/active-goals-radar.component';
 import { ActionableInsightCardComponent } from '../components/actionable-insight-card/actionable-insight-card.component';
 import { FundPocketModalComponent } from '../components/fund-pocket-modal/fund-pocket-modal.component';
+import { InsightDetailModalComponent } from '../components/insight-detail-modal/insight-detail-modal.component';
 
 type FilterType = 'all' | 'pacing' | 'goals' | 'opportunities';
 
@@ -38,6 +39,7 @@ type FilterType = 'all' | 'pacing' | 'goals' | 'opportunities';
     ActiveGoalsRadarComponent,
     ActionableInsightCardComponent,
     FundPocketModalComponent,
+    InsightDetailModalComponent,
   ],
   templateUrl: './insights.page.html',
   styleUrl: './insights.page.scss',
@@ -60,6 +62,8 @@ export class InsightsPage implements OnInit {
   readonly actionableInsights = signal<ActionableInsight[]>([]);
 
   readonly activeFilter = signal<FilterType>('all');
+
+  readonly selectedInsight = signal<ActionableInsight | null>(null);
 
   readonly isFundModalOpen = signal<boolean>(false);
   readonly modalPocketId = signal<string | null>(null);
@@ -168,7 +172,18 @@ export class InsightsPage implements OnInit {
     }
   }
 
+  openInsightDetail(insight: ActionableInsight): void {
+    this.selectedInsight.set(insight);
+  }
+
+  closeInsightDetail(): void {
+    this.selectedInsight.set(null);
+  }
+
   handleDismiss(insightId: string): void {
+    if (this.selectedInsight()?.id === insightId) {
+      this.selectedInsight.set(null);
+    }
     this.actionableInsights.update((list) =>
       list.map((i) => (i.id === insightId ? { ...i, isDismissed: true } : i)),
     );

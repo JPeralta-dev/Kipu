@@ -35,9 +35,9 @@ describe('FtTourService', () => {
     expect(service.shouldPromptForTour()).toBe(true);
   });
 
-  it('should auto-start for brand new users', () => {
+  it('should auto-start and show trigger card for brand new users', () => {
     expect(service.shouldAutoStart()).toBe(true);
-    expect(service.shouldShowTriggerCard()).toBe(false);
+    expect(service.shouldShowTriggerCard()).toBe(true);
   });
 
   it('should not auto-start after postpone', () => {
@@ -66,10 +66,10 @@ describe('FtTourService', () => {
     expect(service.shouldShowTriggerCard()).toBe(false);
   });
 
-  it('should not show trigger card after skip', () => {
+  it('should show trigger card after skip so user can reopen if closed accidentally', () => {
     service.start();
     service.skip();
-    expect(service.shouldShowTriggerCard()).toBe(false);
+    expect(service.shouldShowTriggerCard()).toBe(true);
   });
 
   it('should start the tour at step 1 and fire analytics', () => {
@@ -164,6 +164,28 @@ describe('FtTourService', () => {
     expect(service.isActive()).toBe(true);
     expect(service.steps.length).toBe(4);
     expect(service.currentStepNumber()).toBe(1);
+  });
+
+  it('should support starting transactions-list contextual tour', () => {
+    service.startTour('transactions-list');
+    expect(service.activeTourId()).toBe('transactions-list');
+    expect(service.isActive()).toBe(true);
+    expect(service.steps.length).toBe(5);
+    expect(service.currentStepNumber()).toBe(1);
+  });
+
+  it('should support starting analytics, goals and pockets contextual tours', () => {
+    service.startTour('analytics');
+    expect(service.activeTourId()).toBe('analytics');
+    expect(service.steps.length).toBe(4);
+
+    service.startTour('goals');
+    expect(service.activeTourId()).toBe('goals');
+    expect(service.steps.length).toBe(3);
+
+    service.startTour('pockets');
+    expect(service.activeTourId()).toBe('pockets');
+    expect(service.steps.length).toBe(3);
   });
 
   it('should allow registering custom tours dynamically', () => {

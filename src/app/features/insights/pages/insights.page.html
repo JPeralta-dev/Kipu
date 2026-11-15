@@ -114,6 +114,7 @@
             @for (insight of filteredInsights(); track insight.id; let i = $index) {
               <ft-actionable-insight-card
                 [insight]="insight"
+                (cardClick)="openInsightDetail($event)"
                 (actionClick)="handleActionClick($event)"
                 (dismiss)="handleDismiss($event)"
                 ftSubtleReveal="fade-up"
@@ -125,6 +126,15 @@
       </div>
     }
   }
+
+  <!-- Insight Detail Modal -->
+  <ft-insight-detail-modal
+    [isOpen]="!!selectedInsight()"
+    [insight]="selectedInsight()"
+    (close)="closeInsightDetail()"
+    (actionClick)="handleActionClick($event)"
+    (dismiss)="handleDismiss($event)"
+  />
 
   <!-- Fund Pocket Modal -->
   <ft-fund-pocket-modal

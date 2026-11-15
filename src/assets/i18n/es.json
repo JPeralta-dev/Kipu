@@ -22,8 +22,8 @@
       "category_delete_failed": "Error al eliminar la categoría.",
       "category_cannot_delete": "No se pueden eliminar las categorías por defecto.",
       "category_deleted": "Categoría eliminada.",
-      "transactions_load_failed": "Error al cargar las transacciones. Intentá de nuevo.",
-      "dashboard_load_failed": "Error al cargar los datos del dashboard. Intentá de nuevo.",
+      "transactions_load_failed": "Error al cargar las transacciones. Intenta de nuevo.",
+      "dashboard_load_failed": "Error al cargar los datos del dashboard. Intenta de nuevo.",
       "dashboard_load_failed_short": "Error al cargar los datos del dashboard.",
       "deleted_single": "Transacción eliminada",
       "deleted_multiple": "{{count}} transacciones eliminadas"
@@ -398,29 +398,29 @@
       "preview2Desc": "Podrías ahorrar $45.000 cambiando tu plan de...",
       "upgradeTitle": "Desbloqueá insights personalizados con IA",
       "upgradeCta": "Activar Premium",
-      "emptyText": "Agregá más transacciones para recibir insights personalizados.",
-      "errorText": "No pudimos cargar los insights. Intentá de nuevo."
+      "emptyText": "Agrega más transacciones para recibir diagnósticos personalizados.",
+      "errorText": "No pudimos cargar los insights. Intenta de nuevo."
     },
     "goals": {
       "title": "Metas de Ahorro",
       "viewAll": "Ver todas",
       "previewGoal": "Meta de ejemplo",
-      "upgradeTitle": "Creá metas de ahorro y seguí tu progreso",
+      "upgradeTitle": "Crea metas de ahorro y sigue tu progreso",
       "upgradeCta": "Activar Premium",
-      "emptyText": "Todavía no tenés metas. Creá tu primera meta de ahorro.",
+      "emptyText": "Todavía no tienes metas. Crea tu primera meta de ahorro.",
       "emptyCta": "Crear primera meta",
-      "errorText": "No pudimos cargar tus metas. Intentá de nuevo.",
+      "errorText": "No pudimos cargar tus metas. Intenta de nuevo.",
       "remaining": "Te faltan"
     },
     "pockets": {
       "title": "Pockets",
       "viewAll": "Ver todos",
       "previewPocket": "Pocket de ejemplo",
-      "upgradeTitle": "Organizá tu presupuesto por categorías con Pockets",
+      "upgradeTitle": "Organiza tu presupuesto por categorías con Pockets",
       "upgradeCta": "Activar Premium",
-      "emptyText": "Todavía no tenés pockets. Creá tu primer pocket para organizar tu presupuesto.",
+      "emptyText": "Todavía no tienes bolsillos. Crea tu primer bolsillo para organizar tu presupuesto.",
       "emptyCta": "Crear primer pocket",
-      "errorText": "No pudimos cargar tus pockets. Intentá de nuevo."
+      "errorText": "No pudimos cargar tus bolsillos. Intenta de nuevo."
     },
     "savingsRateTooltip": "Porcentaje de tus ingresos que estás ahorrando este mes",
     "activity": {
@@ -439,7 +439,7 @@
     "loading": "Cargando inteligencia financiera...",
     "fetching": "Analizando patrones de consumo, ritmo y metas",
     "errorTitle": "Error al cargar insights",
-    "errorLoading": "No pudimos cargar tus insights. Intentá de nuevo.",
+    "errorLoading": "No pudimos cargar tus insights. Intenta de nuevo.",
     "retry": "Reintentar",
     "emptyTitle": "Sin insights por ahora",
     "emptyDesc": "Agrega transacciones o define metas para comenzar a recibir diagnósticos y alertas en tiempo real.",
@@ -553,9 +553,9 @@
       "mom_increase": "Tus gastos subieron {{percentage}}% respecto al mes pasado",
       "mom_decrease": "Tus gastos bajaron {{percentage}}% respecto al mes pasado",
       "top_category": "{{name}} representa el {{percentage}}% de tus gastos este mes",
-      "no_income": "No se registraron ingresos este mes. Revisá tus fuentes de ingreso.",
+      "no_income": "No se registraron ingresos este mes. Revisa tus fuentes de ingreso.",
       "good_savings": "¡Excelente! Tu tasa de ahorro es del {{rate}}%",
-      "negative_savings": "Estás gastando {{rate}}% más de lo que ganás este mes",
+      "negative_savings": "Estás gastando {{rate}}% más de lo que ganas este mes",
       "high_concentration": "El {{percentage}}% de tus gastos se concentra en {{count}} categorías",
       "period_trend": "Comparado con el período anterior, tus gastos {{direction}} un {{percentage}}%",
       "monthly_projection": "Si mantienes este ritmo terminarás el mes con ${{projectedIncome}} en ingresos y ${{projectedExpenses}} en gastos",
@@ -564,8 +564,8 @@
       "category_increase": "Tu gasto en {{category}} aumentó {{percentage}}% respecto al mes pasado",
       "category_decrease": "Tu gasto en {{category}} disminuyó {{percentage}}% respecto al mes pasado",
       "anomaly_detected": "Detectamos un gasto {{ratio}}x superior a tu promedio en {{category}}",
-      "weekly_pattern": "Los {{dayName}} solés gastar más en {{category}}",
-      "goal_savings_plan": "Ajustá tu ahorro mensual para alcanzar tus metas planificadas"
+      "weekly_pattern": "Los {{dayName}} sueles gastar más en {{category}}",
+      "goal_savings_plan": "Ajusta tu ahorro mensual para alcanzar tus metas planificadas"
     },
     "viewDetail": "Ver análisis",
     "modalDetailTitle": "Diagnóstico y Oportunidad",
@@ -603,11 +603,11 @@
     "loading": "Cargando...",
     "loadingDesc": "Obteniendo tus transacciones.",
     "errorTitle": "Algo salió mal",
-    "errorDesc": "No pudimos cargar tus transacciones. Intentá de nuevo.",
+    "errorDesc": "No pudimos cargar tus transacciones. Intenta de nuevo.",
     "retry": "Reintentar",
     "emptyTitle": "Sin transacciones aún",
     "emptyDesc": "Tu historial de transacciones aparecerá aquí una vez que comiences a registrar gastos e ingresos.",
-    "startTracking": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
+    "startTracking": "Comienza a registrar tus finanzas agregando tu primera transacción.",
     "addFirstTransaction": "Agregar Transacción",
     "newTransaction": "Nueva Transacción",
     "form": {
@@ -640,7 +640,7 @@
         "invalid_data": "Datos inválidos. Revisa todos los campos",
         "not_found": "Transacción no encontrada",
         "invalid_id": "ID de transacción inválido",
-        "server_error": "Error del servidor. Intentá de nuevo."
+        "server_error": "Error del servidor. Intenta de nuevo."
       },
       "bank": "Banco",
       "bank_placeholder": "Seleccioná un banco"
@@ -666,7 +666,7 @@
     "delete": "Eliminar",
     "clear_filter": "Limpiar filtro",
     "clear_search": "Limpiar búsqueda",
-    "empty_start_desc": "Comenzá a rastrear tus finanzas agregando tu primera transacción.",
+    "empty_start_desc": "Comienza a registrar tus finanzas agregando tu primera transacción.",
     "empty_add_cta": "Agregar transacción"
   },
   "categories": {
@@ -712,7 +712,7 @@
     },
     "empty": {
       "title": "No hay categorías todavía",
-      "desc": "Creá tu primera categoría para empezar a organizar tus finanzas.",
+      "desc": "Crea tu primera categoría para empezar a organizar tus finanzas.",
       "action": "Crear categoría",
       "empty_expenses": "No tienes categorías de gastos aún.",
       "empty_income": "No tienes categorías de ingresos aún.",
@@ -720,7 +720,7 @@
     },
     "error": {
       "title": "No se pudieron cargar las categorías",
-      "desc": "Algo salió mal al obtener tus categorías. Revisá tu conexión e intentá de nuevo.",
+      "desc": "Algo salió mal al obtener tus categorías. Revisa tu conexión e intenta de nuevo.",
       "retry": "Reintentar"
     },
     "form": {
@@ -745,8 +745,8 @@
       "display_name": "Nombre visible",
       "email": "Correo",
       "verified": "Verificado",
-      "load_error": "No se pudo cargar el perfil. Intentá nuevamente.",
-      "save_error": "No se pudo actualizar el nombre. Intentá nuevamente."
+      "load_error": "No se pudo cargar el perfil. Intenta nuevamente.",
+      "save_error": "No se pudo actualizar el nombre. Intenta nuevamente."
     },
     "security": {
       "title": "Seguridad",
@@ -763,12 +763,12 @@
       "sign_out": "Cerrar sesión",
       "confirm_message": "¿Estás seguro de que quieres cerrar sesión?",
       "confirm_sign_out": "Sí, cerrar sesión",
-      "sign_out_error": "No se pudo cerrar sesión. Verificá tu conexión e intentá de nuevo."
+      "sign_out_error": "No se pudo cerrar sesión. Verifica tu conexión e intenta de nuevo."
     },
     "accounts": {
       "title": "Cuentas vinculadas",
       "desc": "Conecta tus cuentas de mensajería y bancos para registrar movimientos automáticamente.",
-      "disconnect_confirm": "¿Seguro que querés desconectar este canal? Dejarán de importarse nuevas transacciones."
+      "disconnect_confirm": "¿Seguro que quieres desconectar este canal? Dejarán de importarse nuevas transacciones."
     },
     "telegram": {
       "title": "Vincular Telegram",
@@ -789,7 +789,7 @@
       "copy_code": "Copiar código",
       "copied": "¡Copiado!",
       "copy_command": "Copiar comando /link",
-      "step_hint": "Tocá para abrir el bot y enviar el comando de vinculación."
+      "step_hint": "Toca para abrir el bot y enviar el comando de vinculación."
     },
     "whatsapp": {
       "title": "WhatsApp",
@@ -808,8 +808,8 @@
       "desc": "Conecta tu Gmail para importar automáticamente las notificaciones bancarias como transacciones.",
       "connect": "Conectar Gmail",
       "connecting": "Conectando a Gmail...",
-      "connect_failed": "No se pudo iniciar la conexión con Gmail. Intentá de nuevo.",
-      "sync_failed": "No se pudo sincronizar Gmail. Intentá de nuevo.",
+      "connect_failed": "No se pudo iniciar la conexión con Gmail. Intenta de nuevo.",
+      "sync_failed": "No se pudo sincronizar Gmail. Intenta de nuevo.",
       "connected_status": "Conectado — {{email}}",
       "last_sync": "Última sync: {{when}}",
       "last_sync_just_now": "Última sync: ahora",
@@ -845,14 +845,14 @@
       "subtitle": "Exportá o eliminá permanentemente los datos de tu cuenta.",
       "export_button": "Exportar mis datos",
       "export_loading": "Preparando exportación...",
-      "export_error": "No se pudieron exportar los datos. Intentá de nuevo.",
+      "export_error": "No se pudieron exportar los datos. Intenta de nuevo.",
       "delete_button": "Eliminar mi cuenta",
       "delete_warning": "Esta acción es permanente y no se puede deshacer.",
       "delete_instruction": "Escribí DELETE para confirmar:",
       "delete_placeholder": "DELETE",
       "delete_confirm_button": "Eliminar permanentemente",
       "delete_confirm_mismatch": "Debés escribir DELETE exactamente para confirmar.",
-      "delete_error": "No se pudo eliminar la cuenta. Intentá de nuevo."
+      "delete_error": "No se pudo eliminar la cuenta. Intenta de nuevo."
     }
   },
   "analytics": {
@@ -887,7 +887,7 @@
     "loading": "Cargando análisis...",
     "fetchingData": "Obteniendo datos financieros",
     "errorTitle": "Error al cargar",
-    "errorDesc": "No pudimos cargar los datos de análisis. Intentá de nuevo.",
+    "errorDesc": "No pudimos cargar los datos de análisis. Intenta de nuevo.",
     "retry": "Reintentar",
     "addTransaction": "Agregar transacción",
     "noCategoryData": "Sin datos de categorías aún",
@@ -907,10 +907,10 @@
     "addFirstTransaction": "Agregar Primera Transacción",
     "filtered": "Filtrado por: {{name}}",
     "clearFilter": "Limpiar filtro",
-    "clearFilterTip": "Hacé clic en la insignia para limpiar",
+    "clearFilterTip": "Haz clic en la insignia para restablecer",
     "customRange": "Rango personalizado...",
     "noDataTitle": "Sin Datos para Este Período",
-    "noDataDesc": "Intentá ajustar los filtros para ver resultados.",
+    "noDataDesc": "Intenta ajustar los filtros para ver resultados.",
     "clearFilters": "Limpiar Filtros",
     "welcomeBanner": "¿Listo para empezar? agrega tu primera transacción para desbloquear insights.",
     "period": {
@@ -946,7 +946,7 @@
     },
     "story": {
       "greatSavings": "¡Buen trabajo! Tasa de ahorro del {{rate}}% está por encima del objetivo.",
-      "negativeSavings": "Estás gastando {{rate}}% más de lo que ganás.",
+      "negativeSavings": "Estás gastando {{rate}}% más de lo que ganas.",
       "spendingSpike": "Pico de gastos detectado: {{amount}} este mes.",
       "noNotableEvents": "Sin eventos notables este período.",
       "noData": "No hay suficientes datos para generar historias."
@@ -1001,7 +1001,7 @@
     },
     "toasts": {
       "profile_updated": "¡Perfil actualizado exitosamente!",
-      "profile_update_failed": "Error al guardar el perfil. Intentá de nuevo.",
+      "profile_update_failed": "Error al guardar el perfil. Intenta de nuevo.",
       "load_failed": "Error al cargar los datos del perfil."
     }
   },
@@ -1013,7 +1013,7 @@
   },
   "upgradeModal": {
     "headline": "Desbloqueá todo el potencial de Kipu",
-    "subhead": "Compará los planes y elegí el que mejor se adapta a tu ritmo.",
+    "subhead": "Compara los planes y elige el que mejor se adapte a tu ritmo.",
     "featureCol": "Función",
     "currentTier": "Tu plan",
     "trialActive": "Tu prueba activa termina en {{days}} días.",
@@ -1310,7 +1310,7 @@
     "premiumUpsell": {
       "insights": {
         "title": "Desbloqueá los insights con IA",
-        "description": "Dejá que la IA detecte patrones en tus gastos y te dé recomendaciones para ahorrar más.",
+        "description": "Deja que la IA detecte patrones en tus gastos y te brinde recomendaciones para ahorrar más.",
         "cta": "Desbloquear insights"
       },
       "goals": {
@@ -1327,7 +1327,7 @@
     "firstUse": {
       "categories": {
         "title": "¡Empecemos!",
-        "description": "Creá tu primera categoría para empezar a organizar tus gastos como vos quieras.",
+        "description": "Crea tu primera categoría para empezar a organizar tus gastos como prefieras.",
         "cta": "Crear mi primera categoría"
       },
       "goals": {
@@ -1337,7 +1337,7 @@
       },
       "transactions": {
         "title": "Sumá tu primer movimiento",
-        "description": "Registrá un gasto o ingreso manual. Después podés conectar el bot de Telegram para automatizar.",
+        "description": "Registra un gasto o ingreso manual. Después puedes conectar el bot de Telegram para automatizar.",
         "cta": "Cargar primer movimiento"
       }
     }
@@ -1345,8 +1345,8 @@
   "referral": {
     "hero": {
       "eyebrow": "Referidos",
-      "title": "Invitá amigos, ambos ganan",
-      "subtitle": "Por cada amigo que se suscriba a Premium, te llevás 1 mes gratis y tu amigo también."
+      "title": "Invita amigos, ambos ganan",
+      "subtitle": "Por cada amigo que se suscriba a Premium, te llevas 1 mes gratis y tu amigo también."
     },
     "linkCard": {
       "title": "Tu link único",
@@ -1370,29 +1370,29 @@
       "title": "Cómo funciona",
       "step1": {
         "title": "Compartí tu link",
-        "desc": "Enviá tu link único por WhatsApp, email, o donde quieras."
+        "desc": "Envía tu enlace único por WhatsApp, correo o redes sociales."
       },
       "step2": {
         "title": "Tu amigo se suscribe",
         "desc": "Cuando active Premium, ambos reciben 1 mes gratis."
       },
       "step3": {
-        "title": "Acumulás descuentos",
+        "title": "Acumula descuentos",
         "desc": "Cada referido suma un mes más. Sin tope."
       }
     },
     "terms": "Aplican términos y condiciones.",
     "input": {
-      "label": "¿Tenés un código de referido?",
+      "label": "¿Tienes un código de referido?",
       "placeholder": "ABC123XY",
       "apply": "Aplicar",
-      "invalid": "Código inválido. Revisá que tenga 8 caracteres.",
+      "invalid": "Código inválido. Revisa que tenga 8 caracteres.",
       "applied": "¡Listo! Tu descuento se aplicará al finalizar la compra."
     },
     "widget": {
       "title": "Referidos",
-      "subtitle_one": "Invitá a {{count}} amigo y ambos ganan 1 mes gratis.",
-      "subtitle_other": "Invitá a {{count}} amigos y ambos ganan 1 mes gratis.",
+      "subtitle_one": "Invita a {{count}} amigo y ambos recibirán 1 mes gratis.",
+      "subtitle_other": "Invita a {{count}} amigos y ambos recibirán 1 mes gratis.",
       "copy": "Copiar link",
       "openFull": "Ver referidos"
     }
@@ -1434,7 +1434,7 @@
       "emptyTitle": "Sin transacciones por canal",
       "emptyDesc": "Registra tu primera transacción para ver la distribución por canal",
       "errorTitle": "Error al cargar canales",
-      "errorDesc": "No pudimos cargar la distribución por canal. Intentá de nuevo."
+      "errorDesc": "No pudimos cargar la distribución por canal. Intenta de nuevo."
     }
   },
   "budgets": {
@@ -1457,7 +1457,7 @@
     "widget_title": "Presupuesto del Mes",
     "widget_view_all": "Gestionar límites",
     "widget_empty_title": "Sin presupuestos activos",
-    "widget_empty_desc": "Definí límites mensuales en tus categorías de gasto para no pasarte este mes.",
+    "widget_empty_desc": "Define límites mensuales en tus categorías de gasto para no excederte este mes.",
     "widget_empty_cta": "Configurar presupuestos",
     "widget_total_spent": "Total gastado",
     "widget_total_limit": "Presupuestado",

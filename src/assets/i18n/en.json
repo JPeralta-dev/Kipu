@@ -1090,6 +1090,18 @@
         "title": "Customize your categories",
         "desc": "Organize how your income and expenses are tracked"
       },
+      "analytics": {
+        "title": "Analytics and reports",
+        "desc": "Explore spending trends, savings growth, and monthly comparisons"
+      },
+      "goals": {
+        "title": "Create savings goals",
+        "desc": "Set financial targets and track your percentage progress"
+      },
+      "pockets": {
+        "title": "Organize budgets (Pockets)",
+        "desc": "Control monthly spending caps using virtual envelopes"
+      },
       "telegram": {
         "title": "Connect Telegram bot",
         "desc": "Log transactions in seconds from any chat"
@@ -1196,6 +1208,52 @@
         "cta": {
           "title": "New Transaction",
           "description": "Click here to record a new income or expense manually at any time."
+        }
+      },
+      "analytics": {
+        "header": {
+          "title": "Financial Analytics",
+          "description": "Discover spending patterns, savings evolution, and monthly comparisons."
+        },
+        "range": {
+          "title": "Interactive Date Range",
+          "description": "Select weeks, months, quarters, or custom dates to see how your financial health evolves."
+        },
+        "charts": {
+          "title": "Smart Charts",
+          "description": "Visualize income vs expenses, cash flow, and category distribution with interactive charts."
+        },
+        "insights": {
+          "title": "Diagnostics & Insights",
+          "description": "Explore AI recommendations generated from your habits to detect leaks and save more."
+        }
+      },
+      "goals": {
+        "header": {
+          "title": "Savings Goals",
+          "description": "Set clear targets (vacations, emergency funds, gear) and give purpose to your money."
+        },
+        "create": {
+          "title": "Create a New Goal",
+          "description": "Set your target amount and deadline. Kipu calculates your recommended savings pace."
+        },
+        "tracking": {
+          "title": "Real-time Tracking",
+          "description": "Monitor progress visually with milestone progress bars and target completion dates."
+        }
+      },
+      "pockets": {
+        "header": {
+          "title": "Financial Pockets",
+          "description": "Allocate money into virtual envelopes to stay on top of dining, shopping, and subscriptions."
+        },
+        "create": {
+          "title": "Create a Pocket",
+          "description": "Set a monthly cap and link categories to automatically keep spending within limits."
+        },
+        "tracking": {
+          "title": "Budget Monitoring",
+          "description": "Visual warnings alert you when you approach your cap so you never overspend."
         }
       },
       "telegram": {

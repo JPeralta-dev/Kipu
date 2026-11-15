@@ -64,9 +64,9 @@ describe('FtOnboardingChecklistComponent', () => {
     localStorage.clear();
   });
 
-  it('should create and initialize with 5 tasks', () => {
+  it('should create and initialize with 8 tasks', () => {
     expect(component).toBeTruthy();
-    expect(component.tasks.length).toBe(5);
+    expect(component.tasks.length).toBe(8);
     expect(component.isCollapsed()).toBe(false);
     expect(component.isDismissed()).toBe(false);
   });
@@ -94,7 +94,7 @@ describe('FtOnboardingChecklistComponent', () => {
     component.toggleTask('transaction');
     expect(component.isTaskCompleted('transaction')).toBe(true);
     expect(component.completedCount()).toBe(1);
-    expect(component.progressPercent()).toBe(20);
+    expect(component.progressPercent()).toBe(13);
 
     // Toggle off
     component.toggleTask('transaction');
@@ -126,6 +126,6 @@ describe('FtOnboardingChecklistComponent', () => {
 
     expect(component.isTaskCompleted('transaction')).toBe(true);
     expect(component.completedCount()).toBe(1);
-    expect(component.progressPercent()).toBe(20);
+    expect(component.progressPercent()).toBe(13);
   });
 });

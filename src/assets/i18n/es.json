@@ -1093,6 +1093,18 @@
         "title": "Personalizar tus categorías",
         "desc": "Organiza cómo se clasifican tus gastos e ingresos"
       },
+      "analytics": {
+        "title": "Analíticas y reportes",
+        "desc": "Visualiza tendencias de gastos, ahorros y comparativas mensuales"
+      },
+      "goals": {
+        "title": "Crear metas de ahorro",
+        "desc": "Define objetivos financieros y sigue tu porcentaje de avance"
+      },
+      "pockets": {
+        "title": "Organizar presupuestos (Pockets)",
+        "desc": "Controla tus límites mensuales de gasto por sobres virtuales"
+      },
       "telegram": {
         "title": "Vincular bot de Telegram",
         "desc": "Registra transacciones en segundos desde cualquier chat"
@@ -1199,6 +1211,52 @@
         "cta": {
           "title": "Nueva Transacción",
           "description": "Presiona aquí para registrar cualquier gasto o ingreso manual en el momento."
+        }
+      },
+      "analytics": {
+        "header": {
+          "title": "Analíticas Financieras",
+          "description": "Descubre patrones de consumo, evolución del ahorro y comparativas mensuales detalladas."
+        },
+        "range": {
+          "title": "Rango de tiempo interactivo",
+          "description": "Selecciona semanas, meses, semestres o establece fechas personalizadas para ver cómo cambia tu salud financiera."
+        },
+        "charts": {
+          "title": "Gráficos inteligentes",
+          "description": "Visualiza tus ingresos vs gastos, flujo de caja y la distribución de categorías con gráficos interactivos."
+        },
+        "insights": {
+          "title": "Diagnósticos e Insights",
+          "description": "Explora recomendaciones automáticas generadas a partir de tus hábitos para detectar fugas de dinero y ahorrar más."
+        }
+      },
+      "goals": {
+        "header": {
+          "title": "Metas de Ahorro",
+          "description": "Define tus objetivos financieros (un viaje, un fondo de emergencia, compras) y dale propósito a tu dinero."
+        },
+        "create": {
+          "title": "Crear una nueva meta",
+          "description": "Establece el monto que quieres juntar y la fecha límite. Kipu calculará tu ritmo de ahorro sugerido."
+        },
+        "tracking": {
+          "title": "Seguimiento en tiempo real",
+          "description": "Monitorea el progreso visualmente mediante barras de avance y fechas estimadas de cumplimiento."
+        }
+      },
+      "pockets": {
+        "header": {
+          "title": "Bolsillos Financieros",
+          "description": "Separa tu dinero en sobres virtuales para no gastar de más en salidas, compras o suscripciones."
+        },
+        "create": {
+          "title": "Crear un Pocket",
+          "description": "Asigna un límite mensual y asocia categorías para controlar tus consumos de manera 100% automatizada."
+        },
+        "tracking": {
+          "title": "Monitoreo de presupuesto",
+          "description": "Las alertas visuales te advierten cuando estás cerca del tope para evitar gastos innecesarios."
         }
       },
       "telegram": {

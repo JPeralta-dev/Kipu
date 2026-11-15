@@ -703,6 +703,18 @@
         "title": "Personnaliser vos catégories",
         "desc": "Organisez le suivi de vos revenus et dépenses"
       },
+      "analytics": {
+        "title": "Analyses et rapports",
+        "desc": "Explorez les tendances de dépenses, l'épargne et les bilans mensuels"
+      },
+      "goals": {
+        "title": "Créer des objectifs d'épargne",
+        "desc": "Définissez des cibles financières et suivez votre progression"
+      },
+      "pockets": {
+        "title": "Organiser des budgets (Pockets)",
+        "desc": "Contrôlez vos plafonds mensuels avec des enveloppes virtuelles"
+      },
       "telegram": {
         "title": "Connecter le bot Telegram",
         "desc": "Enregistrez des transactions en quelques secondes depuis un chat"
@@ -809,6 +821,52 @@
         "cta": {
           "title": "Nouvelle Transaction",
           "description": "Cliquez ici pour enregistrer un nouveau mouvement manuel à tout moment."
+        }
+      },
+      "analytics": {
+        "header": {
+          "title": "Analyses Financières",
+          "description": "Découvrez vos habitudes de dépenses, l'évolution de votre épargne et les bilans mensuels."
+        },
+        "range": {
+          "title": "Période Interactive",
+          "description": "Sélectionnez semaines, mois, trimestres ou dates personnalisées pour observer votre santé financière."
+        },
+        "charts": {
+          "title": "Graphiques Intelligents",
+          "description": "Visualisez revenus vs dépenses, trésorerie et ventilation par catégorie avec des graphiques interactifs."
+        },
+        "insights": {
+          "title": "Diagnostics & Opportunités",
+          "description": "Explorez les recommandations IA pour détecter les fuites d'argent et optimiser vos économies."
+        }
+      },
+      "goals": {
+        "header": {
+          "title": "Objectifs d'Épargne",
+          "description": "Définissez des buts clairs (vacances, fonds d'urgence, projets) et donnez un cap à votre argent."
+        },
+        "create": {
+          "title": "Nouvel Objectif",
+          "description": "Indiquez votre montant cible et la date limite. Kipu calcule votre rythme d'épargne conseillé."
+        },
+        "tracking": {
+          "title": "Suivi en Temps Réel",
+          "description": "Visualisez votre progression avec des jauges d'avancement et dates estimées de complétion."
+        }
+      },
+      "pockets": {
+        "header": {
+          "title": "Pockets Financiers",
+          "description": "Répartissez votre argent dans des enveloppes virtuelles pour maîtriser restos, shopping et abonnements."
+        },
+        "create": {
+          "title": "Créer un Pocket",
+          "description": "Définissez un plafond mensuel et associez des catégories pour limiter vos dépenses automatiquement."
+        },
+        "tracking": {
+          "title": "Contrôle du Budget",
+          "description": "Des alertes visuelles vous préviennent à l'approche de la limite pour éviter tout dépassement."
         }
       },
       "telegram": {

@@ -174,6 +174,20 @@ describe('FtTourService', () => {
     expect(service.currentStepNumber()).toBe(1);
   });
 
+  it('should support starting analytics, goals and pockets contextual tours', () => {
+    service.startTour('analytics');
+    expect(service.activeTourId()).toBe('analytics');
+    expect(service.steps.length).toBe(4);
+
+    service.startTour('goals');
+    expect(service.activeTourId()).toBe('goals');
+    expect(service.steps.length).toBe(3);
+
+    service.startTour('pockets');
+    expect(service.activeTourId()).toBe('pockets');
+    expect(service.steps.length).toBe(3);
+  });
+
   it('should allow registering custom tours dynamically', () => {
     const customSteps: TourStep[] = [
       {

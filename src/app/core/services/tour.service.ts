@@ -277,6 +277,115 @@ export const TRANSACTIONS_LIST_TOUR_STEPS: TourStep[] = [
   },
 ];
 
+export const ANALYTICS_TOUR_STEPS: TourStep[] = [
+  {
+    id: 'analytics-header',
+    titleKey: 'tour.steps.analytics.header.title',
+    defaultTitle: 'Analíticas Financieras',
+    descriptionKey: 'tour.steps.analytics.header.description',
+    defaultDescription: 'Descubre patrones de consumo, evolución del ahorro y comparativas mensuales detalladas.',
+    targetSelector: '.analytics-header-row, .analytics-header, .analytics-page',
+    tooltipPosition: 'bottom',
+    route: '/analytics',
+  },
+  {
+    id: 'analytics-range',
+    titleKey: 'tour.steps.analytics.range.title',
+    defaultTitle: 'Rango de tiempo interactivo',
+    descriptionKey: 'tour.steps.analytics.range.description',
+    defaultDescription: 'Selecciona semanas, meses, semestres o establece fechas personalizadas para ver cómo cambia tu salud financiera.',
+    targetSelector: '.date-control, .month-selector',
+    tooltipPosition: 'bottom',
+    route: '/analytics',
+  },
+  {
+    id: 'analytics-charts',
+    titleKey: 'tour.steps.analytics.charts.title',
+    defaultTitle: 'Gráficos inteligentes',
+    descriptionKey: 'tour.steps.analytics.charts.description',
+    defaultDescription: 'Visualiza tus ingresos vs gastos, flujo de caja y la distribución de categorías con gráficos interactivos.',
+    targetSelector: 'ft-analytics-chart-card, .chart-card, .analytics-skeleton',
+    tooltipPosition: 'top',
+    route: '/analytics',
+  },
+  {
+    id: 'analytics-insights',
+    titleKey: 'tour.steps.analytics.insights.title',
+    defaultTitle: 'Diagnósticos e Insights',
+    descriptionKey: 'tour.steps.analytics.insights.description',
+    defaultDescription: 'Explora recomendaciones automáticas generadas a partir de tus hábitos para detectar fugas de dinero y ahorrar más.',
+    targetSelector: 'a[routerLink="/insights"], .topbar__nav',
+    tooltipPosition: 'bottom',
+    route: '/analytics',
+  },
+];
+
+export const GOALS_TOUR_STEPS: TourStep[] = [
+  {
+    id: 'goals-header',
+    titleKey: 'tour.steps.goals.header.title',
+    defaultTitle: 'Metas de Ahorro',
+    descriptionKey: 'tour.steps.goals.header.description',
+    defaultDescription: 'Define tus objetivos financieros (un viaje, un fondo de emergencia, compras) y dale propósito a tu dinero.',
+    targetSelector: '.goals-page__header, .goals-page',
+    tooltipPosition: 'bottom',
+    route: '/goals',
+  },
+  {
+    id: 'goals-create',
+    titleKey: 'tour.steps.goals.create.title',
+    defaultTitle: 'Crear una nueva meta',
+    descriptionKey: 'tour.steps.goals.create.description',
+    defaultDescription: 'Establece el monto que quieres juntar y la fecha límite. Kipu calculará tu ritmo de ahorro sugerido.',
+    targetSelector: '.goals-page button.btn-primary, .btn-primary',
+    tooltipPosition: 'bottom',
+    route: '/goals',
+  },
+  {
+    id: 'goals-tracking',
+    titleKey: 'tour.steps.goals.tracking.title',
+    defaultTitle: 'Seguimiento en tiempo real',
+    descriptionKey: 'tour.steps.goals.tracking.description',
+    defaultDescription: 'Monitorea el progreso visualmente mediante barras de avance y fechas estimadas de cumplimiento.',
+    targetSelector: '.goals-list, .goal-card, .empty-state',
+    tooltipPosition: 'top',
+    route: '/goals',
+  },
+];
+
+export const POCKETS_TOUR_STEPS: TourStep[] = [
+  {
+    id: 'pockets-header',
+    titleKey: 'tour.steps.pockets.header.title',
+    defaultTitle: 'Bolsillos Financieros',
+    descriptionKey: 'tour.steps.pockets.header.description',
+    defaultDescription: 'Separa tu dinero en sobres virtuales para no gastar de más en salidas, compras o suscripciones.',
+    targetSelector: '.pockets-page__header, .pockets-page',
+    tooltipPosition: 'bottom',
+    route: '/pockets',
+  },
+  {
+    id: 'pockets-create',
+    titleKey: 'tour.steps.pockets.create.title',
+    defaultTitle: 'Crear un Pocket',
+    descriptionKey: 'tour.steps.pockets.create.description',
+    defaultDescription: 'Asigna un límite mensual y asocia categorías para controlar tus consumos de manera 100% automatizada.',
+    targetSelector: '.pockets-page button.btn-primary, .btn-primary',
+    tooltipPosition: 'bottom',
+    route: '/pockets',
+  },
+  {
+    id: 'pockets-tracking',
+    titleKey: 'tour.steps.pockets.tracking.title',
+    defaultTitle: 'Monitoreo de presupuesto',
+    descriptionKey: 'tour.steps.pockets.tracking.description',
+    defaultDescription: 'Las alertas visuales te advierten cuando estás cerca del tope para evitar gastos innecesarios.',
+    targetSelector: '.pockets-list, .pocket-card, .empty-state',
+    tooltipPosition: 'top',
+    route: '/pockets',
+  },
+];
+
 @Injectable({ providedIn: 'root' })
 export class FtTourService {
   private readonly analytics = inject(FtAnalyticsService);
@@ -289,6 +398,9 @@ export class FtTourService {
     ['categories', CATEGORIES_TOUR_STEPS],
     ['telegram', TELEGRAM_TOUR_STEPS],
     ['transactions-list', TRANSACTIONS_LIST_TOUR_STEPS],
+    ['analytics', ANALYTICS_TOUR_STEPS],
+    ['goals', GOALS_TOUR_STEPS],
+    ['pockets', POCKETS_TOUR_STEPS],
   ]);
 
   // ── Reactive state ─────────────────────────────────────────────

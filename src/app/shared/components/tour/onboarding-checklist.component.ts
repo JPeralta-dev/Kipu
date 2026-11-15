@@ -383,6 +383,9 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
       display: flex;
       flex-direction: column;
       gap: 10px;
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 4px;
     }
 
     .checklist-task-item {
@@ -557,12 +560,28 @@ export class FtOnboardingChecklistComponent implements OnInit {
 
   readonly tasks: ChecklistTask[] = [
     {
+      id: 'tour',
+      titleKey: 'tour.checklist.tour.title',
+      descKey: 'tour.checklist.tour.desc',
+      tourId: 'onboarding',
+      route: '/home',
+      icon: 'sparkles',
+    },
+    {
       id: 'transaction',
       titleKey: 'tour.checklist.transaction.title',
       descKey: 'tour.checklist.transaction.desc',
       tourId: 'new-expense',
       route: '/transactions/new',
       icon: 'plus',
+    },
+    {
+      id: 'transactions-list',
+      titleKey: 'tour.checklist.transactionsList.title',
+      descKey: 'tour.checklist.transactionsList.desc',
+      tourId: 'transactions-list',
+      route: '/transactions',
+      icon: 'list',
     },
     {
       id: 'categories',
@@ -573,20 +592,36 @@ export class FtOnboardingChecklistComponent implements OnInit {
       icon: 'tag',
     },
     {
+      id: 'analytics',
+      titleKey: 'tour.checklist.analytics.title',
+      descKey: 'tour.checklist.analytics.desc',
+      tourId: 'analytics',
+      route: '/analytics',
+      icon: 'chart',
+    },
+    {
+      id: 'goals',
+      titleKey: 'tour.checklist.goals.title',
+      descKey: 'tour.checklist.goals.desc',
+      tourId: 'goals',
+      route: '/goals',
+      icon: 'target',
+    },
+    {
+      id: 'pockets',
+      titleKey: 'tour.checklist.pockets.title',
+      descKey: 'tour.checklist.pockets.desc',
+      tourId: 'pockets',
+      route: '/pockets',
+      icon: 'wallet',
+    },
+    {
       id: 'telegram',
       titleKey: 'tour.checklist.telegram.title',
       descKey: 'tour.checklist.telegram.desc',
       tourId: 'telegram',
       route: '/settings',
       icon: 'bolt',
-    },
-    {
-      id: 'tour',
-      titleKey: 'tour.checklist.tour.title',
-      descKey: 'tour.checklist.tour.desc',
-      tourId: 'onboarding',
-      route: '/home',
-      icon: 'sparkles',
     },
   ];
 

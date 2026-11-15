@@ -3,117 +3,45 @@ import { CommonModule } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { ActionableInsight, InsightAction, InsightCategory, InsightSeverity } from '../../../../core/models/insight.model';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
-import { FtCurrencyPipe } from '../../../../core/pipes/ft-currency.pipe';
 import { CurrencyService } from '../../../../core/services/currency.service';
-
-export interface FormattedMetric {
-  label: string;
-  value: string;
-  variant?: 'default' | 'success' | 'warning' | 'danger';
-}
+import { TranslationService } from '../../../../core/services/translation.service';
+import { formatInsightMetrics, FormattedMetric } from '../../utils/insight-metrics.util';
 
 @Component({
   selector: 'ft-actionable-insight-card',
   standalone: true,
-  imports: [CommonModule, NgIcon, TranslatePipe, FtCurrencyPipe],
+  imports: [CommonModule, NgIcon, TranslatePipe],
   templateUrl: './actionable-insight-card.component.html',
   styleUrl: './actionable-insight-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActionableInsightCardComponent {
   private readonly currencyService = inject(CurrencyService);
+  private readonly translationService = inject(TranslationService);
 
   readonly insight = input.required<ActionableInsight>();
 
+  readonly cardClick = output<ActionableInsight>();
   readonly actionClick = output<{ action: InsightAction; insight: ActionableInsight }>();
   readonly dismiss = output<string>();
 
   readonly formattedMetrics = computed<FormattedMetric[]>(() => {
-    const m = (this.insight().metrics ?? {}) as Record<string, unknown>;
-    const list: FormattedMetric[] = [];
+    // Reactive dependency on current language
+    this.translationService.currentLang();
+    return formatInsightMetrics(this.insight(), this.currencyService, this.translationService);
+  });
 
-    const suggestedMonthly = typeof m['suggestedMonthlySavings'] === 'number' ? m['suggestedMonthlySavings'] : null;
-    if (suggestedMonthly != null) {
-      list.push({
-        label: 'Aporte sugerido',
-        value: `${this.currencyService.format(suggestedMonthly)}/mes`,
-        variant: 'success',
-      });
-    }
+  /** Single key highlight to show compactly in the card footer if present */
+  readonly highlightMetric = computed<FormattedMetric | null>(() => {
+    const list = this.formattedMetrics();
+    if (list.length === 0) return null;
+    // Prefer success or warning metrics as primary teaser
+    const highlighted = list.find((m) => m.variant === 'success' || m.variant === 'warning');
+    return highlighted || list[0];
+  });
 
-    const potential = typeof m['potentialSavings'] === 'number' ? m['potentialSavings'] : null;
-    if (potential != null) {
-      list.push({
-        label: 'Ahorro potencial',
-        value: this.currencyService.format(potential),
-        variant: 'success',
-      });
-    }
-
-    const months = m['monthsRemaining'];
-    if (months != null) {
-      list.push({
-        label: 'Plazo estimado',
-        value: `~${months} meses`,
-        variant: 'default',
-      });
-    }
-
-    const remaining = typeof m['remainingGoalAmount'] === 'number' ? m['remainingGoalAmount'] : null;
-    if (remaining != null) {
-      list.push({
-        label: 'Falta recaudar',
-        value: this.currencyService.format(remaining),
-        variant: 'default',
-      });
-    }
-
-    const margin = typeof m['cashMargin'] === 'number' ? m['cashMargin'] : null;
-    if (margin != null) {
-      list.push({
-        label: 'Margen libre',
-        value: `${this.currencyService.format(margin)}/mes`,
-        variant: 'default',
-      });
-    }
-
-    const current = typeof m['current'] === 'number' ? m['current'] : null;
-    if (current != null) {
-      list.push({
-        label: 'Actual',
-        value: this.currencyService.format(current),
-        variant: 'default',
-      });
-    }
-
-    const target = typeof m['target'] === 'number' ? m['target'] : null;
-    if (target != null) {
-      list.push({
-        label: 'Objetivo',
-        value: this.currencyService.format(target),
-        variant: 'default',
-      });
-    }
-
-    const projected = typeof m['projected'] === 'number' ? m['projected'] : null;
-    if (projected != null) {
-      list.push({
-        label: 'Proyectado',
-        value: this.currencyService.format(projected),
-        variant: 'warning',
-      });
-    }
-
-    const impactDays = m['impactDays'];
-    if (impactDays != null) {
-      list.push({
-        label: 'Impacto',
-        value: `+${impactDays} días`,
-        variant: 'warning',
-      });
-    }
-
-    return list;
+  readonly actionCount = computed<number>(() => {
+    return this.insight().actions?.length || 0;
   });
 
   getCategoryIcon(category: InsightCategory): string {
@@ -125,7 +53,7 @@ export class ActionableInsightCardComponent {
       case 'smart_allocation':
         return 'wallet';
       case 'leak_optimization':
-        return 'sparkles' || 'star';
+        return 'sparkles';
       case 'positive_milestone':
         return 'star';
       case 'spending':
@@ -135,7 +63,7 @@ export class ActionableInsightCardComponent {
       case 'anomaly':
         return 'warning';
       default:
-        return 'info';
+        return 'insights';
     }
   }
 
@@ -152,14 +80,37 @@ export class ActionableInsightCardComponent {
     }
   }
 
-  onAction(action: InsightAction): void {
-    this.actionClick.emit({
-      action,
-      insight: this.insight(),
-    });
+  getSeverityLabel(severity: InsightSeverity): string {
+    const key = 'insights.severity.' + severity;
+    const translated = this.translationService.translate(key);
+    if (translated && translated !== key && !translated.startsWith('insights.')) {
+      return translated;
+    }
+    switch (severity) {
+      case 'critical': return 'Crítica';
+      case 'high': return 'Alta';
+      case 'medium': return 'Media';
+      case 'low':
+      default: return 'Baja';
+    }
   }
 
-  onDismiss(): void {
+  getMetricLabel(m: FormattedMetric): string {
+    const translated = this.translationService.translate(m.labelKey);
+    if (translated && translated !== m.labelKey && !translated.startsWith('insights.')) {
+      return translated;
+    }
+    return m.label;
+  }
+
+  onCardClick(): void {
+    this.cardClick.emit(this.insight());
+  }
+
+  onDismiss(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
     this.dismiss.emit(this.insight().id);
   }
 }

@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { TopbarComponent } from './topbar.component';
 import { LayoutService } from '../../../core/services/layout.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { FtTourService } from '../../../core/services/tour.service';
 
 // Pure function that mirrors the title suppression logic for testing
 const NAV_ITEM_LABELS = ['Dashboard', 'Transactions', 'Categories', 'Analytics'];
@@ -48,6 +49,13 @@ describe('TopbarComponent', () => {
     currentUser: signal(null),
   };
 
+  const mockTourService = {
+    start: jasmine.createSpy('start'),
+    replayTour: jasmine.createSpy('replayTour'),
+    openTutorialsHub: jasmine.createSpy('openTutorialsHub'),
+    resetTour: jasmine.createSpy('resetTour'),
+  };
+
   beforeEach(() => {
     eventsSubject = new Subject<NavigationEnd>();
 
@@ -56,6 +64,7 @@ describe('TopbarComponent', () => {
       providers: [
         { provide: LayoutService, useValue: mockLayoutService },
         { provide: AuthService, useValue: mockAuthService },
+        { provide: FtTourService, useValue: mockTourService },
       ],
     });
 
@@ -129,6 +138,38 @@ describe('TopbarComponent', () => {
 
     it('should return empty string for unknown routes', () => {
       expect(resolvePageTitle('/unknown')).toBe('');
+    });
+  });
+
+  describe('tour dropdown actions', () => {
+    it('should toggle tour menu state', () => {
+      expect(component.tourMenuOpen()).toBeFalse();
+      component.toggleTourMenu();
+      expect(component.tourMenuOpen()).toBeTrue();
+      component.toggleTourMenu();
+      expect(component.tourMenuOpen()).toBeFalse();
+    });
+
+    it('should start main tour and close menu', () => {
+      component.tourMenuOpen.set(true);
+      component.startMainTour();
+      expect(component.tourMenuOpen()).toBeFalse();
+      expect(mockTourService.replayTour).toHaveBeenCalledWith('onboarding');
+    });
+
+    it('should open full checklist and close menu', () => {
+      component.tourMenuOpen.set(true);
+      component.openFullChecklist();
+      expect(component.tourMenuOpen()).toBeFalse();
+      expect(mockTourService.openTutorialsHub).toHaveBeenCalled();
+    });
+
+    it('should reset all tours and close menu', () => {
+      component.tourMenuOpen.set(true);
+      component.resetAllTours();
+      expect(component.tourMenuOpen()).toBeFalse();
+      expect(mockTourService.resetTour).toHaveBeenCalled();
+      expect(mockTourService.openTutorialsHub).toHaveBeenCalled();
     });
   });
 });

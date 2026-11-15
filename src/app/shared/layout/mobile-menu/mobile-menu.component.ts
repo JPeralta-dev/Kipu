@@ -8,6 +8,7 @@ import { MobileMenuItem } from './mobile-menu.types';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { AuthService } from '../../../core/services/auth.service';
 import { User } from '../../../core/models/user.model';
+import { FtTourService } from '../../../core/services/tour.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 
 @Component({
@@ -19,6 +20,7 @@ import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 })
 export class MobileMenuComponent {
   private readonly authService = inject(AuthService);
+  private readonly tourService = inject(FtTourService);
   private readonly router = inject(Router);
 
   items = input.required<MobileMenuItem[]>();
@@ -61,6 +63,15 @@ export class MobileMenuComponent {
 
   onClose(): void {
     this.close.emit();
+  }
+
+  onStartTour(): void {
+    this.onClose();
+    this.tourService.openTutorialsHub();
+    const currentUrl = this.router.url.split('?')[0].split('#')[0];
+    if (currentUrl === '/home' || currentUrl === '/dashboard') {
+      this.tourService.replayTour('onboarding');
+    }
   }
 
   onLogout(): void {

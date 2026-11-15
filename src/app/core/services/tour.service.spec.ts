@@ -35,9 +35,9 @@ describe('FtTourService', () => {
     expect(service.shouldPromptForTour()).toBe(true);
   });
 
-  it('should auto-start for brand new users', () => {
+  it('should auto-start and show trigger card for brand new users', () => {
     expect(service.shouldAutoStart()).toBe(true);
-    expect(service.shouldShowTriggerCard()).toBe(false);
+    expect(service.shouldShowTriggerCard()).toBe(true);
   });
 
   it('should not auto-start after postpone', () => {
@@ -66,10 +66,10 @@ describe('FtTourService', () => {
     expect(service.shouldShowTriggerCard()).toBe(false);
   });
 
-  it('should not show trigger card after skip', () => {
+  it('should show trigger card after skip so user can reopen if closed accidentally', () => {
     service.start();
     service.skip();
-    expect(service.shouldShowTriggerCard()).toBe(false);
+    expect(service.shouldShowTriggerCard()).toBe(true);
   });
 
   it('should start the tour at step 1 and fire analytics', () => {

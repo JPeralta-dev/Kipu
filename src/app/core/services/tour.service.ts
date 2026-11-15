@@ -331,21 +331,13 @@ export class FtTourService {
     const s = this._state();
     if (s.status === 'completed') return false;
     if (s.status === 'in_progress') return false;
-    if (s.status === 'skipped') {
-      // Allow showing the card so users who closed it by habit can reopen it!
+    if (s.status === 'skipped' || s.status === 'not_started') {
+      // Allow showing the card so new users and users who closed it by habit can reopen it!
       if (s.postponedAt) {
         const elapsed = Date.now() - s.postponedAt;
         return elapsed >= this.POSTPONE_COOLDOWN_MS;
       }
       return true;
-    }
-    if (s.status === 'not_started') {
-      if (s.postponedAt) {
-        const elapsed = Date.now() - s.postponedAt;
-        if (elapsed >= this.POSTPONE_COOLDOWN_MS) return true;
-        return false;
-      }
-      return !this.shouldAutoStart();
     }
     return false;
   }
@@ -400,7 +392,7 @@ export class FtTourService {
     this._activeTourId.set(tourId);
     this._currentStepIndex.set(0);
     this._isActive.set(true);
-    this.updateStatus('in_progress', { activeTourId: tourId, currentStep: 1 });
+    this.updateStatus('in_progress', { activeTourId: tourId, currentStep: 1, postponedAt: undefined });
     this.analytics.trackEvent('onboarding_tour_started', {
       step: 1 as OnboardingStep,
       step_id: this.steps[0]?.id,

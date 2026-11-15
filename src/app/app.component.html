@@ -34,10 +34,6 @@
     <ft-tour-overlay />
   }
   @if (showTopbar()) {
-    @defer (on interaction) {
-      <ft-onboarding-checklist />
-    } @placeholder {
-      <span hidden></span>
-    }
+    <ft-onboarding-checklist />
   }
 </div>

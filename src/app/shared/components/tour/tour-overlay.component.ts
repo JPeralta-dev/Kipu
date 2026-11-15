@@ -58,11 +58,22 @@ export class FtTourOverlayComponent {
   }
 
   private async startOrResumeTour(targetIndex: number): Promise<void> {
+    const currentRoute = this.router.url.split('?')[0].split('#')[0];
+
+    // If starting at step 0 but the current page already matches a subsequent step in this tour,
+    // start directly at that step instead of navigating back to home!
+    if (targetIndex === 0) {
+      const matchingIdx = this.tour.steps.findIndex(s => s.route === currentRoute);
+      if (matchingIdx > 0) {
+        targetIndex = matchingIdx;
+        this.zone.run(() => this.tour.syncStepIndex(targetIndex));
+      }
+    }
+
     const step = this.tour.steps[targetIndex] ?? this.tour.steps[0];
     if (!step) return;
 
     // Check if initial step requires navigation to another route
-    const currentRoute = this.router.url.split('?')[0].split('#')[0];
     if (step.route && currentRoute !== step.route) {
       this.zone.run(() => this.tour.setNavigating(true));
       try {

@@ -1273,6 +1273,29 @@
           "description": "Haz clic en 'Vincular Telegram' para generar tu código y empezar a registrar gastos enviando un mensaje como 'Café $5'."
         }
       }
+    },
+    "menu": {
+      "title": "Centro de Tutoriales",
+      "subtitle": "Guías interactivas paso a paso",
+      "mainTour": "Tour de Bienvenida",
+      "mainTourDesc": "Recorrido inicial por el centro de control",
+      "allGuides": "Lista de Primeros Pasos",
+      "allGuidesDesc": "Ver todas las guías y tu progreso",
+      "reset": "Reiniciar todos los tutoriales",
+      "txListTour": "Guía de Historial",
+      "txListTourDesc": "Aprende a filtrar, buscar y exportar movimientos",
+      "txNewTour": "Guía de Registro",
+      "txNewTourDesc": "Cómo registrar gastos e ingresos correctamente",
+      "catTour": "Guía de Categorías",
+      "catTourDesc": "Crea y personaliza categorías de gastos",
+      "analyticsTour": "Guía de Analíticas",
+      "analyticsTourDesc": "Interpreta métricas, balances y tendencias",
+      "goalsTour": "Guía de Metas de Ahorro",
+      "goalsTourDesc": "Aprende a crear y financiar metas de ahorro",
+      "pocketsTour": "Guía de Presupuestos (Pockets)",
+      "pocketsTourDesc": "Gestiona límites de gasto por sobres virtuales",
+      "settingsTour": "Guía de Configuración & Telegram",
+      "settingsTourDesc": "Conecta bots y ajusta tus preferencias"
     }
   },
   "upgradePrompt": {

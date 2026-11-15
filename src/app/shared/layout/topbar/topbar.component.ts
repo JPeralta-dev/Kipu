@@ -1,4 +1,4 @@
-import { Component, inject, signal, DestroyRef } from '@angular/core';
+import { Component, inject, signal, computed, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
@@ -10,6 +10,7 @@ import { MobileMenuItem } from '../../layout/mobile-menu/mobile-menu.types';
 import { ICONS } from '../../../shared/icons/icon-registry';
 import { ProfileDropdownComponent } from '../../layout/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from '../../layout/notifications-dropdown/notifications-dropdown.component';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { AuthService } from '../../../core/services/auth.service';
 import { FtTourService } from '../../../core/services/tour.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
@@ -46,7 +47,7 @@ const PRIVATE_PATHS = Object.keys(ROUTE_TITLES);
 @Component({
   selector: 'ft-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent, TranslatePipe],
+  imports: [CommonModule, RouterLink, NgIcon, NavItemComponent, MobileMenuComponent, ProfileDropdownComponent, NotificationsDropdownComponent, ClickOutsideDirective, TranslatePipe],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',
 })
@@ -67,6 +68,33 @@ export class TopbarComponent {
 
   readonly pageTitle = signal<string>('');
   readonly showHomeButton = signal<boolean>(false);
+  readonly tourMenuOpen = signal<boolean>(false);
+
+  readonly currentPageTour = computed<{ tourId: string; title: string; desc: string } | null>(() => {
+    const url = this.router.url.split('?')[0].split('#')[0];
+    if (url === '/transactions') {
+      return { tourId: 'transactions-list', title: 'tour.menu.txListTour', desc: 'tour.menu.txListTourDesc' };
+    }
+    if (url === '/transactions/new') {
+      return { tourId: 'new-expense', title: 'tour.menu.txNewTour', desc: 'tour.menu.txNewTourDesc' };
+    }
+    if (url === '/categories') {
+      return { tourId: 'categories', title: 'tour.menu.catTour', desc: 'tour.menu.catTourDesc' };
+    }
+    if (url === '/analytics' || url === '/insights') {
+      return { tourId: 'analytics', title: 'tour.menu.analyticsTour', desc: 'tour.menu.analyticsTourDesc' };
+    }
+    if (url === '/goals') {
+      return { tourId: 'goals', title: 'tour.menu.goalsTour', desc: 'tour.menu.goalsTourDesc' };
+    }
+    if (url === '/pockets') {
+      return { tourId: 'pockets', title: 'tour.menu.pocketsTour', desc: 'tour.menu.pocketsTourDesc' };
+    }
+    if (url === '/settings' || url === '/profile') {
+      return { tourId: 'telegram', title: 'tour.menu.settingsTour', desc: 'tour.menu.settingsTourDesc' };
+    }
+    return null;
+  });
 
   constructor() {
     this.router.events
@@ -100,12 +128,32 @@ export class TopbarComponent {
     this.layoutService.toggleMobileMenu();
   }
 
-  onOpenTour(): void {
-    const currentUrl = this.router.url.split('?')[0].split('#')[0];
-    this.tourService.openTutorialsHub();
-    if (currentUrl === '/home' || currentUrl === '/dashboard') {
-      this.tourService.replayTour('onboarding');
+  toggleTourMenu(): void {
+    this.tourMenuOpen.update(v => !v);
+  }
+
+  startCurrentPageTour(): void {
+    const pt = this.currentPageTour();
+    this.tourMenuOpen.set(false);
+    if (pt) {
+      this.tourService.replayTour(pt.tourId);
     }
+  }
+
+  startMainTour(): void {
+    this.tourMenuOpen.set(false);
+    this.tourService.replayTour('onboarding');
+  }
+
+  openFullChecklist(): void {
+    this.tourMenuOpen.set(false);
+    this.tourService.openTutorialsHub();
+  }
+
+  resetAllTours(): void {
+    this.tourMenuOpen.set(false);
+    this.tourService.resetTour();
+    this.tourService.openTutorialsHub();
   }
 
   onCloseMenu(): void {

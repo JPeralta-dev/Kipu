@@ -37,16 +37,101 @@
 
     <!-- Right: Actions + Profile -->
     <div class="topbar__right">
-      <button
-        type="button"
-        class="topbar__tour-btn"
-        (click)="onOpenTour()"
-        [title]="'tour.topbarBtn' | translate"
-        [attr.aria-label]="'tour.topbarBtn' | translate"
-      >
-        <ng-icon name="sparkles" size="1.05rem" />
-        <span class="topbar__tour-label">{{ 'tour.topbarBtn' | translate }}</span>
-      </button>
+      <!-- Tutorial Dropdown -->
+      <div class="topbar__tour-wrapper" (clickOutside)="tourMenuOpen.set(false)">
+        <button
+          type="button"
+          class="topbar__tour-btn"
+          [class.topbar__tour-btn--active]="tourMenuOpen()"
+          (click)="toggleTourMenu()"
+          [title]="'tour.topbarBtn' | translate"
+          [attr.aria-label]="'tour.topbarBtn' | translate"
+          [attr.aria-expanded]="tourMenuOpen()"
+        >
+          <ng-icon name="sparkles" size="1.05rem" />
+          <span class="topbar__tour-label">{{ 'tour.topbarBtn' | translate }}</span>
+          <ng-icon name="chevronDown" size="0.75rem" class="topbar__tour-chevron" />
+        </button>
+
+        @if (tourMenuOpen()) {
+          <div class="tour-dropdown-menu" (click)="$event.stopPropagation()">
+            <div class="tour-dropdown-menu__header">
+              <div class="tour-dropdown-menu__header-icon">
+                <ng-icon name="sparkles" size="1rem" />
+              </div>
+              <div>
+                <h4 class="tour-dropdown-menu__title">{{ 'tour.menu.title' | translate }}</h4>
+                <p class="tour-dropdown-menu__subtitle">{{ 'tour.menu.subtitle' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="tour-dropdown-menu__divider"></div>
+
+            <!-- Contextual action: current page tour -->
+            @if (currentPageTour(); as pageTour) {
+              <button
+                type="button"
+                class="tour-dropdown-menu__item tour-dropdown-menu__item--highlight"
+                (click)="startCurrentPageTour()"
+              >
+                <div class="tour-dropdown-menu__item-icon">
+                  <ng-icon name="sparkles" size="1rem" />
+                </div>
+                <div class="tour-dropdown-menu__item-text">
+                  <span class="tour-dropdown-menu__item-title">{{ pageTour.title | translate }}</span>
+                  <span class="tour-dropdown-menu__item-desc">{{ pageTour.desc | translate }}</span>
+                </div>
+              </button>
+            }
+
+            <!-- Main onboarding tour -->
+            <button
+              type="button"
+              class="tour-dropdown-menu__item"
+              (click)="startMainTour()"
+            >
+              <div class="tour-dropdown-menu__item-icon">
+                <ng-icon name="home" size="1rem" />
+              </div>
+              <div class="tour-dropdown-menu__item-text">
+                <span class="tour-dropdown-menu__item-title">{{ 'tour.menu.mainTour' | translate }}</span>
+                <span class="tour-dropdown-menu__item-desc">{{ 'tour.menu.mainTourDesc' | translate }}</span>
+              </div>
+            </button>
+
+            <!-- Open full checklist hub -->
+            <button
+              type="button"
+              class="tour-dropdown-menu__item"
+              (click)="openFullChecklist()"
+            >
+              <div class="tour-dropdown-menu__item-icon">
+                <ng-icon name="list" size="1rem" />
+              </div>
+              <div class="tour-dropdown-menu__item-text">
+                <span class="tour-dropdown-menu__item-title">{{ 'tour.menu.allGuides' | translate }}</span>
+                <span class="tour-dropdown-menu__item-desc">{{ 'tour.menu.allGuidesDesc' | translate }}</span>
+              </div>
+            </button>
+
+            <div class="tour-dropdown-menu__divider"></div>
+
+            <!-- Reset all tours -->
+            <button
+              type="button"
+              class="tour-dropdown-menu__item tour-dropdown-menu__item--ghost"
+              (click)="resetAllTours()"
+            >
+              <div class="tour-dropdown-menu__item-icon">
+                <ng-icon name="repeat" size="0.95rem" />
+              </div>
+              <div class="tour-dropdown-menu__item-text">
+                <span class="tour-dropdown-menu__item-title">{{ 'tour.menu.reset' | translate }}</span>
+              </div>
+            </button>
+          </div>
+        }
+      </div>
 
       <ft-notifications-dropdown />
 

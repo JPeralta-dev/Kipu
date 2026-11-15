@@ -1270,6 +1270,29 @@
           "description": "Click 'Connect Telegram' to generate your code and start logging by messaging 'Coffee $5'."
         }
       }
+    },
+    "menu": {
+      "title": "Tutorial Center",
+      "subtitle": "Step-by-step interactive guides",
+      "mainTour": "Welcome Tour",
+      "mainTourDesc": "Overview of your financial command center",
+      "allGuides": "Getting Started Checklist",
+      "allGuidesDesc": "View all feature guides and your progress",
+      "reset": "Reset all tutorials",
+      "txListTour": "History Guide",
+      "txListTourDesc": "Learn to filter, search and export records",
+      "txNewTour": "Transaction Guide",
+      "txNewTourDesc": "How to record income and expenses",
+      "catTour": "Categories Guide",
+      "catTourDesc": "Create and organize expense categories",
+      "analyticsTour": "Analytics Guide",
+      "analyticsTourDesc": "Understand trends, metrics and balances",
+      "goalsTour": "Savings Goals Guide",
+      "goalsTourDesc": "Learn how to create and fund goals",
+      "pocketsTour": "Budgets (Pockets) Guide",
+      "pocketsTourDesc": "Manage spending limits with digital envelopes",
+      "settingsTour": "Settings & Telegram Guide",
+      "settingsTourDesc": "Connect bots and adjust preferences"
     }
   },
   "upgradePrompt": {

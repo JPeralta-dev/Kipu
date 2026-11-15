@@ -883,6 +883,29 @@
           "description": "Cliquez sur 'Connecter Telegram' pour générer votre code et enregistrer vos dépenses en envoyant 'Café $5'."
         }
       }
+    },
+    "menu": {
+      "title": "Centre de Tutoriels",
+      "subtitle": "Guides interactifs étape par étape",
+      "mainTour": "Visite de Bienvenue",
+      "mainTourDesc": "Aperçu de votre tableau de bord financier",
+      "allGuides": "Liste de Premiers Pas",
+      "allGuidesDesc": "Voir tous les guides et votre progression",
+      "reset": "Réinitialiser tous les tutoriels",
+      "txListTour": "Guide de l'Historique",
+      "txListTourDesc": "Filtrer, rechercher et exporter vos transactions",
+      "txNewTour": "Guide d'Ajout de Transaction",
+      "txNewTourDesc": "Comment enregistrer vos dépenses et revenus",
+      "catTour": "Guide des Catégories",
+      "catTourDesc": "Créer et organiser les catégories de dépenses",
+      "analyticsTour": "Guide des Analyses",
+      "analyticsTourDesc": "Comprendre les tendances, métriques et soldes",
+      "goalsTour": "Guide des Objectifs d'Épargne",
+      "goalsTourDesc": "Créer et financer vos objectifs d'épargne",
+      "pocketsTour": "Guide des Budgets (Pockets)",
+      "pocketsTourDesc": "Gérer vos plafonds par enveloppes virtuelles",
+      "settingsTour": "Guide Paramètres & Telegram",
+      "settingsTourDesc": "Connecter le bot et ajuster vos préférences"
     }
   },
   "analytics": {

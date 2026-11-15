@@ -383,6 +383,9 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
       display: flex;
       flex-direction: column;
       gap: 10px;
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 4px;
     }
 
     .checklist-task-item {

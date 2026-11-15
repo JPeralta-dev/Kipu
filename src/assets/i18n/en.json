@@ -27,7 +27,8 @@
       "dashboard_load_failed_short": "Failed to load dashboard data.",
       "deleted_single": "Transaction deleted",
       "deleted_multiple": "{{count}} transactions deleted"
-    }
+    },
+    "retry": "Retry"
   },
   "auth": {
     "login": "Sign In",
@@ -431,7 +432,15 @@
     },
     "mainIndicators": "Key Indicators",
     "positiveFlow": "Positive cashflow",
-    "periodOutflows": "Period outflows"
+    "periodOutflows": "Period outflows",
+    "channels": {
+      "title": "Channel Distribution",
+      "transactions": "transactions",
+      "emptyTitle": "No transactions by channel",
+      "emptyDesc": "Log transactions to see distribution across channels (manual, Telegram, etc.)",
+      "errorTitle": "Failed to load channels",
+      "errorDesc": "Could not load channel distribution. Please try again."
+    }
   },
   "insights": {
     "title": "Insights & Goals Radar",
@@ -565,7 +574,8 @@
       "category_decrease": "Your spending on {{category}} decreased {{percentage}}% compared to last month",
       "anomaly_detected": "We detected a {{ratio}}x higher than average expense in {{category}}",
       "weekly_pattern": "On {{dayName}}s you tend to spend more on {{category}}",
-      "goal_savings_plan": "Adjust your monthly savings to reach your planned goals"
+      "goal_savings_plan": "Adjust your monthly savings to reach your planned goals",
+      "leak_optimization": "Optimize small recurring expenses in {{category}} to save up to ${{savings}} per month"
     },
     "viewDetail": "View analysis",
     "modalDetailTitle": "Diagnosis & Opportunity",
@@ -592,7 +602,15 @@
       "perMonth": "/mo",
       "monthsFormat": "~{{count}} months",
       "daysFormat": "+{{count}} days"
-    }
+    },
+    "spendingTrend": "Spending Trend",
+    "spendingTrendMsg": "Your spending shows a variation compared to your recent average",
+    "budgetAlert": "Budget Alert",
+    "budgetAlertMsg": "You are close to reaching your budgeted limit for this period",
+    "highSpending": "High Spending",
+    "highSpendingMsg": "We detected spending above your regular average",
+    "savingsGoal": "Savings Goal",
+    "savingsGoalMsg": "Check your goal progress to stay on track"
   },
   "transactions": {
     "title": "Transactions",
@@ -789,7 +807,9 @@
       "copy_code": "Copy code",
       "copied": "Copied!",
       "copy_command": "Copy /link command",
-      "step_hint": "Tap to open the bot with your link command ready to send."
+      "step_hint": "Tap to open the bot with your link command ready to send.",
+      "error_link": "Could not link Telegram account. Please try again.",
+      "error_generate": "Could not generate linking code. Please try again."
     },
     "whatsapp": {
       "title": "WhatsApp",
@@ -966,7 +986,10 @@
       "patterns": "Habits"
     },
     "categoryRanking": "Category Ranking",
-    "categoryRankingSubtitle": "Detailed breakdown by amount and percentage"
+    "categoryRankingSubtitle": "Detailed breakdown by amount and percentage",
+    "dailySpendingSubtitle": "Income vs Expenses day by day",
+    "monthTrend": "Monthly Trend",
+    "weekdayAverage": "Daily Average by Day of Week"
   },
   "profile": {
     "title": "Profile",
@@ -1050,7 +1073,8 @@
       "upgradeToPremium": "Upgrade to Premium",
       "upgradeToPlus": "Upgrade to Premium Plus",
       "continueWithPremium": "Continue with Premium"
-    }
+    },
+    "title": "Choose your plan"
   },
   "banner": {
     "dismiss": "Dismiss"
@@ -1391,7 +1415,8 @@
       "subtitle_one": "Invite {{count}} friend and you both get 1 month free.",
       "subtitle_other": "Invite {{count}} friends and you both get 1 month free.",
       "copy": "Copy link",
-      "openFull": "See referrals"
+      "openFull": "See referrals",
+      "subtitle": "Invite friends to Kipu and you both get 1 month of Premium free."
     }
   },
   "notifications": {
@@ -1430,7 +1455,8 @@
       "transactions": "transactions",
       "emptyTitle": "No channel transactions",
       "emptyDesc": "Record your first transaction to see channel distribution",
-      "errorTitle": "Error loading channels"
+      "errorTitle": "Error loading channels",
+      "errorDesc": "Could not load channel distribution. Please try again."
     }
   },
   "budgets": {

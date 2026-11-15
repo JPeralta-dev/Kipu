@@ -27,7 +27,8 @@
       "dashboard_load_failed_short": "Error al cargar los datos del dashboard.",
       "deleted_single": "Transacción eliminada",
       "deleted_multiple": "{{count}} transacciones eliminadas"
-    }
+    },
+    "retry": "Reintentar"
   },
   "auth": {
     "login": "Iniciar Sesión",
@@ -431,7 +432,15 @@
     },
     "mainIndicators": "Indicadores Principales",
     "positiveFlow": "Flujo positivo",
-    "periodOutflows": "Salidas del período"
+    "periodOutflows": "Salidas del período",
+    "channels": {
+      "title": "Distribución por Canal",
+      "transactions": "transacciones",
+      "emptyTitle": "Sin transacciones por canal",
+      "emptyDesc": "Registra transacciones para ver la distribución por canal (manual, Telegram, etc.)",
+      "errorTitle": "Error al cargar canales",
+      "errorDesc": "No pudimos cargar la distribución por canal. Intenta de nuevo."
+    }
   },
   "insights": {
     "title": "Insights & Radar de Metas",
@@ -565,7 +574,8 @@
       "category_decrease": "Tu gasto en {{category}} disminuyó {{percentage}}% respecto al mes pasado",
       "anomaly_detected": "Detectamos un gasto {{ratio}}x superior a tu promedio en {{category}}",
       "weekly_pattern": "Los {{dayName}} sueles gastar más en {{category}}",
-      "goal_savings_plan": "Ajusta tu ahorro mensual para alcanzar tus metas planificadas"
+      "goal_savings_plan": "Ajusta tu ahorro mensual para alcanzar tus metas planificadas",
+      "leak_optimization": "Optimiza gastos hormiga en {{category}} para ahorrar hasta ${{savings}} al mes"
     },
     "viewDetail": "Ver análisis",
     "modalDetailTitle": "Diagnóstico y Oportunidad",
@@ -592,7 +602,15 @@
       "perMonth": "/mes",
       "monthsFormat": "~{{count}} meses",
       "daysFormat": "+{{count}} días"
-    }
+    },
+    "spendingTrend": "Tendencia de Gastos",
+    "spendingTrendMsg": "Tus gastos muestran una variación respecto al promedio reciente",
+    "budgetAlert": "Alerta de Presupuesto",
+    "budgetAlertMsg": "Estás cerca de alcanzar el límite presupuestado para este período",
+    "highSpending": "Gasto Elevado",
+    "highSpendingMsg": "Detectamos consumos por encima del promedio habitual",
+    "savingsGoal": "Meta de Ahorro",
+    "savingsGoalMsg": "Revisa el avance de tus metas para mantenerte al día"
   },
   "transactions": {
     "title": "Transacciones",
@@ -789,7 +807,9 @@
       "copy_code": "Copiar código",
       "copied": "¡Copiado!",
       "copy_command": "Copiar comando /link",
-      "step_hint": "Toca para abrir el bot y enviar el comando de vinculación."
+      "step_hint": "Toca para abrir el bot y enviar el comando de vinculación.",
+      "error_link": "No se pudo vincular la cuenta de Telegram. Intenta de nuevo.",
+      "error_generate": "No se pudo generar el código de vinculación. Intenta de nuevo."
     },
     "whatsapp": {
       "title": "WhatsApp",
@@ -1053,7 +1073,8 @@
       "upgradeToPremium": "Pasarme a Premium",
       "upgradeToPlus": "Pasarme a Premium Plus",
       "continueWithPremium": "Continuar con Premium"
-    }
+    },
+    "title": "Elige tu plan"
   },
   "banner": {
     "dismiss": "Descartar"
@@ -1394,7 +1415,8 @@
       "subtitle_one": "Invita a {{count}} amigo y ambos recibirán 1 mes gratis.",
       "subtitle_other": "Invita a {{count}} amigos y ambos recibirán 1 mes gratis.",
       "copy": "Copiar link",
-      "openFull": "Ver referidos"
+      "openFull": "Ver referidos",
+      "subtitle": "Invita amigos a Kipu y ambos recibirán 1 mes gratis de Premium."
     }
   },
   "notifications": {

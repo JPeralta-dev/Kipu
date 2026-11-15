@@ -331,7 +331,108 @@
     "modalClose": "Fermer",
     "diagnosticLabel": "Diagnostic",
     "actionsAvailable": "action disponible",
-    "actionsAvailablePlural": "actions disponibles"
+    "actionsAvailablePlural": "actions disponibles",
+    "health": {
+      "title": "Santé financière",
+      "score": "Score de santé",
+      "excellent": "Excellent",
+      "good": "Sain",
+      "fair": "Stable",
+      "critical": "Risque élevé",
+      "goalsOnTrack": "Objectifs sur la bonne voie",
+      "savingsRate": "Taux d'épargne réel",
+      "targetSavingsRate": "Taux d'épargne cible",
+      "netSaved": "Épargne nette ce mois-ci",
+      "alertsCount": "Alertes de rythme",
+      "needs_attention": "Attention requise",
+      "unrated": "Aucune activité précédente"
+    },
+    "radar": {
+      "title": "Radar des objectifs et limites",
+      "subtitle": "Surveillance du rythme des dépenses vs temps écoulé du mois",
+      "noGoals": "Vous n'avez aucun objectif actif enregistré",
+      "noGoalsDesc": "Créez un objectif d'épargne ou définissez un plafond mensuel pour activer le radar de rythme.",
+      "createGoalBtn": "Créer un objectif",
+      "pacingProgress": "Épargne cumulée",
+      "timeElapsed": "Temps écoulé",
+      "dailySafe": "Budget quotidien sécurisé",
+      "projected": "Projection fin de mois",
+      "projectedDate": "Date estimée",
+      "daysLeft": "jours restants",
+      "linkedPocket": "Compartiment lié",
+      "fundAction": "Contribuer",
+      "directTracking": "Suivi direct",
+      "manageGoal": "Voir l'objectif"
+    },
+    "goalTypes": {
+      "savings": "Épargne",
+      "monthly_ceiling": "Plafond mensuel",
+      "category_cap": "Limite de catégorie"
+    },
+    "goalHealth": {
+      "on_track": "Sur la bonne voie",
+      "at_risk": "En danger",
+      "critical": "Critique",
+      "achieved": "Atteint",
+      "paused": "En pause"
+    },
+    "filters": {
+      "all": "Tous",
+      "pacing": "Rythme et plafonds",
+      "goals": "Impact sur les objectifs",
+      "opportunities": "Opportunités"
+    },
+    "categories": {
+      "pacing_alert": "Alerte de rythme",
+      "goal_impact": "Impact sur l'objectif",
+      "smart_allocation": "Allocation intelligente",
+      "leak_optimization": "Optimisation",
+      "positive_milestone": "Étape franchie",
+      "spending": "Dépenses",
+      "savings": "Épargne",
+      "anomaly": "Dépense inhabituelle"
+    },
+    "actions": {
+      "filter_transactions": "Voir les transactions",
+      "fund_pocket": "Alimenter le compartiment",
+      "adjust_goal_limit": "Ajuster la limite",
+      "simulate_savings": "Simuler l'épargne",
+      "dismiss": "Ignorer",
+      "review_category": "Vérifier la catégorie",
+      "view_goal": "Voir l'objectif",
+      "allocate_pocket": "Allouer au compartiment",
+      "create_pocket": "Créer un compartiment"
+    },
+    "fundModal": {
+      "title": "Alimenter le compartiment",
+      "desc": "Transférez des fonds pour accélérer votre objectif associé.",
+      "pocketLabel": "Compartiment de destination",
+      "amountLabel": "Montant à transférer",
+      "suggested": "Suggéré",
+      "confirm": "Confirmer le transfert",
+      "success": "Transfert effectué avec succès",
+      "error": "Erreur lors du transfert"
+    },
+    "severity": {
+      "high": "Élevée",
+      "medium": "Moyenne",
+      "low": "Faible",
+      "critical": "Critique"
+    },
+    "metrics": {
+      "suggestedMonthlySavings": "Apport suggéré",
+      "potentialSavings": "Économies potentielles",
+      "monthsRemaining": "Délai estimé",
+      "remainingGoalAmount": "Reste à financer",
+      "cashMargin": "Marge disponible",
+      "current": "Actuel",
+      "target": "Objectif",
+      "projected": "Projeté",
+      "impactDays": "Impact",
+      "perMonth": "/mois",
+      "monthsFormat": "~{{count}} mois",
+      "daysFormat": "+{{count}} jours"
+    }
   },
   "transactions": {
     "title": "Transactions",
@@ -594,6 +695,10 @@
         "title": "Enregistrer votre premier mouvement",
         "desc": "Ajoutez une dépense ou un revenu manuel pour activer vos indicateurs"
       },
+      "transactionsList": {
+        "title": "Explorer l'historique et filtres",
+        "desc": "Apprenez à rechercher, filtrer par date et importer des transactions"
+      },
       "categories": {
         "title": "Personnaliser vos catégories",
         "desc": "Organisez le suivi de vos revenus et dépenses"
@@ -682,6 +787,28 @@
         "step4_manage": {
           "title": "4. Gérer les cartes",
           "description": "Cliquez sur une carte de catégorie pour voir son historique ou modifier ses propriétés."
+        }
+      },
+      "transactionsList": {
+        "header": {
+          "title": "Historique des Transactions",
+          "description": "Voici le registre chronologique complet de tous vos revenus et dépenses."
+        },
+        "range": {
+          "title": "Sélecteur de Période",
+          "description": "Filtrez vos mouvements rapidement par cette semaine, ce mois, les 30 derniers jours ou périodes personnalisées."
+        },
+        "import": {
+          "title": "Importer Excel ou CSV",
+          "description": "Téléversez des relevés bancaires au format Excel ou CSV pour importer des centaines de transactions en quelques secondes."
+        },
+        "table": {
+          "title": "Détails des Mouvements",
+          "description": "Visualisez la catégorie, compte bancaire, date et montant pour chaque entrée. Cliquez pour voir ou modifier."
+        },
+        "cta": {
+          "title": "Nouvelle Transaction",
+          "description": "Cliquez ici pour enregistrer un nouveau mouvement manuel à tout moment."
         }
       },
       "telegram": {

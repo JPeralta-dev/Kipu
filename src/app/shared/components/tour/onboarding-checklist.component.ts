@@ -557,12 +557,28 @@ export class FtOnboardingChecklistComponent implements OnInit {
 
   readonly tasks: ChecklistTask[] = [
     {
+      id: 'tour',
+      titleKey: 'tour.checklist.tour.title',
+      descKey: 'tour.checklist.tour.desc',
+      tourId: 'onboarding',
+      route: '/home',
+      icon: 'sparkles',
+    },
+    {
       id: 'transaction',
       titleKey: 'tour.checklist.transaction.title',
       descKey: 'tour.checklist.transaction.desc',
       tourId: 'new-expense',
       route: '/transactions/new',
       icon: 'plus',
+    },
+    {
+      id: 'transactions-list',
+      titleKey: 'tour.checklist.transactionsList.title',
+      descKey: 'tour.checklist.transactionsList.desc',
+      tourId: 'transactions-list',
+      route: '/transactions',
+      icon: 'list',
     },
     {
       id: 'categories',
@@ -579,14 +595,6 @@ export class FtOnboardingChecklistComponent implements OnInit {
       tourId: 'telegram',
       route: '/settings',
       icon: 'bolt',
-    },
-    {
-      id: 'tour',
-      titleKey: 'tour.checklist.tour.title',
-      descKey: 'tour.checklist.tour.desc',
-      tourId: 'onboarding',
-      route: '/home',
-      icon: 'sparkles',
     },
   ];
 

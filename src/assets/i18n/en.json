@@ -509,7 +509,11 @@
       "fund_pocket": "Fund Pocket",
       "adjust_goal_limit": "Adjust Limit",
       "simulate_savings": "Simulate Savings",
-      "dismiss": "Dismiss"
+      "dismiss": "Dismiss",
+      "review_category": "Review Category",
+      "view_goal": "View Goal",
+      "allocate_pocket": "Allocate Pocket",
+      "create_pocket": "Create Pocket"
     },
     "fundModal": {
       "title": "Fund Pocket",
@@ -568,7 +572,27 @@
     "modalClose": "Close",
     "diagnosticLabel": "Diagnosis",
     "actionsAvailable": "action available",
-    "actionsAvailablePlural": "actions available"
+    "actionsAvailablePlural": "actions available",
+    "severity": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "critical": "Critical"
+    },
+    "metrics": {
+      "suggestedMonthlySavings": "Suggested contribution",
+      "potentialSavings": "Potential savings",
+      "monthsRemaining": "Estimated timeframe",
+      "remainingGoalAmount": "Remaining amount",
+      "cashMargin": "Free cash flow",
+      "current": "Current",
+      "target": "Target",
+      "projected": "Projected",
+      "impactDays": "Impact",
+      "perMonth": "/mo",
+      "monthsFormat": "~{{count}} months",
+      "daysFormat": "+{{count}} days"
+    }
   },
   "transactions": {
     "title": "Transactions",
@@ -1058,6 +1082,10 @@
         "title": "Log your first transaction",
         "desc": "Add a manual expense or income to activate your metrics"
       },
+      "transactionsList": {
+        "title": "Explore history & filters",
+        "desc": "Learn how to search, filter by date, and import transactions"
+      },
       "categories": {
         "title": "Customize your categories",
         "desc": "Organize how your income and expenses are tracked"
@@ -1146,6 +1174,28 @@
         "step4_manage": {
           "title": "4. Manage cards",
           "description": "Click on any category card to edit details or inspect transaction breakdown."
+        }
+      },
+      "transactionsList": {
+        "header": {
+          "title": "Transaction History",
+          "description": "Here is the full chronological record of all your income and expenses."
+        },
+        "range": {
+          "title": "Date Range Selector",
+          "description": "Filter your transactions quickly by this week, this month, last 30 days, or custom periods."
+        },
+        "import": {
+          "title": "Import Excel or CSV",
+          "description": "Upload bank statements in Excel or CSV format to import hundreds of transactions in seconds."
+        },
+        "table": {
+          "title": "Transaction Details",
+          "description": "Inspect category, bank account, date, and amount for each entry. Click to view or edit."
+        },
+        "cta": {
+          "title": "New Transaction",
+          "description": "Click here to record a new income or expense manually at any time."
         }
       },
       "telegram": {

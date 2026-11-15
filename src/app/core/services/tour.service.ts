@@ -224,6 +224,59 @@ export const TELEGRAM_TOUR_STEPS: TourStep[] = [
   },
 ];
 
+export const TRANSACTIONS_LIST_TOUR_STEPS: TourStep[] = [
+  {
+    id: 'txlist-header',
+    titleKey: 'tour.steps.transactionsList.header.title',
+    defaultTitle: 'Historial de Transacciones',
+    descriptionKey: 'tour.steps.transactionsList.header.description',
+    defaultDescription: 'Aquí tienes el registro histórico completo de todos tus ingresos y egresos ordenados cronológicamente.',
+    targetSelector: '.transactions-page__header, .transactions-page',
+    tooltipPosition: 'bottom',
+    route: '/transactions',
+  },
+  {
+    id: 'txlist-range',
+    titleKey: 'tour.steps.transactionsList.range.title',
+    defaultTitle: 'Selector de Período',
+    descriptionKey: 'tour.steps.transactionsList.range.description',
+    defaultDescription: 'Filtra tus movimientos rápidamente por esta semana, este mes, últimos 30 días o cualquier mes anterior.',
+    targetSelector: '.month-selector',
+    tooltipPosition: 'bottom',
+    route: '/transactions',
+  },
+  {
+    id: 'txlist-import',
+    titleKey: 'tour.steps.transactionsList.import.title',
+    defaultTitle: 'Importar Excel o CSV',
+    descriptionKey: 'tour.steps.transactionsList.import.description',
+    defaultDescription: 'Sube extractos bancarios en archivo Excel o CSV para importar cientos de transacciones automáticamente en segundos.',
+    targetSelector: '.transactions-page__secondary-btn',
+    tooltipPosition: 'bottom',
+    route: '/transactions',
+  },
+  {
+    id: 'txlist-table',
+    titleKey: 'tour.steps.transactionsList.table.title',
+    defaultTitle: 'Detalle de Movimientos',
+    descriptionKey: 'tour.steps.transactionsList.table.description',
+    defaultDescription: 'Visualiza la categoría, cuenta bancaria, fecha y monto de cada movimiento. Puedes hacer clic para ver o editar.',
+    targetSelector: 'ft-transaction-table, .tx-scroll-wrapper, ft-empty-state',
+    tooltipPosition: 'top',
+    route: '/transactions',
+  },
+  {
+    id: 'txlist-cta',
+    titleKey: 'tour.steps.transactionsList.cta.title',
+    defaultTitle: 'Nueva Transacción',
+    descriptionKey: 'tour.steps.transactionsList.cta.description',
+    defaultDescription: 'Presiona aquí para registrar cualquier gasto o ingreso manual en el momento.',
+    targetSelector: '.transactions-page__cta, a[routerLink="/transactions/new"]',
+    tooltipPosition: 'bottom',
+    route: '/transactions',
+  },
+];
+
 @Injectable({ providedIn: 'root' })
 export class FtTourService {
   private readonly analytics = inject(FtAnalyticsService);
@@ -235,6 +288,7 @@ export class FtTourService {
     ['new-expense', NEW_EXPENSE_TOUR_STEPS],
     ['categories', CATEGORIES_TOUR_STEPS],
     ['telegram', TELEGRAM_TOUR_STEPS],
+    ['transactions-list', TRANSACTIONS_LIST_TOUR_STEPS],
   ]);
 
   // ── Reactive state ─────────────────────────────────────────────

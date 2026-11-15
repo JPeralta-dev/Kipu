@@ -166,6 +166,14 @@ describe('FtTourService', () => {
     expect(service.currentStepNumber()).toBe(1);
   });
 
+  it('should support starting transactions-list contextual tour', () => {
+    service.startTour('transactions-list');
+    expect(service.activeTourId()).toBe('transactions-list');
+    expect(service.isActive()).toBe(true);
+    expect(service.steps.length).toBe(5);
+    expect(service.currentStepNumber()).toBe(1);
+  });
+
   it('should allow registering custom tours dynamically', () => {
     const customSteps: TourStep[] = [
       {

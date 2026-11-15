@@ -509,7 +509,11 @@
       "fund_pocket": "Aportar a Bolsillo",
       "adjust_goal_limit": "Ajustar Límite",
       "simulate_savings": "Simular Ahorro",
-      "dismiss": "Descartar"
+      "dismiss": "Descartar",
+      "review_category": "Revisar Categoría",
+      "view_goal": "Ver Meta",
+      "allocate_pocket": "Asignar Bolsillo",
+      "create_pocket": "Crear Bolsillo"
     },
     "fundModal": {
       "title": "Aportar a Bolsillo",
@@ -568,7 +572,27 @@
     "modalClose": "Cerrar",
     "diagnosticLabel": "Diagnóstico",
     "actionsAvailable": "acción disponible",
-    "actionsAvailablePlural": "acciones disponibles"
+    "actionsAvailablePlural": "acciones disponibles",
+    "severity": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja",
+      "critical": "Crítica"
+    },
+    "metrics": {
+      "suggestedMonthlySavings": "Aporte sugerido",
+      "potentialSavings": "Ahorro potencial",
+      "monthsRemaining": "Plazo estimado",
+      "remainingGoalAmount": "Falta recaudar",
+      "cashMargin": "Margen libre",
+      "current": "Actual",
+      "target": "Objetivo",
+      "projected": "Proyectado",
+      "impactDays": "Impacto",
+      "perMonth": "/mes",
+      "monthsFormat": "~{{count}} meses",
+      "daysFormat": "+{{count}} días"
+    }
   },
   "transactions": {
     "title": "Transacciones",
@@ -1061,6 +1085,10 @@
         "title": "Registrar tu primer movimiento",
         "desc": "Carga un gasto o ingreso manual para activar tus métricas"
       },
+      "transactionsList": {
+        "title": "Explorar historial y filtros",
+        "desc": "Aprende a buscar, filtrar por fecha e importar transacciones"
+      },
       "categories": {
         "title": "Personalizar tus categorías",
         "desc": "Organiza cómo se clasifican tus gastos e ingresos"
@@ -1149,6 +1177,28 @@
         "step4_manage": {
           "title": "4. Administrar tarjetas",
           "description": "Haz clic sobre cualquier categoría para ver su historial o editar sus propiedades."
+        }
+      },
+      "transactionsList": {
+        "header": {
+          "title": "Historial de Transacciones",
+          "description": "Aquí tienes el registro histórico completo de todos tus ingresos y egresos ordenados cronológicamente."
+        },
+        "range": {
+          "title": "Selector de Período",
+          "description": "Filtra tus movimientos rápidamente por esta semana, este mes, últimos 30 días o cualquier mes anterior."
+        },
+        "import": {
+          "title": "Importar Excel o CSV",
+          "description": "Sube extractos bancarios en archivo Excel o CSV para importar cientos de transacciones automáticamente en segundos."
+        },
+        "table": {
+          "title": "Detalle de Movimientos",
+          "description": "Visualiza la categoría, cuenta bancaria, fecha y monto de cada movimiento. Puedes hacer clic para ver o editar."
+        },
+        "cta": {
+          "title": "Nueva Transacción",
+          "description": "Presiona aquí para registrar cualquier gasto o ingreso manual en el momento."
         }
       },
       "telegram": {

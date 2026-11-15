@@ -1,0 +1,120 @@
+@if (isOpen() && insight()) {
+  <div
+    class="modal-backdrop"
+    (click)="onBackdropClick($event)"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'insight-modal-title-' + insight()!.id"
+  >
+    <div
+      class="modal-dialog"
+      [attr.data-category]="insight()!.category"
+      [class]="getSeverityClass(insight()!.severity)"
+    >
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-header__content">
+          <div class="modal-icon" [attr.data-category]="insight()!.category">
+            <ng-icon [name]="getCategoryIcon(insight()!.category)" size="1.35rem" />
+          </div>
+
+          <div class="modal-title-wrap">
+            <div class="modal-meta-badges">
+              <span class="category-badge">
+                {{ 'insights.categories.' + insight()!.category | translate }}
+              </span>
+              <span class="severity-badge" [class]="getSeverityClass(insight()!.severity)">
+                {{ getSeverityLabel(insight()!.severity) }}
+              </span>
+            </div>
+            <h3 [id]="'insight-modal-title-' + insight()!.id" class="modal-title">
+              {{ insight()!.title }}
+            </h3>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          [attr.aria-label]="('insights.modalClose' | translate) || 'Cerrar'"
+          (click)="close.emit()"
+        >
+          <ng-icon name="close" size="1.25rem" />
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <p class="insight-message">
+          {{ insight()!.message }}
+        </p>
+
+        <!-- Metrics Grid -->
+        @if (formattedMetrics().length > 0) {
+          <div class="metrics-section">
+            <div class="metrics-grid">
+              @for (m of formattedMetrics(); track m.label) {
+                <div class="metric-card">
+                  <span class="metric-card__label">{{ getMetricLabel(m) }}</span>
+                  <span
+                    class="metric-card__value"
+                    [class.metric-card__value--success]="m.variant === 'success'"
+                    [class.metric-card__value--warning]="m.variant === 'warning'"
+                    [class.metric-card__value--danger]="m.variant === 'danger'"
+                  >
+                    {{ m.value }}
+                  </span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Modal Footer (Actions) -->
+      <div class="modal-footer">
+        <div class="footer-actions-primary">
+          @if (insight()!.actions && insight()!.actions!.length > 0) {
+            @for (action of insight()!.actions; track action.id) {
+              <button
+                type="button"
+                class="btn-action"
+                [class.btn-action--primary]="action.isPrimary"
+                [class.btn-action--secondary]="!action.isPrimary"
+                (click)="onAction(action)"
+              >
+                @if (action.actionType === 'filter_transactions' || action.actionType === 'review_category') {
+                  <ng-icon name="search" size="1rem" />
+                } @else if (action.actionType === 'fund_pocket' || action.actionType === 'allocate_pocket' || action.actionType === 'create_pocket') {
+                  <ng-icon name="plus" size="1rem" />
+                } @else if (action.actionType === 'adjust_goal_limit') {
+                  <ng-icon name="edit" size="1rem" />
+                } @else if (action.actionType === 'view_goal') {
+                  <ng-icon name="goals" size="1rem" />
+                }
+                <span>{{ action.label || ('insights.actions.' + action.actionType | translate) }}</span>
+              </button>
+            }
+          }
+        </div>
+
+        <div class="footer-actions-secondary">
+          <button
+            type="button"
+            class="btn-dismiss"
+            (click)="onDismiss()"
+          >
+            {{ 'insights.actions.dismiss' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn-cancel"
+            (click)="close.emit()"
+          >
+            {{ 'common.cancel' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

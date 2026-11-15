@@ -79,6 +79,7 @@ export class DashboardPage implements OnInit {
   readonly tour = inject(FtTourService);
 
   readonly isPremium = this.authService.isPremium;
+  private hasAutoStarted = false;
 
   readonly stats = signal<StatCardData[]>(
     this.mapSummary({ totalBalance: 0, totalIncome: 0, totalExpenses: 0, savingsRate: 0 })
@@ -186,6 +187,7 @@ export class DashboardPage implements OnInit {
         }
 
         this.state.set('ready');
+        this.checkAutoStartTour();
       },
       error: () => {
         this.state.set('error');
@@ -213,5 +215,16 @@ export class DashboardPage implements OnInit {
 
   dismissTourPrompt(): void {
     this.tour.postpone();
+  }
+
+  private checkAutoStartTour(): void {
+    if (this.tour.shouldAutoStart() && !this.hasAutoStarted) {
+      this.hasAutoStarted = true;
+      setTimeout(() => {
+        if (this.tour.shouldAutoStart() && !this.tour.isActive()) {
+          this.tour.start();
+        }
+      }, 700);
+    }
   }
 }

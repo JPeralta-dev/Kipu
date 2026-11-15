@@ -27,7 +27,8 @@
       "dashboard_load_failed_short": "Échec du chargement des données du tableau de bord.",
       "deleted_single": "Transaction supprimée",
       "deleted_multiple": "{{count}} transactions supprimées"
-    }
+    },
+    "retry": "Réessayer"
   },
   "auth": {
     "login": "Connexion",
@@ -188,6 +189,163 @@
         "cookies": "Politique relative aux cookies",
         "suggestions": "Partager une suggestion",
         "creator_credit": "Créé par l'équipe Kipu"
+      },
+      "back": "Retour à l'accueil",
+      "back_to_home": "Retour à l'accueil",
+      "last_updated": "Dernière mise à jour : {{year}}",
+      "coming_soon": {
+        "title": "Bientôt disponible"
+      },
+      "terms": {
+        "eyebrow": "Légal",
+        "title": "Conditions Générales d'Utilisation",
+        "coming_soon_text": "Nos Conditions Générales d'Utilisation complètes sont en cours de rédaction par notre équipe juridique. En attendant, en utilisant Kipu, vous acceptez d'utiliser le service de manière responsable."
+      },
+      "privacy": {
+        "eyebrow": "Légal",
+        "title": "Politique de Confidentialité",
+        "coming_soon_text": "Notre Politique de Confidentialité complète sera bientôt disponible. En résumé : nous chiffrons vos données, ne les vendons jamais et vous pouvez supprimer votre compte à tout moment."
+      },
+      "cookies": {
+        "eyebrow": "Légal",
+        "title": "Politique relative aux Cookies",
+        "coming_soon_text": "Nous utilisons un ensemble minimal de cookies pour vous maintenir connecté et mémoriser votre préférence de langue. Notre politique détaillée sera disponible prochainement."
+      }
+    },
+    "pricing": {
+      "section_title": "Une tarification simple et transparente",
+      "section_subtitle": "Choisissez le forfait qui convient à vos objectifs. Modifiez ou annulez à tout moment.",
+      "billing_monthly": "Mensuel",
+      "billing_annual": "Annuel",
+      "save_badge": "Économisez 33 %",
+      "tiers": {
+        "free": {
+          "name": "Gratuit",
+          "tagline": "Démarrez avec l'essentiel",
+          "features": {
+            "transactions": "Transactions illimitées",
+            "categories": "Catégories personnalisées",
+            "basic_charts": "Graphiques de base",
+            "history": "Historique complet des transactions"
+          },
+          "cta": "Commencer gratuitement"
+        },
+        "premium": {
+          "name": "Premium",
+          "tagline": "Pour ceux qui prennent leurs finances au sérieux",
+          "features": {
+            "ai_insights": "Analyses propulsées par l'IA",
+            "goals": "Objectifs d'épargne",
+            "budgets": "Budgets intelligents",
+            "alerts": "Alertes de dépenses",
+            "support": "Support par e-mail"
+          },
+          "cta": "Démarrer l'essai gratuit de 30 jours"
+        },
+        "premium_plus": {
+          "name": "Premium Plus",
+          "tagline": "Pour les utilisateurs avancés et professionnels",
+          "features": {
+            "ai_chat": "Chat IA illimité",
+            "telegram": "Intégration du bot Telegram",
+            "export": "Export PDF & CSV",
+            "priority_support": "Support prioritaire",
+            "everything_premium": "Tout ce qui est inclus dans Premium"
+          },
+          "cta": "Démarrer l'essai gratuit de 30 jours"
+        }
+      }
+    },
+    "comparison": {
+      "title": "Comparer les forfaits",
+      "subtitle": "Tout ce que comprend chaque offre",
+      "free": "Gratuit",
+      "premium": "Premium",
+      "premium_plus": "Premium Plus",
+      "features": {
+        "transactions": "Transactions illimitées",
+        "categories": "Catégories personnalisées",
+        "basic_charts": "Analyses de base",
+        "ai_insights": "Analyses par IA",
+        "goals": "Objectifs d'épargne",
+        "budgets": "Budgets intelligents",
+        "alerts": "Alertes de dépenses",
+        "telegram": "Bot Telegram",
+        "export": "Export PDF & CSV",
+        "priority_support": "Support prioritaire"
+      }
+    },
+    "testimonials": {
+      "section_title": "Approuvé par ceux qui gèrent leur argent",
+      "section_subtitle": "Témoignages authentiques de nos utilisateurs",
+      "items": {
+        "maria": {
+          "text": "Kipu m'a aidée à économiser plus de 2 000 $ en 3 mois. Le tableau de bord a immédiatement mis en évidence des abonnements oubliés et des micro-dépenses.",
+          "name": "María G.",
+          "role": "Designer, Buenos Aires"
+        },
+        "carlos": {
+          "text": "Le bot Telegram a transformé ma façon de suivre mes dépenses. J'envoie un message rapide juste après avoir payé, et tout est classé automatiquement dans Kipu.",
+          "name": "Carlos R.",
+          "role": "Ingénieur, Madrid"
+        },
+        "ana": {
+          "text": "J'ai essayé de nombreuses applications de finances. Kipu est la seule que j'utilise régulièrement car elle élimine toute friction et rend le suivi financier intuitif.",
+          "name": "Ana L.",
+          "role": "Indépendante, Mexico"
+        }
+      },
+      "prev": "Témoignage précédent",
+      "next": "Témoignage suivant"
+    },
+    "faq": {
+      "section_title": "Foire aux questions",
+      "section_subtitle": "Tout ce qu'il faut savoir pour démarrer",
+      "items": {
+        "pricing": {
+          "question": "Combien coûte Kipu ?",
+          "answer": "Kipu est gratuit pour toujours sur l'essentiel. Premium est à 14 900 $/mois (ou 119 000 $/an) et Premium Plus à 24 900 $/mois (ou 199 000 $/an). Vous pouvez démarrer un essai gratuit de 30 jours sans carte bancaire."
+        },
+        "cancel": {
+          "question": "Puis-je annuler à tout moment ?",
+          "answer": "Oui. Annulez depuis les paramètres de votre compte en deux clics. Vous conservez votre accès jusqu'à la fin de la période de facturation, et vos données restent disponibles sur l'offre gratuite."
+        },
+        "free_trial": {
+          "question": "L'essai gratuit est-il vraiment gratuit ?",
+          "answer": "Oui : 30 jours, toutes les fonctionnalités Premium, sans carte bancaire requise. Nous vous enverrons un rappel avant la fin afin que vous puissiez décider en toute sérénité."
+        },
+        "data_safety": {
+          "question": "Mes données financières sont-elles en sécurité ?",
+          "answer": "Totalement. Nous utilisons un chiffrement 256 bits, ne vendons jamais vos données et protégeons vos informations dans des bases sécurisées. Vous pouvez exporter ou supprimer votre compte et vos données à tout moment."
+        },
+        "telegram": {
+          "question": "Dois-je obligatoirement utiliser le bot Telegram ?",
+          "answer": "Pas du tout : le bot est optionnel. L'application web fonctionne parfaitement seule. Le bot permet simplement d'enregistrer vos dépenses encore plus vite en déplacement."
+        }
+      }
+    },
+    "trust": {
+      "section_title": "Conçu avec la sécurité et la confidentialité avant tout",
+      "section_subtitle": "Vos données financières méritent une protection de niveau bancaire",
+      "badges": {
+        "encryption": {
+          "label": "Chiffrement 256 bits"
+        },
+        "no_selling": {
+          "label": "Nous ne vendons jamais vos données"
+        },
+        "database": {
+          "label": "Base de données sécurisée et chiffrée"
+        },
+        "open_source": {
+          "label": "Open source et auditable"
+        },
+        "data_control": {
+          "label": "Contrôle total : exportez ou supprimez à tout moment"
+        },
+        "gdpr": {
+          "label": "Conforme RGPD"
+        }
       }
     }
   },
@@ -271,6 +429,17 @@
       "yesterday": "Hier",
       "thisWeek": "Cette semaine",
       "earlier": "Plus tôt"
+    },
+    "mainIndicators": "Indicateurs Clés",
+    "positiveFlow": "Flux positif",
+    "periodOutflows": "Sorties de la période",
+    "channels": {
+      "title": "Distribution par Canal",
+      "transactions": "transactions",
+      "emptyTitle": "Aucune transaction par canal",
+      "emptyDesc": "Enregistrez des transactions pour voir la distribution par canal (manuel, Telegram, etc.)",
+      "errorTitle": "Échec du chargement des canaux",
+      "errorDesc": "Impossible de charger la distribution par canal. Veuillez réessayer."
     }
   },
   "insights": {
@@ -324,8 +493,124 @@
       "category_decrease": "Vos dépenses en {{category}} ont diminué de {{percentage}}% par rapport au mois dernier",
       "anomaly_detected": "Nous avons détecté une dépense {{ratio}}x supérieure à votre moyenne en {{category}}",
       "weekly_pattern": "Le {{dayName}}, vous dépensez généralement plus en {{category}}",
-      "goal_savings_plan": "Ajustez votre épargne mensuelle pour atteindre vos objectifs"
-    }
+      "goal_savings_plan": "Ajustez votre épargne mensuelle pour atteindre vos objectifs",
+      "leak_optimization": "Optimisez les petites dépenses récurrentes dans {{category}} pour économiser jusqu'à {{savings}} $ par mois"
+    },
+    "viewDetail": "Voir l'analyse",
+    "modalDetailTitle": "Diagnostic et opportunité",
+    "modalClose": "Fermer",
+    "diagnosticLabel": "Diagnostic",
+    "actionsAvailable": "action disponible",
+    "actionsAvailablePlural": "actions disponibles",
+    "health": {
+      "title": "Santé financière",
+      "score": "Score de santé",
+      "excellent": "Excellent",
+      "good": "Sain",
+      "fair": "Stable",
+      "critical": "Risque élevé",
+      "goalsOnTrack": "Objectifs sur la bonne voie",
+      "savingsRate": "Taux d'épargne réel",
+      "targetSavingsRate": "Taux d'épargne cible",
+      "netSaved": "Épargne nette ce mois-ci",
+      "alertsCount": "Alertes de rythme",
+      "needs_attention": "Attention requise",
+      "unrated": "Aucune activité précédente"
+    },
+    "radar": {
+      "title": "Radar des objectifs et limites",
+      "subtitle": "Surveillance du rythme des dépenses vs temps écoulé du mois",
+      "noGoals": "Vous n'avez aucun objectif actif enregistré",
+      "noGoalsDesc": "Créez un objectif d'épargne ou définissez un plafond mensuel pour activer le radar de rythme.",
+      "createGoalBtn": "Créer un objectif",
+      "pacingProgress": "Épargne cumulée",
+      "timeElapsed": "Temps écoulé",
+      "dailySafe": "Budget quotidien sécurisé",
+      "projected": "Projection fin de mois",
+      "projectedDate": "Date estimée",
+      "daysLeft": "jours restants",
+      "linkedPocket": "Compartiment lié",
+      "fundAction": "Contribuer",
+      "directTracking": "Suivi direct",
+      "manageGoal": "Voir l'objectif"
+    },
+    "goalTypes": {
+      "savings": "Épargne",
+      "monthly_ceiling": "Plafond mensuel",
+      "category_cap": "Limite de catégorie"
+    },
+    "goalHealth": {
+      "on_track": "Sur la bonne voie",
+      "at_risk": "En danger",
+      "critical": "Critique",
+      "achieved": "Atteint",
+      "paused": "En pause"
+    },
+    "filters": {
+      "all": "Tous",
+      "pacing": "Rythme et plafonds",
+      "goals": "Impact sur les objectifs",
+      "opportunities": "Opportunités"
+    },
+    "categories": {
+      "pacing_alert": "Alerte de rythme",
+      "goal_impact": "Impact sur l'objectif",
+      "smart_allocation": "Allocation intelligente",
+      "leak_optimization": "Optimisation",
+      "positive_milestone": "Étape franchie",
+      "spending": "Dépenses",
+      "savings": "Épargne",
+      "anomaly": "Dépense inhabituelle"
+    },
+    "actions": {
+      "filter_transactions": "Voir les transactions",
+      "fund_pocket": "Alimenter le compartiment",
+      "adjust_goal_limit": "Ajuster la limite",
+      "simulate_savings": "Simuler l'épargne",
+      "dismiss": "Ignorer",
+      "review_category": "Vérifier la catégorie",
+      "view_goal": "Voir l'objectif",
+      "allocate_pocket": "Allouer au compartiment",
+      "create_pocket": "Créer un compartiment"
+    },
+    "fundModal": {
+      "title": "Alimenter le compartiment",
+      "desc": "Transférez des fonds pour accélérer votre objectif associé.",
+      "pocketLabel": "Compartiment de destination",
+      "amountLabel": "Montant à transférer",
+      "suggested": "Suggéré",
+      "confirm": "Confirmer le transfert",
+      "success": "Transfert effectué avec succès",
+      "error": "Erreur lors du transfert"
+    },
+    "severity": {
+      "high": "Élevée",
+      "medium": "Moyenne",
+      "low": "Faible",
+      "critical": "Critique"
+    },
+    "metrics": {
+      "suggestedMonthlySavings": "Apport suggéré",
+      "potentialSavings": "Économies potentielles",
+      "monthsRemaining": "Délai estimé",
+      "remainingGoalAmount": "Reste à financer",
+      "cashMargin": "Marge disponible",
+      "current": "Actuel",
+      "target": "Objectif",
+      "projected": "Projeté",
+      "impactDays": "Impact",
+      "perMonth": "/mois",
+      "monthsFormat": "~{{count}} mois",
+      "daysFormat": "+{{count}} jours"
+    },
+    "spendingTrend": "Tendance des Dépenses",
+    "spendingTrendMsg": "Vos dépenses affichent une variation par rapport à votre moyenne récente",
+    "budgetAlert": "Alerte Budgétaire",
+    "budgetAlertMsg": "Vous êtes proche d'atteindre votre plafond budgétaire pour cette période",
+    "highSpending": "Dépenses Élevées",
+    "highSpendingMsg": "Nous avons détecté des dépenses supérieures à votre moyenne habituelle",
+    "savingsGoal": "Objectif d'Épargne",
+    "savingsGoalMsg": "Vérifiez la progression de vos objectifs pour rester à jour"
   },
   "transactions": {
     "title": "Transactions",
@@ -386,7 +671,21 @@
       "date": "Date",
       "amount": "Montant",
       "category": "Catégorie"
-    }
+    },
+    "deleteConfirmTitle": "Supprimer les transactions",
+    "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer définitivement {{count}} transaction(s) ? Cette action est irréversible.",
+    "deletedCount": "{{count}} transaction(s) supprimée(s)",
+    "count_single": "{{count}} transaction",
+    "count_multiple": "{{count}} transactions",
+    "select_all": "Tout sélectionner",
+    "deselect_all": "Tout désélectionner",
+    "selected_count": "{{count}} sélectionné(s)",
+    "export": "Exporter",
+    "delete": "Supprimer",
+    "clear_filter": "Effacer le filtre",
+    "clear_search": "Effacer la recherche",
+    "empty_start_desc": "Commencez à suivre vos finances en ajoutant votre première transaction.",
+    "empty_add_cta": "Ajouter une transaction"
   },
   "categories": {
     "title": "Catégories",
@@ -498,7 +797,10 @@
       "copy_code": "Copier le code",
       "copied": "Copié !",
       "copy_command": "Copier la commande /link",
-      "step_hint": "Appuyez pour ouvrir le bot avec votre commande prête à être envoyée."
+      "step_hint": "Appuyez pour ouvrir le bot avec votre commande prête à être envoyée.",
+      "generating": "Génération du code...",
+      "error_link": "Impossible de lier le compte Telegram. Veuillez réessayer.",
+      "error_generate": "Impossible de générer le code de liaison. Veuillez réessayer."
     },
     "whatsapp": {
       "title": "WhatsApp",
@@ -518,7 +820,13 @@
       "connect": "Connecter Gmail",
       "connecting": "Connexion...",
       "connect_failed": "Impossible de démarrer la connexion Gmail. Veuillez réessayer.",
-      "ready_line": "Prêt à enregistrer des transactions Gmail"
+      "ready_line": "Prêt à enregistrer des transactions Gmail",
+      "sync_failed": "Impossible de synchroniser Gmail. Veuillez réessayer.",
+      "connected_status": "Connecté — {{email}}",
+      "last_sync": "Dernière synchro : {{when}}",
+      "last_sync_just_now": "Dernière synchro : à l'instant",
+      "recent": "Importations récentes",
+      "no_email": "Connecté"
     },
     "linked": {
       "connected_pill": "Connecté",
@@ -568,6 +876,7 @@
     }
   },
   "tour": {
+    "topbarBtn": "Tutoriel",
     "checklist": {
       "title": "Premiers pas sur Kipu",
       "subtitle": "L'essentiel pour maîtriser vos finances",
@@ -587,9 +896,25 @@
         "title": "Enregistrer votre premier mouvement",
         "desc": "Ajoutez une dépense ou un revenu manuel pour activer vos indicateurs"
       },
+      "transactionsList": {
+        "title": "Explorer l'historique et filtres",
+        "desc": "Apprenez à rechercher, filtrer par date et importer des transactions"
+      },
       "categories": {
         "title": "Personnaliser vos catégories",
         "desc": "Organisez le suivi de vos revenus et dépenses"
+      },
+      "analytics": {
+        "title": "Analyses et rapports",
+        "desc": "Explorez les tendances de dépenses, l'épargne et les bilans mensuels"
+      },
+      "goals": {
+        "title": "Créer des objectifs d'épargne",
+        "desc": "Définissez des cibles financières et suivez votre progression"
+      },
+      "pockets": {
+        "title": "Organiser des budgets (Pockets)",
+        "desc": "Contrôlez vos plafonds mensuels avec des enveloppes virtuelles"
       },
       "telegram": {
         "title": "Connecter le bot Telegram",
@@ -677,6 +1002,74 @@
           "description": "Cliquez sur une carte de catégorie pour voir son historique ou modifier ses propriétés."
         }
       },
+      "transactionsList": {
+        "header": {
+          "title": "Historique des Transactions",
+          "description": "Voici le registre chronologique complet de tous vos revenus et dépenses."
+        },
+        "range": {
+          "title": "Sélecteur de Période",
+          "description": "Filtrez vos mouvements rapidement par cette semaine, ce mois, les 30 derniers jours ou périodes personnalisées."
+        },
+        "import": {
+          "title": "Importer Excel ou CSV",
+          "description": "Téléversez des relevés bancaires au format Excel ou CSV pour importer des centaines de transactions en quelques secondes."
+        },
+        "table": {
+          "title": "Détails des Mouvements",
+          "description": "Visualisez la catégorie, compte bancaire, date et montant pour chaque entrée. Cliquez pour voir ou modifier."
+        },
+        "cta": {
+          "title": "Nouvelle Transaction",
+          "description": "Cliquez ici pour enregistrer un nouveau mouvement manuel à tout moment."
+        }
+      },
+      "analytics": {
+        "header": {
+          "title": "Analyses Financières",
+          "description": "Découvrez vos habitudes de dépenses, l'évolution de votre épargne et les bilans mensuels."
+        },
+        "range": {
+          "title": "Période Interactive",
+          "description": "Sélectionnez semaines, mois, trimestres ou dates personnalisées pour observer votre santé financière."
+        },
+        "charts": {
+          "title": "Graphiques Intelligents",
+          "description": "Visualisez revenus vs dépenses, trésorerie et ventilation par catégorie avec des graphiques interactifs."
+        },
+        "insights": {
+          "title": "Diagnostics & Opportunités",
+          "description": "Explorez les recommandations IA pour détecter les fuites d'argent et optimiser vos économies."
+        }
+      },
+      "goals": {
+        "header": {
+          "title": "Objectifs d'Épargne",
+          "description": "Définissez des buts clairs (vacances, fonds d'urgence, projets) et donnez un cap à votre argent."
+        },
+        "create": {
+          "title": "Nouvel Objectif",
+          "description": "Indiquez votre montant cible et la date limite. Kipu calcule votre rythme d'épargne conseillé."
+        },
+        "tracking": {
+          "title": "Suivi en Temps Réel",
+          "description": "Visualisez votre progression avec des jauges d'avancement et dates estimées de complétion."
+        }
+      },
+      "pockets": {
+        "header": {
+          "title": "Pockets Financiers",
+          "description": "Répartissez votre argent dans des enveloppes virtuelles pour maîtriser restos, shopping et abonnements."
+        },
+        "create": {
+          "title": "Créer un Pocket",
+          "description": "Définissez un plafond mensuel et associez des catégories pour limiter vos dépenses automatiquement."
+        },
+        "tracking": {
+          "title": "Contrôle du Budget",
+          "description": "Des alertes visuelles vous préviennent à l'approche de la limite pour éviter tout dépassement."
+        }
+      },
       "telegram": {
         "step1_nav": {
           "title": "1. Paramètres",
@@ -691,6 +1084,29 @@
           "description": "Cliquez sur 'Connecter Telegram' pour générer votre code et enregistrer vos dépenses en envoyant 'Café $5'."
         }
       }
+    },
+    "menu": {
+      "title": "Centre de Tutoriels",
+      "subtitle": "Guides interactifs étape par étape",
+      "mainTour": "Visite de Bienvenue",
+      "mainTourDesc": "Aperçu de votre tableau de bord financier",
+      "allGuides": "Liste de Premiers Pas",
+      "allGuidesDesc": "Voir tous les guides et votre progression",
+      "reset": "Réinitialiser tous les tutoriels",
+      "txListTour": "Guide de l'Historique",
+      "txListTourDesc": "Filtrer, rechercher et exporter vos transactions",
+      "txNewTour": "Guide d'Ajout de Transaction",
+      "txNewTourDesc": "Comment enregistrer vos dépenses et revenus",
+      "catTour": "Guide des Catégories",
+      "catTourDesc": "Créer et organiser les catégories de dépenses",
+      "analyticsTour": "Guide des Analyses",
+      "analyticsTourDesc": "Comprendre les tendances, métriques et soldes",
+      "goalsTour": "Guide des Objectifs d'Épargne",
+      "goalsTourDesc": "Créer et financer vos objectifs d'épargne",
+      "pocketsTour": "Guide des Budgets (Pockets)",
+      "pocketsTourDesc": "Gérer vos plafonds par enveloppes virtuelles",
+      "settingsTour": "Guide Paramètres & Telegram",
+      "settingsTourDesc": "Connecter le bot et ajuster vos préférences"
     }
   },
   "analytics": {
@@ -798,7 +1214,16 @@
       "patterns": "Habitudes"
     },
     "categoryRanking": "Classement des catégories",
-    "categoryRankingSubtitle": "Répartition détaillée par montant et pourcentage"
+    "categoryRankingSubtitle": "Répartition détaillée par montant et pourcentage",
+    "consent": {
+      "message": "Nous utilisons des cookies et outils d'analyse pour comprendre comment améliorer Kipu. C'est votre choix.",
+      "accept": "Accepter",
+      "decline": "Refuser",
+      "learnMore": "Politique de cookies"
+    },
+    "dailySpendingSubtitle": "Revenus vs Dépenses au quotidien",
+    "monthTrend": "Évolution Mensuelle",
+    "weekdayAverage": "Moyenne par Jour de la Semaine"
   },
   "profile": {
     "title": "Profil",
@@ -861,5 +1286,204 @@
     "empty": {
       "search": "Aucune banque ne correspond à votre recherche"
     }
+  },
+  "modal": {
+    "close": "Fermer"
+  },
+  "banner": {
+    "dismiss": "Ignorer"
+  },
+  "trialBanner": {
+    "daysRemaining": "Votre essai premium se termine dans {{count}} jours.",
+    "daysRemaining_one": "Votre essai premium se termine dans {{count}} jour.",
+    "endsToday": "Votre essai premium se termine aujourd'hui.",
+    "cta": "Passer à Premium"
+  },
+  "upgradePrompt": {
+    "default": {
+      "title": "Fonctionnalité Premium",
+      "description": "Débloquez cette fonctionnalité avec l'offre Premium.",
+      "cta": "Débloquer"
+    },
+    "learnMore": "En savoir plus"
+  },
+  "channels": {
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "gmail": "Gmail",
+    "manual": "Manuel",
+    "from": "De {{ channel }}",
+    "dashboard": {
+      "title": "Canaux",
+      "transactions": "transactions",
+      "emptyTitle": "Aucune transaction par canal",
+      "emptyDesc": "Enregistrez votre première transaction pour voir la répartition par canal",
+      "errorTitle": "Erreur lors du chargement des canaux",
+      "errorDesc": "Impossible de charger la distribution par canal. Veuillez réessayer."
+    }
+  },
+  "budgets": {
+    "title": "Budgets Mensuels",
+    "subtitle": "Plafonds de dépenses par catégorie",
+    "budget": "Budget",
+    "set_budget": "Définir un budget",
+    "edit_budget": "Modifier le budget",
+    "delete_budget": "Supprimer le budget",
+    "limit_amount": "Plafond mensuel",
+    "alert_threshold": "Seuil d'alerte (%)",
+    "alert_threshold_hint": "Nous vous préviendrons lorsque vos dépenses atteindront ce pourcentage (80 % par défaut).",
+    "saved": "Budget enregistré avec succès",
+    "deleted": "Budget supprimé",
+    "save_error": "Échec de l'enregistrement du budget",
+    "delete_error": "Échec de la suppression du budget",
+    "spent_of": "{{spent}} sur {{limit}}",
+    "exceeded": "Dépassement de {{amount}}",
+    "remaining": "{{amount}} restant",
+    "widget_title": "Budget du Mois",
+    "widget_view_all": "Gérer les plafonds",
+    "widget_empty_title": "Aucun budget actif",
+    "widget_empty_desc": "Définissez des plafonds mensuels sur vos catégories de dépenses pour maîtriser votre budget.",
+    "widget_empty_cta": "Configurer les budgets",
+    "widget_total_spent": "Total dépensé",
+    "widget_total_limit": "Budgété",
+    "confirm_delete_title": "Supprimer le budget ?",
+    "confirm_delete_msg": "Êtes-vous sûr de vouloir supprimer le plafond de budget pour cette catégorie ?"
+  },
+  "referral": {
+    "hero": {
+      "eyebrow": "Parrainage",
+      "title": "Invitez des amis, vous y gagnez tous les deux",
+      "subtitle": "Pour chaque ami qui s'abonne à Premium, vous bénéficiez de 1 mois gratuit, et lui aussi."
+    },
+    "linkCard": {
+      "title": "Votre lien unique",
+      "codeAria": "Votre lien de parrainage",
+      "copy": "Copier le lien",
+      "copied": "Copié !"
+    },
+    "share": {
+      "label": "Partager via",
+      "email": "E-mail",
+      "whatsapp": "WhatsApp",
+      "twitter": "X",
+      "telegram": "Telegram"
+    },
+    "stats": {
+      "friends": "Amis invités",
+      "monthsEarned": "Mois gagnés",
+      "pending": "En attente"
+    },
+    "howItWorks": {
+      "title": "Comment ça fonctionne",
+      "step1": {
+        "title": "Partagez votre lien",
+        "desc": "Envoyez votre lien unique par WhatsApp, e-mail ou où vous le souhaitez."
+      },
+      "step2": {
+        "title": "Votre ami s'abonne",
+        "desc": "Dès qu'il active Premium, vous recevez tous les deux 1 mois gratuit."
+      },
+      "step3": {
+        "title": "Cumulez vos réductions",
+        "desc": "Chaque parrainage ajoute un mois supplémentaire. Sans limite."
+      }
+    },
+    "terms": "Conditions générales applicables.",
+    "input": {
+      "label": "Vous avez un code de parrainage ?",
+      "placeholder": "ABC123XY",
+      "apply": "Appliquer",
+      "invalid": "Code invalide. Vérifiez qu'il comporte 8 caractères.",
+      "applied": "Terminé ! Votre réduction sera appliquée lors du paiement."
+    },
+    "widget": {
+      "title": "Parrainage",
+      "subtitle_one": "Invitez {{count}} ami et obtenez tous les deux 1 mois gratuit.",
+      "subtitle_other": "Invitez {{count}} amis et obtenez tous les deux 1 mois gratuit.",
+      "copy": "Copier le lien",
+      "openFull": "Voir les parrainages",
+      "subtitle": "Invitez des amis sur Kipu et obtenez tous les deux 1 mois de Premium gratuit."
+    }
+  },
+  "emptyState": {
+    "premiumUpsell": {
+      "insights": {
+        "title": "Débloquez les analyses IA",
+        "description": "Laissez l'IA détecter les tendances de vos dépenses et recommander des moyens d'économiser davantage.",
+        "cta": "Débloquer les analyses"
+      },
+      "goals": {
+        "title": "Vos objectifs financiers débloqués",
+        "description": "Atteignez la ligne d'arrivée grâce à des objectifs personnalisés et des alertes automatiques.",
+        "cta": "Créer un objectif"
+      },
+      "analytics": {
+        "title": "Analyses avancées",
+        "description": "Visualisez votre argent avec des graphiques détaillés et des projections futures.",
+        "cta": "Voir les analyses"
+      }
+    },
+    "firstUse": {
+      "categories": {
+        "title": "C'est parti !",
+        "description": "Créez votre première catégorie pour organiser vos dépenses à votre façon.",
+        "cta": "Créer ma première catégorie"
+      },
+      "goals": {
+        "title": "Votre premier objectif",
+        "description": "Définissez un objectif financier et Kipu vous aidera à l'atteindre. Commencez par du concret.",
+        "cta": "Créer mon premier objectif"
+      },
+      "transactions": {
+        "title": "Ajoutez votre première transaction",
+        "description": "Enregistrez une dépense ou un revenu manuellement. Vous pourrez connecter le bot Telegram plus tard pour automatiser.",
+        "cta": "Ajouter ma première transaction"
+      }
+    }
+  },
+  "upgradeModal": {
+    "headline": "Débloquez tout le potentiel de Kipu",
+    "subhead": "Comparez les forfaits et choisissez celui qui correspond à votre rythme.",
+    "featureCol": "Fonctionnalité",
+    "currentTier": "Votre forfait",
+    "trialActive": "Votre essai actif se termine dans {{days}} jours.",
+    "maybeLater": "Peut-être plus tard",
+    "tiers": {
+      "free": {
+        "name": "Gratuit",
+        "tagline": "Pour démarrer",
+        "cta": "Forfait actuel"
+      },
+      "premium": {
+        "name": "Premium",
+        "tagline": "Le plus populaire",
+        "cta": "Choisir Premium"
+      },
+      "premiumPlus": {
+        "name": "Premium Plus",
+        "tagline": "Pour les experts",
+        "cta": "Choisir Plus"
+      }
+    },
+    "features": {
+      "transactions": "Suivi des transactions",
+      "basicCharts": "Graphiques de base",
+      "customCategories": "Catégories personnalisées",
+      "history": "Historique",
+      "aiInsights": "Analyses par IA",
+      "aiInsightsSub": "Tendances et recommandations automatiques",
+      "goals": "Objectifs d'épargne",
+      "goalsSub": "Suivi vers votre objectif",
+      "aiChat": "Chat IA illimité",
+      "telegramIntegration": "Intégration Telegram",
+      "exportPdf": "Export PDF et CSV",
+      "prioritySupport": "Support prioritaire"
+    },
+    "cta": {
+      "upgradeToPremium": "Passer à Premium",
+      "upgradeToPlus": "Passer à Premium Plus",
+      "continueWithPremium": "Continuer avec Premium"
+    },
+    "title": "Choisissez votre forfait"
   }
 }

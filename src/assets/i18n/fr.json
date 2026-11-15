@@ -325,7 +325,13 @@
       "anomaly_detected": "Nous avons détecté une dépense {{ratio}}x supérieure à votre moyenne en {{category}}",
       "weekly_pattern": "Le {{dayName}}, vous dépensez généralement plus en {{category}}",
       "goal_savings_plan": "Ajustez votre épargne mensuelle pour atteindre vos objectifs"
-    }
+    },
+    "viewDetail": "Voir l'analyse",
+    "modalDetailTitle": "Diagnostic et opportunité",
+    "modalClose": "Fermer",
+    "diagnosticLabel": "Diagnostic",
+    "actionsAvailable": "action disponible",
+    "actionsAvailablePlural": "actions disponibles"
   },
   "transactions": {
     "title": "Transactions",
@@ -568,6 +574,7 @@
     }
   },
   "tour": {
+    "topbarBtn": "Tutoriel",
     "checklist": {
       "title": "Premiers pas sur Kipu",
       "subtitle": "L'essentiel pour maîtriser vos finances",

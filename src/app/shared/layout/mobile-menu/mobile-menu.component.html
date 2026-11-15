@@ -41,6 +41,10 @@
           </div>
         </div>
       }
+      <button class="mobile-menu-tour-btn" (click)="onStartTour()" [attr.aria-label]="'tour.checklist.startTour' | translate">
+        <ng-icon name="sparkles" size="1.05rem" />
+        <span>{{ 'tour.checklist.startTour' | translate }}</span>
+      </button>
       <button class="mobile-menu-logout" (click)="onLogout()" [attr.aria-label]="'auth.logout' | translate">
         <ng-icon name="logout" size="1rem" />
         <span>{{ 'auth.logout' | translate }}</span>

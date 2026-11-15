@@ -135,6 +135,56 @@
     gap: 4px;
   }
 
+  &__tour-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    background: rgba(217, 70, 239, 0.08);
+    border: 1px solid rgba(217, 70, 239, 0.28);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    margin-right: 4px;
+    transition: all var(--duration-fast) var(--ease-out);
+
+    ng-icon {
+      color: var(--accent-start);
+      transition: transform var(--duration-fast) var(--ease-out);
+    }
+
+    &:hover {
+      background: rgba(217, 70, 239, 0.16);
+      border-color: var(--accent-start);
+      transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(217, 70, 239, 0.25);
+
+      ng-icon {
+        transform: rotate(15deg) scale(1.1);
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      padding: 0 8px;
+      height: 32px;
+      margin-right: 2px;
+    }
+  }
+
+  &__tour-label {
+    @media (max-width: 640px) {
+      display: none;
+    }
+  }
+
   &__action {
     position: relative;
     display: flex;

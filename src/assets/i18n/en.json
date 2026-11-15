@@ -562,7 +562,13 @@
       "anomaly_detected": "We detected a {{ratio}}x higher than average expense in {{category}}",
       "weekly_pattern": "On {{dayName}}s you tend to spend more on {{category}}",
       "goal_savings_plan": "Adjust your monthly savings to reach your planned goals"
-    }
+    },
+    "viewDetail": "View analysis",
+    "modalDetailTitle": "Diagnosis & Opportunity",
+    "modalClose": "Close",
+    "diagnosticLabel": "Diagnosis",
+    "actionsAvailable": "action available",
+    "actionsAvailablePlural": "actions available"
   },
   "transactions": {
     "title": "Transactions",
@@ -1032,6 +1038,7 @@
     "cta": "Upgrade to Premium"
   },
   "tour": {
+    "topbarBtn": "Tutorial",
     "checklist": {
       "title": "Getting started with Kipu",
       "subtitle": "The essentials to master your finances",

@@ -26,6 +26,15 @@
     <span>{{ 'nav.settings' | translate }}</span>
   </a>
 
+  <button
+    type="button"
+    class="profile-dropdown__item"
+    (click)="onOpenTutorials()"
+  >
+    <ng-icon name="sparkles" size="1rem" />
+    <span>{{ 'tour.checklist.startTour' | translate }}</span>
+  </button>
+
   <div class="profile-dropdown__divider"></div>
 
   <button

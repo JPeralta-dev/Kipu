@@ -1,6 +1,6 @@
 import { Component, input, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { ICONS } from '../../../../shared/icons/icon-registry';
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
@@ -16,6 +16,7 @@ import type { User } from '../../../../core/models/user.model';
 })
 export class ProfileDropdownMenuComponent {
   private readonly tourService = inject(FtTourService);
+  private readonly router = inject(Router);
 
   user = input.required<User | null>();
   initials = input.required<string>();
@@ -40,5 +41,9 @@ export class ProfileDropdownMenuComponent {
   onOpenTutorials(): void {
     this.onClose();
     this.tourService.openTutorialsHub();
+    const currentUrl = this.router.url.split('?')[0].split('#')[0];
+    if (currentUrl === '/home' || currentUrl === '/dashboard') {
+      this.tourService.replayTour('onboarding');
+    }
   }
 }

@@ -11,6 +11,7 @@ import { ICONS } from '../../../shared/icons/icon-registry';
 import { ProfileDropdownComponent } from '../../layout/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from '../../layout/notifications-dropdown/notifications-dropdown.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { FtTourService } from '../../../core/services/tour.service';
 import { TranslatePipe } from '../../../core/pipes/translate.pipe';
 import { filter } from 'rxjs';
 
@@ -52,6 +53,7 @@ const PRIVATE_PATHS = Object.keys(ROUTE_TITLES);
 export class TopbarComponent {
   private readonly layoutService = inject(LayoutService);
   private readonly authService = inject(AuthService);
+  private readonly tourService = inject(FtTourService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -96,6 +98,14 @@ export class TopbarComponent {
 
   onToggleMenu(): void {
     this.layoutService.toggleMobileMenu();
+  }
+
+  onOpenTour(): void {
+    const currentUrl = this.router.url.split('?')[0].split('#')[0];
+    this.tourService.openTutorialsHub();
+    if (currentUrl === '/home' || currentUrl === '/dashboard') {
+      this.tourService.replayTour('onboarding');
+    }
   }
 
   onCloseMenu(): void {

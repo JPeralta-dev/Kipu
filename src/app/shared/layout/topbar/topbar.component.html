@@ -37,6 +37,17 @@
 
     <!-- Right: Actions + Profile -->
     <div class="topbar__right">
+      <button
+        type="button"
+        class="topbar__tour-btn"
+        (click)="onOpenTour()"
+        [title]="'tour.topbarBtn' | translate"
+        [attr.aria-label]="'tour.topbarBtn' | translate"
+      >
+        <ng-icon name="sparkles" size="1.05rem" />
+        <span class="topbar__tour-label">{{ 'tour.topbarBtn' | translate }}</span>
+      </button>
+
       <ft-notifications-dropdown />
 
       <ft-profile-dropdown />

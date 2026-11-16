@@ -3,7 +3,7 @@
   <div class="pockets-page__header">
     <div class="pockets-page__title-group">
       <h1 class="pockets-page__title">Pockets</h1>
-      <p class="pockets-page__subtitle">Organizá tu presupuesto por categorías y seguí tu gasto mensual</p>
+      <p class="pockets-page__subtitle">Organiza tu presupuesto por categorías y sigue tu gasto mensual</p>
     </div>
     @if (state() === 'ready' || state() === 'empty') {
       <button class="btn-primary" (click)="openCreateModal()">
@@ -40,9 +40,9 @@
   @if (state() === 'empty') {
     <div class="empty-state">
       <span class="empty-state__icon"><ft-icon name="wallet" [size]="40" /></span>
-      <h2 class="empty-state__title">No tenés pockets todavía</h2>
+      <h2 class="empty-state__title">No tienes pockets todavía</h2>
       <p class="empty-state__text">
-        Creá tu primer pocket para organizar tu presupuesto mensual por categorías.
+        Crea tu primer pocket para organizar tu presupuesto mensual por categorías.
       </p>
       <button class="btn-primary" (click)="openCreateModal()">
         Crear mi primer pocket
@@ -55,7 +55,7 @@
     <div class="error-state">
       <span class="error-state__icon"><ft-icon name="alert-triangle" [size]="40" /></span>
       <h2 class="error-state__title">No pudimos cargar tus pockets</h2>
-      <p class="error-state__text">Hubo un problema al conectar con el servidor. Intentá de nuevo.</p>
+      <p class="error-state__text">Hubo un problema al conectar con el servidor. Intenta de nuevo.</p>
       <button class="btn-secondary" (click)="retry()">Reintentar</button>
     </div>
   }
@@ -278,7 +278,7 @@
       </div>
 
       <div class="modal__body">
-        <p>¿Estás seguro de que querés eliminar <strong>"{{ pocketToDelete()?.name }}"</strong>? Esta acción no se puede deshacer.</p>
+        <p>¿Estás seguro de que quieres eliminar <strong>"{{ pocketToDelete()?.name }}"</strong>? Esta acción no se puede deshacer.</p>
       </div>
 
       <div class="modal__actions">

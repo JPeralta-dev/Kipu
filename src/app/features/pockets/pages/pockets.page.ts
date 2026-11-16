@@ -189,7 +189,7 @@ export class PocketsPage implements OnInit {
 
     if (!pocket) return;
     if (!amount || amount <= 0) {
-      this.formError.set('Ingresá un monto válido mayor a 0');
+      this.formError.set('Ingresa un monto válido mayor a 0');
       return;
     }
     if (type === 'withdraw' && (pocket.currentBalance || 0) < amount) {
@@ -199,7 +199,7 @@ export class PocketsPage implements OnInit {
 
     this.pocketsService.allocate(pocket.id, { amount, type }).pipe(
       catchError((err) => {
-        this.formError.set(err?.error?.message || 'Error al procesar el abono. Intentá de nuevo.');
+        this.formError.set(err?.error?.message || 'Error al procesar el abono. Intenta de nuevo.');
         return of(null);
       }),
     ).subscribe({
@@ -253,7 +253,7 @@ export class PocketsPage implements OnInit {
 
     this.pocketsService.create(dto).pipe(
       catchError(() => {
-        this.formError.set('Error al crear el pocket. Intentá de nuevo.');
+        this.formError.set('Error al crear el pocket. Intenta de nuevo.');
         return of(null);
       }),
     ).subscribe({
@@ -282,7 +282,7 @@ export class PocketsPage implements OnInit {
 
     this.pocketsService.update(pocket.id, dto).pipe(
       catchError(() => {
-        this.formError.set('Error al actualizar el pocket. Intentá de nuevo.');
+        this.formError.set('Error al actualizar el pocket. Intenta de nuevo.');
         return of(null);
       }),
     ).subscribe({

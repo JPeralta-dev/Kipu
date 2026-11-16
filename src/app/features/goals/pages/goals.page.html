@@ -3,7 +3,7 @@
   <div class="goals-page__header">
     <div class="goals-page__title-group">
       <h1 class="goals-page__title">Metas de Ahorro</h1>
-      <p class="goals-page__subtitle">Seguí tu progreso y alcanzá tus objetivos financieros</p>
+      <p class="goals-page__subtitle">Sigue tu progreso y alcanza tus objetivos financieros</p>
     </div>
     @if (state() === 'ready' || state() === 'empty') {
       <button class="btn-primary" (click)="openCreateModal()">
@@ -42,9 +42,9 @@
       <div class="empty-state__icon-wrap">
         <ng-icon name="goals" size="2.5rem" />
       </div>
-      <h2 class="empty-state__title">No tenés metas todavía</h2>
+      <h2 class="empty-state__title">No tienes metas todavía</h2>
       <p class="empty-state__text">
-        Creá tu primera meta de ahorro y empezá hoy a construir tu futuro financiero.
+        Crea tu primera meta de ahorro y empieza hoy a construir tu futuro financiero.
       </p>
       <button class="btn-primary" (click)="openCreateModal()">
         <ng-icon name="plus" size="1rem" />
@@ -60,7 +60,7 @@
         <ng-icon name="warning" size="2.5rem" />
       </div>
       <h2 class="error-state__title">No pudimos cargar tus metas</h2>
-      <p class="error-state__text">Hubo un problema al conectar con el servidor. Intentá de nuevo.</p>
+      <p class="error-state__text">Hubo un problema al conectar con el servidor. Intenta de nuevo.</p>
       <button class="btn-secondary" (click)="retry()">Reintentar</button>
     </div>
   }
@@ -290,7 +290,7 @@
       </div>
 
       <div class="modal__body">
-        <p>¿Estás seguro de que querés eliminar <strong>"{{ goalToDelete()?.name }}"</strong>? Esta acción no se puede deshacer.</p>
+        <p>¿Estás seguro de que quieres eliminar <strong>"{{ goalToDelete()?.name }}"</strong>? Esta acción no se puede deshacer.</p>
       </div>
 
       <div class="modal__actions">

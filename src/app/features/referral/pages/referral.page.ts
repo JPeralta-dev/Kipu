@@ -75,7 +75,7 @@ export class ReferralPage implements OnInit {
       this.toast.success('Link copiado', 'Tu link de referido está en el portapapeles.');
       setTimeout(() => this.copyState.set('idle'), 2000);
     } else {
-      this.toast.error('Error', 'No pudimos copiar el link. Probá seleccionarlo manualmente.');
+      this.toast.error('Error', 'No pudimos copiar el enlace. Prueba seleccionarlo manualmente.');
     }
   }
 

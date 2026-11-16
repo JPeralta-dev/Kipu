@@ -299,6 +299,10 @@ html.light .driver-active-element {
     width: 100% !important;
     padding-bottom: max(20px, env(safe-area-inset-bottom, 16px)) !important;
   }
+
+  .driver-popover-arrow {
+    display: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

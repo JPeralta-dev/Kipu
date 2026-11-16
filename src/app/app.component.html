@@ -33,7 +33,7 @@
   @defer (when tourService.isActive()) {
     <ft-tour-overlay />
   }
-  @if (showTopbar()) {
+  @if (showTopbar() && !tourService.isActive()) {
     <ft-onboarding-checklist />
   }
 </div>

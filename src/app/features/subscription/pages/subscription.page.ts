@@ -204,7 +204,7 @@ export class SubscriptionPage implements OnInit {
       { withCredentials: true },
     ).pipe(
       catchError((err) => {
-        const msg = err?.error?.message || 'No se pudo activar la prueba. Intentá de nuevo.';
+        const msg = err?.error?.message || 'No se pudo activar la prueba. Intenta de nuevo.';
         this.toast.error('Error', msg);
         return of(null);
       }),
@@ -212,7 +212,7 @@ export class SubscriptionPage implements OnInit {
     ).subscribe({
       next: (res) => {
         if (res?.success) {
-          this.toast.success('¡Prueba activada!', 'Tenés 30 días de Premium gratis');
+          this.toast.success('¡Prueba activada!', 'Tienes 30 días de Premium gratis');
           // Refresh auth state
           this.authService.initAuthCheck();
         }
@@ -228,7 +228,7 @@ export class SubscriptionPage implements OnInit {
       { withCredentials: true },
     ).pipe(
       catchError((err) => {
-        const msg = err?.error?.message || 'No se pudo completar la actualización. Intentá de nuevo.';
+        const msg = err?.error?.message || 'No se pudo completar la actualización. Intenta de nuevo.';
         this.toast.error('Error', msg);
         return of(null);
       }),
@@ -236,7 +236,7 @@ export class SubscriptionPage implements OnInit {
     ).subscribe({
       next: (res) => {
         if (res?.success) {
-          this.toast.success('¡Plan actualizado!', `Ahora tenés ${tier === 'premium' ? 'Premium' : 'Premium Plus'}`);
+          this.toast.success('¡Plan actualizado!', `Ahora tienes ${tier === 'premium' ? 'Premium' : 'Premium Plus'}`);
           this.authService.initAuthCheck();
         }
       },

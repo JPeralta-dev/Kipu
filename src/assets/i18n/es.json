@@ -397,7 +397,7 @@
       "preview1Desc": "Tus gastos de los viernes subieron un 23%...",
       "preview2Title": "Oportunidad de ahorro",
       "preview2Desc": "Podrías ahorrar $45.000 cambiando tu plan de...",
-      "upgradeTitle": "Desbloqueá insights personalizados con IA",
+      "upgradeTitle": "Desbloquea insights personalizados con IA",
       "upgradeCta": "Activar Premium",
       "emptyText": "Agrega más transacciones para recibir diagnósticos personalizados.",
       "errorText": "No pudimos cargar los insights. Intenta de nuevo."
@@ -661,7 +661,7 @@
         "server_error": "Error del servidor. Intenta de nuevo."
       },
       "bank": "Banco",
-      "bank_placeholder": "Seleccioná un banco"
+      "bank_placeholder": "Selecciona un banco"
     },
     "filters": {
       "search": "Buscar transacciones...",
@@ -753,7 +753,7 @@
   },
   "settings": {
     "title": "Configuración",
-    "subtitle": "Gestioná tu cuenta e integraciones",
+    "subtitle": "Gestiona tu cuenta e integraciones",
     "signOut": "Cerrar Sesión",
     "back_to_dashboard": "Volver al dashboard",
     "coming_soon": "Próximamente...",
@@ -846,7 +846,7 @@
     },
     "preferences": {
       "title": "Preferencias",
-      "desc": "Personalizá el tema visual, idioma, moneda y categoría predeterminada.",
+      "desc": "Personaliza el tema visual, idioma, moneda y categoría predeterminada.",
       "theme": "Tema",
       "toggle_theme": "Cambiar tema",
       "dark": "Oscuro",
@@ -862,16 +862,16 @@
     },
     "data": {
       "title": "Mis Datos",
-      "subtitle": "Exportá o eliminá permanentemente los datos de tu cuenta.",
+      "subtitle": "Exporta o elimina permanentemente los datos de tu cuenta.",
       "export_button": "Exportar mis datos",
       "export_loading": "Preparando exportación...",
       "export_error": "No se pudieron exportar los datos. Intenta de nuevo.",
       "delete_button": "Eliminar mi cuenta",
       "delete_warning": "Esta acción es permanente y no se puede deshacer.",
-      "delete_instruction": "Escribí DELETE para confirmar:",
+      "delete_instruction": "Escribe DELETE para confirmar:",
       "delete_placeholder": "DELETE",
       "delete_confirm_button": "Eliminar permanentemente",
-      "delete_confirm_mismatch": "Debés escribir DELETE exactamente para confirmar.",
+      "delete_confirm_mismatch": "Debes escribir DELETE exactamente para confirmar.",
       "delete_error": "No se pudo eliminar la cuenta. Intenta de nuevo."
     }
   },
@@ -978,7 +978,7 @@
       "previous": "Anterior"
     },
     "consent": {
-      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Kipu. Vos decidís.",
+      "message": "Usamos cookies y herramientas de análisis para entender cómo mejoramos Kipu. Tú decides.",
       "accept": "Aceptar",
       "decline": "Rechazar",
       "learnMore": "Política de cookies"
@@ -1032,7 +1032,7 @@
     "close": "Cerrar"
   },
   "upgradeModal": {
-    "headline": "Desbloqueá todo el potencial de Kipu",
+    "headline": "Desbloquea todo el potencial de Kipu",
     "subhead": "Compara los planes y elige el que mejor se adapte a tu ritmo.",
     "featureCol": "Función",
     "currentTier": "Tu plan",
@@ -1142,9 +1142,9 @@
     "finish": "Entendido",
     "startExploring": "Empezar a explorar",
     "triggerCard": {
-      "title": "¿Sos nuevo por acá?",
+      "title": "¿Eres nuevo por aquí?",
       "description": "Un tour de 30 segundos por tu centro de control financiero.",
-      "start": "Mostrame",
+      "start": "Muéstrame",
       "later": "Ahora no"
     },
     "steps": {
@@ -1322,7 +1322,7 @@
   "upgradePrompt": {
     "default": {
       "title": "Función premium",
-      "description": "Desbloqueá esta función con Premium.",
+      "description": "Desbloquea esta función con Premium.",
       "cta": "Desbloquear"
     },
     "learnMore": "Más información"
@@ -1330,18 +1330,18 @@
   "emptyState": {
     "premiumUpsell": {
       "insights": {
-        "title": "Desbloqueá los insights con IA",
+        "title": "Desbloquea los insights con IA",
         "description": "Deja que la IA detecte patrones en tus gastos y te brinde recomendaciones para ahorrar más.",
         "cta": "Desbloquear insights"
       },
       "goals": {
         "title": "Tus metas financieras, desbloqueadas",
-        "description": "Trackeá hasta el objetivo con metas personalizadas y alertas cuando te acerques.",
+        "description": "Monitorea hasta el objetivo con metas personalizadas y alertas cuando te acerques.",
         "cta": "Crear meta"
       },
       "analytics": {
         "title": "Analítica avanzada",
-        "description": "Visualizá tus finanzas con gráficos detallados y proyecciones a futuro.",
+        "description": "Visualiza tus finanzas con gráficos detallados y proyecciones a futuro.",
         "cta": "Ver analytics"
       }
     },
@@ -1353,11 +1353,11 @@
       },
       "goals": {
         "title": "Tu primera meta",
-        "description": "Marcá un objetivo financiero y Kipu te ayuda a llegar. Empezá con algo concreto.",
+        "description": "Marca un objetivo financiero y Kipu te ayuda a llegar. Empieza con algo concreto.",
         "cta": "Crear mi primera meta"
       },
       "transactions": {
-        "title": "Sumá tu primer movimiento",
+        "title": "Suma tu primer movimiento",
         "description": "Registra un gasto o ingreso manual. Después puedes conectar el bot de Telegram para automatizar.",
         "cta": "Cargar primer movimiento"
       }
@@ -1390,7 +1390,7 @@
     "howItWorks": {
       "title": "Cómo funciona",
       "step1": {
-        "title": "Compartí tu link",
+        "title": "Comparte tu enlace",
         "desc": "Envía tu enlace único por WhatsApp, correo o redes sociales."
       },
       "step2": {

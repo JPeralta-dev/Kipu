@@ -272,7 +272,7 @@ export class GoalsPage implements OnInit {
       catchError((err) => {
         console.error('Error al crear la meta:', err);
         const serverMsg = err?.error?.details?.[0]?.message || err?.error?.message;
-        this.formError.set(serverMsg || 'Error al crear la meta. Intentá de nuevo.');
+        this.formError.set(serverMsg || 'Error al crear la meta. Intenta de nuevo.');
         return of(null);
       }),
     ).subscribe({
@@ -307,7 +307,7 @@ export class GoalsPage implements OnInit {
       catchError((err) => {
         console.error('Error al actualizar la meta:', err);
         const serverMsg = err?.error?.details?.[0]?.message || err?.error?.message;
-        this.formError.set(serverMsg || 'Error al actualizar la meta. Intentá de nuevo.');
+        this.formError.set(serverMsg || 'Error al actualizar la meta. Intenta de nuevo.');
         return of(null);
       }),
     ).subscribe({
@@ -325,7 +325,7 @@ export class GoalsPage implements OnInit {
     const amount = this.parseNumber(this.formAddAmount());
     const goal = this.selectedGoal();
     if (amount <= 0 || !goal) {
-      this.formError.set('Ingresá un monto válido mayor a 0');
+      this.formError.set('Ingresa un monto válido mayor a 0');
       return;
     }
 
@@ -337,7 +337,7 @@ export class GoalsPage implements OnInit {
       catchError((err) => {
         console.error('Error al actualizar el progreso:', err);
         const serverMsg = err?.error?.details?.[0]?.message || err?.error?.message;
-        this.formError.set(serverMsg || 'Error al actualizar el progreso. Intentá de nuevo.');
+        this.formError.set(serverMsg || 'Error al actualizar el progreso. Intenta de nuevo.');
         return of(null);
       }),
     ).subscribe({

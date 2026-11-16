@@ -35,7 +35,7 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
   standalone: true,
   imports: [CommonModule, IconComponent, TranslatePipe],
   template: `
-    @if (!isDismissed()) {
+    @if (!isDismissed() && !isTourActive()) {
       <aside
         class="onboarding-checklist"
         [class.onboarding-checklist--collapsed]="isCollapsed()"
@@ -546,6 +546,8 @@ const CHECKLIST_COLLAPSED_KEY = 'kipu_onboarding_checklist_collapsed';
       .checklist-card {
         width: 100%;
         max-width: 100%;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
       }
     }
   `],
@@ -626,6 +628,7 @@ export class FtOnboardingChecklistComponent implements OnInit {
   ];
 
   // State
+  readonly isTourActive = this.tourService.isActive;
   readonly isCollapsed = signal<boolean>(false);
   readonly isDismissed = signal<boolean>(false);
   readonly completedTasks = signal<Set<string>>(new Set());
@@ -777,7 +780,8 @@ export class FtOnboardingChecklistComponent implements OnInit {
       this.isDismissed.set(dismissed === 'true');
 
       const collapsed = localStorage.getItem(this.getStorageKey(CHECKLIST_COLLAPSED_KEY));
-      this.isCollapsed.set(collapsed !== null ? JSON.parse(collapsed) : false);
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+      this.isCollapsed.set(collapsed !== null ? JSON.parse(collapsed) : isMobile);
 
       const rawTasks = localStorage.getItem(this.getStorageKey(CHECKLIST_STORAGE_KEY));
       if (rawTasks) {

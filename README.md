@@ -1,175 +1,84 @@
-# 💸 Personal Finance Tracker — Angular 17+
+# Kipu — Personal Finance Platform
 
-A youthful, minimalist personal finance tracker built with Angular 17 standalone components, signals, and Angular Router.
+Production personal finance platform live at **[kipufinance.online](https://kipufinance.online)**, combining an Angular web dashboard with automated multi-channel expense capture (Telegram text, voice notes, receipt OCR, and bank CSV imports) and application-level `AES-256-GCM` encryption.
 
-## Tech Stack
-
-- Angular 17+ (standalone components, signals)
-- Chart.js (via ng2-charts)
-- @angular/animations
-- RxJS
-- TypeScript strict mode
-
-## Getting Started
-
-```bash
-npm install
-ng serve
-```
-
-App runs at `http://localhost:4200`. By default, the service layer uses the **mock data** (`of(mockData).pipe(delay(800))`). To switch to the real API, swap the `// MOCK` blocks in `finance.service.ts` with the real `HttpClient` calls.
+This repository hosts the **Angular 17 web application**. The production REST API and Telegram bot run as independent backend services documented below.
 
 ---
 
-## API Endpoints (Backend Contract)
+## System Architecture & Security
 
-The backend must implement the following REST endpoints. Base URL is configured in `environment.ts`.
+> **Backend & Bot repository visibility:** The production REST API (`Finance-Tracker-Backend`) and Telegram bot (`Bot-Finance`) repositories are kept **private** to protect live user data, credentials, and operational security for [kipufinance.online](https://kipufinance.online). A full architecture and code walkthrough is available upon request during technical interviews.
 
-### Summary
-
-| Method | Endpoint        | Description            |
-|--------|-----------------|------------------------|
-| GET    | `/api/summary`  | Returns account summary |
-
-**Response shape:**
-```json
-{
-  "totalBalance": 12400.00,
-  "totalIncome": 8200.00,
-  "totalExpenses": 3800.00,
-  "savingsRate": 53.7
-}
+```mermaid
+flowchart LR
+    WEB["Angular 17 Web App\n(kipufinance.online)"] --> API["Express 5 REST API (TypeScript)\nBetter Auth · Zod · Gzip · Cache"]
+    TG["Telegram Bot (grammY)\nText · Voice · Photo OCR"] -->|Service API Key| API
+    API --> DOM["15 Domain Modules\nClean Architecture · DDD"]
+    DOM --> AI["Ingestion & NLP\nWhisper · Tesseract · Groq"]
+    DOM --> ENC["AES-256-GCM\nEncryption Layer"]
+    ENC --> DB[("MongoDB 7")]
+    DOM -. "Event Bus (Fire-and-forget)" .-> NOTIF["Notification Subscriber"]
 ```
+
+### Production Services Breakdown
+
+| Service | Visibility | Core Stack | Responsibilities |
+| :--- | :---: | :--- | :--- |
+| **Kipu Web (`Kipu`)** | Public | `Angular 17.3` (standalone + signals), `TypeScript`, `Tailwind CSS`, `ECharts`, `RxJS`, `Nginx/Docker`, `Vercel` | Financial dashboard, transactions, categories, pockets, goals, analytics, AI insights, subscriptions & auth UI |
+| **REST API (`Finance-Tracker-Backend`)** | Private | `Node.js`, `Express 5`, `TypeScript`, `MongoDB 7` / `Mongoose 8`, `Zod 4`, `Better Auth` | 15 isolated business domains (Hexagonal Clean Architecture / DDD), dual auth (session cookies + service API keys), `AES-256-GCM` encryption (random & deterministic IV modes), user-scoped response caching (`node-cache`, 60 s TTL + invalidation on writes), gzip compression, banking CSV adapters (`Bancolombia`, `Nequi`, `Davivienda`, `Nu`) + Twilio SMS webhook, event-driven non-blocking notifications |
+| **Telegram Bot (`Bot-Finance`)** | Private | `TypeScript` (ESM), `grammY`, `MongoDB`, `Sharp`, `Tesseract.js`, `Groq (Llama 3.1 8B)` | Natural-language expense capture, receipt OCR with Colombian bank detection, voice-note forwarding (Whisper + NLP), 6-digit web-account linking (`TelegramLink`), daily/weekly/monthly reports & pocket alerts |
 
 ---
 
-### Transactions
+## Web Application Structure
 
-| Method | Endpoint                  | Description               |
-|--------|---------------------------|---------------------------|
-| GET    | `/api/transactions`       | List all transactions (supports query params: `category`, `type`, `startDate`, `endDate`, `page`, `limit`, `sortBy`, `sortDir`) |
-| GET    | `/api/transactions/:id`   | Get single transaction    |
-| POST   | `/api/transactions`       | Create new transaction    |
-| PUT    | `/api/transactions/:id`   | Update transaction        |
-| DELETE | `/api/transactions/:id`   | Delete transaction        |
-
-**Query params for GET /api/transactions:**
-- `category` — filter by category name
-- `type` — `income` | `expense`
-- `startDate` — ISO date string
-- `endDate` — ISO date string
-- `page` — page number (default: 1)
-- `limit` — items per page (default: 20)
-- `sortBy` — `date` | `amount` | `category` (default: `date`)
-- `sortDir` — `asc` | `desc` (default: `desc`)
-
-**Transaction shape:**
-```json
-{
-  "id": "uuid",
-  "amount": 250.00,
-  "type": "expense",
-  "category": "Food",
-  "description": "Grocery run",
-  "date": "2024-06-15T00:00:00.000Z",
-  "createdAt": "2024-06-15T10:32:00.000Z"
-}
-```
-
----
-
-### Categories
-
-| Method | Endpoint          | Description        |
-|--------|-------------------|--------------------|
-| GET    | `/api/categories` | List all categories with totals |
-
-**Category shape:**
-```json
-{
-  "id": "uuid",
-  "name": "Food",
-  "icon": "🍔",
-  "color": "#FF5C4D",
-  "total": 1240.00
-}
-```
-
----
-
-### Chart
-
-| Method | Endpoint             | Description             |
-|--------|----------------------|-------------------------|
-| GET    | `/api/chart/monthly` | Monthly income vs expenses for chart |
-
-**ChartData shape:**
-```json
-[
-  { "month": "Jan", "income": 5200, "expenses": 3100 },
-  { "month": "Feb", "income": 4800, "expenses": 2900 }
-]
-```
-
----
-
-
-## Backend
-
-Se agregó una implementación completa en `backend/` con Express + MongoDB (Mongoose), validación con Zod y los modelos necesarios para `transactions` y `categories`.
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-Configura las variables del backend usando `backend/.env.example`.
-
-## Folder Structure
-
-```
+```text
 src/app/
-├── core/
-│   ├── models/
-│   │   ├── transaction.model.ts
-│   │   ├── summary.model.ts
-│   │   ├── category.model.ts
-│   │   └── chart.model.ts
-│   └── services/
-│       └── finance.service.ts
+├── core/                  # Auth, API services, interceptors, guards & domain models
 ├── features/
-│   ├── dashboard/
-│   │   └── dashboard.component.ts
-│   ├── transactions/
-│   │   ├── transactions-list.component.ts
-│   │   └── transaction-form.component.ts
-│   └── categories/
-│       └── categories.component.ts
-├── shared/
-│   ├── components/
-│   │   ├── navbar.component.ts
-│   │   ├── skeleton.component.ts
-│   │   └── empty-state.component.ts
-│   └── animations.ts
-├── app.component.ts
-├── app.routes.ts
-├── app.config.ts
-└── environments/
-    ├── environment.ts
-    └── environment.prod.ts
+│   ├── dashboard/         # Financial overview & KPI cards
+│   ├── transactions/      # Multi-origin transaction history & forms
+│   ├── analytics/         # Monthly trends, projections, anomalies & breakdowns
+│   ├── ai-insights/       # AI-generated spending insights
+│   ├── insights/          # Actionable financial summaries
+│   ├── pockets/           # Budget pockets & spending limits
+│   ├── goals/             # Savings goals & projections
+│   ├── categories/        # Custom & default income/expense categories
+│   ├── subscription/      # Free / trial / premium tier flows
+│   ├── auth/              # Email/password & Google OAuth views
+│   ├── landing/           # Public landing page
+│   ├── profile/           # User profile & Telegram account linking
+│   ├── referral/          # Referral flows
+│   └── settings/          # User preferences
+└── shared/                # Reusable UI components & animations
 ```
 
-## Switching from Mock to Real API
+---
 
-In `finance.service.ts`, each method has two implementations:
+## Local Development (Frontend)
 
-```ts
-// Real HTTP call (uncomment to use):
-return this.http.get<Summary>(`${this.base}/summary`);
+### Prerequisites
+- Node.js 20+
+- `pnpm` (`9.x`)
 
-// MOCK (comment out when backend is ready):
-return of(MOCK_SUMMARY).pipe(delay(800));
+### Commands
+
+```bash
+# Install dependencies
+pnpm install
+
+# Run development server (http://localhost:4200)
+pnpm start
+
+# Run unit tests (Karma + Jasmine)
+pnpm test
+
+# Run headless CI tests with coverage
+pnpm run test:ci
+
+# Production build
+pnpm run build
 ```
 
-Just swap which line is active per method.
+Environment configuration lives under `src/environments/` (`environment.ts` and `environment.prod.ts`), pointing to the REST API base URL.

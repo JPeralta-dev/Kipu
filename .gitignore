@@ -4,3 +4,12 @@ node_modules
 /backend/.env
 pnpm-lock.yaml
 /dist
+.agents
+.atl
+.codex
+.codegraph
+.engram
+.seren
+.impeccable
+.newlogo
+nskills-lock.json
